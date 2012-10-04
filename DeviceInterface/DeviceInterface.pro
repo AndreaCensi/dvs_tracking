@@ -13,7 +13,9 @@ SOURCES += main.cpp \
 HEADERS += \
     usbinterface.h \
     usbreader.h \
-    stdafx.h
+    stdafx.h \
+    ringbuffer.h
+
 
 
 win32: LIBS += -L$$PWD/inc/usbiolib/Debug/Win32/ -lusbiolib

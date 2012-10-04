@@ -21,8 +21,6 @@ void USBReader::ProcessData(CUsbIoBuf* buf){
     }
     else{
         // read operation completed with error
-        TCHAR strbuf[256];
-//         _ftprintf(stderr,TEXT("ProcessData: %s\n"),CUsbIo::ErrorText(strbuf,sizeof(strbuf)/sizeof(TCHAR),buf->Status));
         fprintf(stderr,"Read error: %x\n",buf->Status);
     }
 }
