@@ -9,7 +9,7 @@ public:
     USBReader(/*void (*process)(char*)*/);
     ~USBReader();
 protected:
-    virtual void ProcessData(CUsbIoBuf *Buf);
+    virtual void ProcessData(CUsbIoBuf* Buf);
 private:
     void (*processEvent)(char*);
 };

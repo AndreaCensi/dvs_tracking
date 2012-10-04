@@ -103,8 +103,8 @@ void USBInterface::startReader(int devIndex){
     // open the device
     status = dev.Open(devIndex,devList,&usbIoID);
     if ( status != USBIO_ERR_SUCCESS ) {
-        //PrintError(status);
-//        return;
+        printf("Could not open device: %x",status);
+        return;
     }
 
     // set up the configuration request
@@ -119,32 +119,32 @@ void USBInterface::startReader(int devIndex){
     printf("Configuring the device...\n");
     status = dev.SetConfiguration(&config);
     if ( status != USBIO_ERR_SUCCESS ) {
-        //        PrintError(status);
-//        return;
+        printf("Could not configure device: %x",status);
+        return;
     }
-
-    sendVendorRequest(dev,0xb3);
 
     status = reader.Bind(devIndex,ENDPOINT,devList,&usbIoID);
     if ( status != USBIO_ERR_SUCCESS ) {
-        //        PrintError(status);
+        printf("Binding failed.\n");
         dev.UnconfigureDevice();
-//        return;
+        return;
     }
 
     if ( !reader.AllocateBuffers(ENDPOINT_FIFO_SIZE, NUM_BUFFERS) ) {
         printf("Unable to allocate buffer pool.\n");
         dev.UnconfigureDevice();
-//        return;
+        return;
     }
     // start the worker thread
     printf("Starting worker thread...\n");
     if ( !reader.StartThread() ) {
         printf("Unable to start worker thread.\n");
         dev.UnconfigureDevice();
-//        return;
+        return;
     }
     printf("Worker thread is running.\n");
+
+    sendVendorRequest(dev,0xb3);
 
     printf("Press any key to stop the worker thread.\n\n");
     _getch();

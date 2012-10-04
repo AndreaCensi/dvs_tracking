@@ -12,17 +12,17 @@ USBReader::~USBReader(){
 
 }
 
-void USBReader::ProcessData(CUsbIoBuf *Buf){
-    if ( Buf->Status==USBIO_ERR_SUCCESS ){
-        //printf((char*)Buf->Buffer());
-        printf(".");
-//        if(Buf->Size > FRAME_LENGTH)
-//            processEvent(Buf->Buffer());
+void USBReader::ProcessData(CUsbIoBuf* buf){
+    if ( buf->Status==USBIO_ERR_SUCCESS ){
+        printf((char*)buf->Buffer());
+        //printf(".");
+//        if(buf->Size > FRAME_LENGTH)
+//            processEvent(buf->Buffer());
     }
     else{
         // read operation completed with error
-        //TCHAR strbuf[256];
-        //fprintf(stderr,TEXT("ProcessData: %s\n"),CUsbIo::ErrorText(strbuf,sizeof(strbuf)/sizeof(TCHAR),Buf->Status));
-        printf("Read operation completed with an error...");
+        TCHAR strbuf[256];
+//         _ftprintf(stderr,TEXT("ProcessData: %s\n"),CUsbIo::ErrorText(strbuf,sizeof(strbuf)/sizeof(TCHAR),buf->Status));
+        fprintf(stderr,"Read error: %x\n",buf->Status);
     }
 }

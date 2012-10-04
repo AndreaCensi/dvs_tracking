@@ -15,6 +15,7 @@ HEADERS += \
     usbreader.h \
     stdafx.h
 
+
 win32: LIBS += -L$$PWD/inc/usbiolib/Debug/Win32/ -lusbiolib
 
 INCLUDEPATH += $$PWD/inc/usbiolib/Debug/Win32
