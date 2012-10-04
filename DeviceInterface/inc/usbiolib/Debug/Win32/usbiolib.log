@@ -1,0 +1,31 @@
+﻿Build started 28.09.2012 15:56:34.
+     1>Project "C:\Thesycon\USBIO\V2.55\source\usbiolib\usbiolib.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I..\inc /Zi /nologo /W4 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _CRT_SECURE_NO_DEPRECATE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHa /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\Win32\usbiolib.pch" /Fo"Debug\Win32\\" /Fd"Debug\Win32\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I..\inc /Zi /nologo /W4 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _CRT_SECURE_NO_DEPRECATE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHa /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\Win32\usbiolib.pch" /Fo"Debug\Win32\\" /Fd"Debug\Win32\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt PnPNotificator.cpp SetupApiDll.cpp UsbIo.cpp UsbIoBuf.cpp UsbIoPipe.cpp UsbIoReader.cpp UsbIoThread.cpp UsbIoWriter.cpp
+         PnPNotificator.cpp
+         SetupApiDll.cpp
+         UsbIo.cpp
+         UsbIoBuf.cpp
+         UsbIoPipe.cpp
+         UsbIoReader.cpp
+         UsbIoThread.cpp
+         UsbIoWriter.cpp
+         Generating Code...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\Lib.exe /OUT:"..\..\lib\Debug\Win32\usbiolib.lib" /NOLOGO Debug\Win32\PnPNotificator.obj
+         Debug\Win32\SetupApiDll.obj
+         Debug\Win32\stdafx.obj
+         Debug\Win32\UsbIo.obj
+         Debug\Win32\UsbIoBuf.obj
+         Debug\Win32\UsbIoPipe.obj
+         Debug\Win32\UsbIoReader.obj
+         Debug\Win32\UsbIoThread.obj
+         Debug\Win32\UsbIoWriter.obj
+         usbiolib.vcxproj -> C:\Thesycon\USBIO\V2.55\source\usbiolib\..\..\lib\Debug\Win32\usbiolib.lib
+     1>Done Building Project "C:\Thesycon\USBIO\V2.55\source\usbiolib\usbiolib.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:08.63

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Lint">
+      <UniqueIdentifier>{d2b38f28-e4af-4b7b-9433-d9c9cf80b942}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lintcfg.lnt">
+      <Filter>Lint</Filter>
+    </None>
+    <None Include="..\shared\msvc8.lnt">
+      <Filter>Lint</Filter>
+    </None>
+    <None Include="..\shared\Win32.lnt">
+      <Filter>Lint</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PnPNotificator.cpp" />
+    <ClCompile Include="SetupApiDll.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="UsbIo.cpp" />
+    <ClCompile Include="UsbIoBuf.cpp" />
+    <ClCompile Include="UsbIoPipe.cpp" />
+    <ClCompile Include="UsbIoReader.cpp" />
+    <ClCompile Include="UsbIoThread.cpp" />
+    <ClCompile Include="UsbIoWriter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PnPNotificator.h" />
+    <ClInclude Include="SetupApiDll.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="UsbIo.h" />
+    <ClInclude Include="..\inc\usbio_i.h" />
+    <ClInclude Include="UsbIoBuf.h" />
+    <ClInclude Include="..\inc\usbioerr.h" />
+    <ClInclude Include="UsbIoPipe.h" />
+    <ClInclude Include="UsbIoReader.h" />
+    <ClInclude Include="UsbIoThread.h" />
+    <ClInclude Include="UsbIoWriter.h" />
+  </ItemGroup>
+</Project>
