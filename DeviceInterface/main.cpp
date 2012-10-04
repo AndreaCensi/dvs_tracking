@@ -3,8 +3,7 @@
 #include "eventreader.h"
 
 int main(int argc, char **argv){
-    EventReader eReader;
-    USBInterface inf(&(EventReader::processEvent));
+    USBInterface inf;
     short deviceIndex = inf.queryDevice();
     printf("Device nb: %d\n",deviceIndex);
 //    if(deviceIndex > -1){

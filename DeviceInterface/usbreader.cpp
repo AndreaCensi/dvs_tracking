@@ -6,7 +6,7 @@
 USBReader::USBReader(/*void (*process)(unsigned char*)*/)
 {
     rBuf = new RingBuffer<unsigned char>(4096,4);
-    processEvent = process;
+    mileStone = 0;
 }
 
 USBReader::~USBReader(){
@@ -39,9 +39,16 @@ void USBReader::processEvent(unsigned char *data){
     }
     else{
         struct Event event;
-        event.xAddr = 0x00;
-        event.yAddr = 0x00;
+//        event.xAddr = 0x00;
+//        event.yAddr = 0x00;
+        event.rawAddr  = (data[0] & 0xFF) | ((data[1] & 0xFF) << 8);
         event.timeStamp = mileStone + (data[2] & 0xff | ((data[3] & 0xff) << 8));
-        event.eventType = 0x1;
+//        event.eventType = 0x1;
     }
+
+    QByteArray bytes;
+    for(int i = 0; i < 4;i++)
+        bytes.append(data[i]);
+    udpClient.send(bytes,"localhost",8991);
+
 }

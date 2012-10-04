@@ -6,10 +6,11 @@ UDPClient::UDPClient(QObject *parent) :
     socket = new QUdpSocket;
 }
 
-void UDPClient::connect(char *host, int port){
-
+void UDPClient::connect(QHostAddress host, int port){
+    socket = new QUdpSocket(this);
+    socket->bind(host,port);
 }
 
-void UDPClient::send(char *data){
-
+void UDPClient::send(QByteArray data, QString host, int port){
+    socket->writeDatagram(data,QHostAddress(host),port);
 }

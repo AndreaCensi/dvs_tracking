@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "ringbuffer.h"
+#include "udpclient.h"
 
 class USBReader : public CUsbIoReader
 {
@@ -14,6 +15,15 @@ protected:
 private:
     void processEvent(unsigned char* data);
     RingBuffer<unsigned char> *rBuf;
+    unsigned int mileStone;
+    UDPClient udpClient;
+    struct Event{
+        unsigned short xAddr;
+        unsigned short yAddr;
+        unsigned int rawAddr;
+        unsigned int timeStamp;
+        bool eventType;
+    };
 
 };
 

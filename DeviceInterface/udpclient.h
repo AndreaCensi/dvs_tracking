@@ -2,15 +2,15 @@
 #define UDPCLIENT_H
 
 #include <QObject>
-#include <QUdpSocket>
+#include <QtNetwork/QUdpSocket>
 
 class UDPClient : public QObject
 {
     Q_OBJECT
 public:
     explicit UDPClient(QObject *parent = 0);
-    void connect(char *host, int port);
-    void send(char *data);
+    void connect(QHostAddress host, int port);
+    void send(QByteArray data, QString host, int port);
 
 private:
     QUdpSocket *socket;

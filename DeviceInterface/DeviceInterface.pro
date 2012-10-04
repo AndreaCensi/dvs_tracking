@@ -1,4 +1,4 @@
-TEMPLATE = app
+#TEMPLATE = app
 CONFIG += console
 #CONFIG -= qt
 
