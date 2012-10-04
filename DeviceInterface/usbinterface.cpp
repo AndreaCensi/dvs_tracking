@@ -17,7 +17,8 @@
 
 GUID usbIoID = USBIO_IID;
 
-USBInterface::USBInterface(){
+USBInterface::USBInterface(/*void (*process)(unsigned char*)*/){
+    processEvent = process;
     devList = NULL;
 }
 
@@ -95,7 +96,7 @@ void USBInterface::startReader(int devIndex){
     // local USBIO device instance, used to configure the device
     CUsbIo dev;
     // local instance of our Reader class, used to read from the pipe
-    USBReader reader;
+    USBReader reader(processEvent);
     // helper variables
     USBIO_SET_CONFIGURATION config;
     DWORD status;

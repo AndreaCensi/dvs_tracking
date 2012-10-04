@@ -1,8 +1,10 @@
 #include "usbreader.h"
 #include "usbinterface.h"
+#include "eventreader.h"
 
 int main(int argc, char **argv){
-    USBInterface inf;
+    EventReader eReader;
+    USBInterface inf(&(EventReader::processEvent));
     short deviceIndex = inf.queryDevice();
     printf("Device nb: %d\n",deviceIndex);
 //    if(deviceIndex > -1){

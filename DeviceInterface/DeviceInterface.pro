@@ -1,6 +1,6 @@
 TEMPLATE = app
 CONFIG += console
-CONFIG -= qt
+#CONFIG -= qt
 
 INCLUDEPATH += \
     inc \
@@ -8,13 +8,17 @@ INCLUDEPATH += \
 
 SOURCES += main.cpp \
     usbinterface.cpp \
-    usbreader.cpp
+    usbreader.cpp \
+    eventreader.cpp \
+    udpclient.cpp
 
 HEADERS += \
     usbinterface.h \
     usbreader.h \
     stdafx.h \
-    ringbuffer.h
+    ringbuffer.h \
+    eventreader.h \
+    udpclient.h
 
 
 

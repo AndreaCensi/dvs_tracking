@@ -20,9 +20,8 @@ public:
     /*!
         \param totalSize Size of the buffer.
         \param windowSize Size of a data window. Allows asking if new data is available. Ensures proper buffer size( multiple of windowSize).
-        \param parent The parent QObject.
     */
-    RingBuffer(int totalSize = 1024, int windowSize = 256, QObject *parent = 0) : QObject(parent){
+    RingBuffer(int totalSize = 1024, int windowSize = 256){
         int remainder = totalSize%windowSize;       //totalSize should be a multiple of windowSize
         if(remainder == 0)
             size = totalSize;
