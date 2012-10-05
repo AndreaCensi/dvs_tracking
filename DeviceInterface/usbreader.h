@@ -3,7 +3,8 @@
 
 #include "stdafx.h"
 #include "ringbuffer.h"
-#include "udpclient.h"
+#include "camwidget.h"
+#include <QUdpSocket>
 
 class USBReader : public CUsbIoReader
 {
@@ -16,7 +17,7 @@ private:
     void processEvent(unsigned char* data);
     RingBuffer<unsigned char> *rBuf;
     unsigned int mileStone;
-    UDPClient udpClient;
+    //UDPClient udpClient;
     struct Event{
         short xAddr;
         short yAddr;
@@ -24,7 +25,7 @@ private:
         unsigned int timeStamp;
         bool polarity;
     };
-
+    CamWidget *camWidget;
 };
 
 #endif // USBREADER_H

@@ -1,4 +1,4 @@
-#TEMPLATE = app
+TEMPLATE = app
 CONFIG += console
 
 QT       += core \
@@ -12,7 +12,8 @@ SOURCES += main.cpp \
     usbinterface.cpp \
     usbreader.cpp \
     eventreader.cpp \
-    udpclient.cpp
+    udpclient.cpp \
+    camwidget.cpp
 
 HEADERS += \
     usbinterface.h \
@@ -20,7 +21,8 @@ HEADERS += \
     stdafx.h \
     ringbuffer.h \
     eventreader.h \
-    udpclient.h
+    udpclient.h \
+    camwidget.h
 
 
 
