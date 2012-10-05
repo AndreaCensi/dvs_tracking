@@ -21,10 +21,14 @@ HDEVINFO devList;
 USBInterface::USBInterface(/*void (*process)(unsigned char*)*/){
     //processEvent = process;
     devList = NULL;
+    reader = new USBReader();
 }
 
 USBInterface::~USBInterface(){
 
+    reader->ShutdownThread();
+    reader->Close();
+    delete reader;
 }
 
 short USBInterface::queryDevice(){
@@ -67,7 +71,7 @@ short USBInterface::queryDevice(){
                     fprintf(stdout,"Device found, starting Reader.\n");
                     index = i;
                     startReader(i);
-                    //break; // leave loop
+                    break; // leave loop
                 } else {
                     fprintf(stdout,"Device not recognized\n");
                 }
@@ -97,7 +101,6 @@ void USBInterface::startReader(int devIndex){
     // local USBIO device instance, used to configure the device
     CUsbIo dev;
     // local instance of our Reader class, used to read from the pipe
-    USBReader reader;
     // helper variables
     USBIO_SET_CONFIGURATION config;
     DWORD status;
@@ -125,21 +128,21 @@ void USBInterface::startReader(int devIndex){
         return;
     }
 
-    status = reader.Bind(devIndex,ENDPOINT,devList,&usbIoID);
+    status = reader->Bind(devIndex,ENDPOINT,devList,&usbIoID);
     if ( status != USBIO_ERR_SUCCESS ) {
         printf("Binding failed.\n");
         dev.UnconfigureDevice();
         return;
     }
 
-    if ( !reader.AllocateBuffers(ENDPOINT_FIFO_SIZE, NUM_BUFFERS) ) {
+    if ( !reader->AllocateBuffers(ENDPOINT_FIFO_SIZE, NUM_BUFFERS) ) {
         printf("Unable to allocate buffer pool.\n");
         dev.UnconfigureDevice();
         return;
     }
     // start the worker thread
     printf("Starting worker thread...\n");
-    if ( !reader.StartThread() ) {
+    if ( !reader->StartThread() ) {
         printf("Unable to start worker thread.\n");
         dev.UnconfigureDevice();
         return;
@@ -151,14 +154,8 @@ void USBInterface::startReader(int devIndex){
     printf("Press any key to stop the worker thread.\n\n");
     _getch();
 
-    reader.ShutdownThread();
-
-    // close pipe, close device
-    // Note: This is not absolute necessary because each
-    // instance will be closed by its destructor.
-    reader.Close();
-    dev.UnconfigureDevice();
-    dev.Close();
+//    dev.UnconfigureDevice();
+//    dev.Close();
 }
 
 void USBInterface::sendVendorRequest(CUsbIo dev, UCHAR req){

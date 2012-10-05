@@ -9,5 +9,6 @@ int main(int argc, char **argv){
     QApplication app(argc,argv);
     USBInterface inf;
     inf.queryDevice();
+
     return app.exec();
 }

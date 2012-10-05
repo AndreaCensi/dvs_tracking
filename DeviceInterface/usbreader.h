@@ -25,7 +25,8 @@ private:
         unsigned int timeStamp;
         bool polarity;
     };
-    CamWidget *camWidget;
+
+    QUdpSocket sock;
 };
 
 #endif // USBREADER_H

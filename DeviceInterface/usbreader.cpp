@@ -7,29 +7,25 @@ USBReader::USBReader(/*void (*process)(unsigned char*)*/)
 {
     rBuf = new RingBuffer<unsigned char>(4096,4);
     mileStone = 0;
-    camWidget = new CamWidget();
-    camWidget->show();
 }
 
 USBReader::~USBReader(){
-    delete camWidget;
+
 }
 
 void USBReader::ProcessData(CUsbIoBuf* buf){
     if ( buf->Status==USBIO_ERR_SUCCESS ){
         const char *data = (const char*)buf->Buffer();
-        for(int i = 0; i < buf->Size(); i++){
-            rBuf->add(data[i]);
-        }
 
-        //printf("bufSize: %d\n",buf->Size());
-        printf(".");
-//        QUdpSocket sock;
-//        int s = sock.writeDatagram(data,buf->Size(),QHostAddress::LocalHost,8991);
-        //printf("%d",s);
-        //        while(rBuf->newData()){
-        //            processEvent(rBuf->data());
+        //        for(unsigned int i = 0; i < buf->Size(); i++){
+        //            rBuf->add(data[i]);
         //        }
+
+        sock.writeDatagram(data,buf->Size(),QHostAddress::LocalHost,8991);
+
+        while(rBuf->newData()){
+            processEvent(rBuf->data());
+        }
     }
     else{
         // read operation completed with error
@@ -59,13 +55,8 @@ void USBReader::processEvent(unsigned char *data){
             event.yAddr = (event.rawAddr >> 8) & 0x7f;
             event.timeStamp = mileStone + (data[2] & 0xff | ((data[3] & 0xff) << 8));
         }
-        camWidget->update(event.xAddr,event.yAddr,event.polarity);
+
+
+
     }
-
-
-
-    //    QByteArray bytes;
-    //    for(int i = 0; i < 4;i++)
-    //        bytes.append(data[i]);
-    //    udpClient.send(bytes,"localhost",8991);
 }

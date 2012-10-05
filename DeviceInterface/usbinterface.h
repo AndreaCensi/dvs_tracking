@@ -14,6 +14,7 @@ public:
     short queryDevice();
 private:
     void (*processEvent)(unsigned char*);
+    USBReader *reader;
 };
 
 #endif // USBINTERFACE_H
