@@ -16,16 +16,19 @@ USBReader::~USBReader(){
 void USBReader::ProcessData(CUsbIoBuf* buf){
     if ( buf->Status==USBIO_ERR_SUCCESS ){
         const char *data = (const char*)buf->Buffer();
+        int numBytes = buf->BytesTransferred;
 
-        //        for(unsigned int i = 0; i < buf->Size(); i++){
+        //        printf("BytesTransferred: %d\n", numBytes);
+
+        //        for(int i = 0; i < numBytes; i++){
         //            rBuf->add(data[i]);
         //        }
 
-        sock.writeDatagram(data,buf->Size(),QHostAddress::LocalHost,8991);
+        sock.writeDatagram(data,numBytes,QHostAddress::LocalHost,8991);
 
-        while(rBuf->newData()){
-            processEvent(rBuf->data());
-        }
+        //        while(rBuf->newData()){
+        //            processEvent(rBuf->data());
+        //        }
     }
     else{
         // read operation completed with error
@@ -33,7 +36,7 @@ void USBReader::ProcessData(CUsbIoBuf* buf){
     }
 }
 
-void USBReader::processEvent(unsigned char *data){
+void USBReader::processEvent(const char *data){
     if(data[3] & 0x80 == 0x80){
         mileStone += 0x4000L;
     }
@@ -55,8 +58,5 @@ void USBReader::processEvent(unsigned char *data){
             event.yAddr = (event.rawAddr >> 8) & 0x7f;
             event.timeStamp = mileStone + (data[2] & 0xff | ((data[3] & 0xff) << 8));
         }
-
-
-
     }
 }

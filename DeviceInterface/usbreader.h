@@ -14,7 +14,7 @@ public:
 protected:
     virtual void ProcessData(CUsbIoBuf* Buf);
 private:
-    void processEvent(unsigned char* data);
+    void processEvent(const char* data);
     RingBuffer<unsigned char> *rBuf;
     unsigned int mileStone;
     //UDPClient udpClient;
