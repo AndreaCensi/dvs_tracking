@@ -19,6 +19,7 @@ void USBReader::ProcessData(CUsbIoBuf* buf){
         for(int i = 0; i < buf->Size(); i++){
             rBuf->add(data[i]);
         }
+
         printf("bufSize: %d\n",buf->Size());
         while(rBuf->newData()){
             processEvent(rBuf->data());
@@ -39,16 +40,23 @@ void USBReader::processEvent(unsigned char *data){
     }
     else{
         struct Event event;
-//        event.xAddr = 0x00;
-//        event.yAddr = 0x00;
+
         event.rawAddr  = (data[0] & 0xFF) | ((data[1] & 0xFF) << 8);
-        event.timeStamp = mileStone + (data[2] & 0xff | ((data[3] & 0xff) << 8));
-//        event.eventType = 0x1;
+        if(event.rawAddr & (0x8000) != 0){
+            //specialEvent
+            event.xAddr = -1;
+            event.yAddr = -1;
+        }
+        else{
+            event.polarity = 1 - event.rawAddr & 1;
+            event.xAddr = (event.rawAddr >> 1) & 0x7f;
+            event.yAddr = (event.rawAddr >> 8) & 0x7f;
+            event.timeStamp = mileStone + (data[2] & 0xff | ((data[3] & 0xff) << 8));
+        }
     }
 
     QByteArray bytes;
     for(int i = 0; i < 4;i++)
         bytes.append(data[i]);
     udpClient.send(bytes,"localhost",8991);
-
 }

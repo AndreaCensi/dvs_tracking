@@ -14,7 +14,7 @@ public:
     short queryDevice();
 private:
     void (*processEvent)(unsigned char*);
-    HDEVINFO devList;
+
 };
 
 #endif // USBINTERFACE_H

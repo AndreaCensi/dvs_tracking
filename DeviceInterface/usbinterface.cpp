@@ -16,6 +16,7 @@
 #define	 CFG_MAX_TRANSFER 4096
 
 GUID usbIoID = USBIO_IID;
+HDEVINFO devList;
 
 USBInterface::USBInterface(/*void (*process)(unsigned char*)*/){
     //processEvent = process;

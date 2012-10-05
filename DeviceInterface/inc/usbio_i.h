@@ -38,18 +38,13 @@
 // The tool guidgen.exe from the Microsoft Platform SDK can be used to create private GUIDs.
 //
 
-#define USBIO_IID_STR     "{325ddf96-938c-11d3-9e34-0080c82727f4}"
-#define USBIO_IID_STR_W  L"{325ddf96-938c-11d3-9e34-0080c82727f4}"
 
-//#define USBIO_IID_STR     "{15646A1B-C119-4101-A91C-44A53ED1A3DF}" // DVS128
-//#define USBIO_IID_STR_W  L"{15646A1B-C119-4101-A91C-44A53ED1A3DF}"
+//GUID for DVS128
+#define USBIO_IID_STR     "{7794c79a-40a7-4a6c-8a29-da141c20d78c}"
+#define USBIO_IID_STR_W  L"{7794c79a-40a7-4a6c-8a29-da141c20d78c}"
 
-//#define USBIO_IID_STR     "96e73b6e-7a5a-11d4-9f24-0080c82727f4}" //DVS on USBIO
-//#define USBIO_IID_STR_W  L"96e73b6e-7a5a-11d4-9f24-0080c82727f4}"
+#define USBIO_IID {0x7794c79a, 0x40a7, 0x4a6c, {0x8a, 0x29, 0xda, 0x14, 0x1c, 0x20, 0xd7, 0x8c}} //DVS128 ID
 
-#define USBIO_IID {0x325ddf96, 0x938c, 0x11d3, {0x9e, 0x34, 0x00, 0x80, 0xc8, 0x27, 0x27, 0xf4}}
-//#define USBIO_IID {0x15646A1B, 0xC119, 0x4101, {0xA9, 0x1C, 0x44, 0xA5, 0x3e, 0xd1, 0xa3, 0xdf}} //DVS128 ID
-//#define USBIO_IID {0x96e73b6e, 0x7a5a, 0x11d4, {0x9f, 0x24, 0x00, 0x80, 0xc8, 0x27, 0x27, 0xf4}}
 
 
 // 

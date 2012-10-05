@@ -1,6 +1,8 @@
 #TEMPLATE = app
 CONFIG += console
-#CONFIG -= qt
+
+QT       += core \
+    network
 
 INCLUDEPATH += \
     inc \
