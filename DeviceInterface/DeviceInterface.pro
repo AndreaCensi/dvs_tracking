@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     usbreader.cpp \
     eventreader.cpp \
     udpclient.cpp \
-    camwidget.cpp
+    camwidget.cpp \
+    event.cpp
 
 HEADERS += \
     usbinterface.h \
@@ -22,7 +23,8 @@ HEADERS += \
     ringbuffer.h \
     eventreader.h \
     udpclient.h \
-    camwidget.h
+    camwidget.h \
+    event.h
 
 
 

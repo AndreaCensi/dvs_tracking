@@ -7,14 +7,17 @@
 class USBInterface
 {
 public:
-    USBInterface(/*void (*process)(unsigned char*)*/);
+    USBInterface(void (*process)(Event event));
     ~USBInterface();
-    void startReader(int devIndex);
-    void sendVendorRequest(CUsbIo dev, UCHAR req);
-    short queryDevice();
+    void startReading();
+    void stopReading();
+    void sendVendorRequest(UCHAR req, char *buffer);
+
 private:
-    void (*processEvent)(unsigned char*);
+    void startReaderThread(int devIndex);
     USBReader *reader;
+    short devIndex;
+
 };
 
 #endif // USBINTERFACE_H

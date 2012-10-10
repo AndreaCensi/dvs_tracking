@@ -4,27 +4,29 @@
 #include "stdafx.h"
 #include "ringbuffer.h"
 #include "camwidget.h"
+#include "event.h"
 #include <QUdpSocket>
 
 class USBReader : public CUsbIoReader
 {
 public:
-    USBReader(/*void (*process)(unsigned char*)*/);
+    USBReader(void (*process)(Event event));
     ~USBReader();
 protected:
     virtual void ProcessData(CUsbIoBuf* Buf);
 private:
-    void processEvent(const char* data);
+    void readDVS128Event(const char* data, int numBytes);
     RingBuffer<unsigned char> *rBuf;
+    void (*processEvent)(Event event);
     unsigned int mileStone;
     //UDPClient udpClient;
-    struct Event{
-        short xAddr;
-        short yAddr;
-        unsigned int rawAddr;
-        unsigned int timeStamp;
-        bool polarity;
-    };
+//    struct Event{
+//        short xAddr;
+//        short yAddr;
+//        unsigned int rawAddr;
+//        unsigned int timeStamp;
+//        bool polarity;
+//    };
 
     QUdpSocket sock;
 };

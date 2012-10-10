@@ -1,20 +1,14 @@
 #ifndef EVENTREADER_H
 #define EVENTREADER_H
 
+#include "event.h"
+
 class EventReader
 {
 public:
     EventReader();
     ~EventReader();
-    void processEvent(unsigned char *data);
-private:
-    unsigned int mileStone;
-    struct Event{
-        unsigned short xAddr;
-        unsigned short yAddr;
-        unsigned int timeStamp;
-        bool eventType;
-    };
+    static void processEvent(Event event);
 };
 
 #endif // EVENTREADER_H

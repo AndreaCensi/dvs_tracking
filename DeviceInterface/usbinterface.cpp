@@ -15,28 +15,29 @@
 #define  CFG_ALTSETTING 0
 #define	 CFG_MAX_TRANSFER 4096
 
+//VendorRequests
+#define START_READ 0xb3
+#define STOP_READ 0xb4
+
 GUID usbIoID = USBIO_IID;
 HDEVINFO devList;
 
-USBInterface::USBInterface(/*void (*process)(unsigned char*)*/){
-    //processEvent = process;
+USBInterface::USBInterface(void (*process)(Event event)){
     devList = NULL;
-    reader = new USBReader();
+    devIndex = -1;
+    reader = new USBReader(process);
 }
 
 USBInterface::~USBInterface(){
-
-    reader->ShutdownThread();
-    reader->Close();
+    stopReading();
     delete reader;
 }
 
-short USBInterface::queryDevice(){
+void USBInterface::startReading(){
     CUsbIo dev;
     USB_DEVICE_DESCRIPTOR devDesc;
     DWORD status;
     bool found = false;
-    short index = -1;
 
     devList = CUsbIo::CreateDeviceList(&usbIoID);
     if (devList == NULL){
@@ -49,7 +50,7 @@ short USBInterface::queryDevice(){
         status = dev.Open(i,devList,&usbIoID);
         if ( status != USBIO_ERR_SUCCESS ) {
             // no more devices, leave loop
-            if ( status != USBIO_ERR_NO_SUCH_DEVICE_INSTANCE ) {
+            if ( status != USBIO_ERR_NO_SUCH_DEVICE_INSTANCE ){
                 fprintf(stdout,"UsbDev.Open returned with error 0x%08X\n",status);
             }
             fprintf(stdout,"No more devices leaving loop...\n");
@@ -69,8 +70,8 @@ short USBInterface::queryDevice(){
                 if (devDesc.idVendor == VID && devDesc.idProduct == PID){
                     // start our Reader
                     fprintf(stdout,"Device found, starting Reader.\n");
-                    index = i;
-                    startReader(i);
+                    devIndex = i;
+                    startReaderThread(devIndex);
                     break; // leave loop
                 } else {
                     fprintf(stdout,"Device not recognized\n");
@@ -93,11 +94,15 @@ short USBInterface::queryDevice(){
         // free device list
         CUsbIo::DestroyDeviceList(devList);
     }
-    return index;
 }
 
-void USBInterface::startReader(int devIndex){
+void USBInterface::stopReading(){
+    sendVendorRequest(STOP_READ,NULL);
+    reader->ShutdownThread();
+    reader->Close();
+}
 
+void USBInterface::startReaderThread(int devIndex){
     // local USBIO device instance, used to configure the device
     CUsbIo dev;
     // local instance of our Reader class, used to read from the pipe
@@ -124,7 +129,7 @@ void USBInterface::startReader(int devIndex){
     printf("Configuring the device...\n");
     status = dev.SetConfiguration(&config);
     if ( status != USBIO_ERR_SUCCESS ) {
-        printf("Could not configure device: %x",status);
+        printf("Could not configure device: %x\n",status);
         return;
     }
 
@@ -149,16 +154,23 @@ void USBInterface::startReader(int devIndex){
     }
     printf("Worker thread is running.\n");
 
-    sendVendorRequest(dev,0xb3);
-
-    printf("Press any key to stop the worker thread.\n\n");
-    _getch();
-
-//    dev.UnconfigureDevice();
-//    dev.Close();
+    sendVendorRequest(START_READ,NULL);
+    //    dev.UnconfigureDevice();
+    //    dev.Close();
 }
 
-void USBInterface::sendVendorRequest(CUsbIo dev, UCHAR req){
+void USBInterface::sendVendorRequest(UCHAR req, char *buffer){
+    CUsbIo dev;
+    DWORD status;
+    // open the device
+    if(!dev.IsOpen()){
+        status = dev.Open(devIndex,devList,&usbIoID);
+        if ( status != USBIO_ERR_SUCCESS ) {
+            printf("Could not open device: %x",status);
+            return;
+        }
+    }
+
     printf("Sending Vendor Request: %x\n", req);
     USBIO_CLASS_OR_VENDOR_REQUEST request;
     // set up the request, this is device-specific
@@ -171,9 +183,10 @@ void USBInterface::sendVendorRequest(CUsbIo dev, UCHAR req){
     request.Value = 4;
     request.Index = 0;
     // send request
+    const void* buf = buffer;
     DWORD bufSize = 0;
-    DWORD status = dev.ClassOrVendorOutRequest(
-                NULL,       // no buffer
+    status = dev.ClassOrVendorOutRequest(
+                buf,       // no buffer
                 bufSize,   // no data Stage
                 &request    // USBIO_CLASS_OR_VENDOR_REQUEST structure
                 );
