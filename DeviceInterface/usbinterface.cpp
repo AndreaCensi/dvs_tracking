@@ -4,7 +4,7 @@
 
 #define NUM_BUFFERS 5
 
-//device config
+//Device config
 #define  VID 0x152A
 #define  PID 0x8400
 #define  ENDPOINT 0x86
@@ -15,7 +15,7 @@
 #define  CFG_ALTSETTING 0
 #define	 CFG_MAX_TRANSFER 4096
 
-//VendorRequests
+//Vendor requests
 #define START_READ 0xb3
 #define STOP_READ 0xb4
 

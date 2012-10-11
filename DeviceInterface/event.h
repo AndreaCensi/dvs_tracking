@@ -7,8 +7,8 @@ public:
     Event();
     ~Event();
     bool isSpecial();
-    int xAddr;
-    int yAddr;
+    int posX;
+    int posY;
     unsigned int timeStamp;
     int polarity;
     bool special;

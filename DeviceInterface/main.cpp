@@ -2,12 +2,13 @@
 
 #include "usbreader.h"
 #include "usbinterface.h"
-#include "eventreader.h"
+#include "eventprocessor.h"
 #include "camwidget.h"
 
 int main(int argc, char **argv){
     QApplication app(argc,argv);
-    USBInterface inf(&EventReader::processEvent);
+    EventProcessor ep;
+    USBInterface inf(&EventProcessor::processEvent);
     inf.startReading();
     printf("Press any key to stop the worker thread.\n\n");
     _getch();

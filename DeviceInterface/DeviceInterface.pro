@@ -11,20 +11,22 @@ INCLUDEPATH += \
 SOURCES += main.cpp \
     usbinterface.cpp \
     usbreader.cpp \
-    eventreader.cpp \
-    udpclient.cpp \
     camwidget.cpp \
-    event.cpp
+    event.cpp \
+    eventprocessor.cpp \
+    eventfilter.cpp \
+    cluster.cpp
 
 HEADERS += \
     usbinterface.h \
     usbreader.h \
     stdafx.h \
     ringbuffer.h \
-    eventreader.h \
-    udpclient.h \
     camwidget.h \
-    event.h
+    event.h \
+    eventprocessor.h \
+    eventfilter.h \
+    cluster.h
 
 
 

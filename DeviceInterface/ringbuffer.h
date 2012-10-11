@@ -8,14 +8,13 @@
 template <typename T>
 class RingBuffer{
 
-private:
+public:
+    T *buffer;
     int size;
     int winSize;
     int start;
     int end;
-    T *buffer;
 
-public:
     //! Constructor
     /*!
         \param totalSize Size of the buffer.
@@ -53,7 +52,7 @@ public:
     /*!
         \return Pointer to new data.
     */
-    T *data(){
+    T *newData(){
         T *at = &buffer[start];
         start += winSize;
         start %= size;

@@ -2,8 +2,8 @@
 
 Event::Event()
 {
-    xAddr = -1;
-    yAddr = -1;
+    posX = -1;
+    posY = -1;
     polarity = 0;
     timeStamp = 0;
     special = false;

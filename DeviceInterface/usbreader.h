@@ -16,19 +16,9 @@ protected:
     virtual void ProcessData(CUsbIoBuf* Buf);
 private:
     void readDVS128Event(const char* data, int numBytes);
-    RingBuffer<unsigned char> *rBuf;
     void (*processEvent)(Event event);
     unsigned int mileStone;
-    //UDPClient udpClient;
-//    struct Event{
-//        short xAddr;
-//        short yAddr;
-//        unsigned int rawAddr;
-//        unsigned int timeStamp;
-//        bool polarity;
-//    };
-
-    QUdpSocket sock;
+    RingBuffer<Event> *events;
 };
 
 #endif // USBREADER_H
