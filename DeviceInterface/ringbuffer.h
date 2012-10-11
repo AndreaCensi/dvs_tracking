@@ -62,7 +62,7 @@ public:
     /*!
         \return True if new data of at least the windowSize is available.
     */
-    bool newData(){
+    bool newDataAvailable(){
         if(start > end)
             return true;
         else if (end - start >= winSize)

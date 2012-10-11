@@ -7,11 +7,12 @@
 class USBInterface
 {
 public:
-    USBInterface(void (*process)(Event event));
+    USBInterface(void (*process)(Event event) = NULL);
     ~USBInterface();
     void startReading();
     void stopReading();
-    void sendVendorRequest(UCHAR req, char *buffer);
+    void sendVendorRequest(UCHAR req, const char *buf = NULL, DWORD bufSize = 0);
+    USBReader *getReaderInstance();
 
 private:
     void startReaderThread(int devIndex);

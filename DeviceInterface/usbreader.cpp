@@ -3,14 +3,16 @@
 
 #define FRAME_LENGTH 4
 
-USBReader::USBReader(void (*process)(Event event))
+USBReader::USBReader(void (*process)(Event event) = NULL)
 {
     events = new RingBuffer<Event>(1024,32);
     processEvent = process;
     mileStone = 0;
+    sig = new SignalWrapper();
 }
 
 USBReader::~USBReader(){
+    delete sig;
 }
 
 void USBReader::ProcessData(CUsbIoBuf* buf){
@@ -22,6 +24,7 @@ void USBReader::ProcessData(CUsbIoBuf* buf){
         }
         else{
             readDVS128Event(data,numBytes);
+            sock.writeDatagram(data,numBytes,QHostAddress::LocalHost,8991);
         }
     }
     else{
@@ -49,7 +52,8 @@ void USBReader::readDVS128Event(const char *data, int numBytes){
                 event.posY = (rawAddr >> 8) & 0x7f;
                 event.timeStamp = mileStone + (data[i+2] & 0xff | ((data[i+3] & 0xff) << 8));
             }
-            processEvent(event);
+            //processEvent(event);
+            sig->sendEvent(event.posX,event.posY,event.polarity);
         }
     }
 }

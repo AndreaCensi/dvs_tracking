@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QTimer>
 #include <QColor>
+#include <stdio.h>
 
 CamWidget::CamWidget(QWidget *parent) : QWidget(parent)
 {
@@ -11,27 +12,34 @@ CamWidget::CamWidget(QWidget *parent) : QWidget(parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     timer->start(20);
     setWindowTitle(tr("DVS128"));
-    resize(512, 512);
+    resize(512,512);
+    counter = 0;
 }
 
-void CamWidget::update(int x, int y, bool type){
+void CamWidget::newEvent(int x, int y, int type){
     QColor color;
-    if(type == false)
-        color = Qt::black;
+    if(type == 0)
+        color = Qt::blue;
     else
-        color = Qt::white;
-    img->setPixel(x,y,color.value());
+        color = Qt::green;
+    QRgb *pixel = (QRgb*)img->scanLine(127-y);
+    pixel = &pixel[127-x];
+    *pixel = color.rgb();
 }
 
 void CamWidget::paintEvent(QPaintEvent *event){
     QPainter painter(this);
-    QRect rect(0,0,500,500);
-    painter.scale(3.0,3.0);
+    QRect rect(0,0,512,512);
+    QColor color = Qt::black;
     painter.drawImage(rect,*img);
 
     for(int x = 0; x < 128; x++){
         for(int y = 0; y < 128; y++){
-            img->setPixel(x,y,Qt::gray);
+            QRgb *pixel = (QRgb*)img->scanLine(y);
+            pixel = &pixel[x];
+            *pixel = color.rgb();
         }
     }
 }
+
+

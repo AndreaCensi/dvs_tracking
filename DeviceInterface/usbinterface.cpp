@@ -97,7 +97,7 @@ void USBInterface::startReading(){
 }
 
 void USBInterface::stopReading(){
-    sendVendorRequest(STOP_READ,NULL);
+    sendVendorRequest(STOP_READ);
     reader->ShutdownThread();
     reader->Close();
 }
@@ -154,12 +154,12 @@ void USBInterface::startReaderThread(int devIndex){
     }
     printf("Worker thread is running.\n");
 
-    sendVendorRequest(START_READ,NULL);
+    sendVendorRequest(START_READ);
     //    dev.UnconfigureDevice();
     //    dev.Close();
 }
 
-void USBInterface::sendVendorRequest(UCHAR req, char *buffer){
+void USBInterface::sendVendorRequest(UCHAR req, const char *buf, DWORD bufSize){
     CUsbIo dev;
     DWORD status;
     // open the device
@@ -183,13 +183,16 @@ void USBInterface::sendVendorRequest(UCHAR req, char *buffer){
     request.Value = 4;
     request.Index = 0;
     // send request
-    const void* buf = buffer;
-    DWORD bufSize = 0;
     status = dev.ClassOrVendorOutRequest(
-                buf,       // no buffer
-                bufSize,   // no data Stage
-                &request    // USBIO_CLASS_OR_VENDOR_REQUEST structure
+                buf,
+                bufSize,
+                &request
                 );
-    printf("Status: %d\n",status);
+    printf("Status: %x\n",status);
+    dev.Close();
+}
+
+USBReader* USBInterface::getReaderInstance(){
+    return reader;
 }
 

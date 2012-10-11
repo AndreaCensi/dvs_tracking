@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'camwidget.h'
 **
-** Created: Wed 10. Oct 15:34:22 2012
+** Created: Thu 11. Oct 12:27:34 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -37,7 +37,7 @@ static const uint qt_meta_data_CamWidget[] = {
 };
 
 static const char qt_meta_stringdata_CamWidget[] = {
-    "CamWidget\0\0x,y,type\0update(int,int,bool)\0"
+    "CamWidget\0\0x,y,type\0newEvent(int,int,int)\0"
 };
 
 void CamWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -46,7 +46,7 @@ void CamWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         Q_ASSERT(staticMetaObject.cast(_o));
         CamWidget *_t = static_cast<CamWidget *>(_o);
         switch (_id) {
-        case 0: _t->update((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
+        case 0: _t->newEvent((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         default: ;
         }
     }

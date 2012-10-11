@@ -12,20 +12,21 @@ Cluster::~Cluster(){
     delete events;
 }
 
-Cluster::addEvent(Event event){
+void Cluster::addEvent(Event event){
     events->add(event);
     if(polarity == -1)
         polarity = event.polarity;
     update();
 }
 
-Cluster::update(){
-    int numEvents = events->size();
-    int sumX = sumY = sumT = 0;
+void Cluster::update(){
+    int numEvents = events->size;
+    int sumX,sumY,sumT;
+    sumX = sumY = sumT = 0;
     Event *buffer = events->buffer;
     for(int i = 0; i < numEvents;i++){
-        sumX += buffer[i].xAddr;
-        sumY += buffer[i].yAddr;
+        sumX += buffer[i].posX;
+        sumY += buffer[i].posY;
         sumT += buffer[i].timeStamp;
     }
     posX = sumX/numEvents;

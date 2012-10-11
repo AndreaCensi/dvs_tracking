@@ -7,7 +7,6 @@ QUdpSocket sock;
 
 EventProcessor::EventProcessor()
 {
-    clusters = new RingBuffer<Cluster>();
 }
 
 void EventProcessor::processEvent(Event event){
@@ -19,10 +18,16 @@ void EventProcessor::processEvent(Event event){
 
     //sock.writeDatagram((const char*)&data,4,QHostAddress::LocalHost,8991);
 
+    if(clusters.empty()){
+        Cluster c;
+        c.addEvent(event);
+    }
+    else{
 
+    }
 }
 
 //distance with circular boundary
 float EventProcessor::distance(Event e, Cluster c){
-    return sqrt(pow((e.posX-c.posX),2) + pow((e.posY-c.posY),2));
+    return sqrt(pow(float(e.posX-c.posX),2) + pow(float(e.posY-c.posY),2));
 }
