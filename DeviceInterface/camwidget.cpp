@@ -18,10 +18,10 @@ CamWidget::CamWidget(QWidget *parent) : QWidget(parent)
 
 void CamWidget::newEvent(int x, int y, int type){
     QColor color;
-    if(type == 0)
-        color = Qt::blue;
+    if(type == 1)
+        color = Qt::red;
     else
-        color = Qt::green;
+        color = Qt::blue;
     QRgb *pixel = (QRgb*)img->scanLine(127-y);
     pixel = &pixel[127-x];
     *pixel = color.rgb();
