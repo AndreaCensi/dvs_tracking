@@ -57,3 +57,7 @@ void USBReader::readDVS128Event(const char *data, int numBytes){
         }
     }
 }
+
+SignalWrapper* USBReader::getSignalWrapper(){
+    return sig;
+}

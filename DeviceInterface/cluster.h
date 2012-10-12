@@ -9,13 +9,20 @@ class Cluster
 public:
     Cluster();
     ~Cluster();
-    void addEvent(Event event);
+    void addEvent(Event e);
     void update();
+    void update(Event e);
+    void calcMoment();
 
     int posX;
     int posY;
     int avgTime;
     int polarity;
+    int lifeTime;
+    int activty;
+    int lastEventTime;
+    //velocity
+    //contour
 
 private:
     RingBuffer<Event> *events;

@@ -12,11 +12,12 @@ Cluster::~Cluster(){
     delete events;
 }
 
-void Cluster::addEvent(Event event){
-    events->add(event);
+void Cluster::addEvent(Event e){
+    events->add(e);
     if(polarity == -1)
-        polarity = event.polarity;
-    update();
+        polarity = e.polarity;
+    lastEventTime = e.timeStamp;
+    update(e);
 }
 
 void Cluster::update(){
@@ -32,4 +33,15 @@ void Cluster::update(){
     posX = sumX/numEvents;
     posY = sumY/numEvents;
     avgTime = sumT/numEvents;
+}
+
+void Cluster::update(Event e){
+    int prevNumEvents = events->size-1;
+    posX = (posX * prevNumEvents + e.posX)/events->size;
+    posY = (posY * prevNumEvents + e.posY)/events->size;
+    avgTime = (avgTime * prevNumEvents + e.timeStamp)/events->size;
+}
+
+void Cluster::calcMoment(){
+
 }

@@ -11,9 +11,13 @@ class EventProcessor
 public:
     EventProcessor();
     ~EventProcessor();
-    /*static*/ void processEvent(Event event);
-    float distance(Event e, Cluster c);
+    /*static*/ void processEvent(Event e);
+
 private:
+    float distance(Event e, Cluster c);
+    float getBoltzmanWeight(Event e, Cluster c);
+    void assignToCluster(Event e);
+
     std::vector<Cluster> clusters;
 };
 

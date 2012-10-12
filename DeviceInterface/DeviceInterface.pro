@@ -14,7 +14,6 @@ SOURCES += main.cpp \
     camwidget.cpp \
     event.cpp \
     eventprocessor.cpp \
-    eventfilter.cpp \
     cluster.cpp \
     signalwrapper.cpp
 
@@ -26,7 +25,6 @@ HEADERS += \
     camwidget.h \
     event.h \
     eventprocessor.h \
-    eventfilter.h \
     cluster.h \
     signalwrapper.h
 

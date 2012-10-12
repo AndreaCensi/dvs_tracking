@@ -14,7 +14,7 @@ public:
     USBReader(void (*process)(Event event));
     ~USBReader();
 
-    SignalWrapper *sig;
+    SignalWrapper *getSignalWrapper();
 
 protected:
     virtual void ProcessData(CUsbIoBuf* Buf);
@@ -24,6 +24,7 @@ private:
     void (*processEvent)(Event event);
     unsigned int mileStone;
     RingBuffer<Event> *events;
+    SignalWrapper *sig;
     QUdpSocket sock;
 };
 

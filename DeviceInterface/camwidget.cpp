@@ -32,6 +32,8 @@ void CamWidget::paintEvent(QPaintEvent *event){
     QRect rect(0,0,512,512);
     QColor color = Qt::black;
     painter.drawImage(rect,*img);
+    painter.setPen(Qt::green);
+    painter.drawEllipse(63*4,63*4,20,20);
 
     for(int x = 0; x < 128; x++){
         for(int y = 0; y < 128; y++){

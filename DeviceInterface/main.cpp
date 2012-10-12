@@ -12,7 +12,7 @@ int main(int argc, char **argv){
     cw.show();
     USBInterface inf/*(&EventProcessor::processEvent)*/;
 
-    QObject::connect(  inf.getReaderInstance()->sig,SIGNAL(publishEvent(int,int,int)),&cw, SLOT(newEvent(int,int,int)),Qt::QueuedConnection );
+    QObject::connect(  inf.getReaderInstance()->getSignalWrapper(),SIGNAL(publishEvent(int,int,int)),&cw, SLOT(newEvent(int,int,int)),Qt::QueuedConnection );
 
     inf.startReading();
 
