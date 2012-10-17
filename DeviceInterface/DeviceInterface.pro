@@ -26,7 +26,8 @@ HEADERS += \
     event.h \
     eventprocessor.h \
     cluster.h \
-    signalwrapper.h
+    signalwrapper.h \
+    eventprocessorbase.h
 
 
 

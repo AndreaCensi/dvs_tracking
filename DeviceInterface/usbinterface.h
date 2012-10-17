@@ -3,11 +3,12 @@
 
 #include "stdafx.h"
 #include "usbreader.h"
+#include "eventprocessorbase.h"
 
 class USBInterface
 {
 public:
-    USBInterface(void (*process)(Event event) = NULL);
+    USBInterface(EventProcessorBase *ep);
     ~USBInterface();
     void startReading();
     void stopReading();

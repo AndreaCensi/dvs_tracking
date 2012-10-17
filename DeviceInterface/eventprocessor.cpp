@@ -1,19 +1,21 @@
 #include "eventprocessor.h"
 #include "stdio.h"
-#include <QUdpSocket>
 #include <math.h>
 
 //parameters from thesis
 #define SHARPNESS 0.7
 #define ASSIGN_PROB 0.6
 
-QUdpSocket sock;
+EventProcessor::EventProcessor(){
+    sig = new SignalWrapper();
+}
 
-EventProcessor::EventProcessor()
-{
+EventProcessor::~EventProcessor(){
+    delete sig;
 }
 
 void EventProcessor::processEvent(Event e){
+    sig->signalEvent(e.posX,e.posY,e.polarity); //signal event to graphical output
     assignToCluster(e);
 }
 
@@ -60,4 +62,8 @@ void EventProcessor::assignToCluster(Event e){
         }
         delete [] weights;
     }
+}
+
+SignalWrapper* EventProcessor::getSignalWrapper(){
+    return sig;
 }

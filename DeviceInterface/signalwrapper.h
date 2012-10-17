@@ -2,6 +2,7 @@
 #define SIGNALWRAPPER_H
 
 #include <QObject>
+#include "QUdpSocket"
 #include "event.h"
 
 class SignalWrapper : public QObject
@@ -10,7 +11,12 @@ class SignalWrapper : public QObject
 
 public:
     SignalWrapper(QObject *parent = 0);
-    void sendEvent(int x, int y, int type);
+    ~SignalWrapper();
+    void signalEvent(int x, int y, int type);
+    void sendDatagram(Event e);
+
+private:
+    QUdpSocket *sock;
 
 signals:
     void publishEvent(int x, int y, int type);

@@ -5,8 +5,8 @@
 #define NUM_BUFFERS 5
 
 //Device config
-#define  VID 0x152A
-#define  PID 0x8400
+#define  VID 0x152A //vendor ID
+#define  PID 0x8400 //product ID
 #define  ENDPOINT 0x86
 #define	 ENDPOINT_FIFO_SIZE 512
 #define  CFG_INDEX 0
@@ -22,10 +22,10 @@
 GUID usbIoID = USBIO_IID;
 HDEVINFO devList;
 
-USBInterface::USBInterface(void (*process)(Event event)){
+USBInterface::USBInterface(EventProcessorBase *ep){
     devList = NULL;
     devIndex = -1;
-    reader = new USBReader(process);
+    reader = new USBReader(ep);
 }
 
 USBInterface::~USBInterface(){
@@ -44,54 +44,44 @@ void USBInterface::startReading(){
         printf("Unable to build a device list!\n");
     }
 
-    // open and query each device (max. 127)
+    // Open and query usb devices to find the right one
     for (int i = 0; i < 127; i++){
         fprintf(stdout,"i: %d\n",i);
         status = dev.Open(i,devList,&usbIoID);
         if ( status != USBIO_ERR_SUCCESS ) {
-            // no more devices, leave loop
             if ( status != USBIO_ERR_NO_SUCH_DEVICE_INSTANCE ){
                 fprintf(stdout,"UsbDev.Open returned with error 0x%08X\n",status);
             }
             fprintf(stdout,"No more devices leaving loop...\n");
             break;
         }
-        // we have found a device, query the device descriptor
+        // Query device descriptor for comparison with PID and VID
         status = dev.GetDeviceDescriptor(&devDesc);
         fprintf(stdout,"vid: %x\n",devDesc.idVendor);
         if ( status == USBIO_ERR_SUCCESS ){
-            // found one valid device
             found = true;
             fprintf(stdout,"Valid device found...\n");
-            // Does the device have a serial number?
             if ( devDesc.iSerialNumber!=0 ){
-                // close device
                 dev.Close();
                 if (devDesc.idVendor == VID && devDesc.idProduct == PID){
-                    // start our Reader
                     fprintf(stdout,"Device found, starting Reader.\n");
                     devIndex = i;
                     startReaderThread(devIndex);
-                    break; // leave loop
+                    break;
                 } else {
                     fprintf(stdout,"Device not recognized\n");
                 }
             } else {
-                // "GetDeviceDescriptor" failed, seems not to be a valid USB device.
-                fprintf(stdout,"Query Device Descriptor failed, status:0x%08X\n",status);
-                // close device
+                fprintf(stdout,"Querying device descriptor failed, status:0x%08X\n",status);
                 dev.Close();
             }
-        } // for
+        }
 
         if ( !found ) {
-            // no device found
             fprintf(stdout,"There are no USB devices attached to the USBIO driver.\n");
         }
         else
             fprintf(stdout,"Device found...");
-
-        // free device list
         CUsbIo::DestroyDeviceList(devList);
     }
 }
@@ -103,11 +93,8 @@ void USBInterface::stopReading(){
 }
 
 void USBInterface::startReaderThread(int devIndex){
-    // local USBIO device instance, used to configure the device
-    CUsbIo dev;
-    // local instance of our Reader class, used to read from the pipe
-    // helper variables
-    USBIO_SET_CONFIGURATION config;
+    CUsbIo dev; //Device instance
+    USBIO_SET_CONFIGURATION config; // Device config
     DWORD status;
 
     // open the device
@@ -170,10 +157,8 @@ void USBInterface::sendVendorRequest(UCHAR req, const char *buf, DWORD bufSize){
             return;
         }
     }
-
     printf("Sending Vendor Request: %x\n", req);
     USBIO_CLASS_OR_VENDOR_REQUEST request;
-    // set up the request, this is device-specific
     ZeroMemory(&request,sizeof(request));
     request.Flags = 0;
     request.Type = RequestTypeVendor;
@@ -182,7 +167,6 @@ void USBInterface::sendVendorRequest(UCHAR req, const char *buf, DWORD bufSize){
     request.Request = req;
     request.Value = 4;
     request.Index = 0;
-    // send request
     status = dev.ClassOrVendorOutRequest(
                 buf,
                 bufSize,

@@ -1,17 +1,21 @@
 #ifndef EVENTPROCESSOR_H
 #define EVENTPROCESSOR_H
 
+#include "eventprocessorbase.h"
 #include "event.h"
 #include "ringbuffer.h"
 #include "cluster.h"
 #include <vector>
+#include "camwidget.h"
+#include "signalwrapper.h"
 
-class EventProcessor
+class EventProcessor : public EventProcessorBase
 {
 public:
     EventProcessor();
     ~EventProcessor();
-    /*static*/ void processEvent(Event e);
+    virtual void processEvent(Event e);
+    SignalWrapper *getSignalWrapper();
 
 private:
     float distance(Event e, Cluster c);
@@ -19,6 +23,7 @@ private:
     void assignToCluster(Event e);
 
     std::vector<Cluster> clusters;
+    SignalWrapper *sig;
 };
 
 #endif // EVENTPROCESSOR_H
