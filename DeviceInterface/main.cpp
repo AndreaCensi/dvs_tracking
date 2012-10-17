@@ -9,10 +9,8 @@ int main(int argc, char **argv){
     QApplication app(argc,argv);
     EventProcessor ep;
     USBInterface inf(&ep);
-    CamWidget cw;
+    CamWidget cw(ep.getImage());
     cw.show();
-
-    QObject::connect( ep.getSignalWrapper(),SIGNAL(publishEvent(int,int,int)),&cw, SLOT(newEvent(int,int,int)));
 
     inf.startReading();
 

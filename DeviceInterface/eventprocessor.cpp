@@ -7,18 +7,37 @@
 #define ASSIGN_PROB 0.6
 
 EventProcessor::EventProcessor(){
-    sig = new SignalWrapper();
+    img = new QImage(128,128,QImage::Format_RGB32);
 }
 
 EventProcessor::~EventProcessor(){
-    for(int i = 0; i < clusters.size(); i++)
+    for(unsigned int i = 0; i < clusters.size(); i++)
         delete clusters[i];
-    delete sig;
+    delete img;
 }
 
 void EventProcessor::processEvent(Event *e){
-    sig->signalEvent(e->posX,e->posY,e->polarity); //signal event to graphical output
     //assignToCluster(e);
+
+    //image update
+    updateImage(e);
+
+    //provisory cleanup
+    delete e;
+}
+
+void EventProcessor::updateImage(Event *e){
+    int x = e->posX;
+    int y = e->posY;
+    int type = e->polarity;
+    QColor color;
+    if(type == 1)
+        color = Qt::red;
+    else
+        color = Qt::blue;
+    QRgb *pixel = (QRgb*)img->scanLine(127-y);
+    pixel = &pixel[127-x];
+    *pixel = color.rgb();
 }
 
 //distance with circular boundary
@@ -66,6 +85,6 @@ void EventProcessor::assignToCluster(Event *e){
     }
 }
 
-SignalWrapper* EventProcessor::getSignalWrapper(){
-    return sig;
+QImage* EventProcessor::getImage(){
+    return img;
 }

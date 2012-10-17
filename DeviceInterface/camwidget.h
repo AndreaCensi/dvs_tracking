@@ -9,11 +9,12 @@ class CamWidget : public QWidget
     Q_OBJECT
 
 public:
-    CamWidget(QWidget *parent = 0);
-public slots:
-    void newEvent(int x, int y, int type);
+    CamWidget(QImage *i, QWidget *parent = 0);
+    void setImage(QImage *i);
+
 protected:
     void paintEvent(QPaintEvent *event);
+
 private:
     QImage *img;
     int counter;

@@ -4,9 +4,9 @@
 #include <QColor>
 #include <stdio.h>
 
-CamWidget::CamWidget(QWidget *parent) : QWidget(parent)
+CamWidget::CamWidget(QImage *i, QWidget *parent) : QWidget(parent)
 {
-    img = new QImage(128,128,QImage::Format_RGB32);
+    img = i;
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -16,24 +16,15 @@ CamWidget::CamWidget(QWidget *parent) : QWidget(parent)
     counter = 0;
 }
 
-void CamWidget::newEvent(int x, int y, int type){
-    QColor color;
-    if(type == 1)
-        color = Qt::red;
-    else
-        color = Qt::blue;
-    QRgb *pixel = (QRgb*)img->scanLine(127-y);
-    pixel = &pixel[127-x];
-    *pixel = color.rgb();
-}
-
 void CamWidget::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     QRect rect(0,0,512,512);
     QColor color = Qt::black;
     painter.drawImage(rect,*img);
-    painter.setPen(Qt::green);
-    painter.drawEllipse(63*4,63*4,20,20);
+
+    //draw a circle -> for later cluster tracking
+//    painter.setPen(Qt::green);
+//    painter.drawEllipse(63*4,63*4,20,20);
 
     for(int x = 0; x < 128; x++){
         for(int y = 0; y < 128; y++){
@@ -42,6 +33,10 @@ void CamWidget::paintEvent(QPaintEvent *event){
             *pixel = color.rgb();
         }
     }
+}
+
+void CamWidget::setImage(QImage *i){
+    img = i;
 }
 
 

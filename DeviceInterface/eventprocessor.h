@@ -7,7 +7,7 @@
 #include "cluster.h"
 #include <vector>
 #include "camwidget.h"
-#include "signalwrapper.h"
+#include <QImage>
 
 class EventProcessor : public EventProcessorBase
 {
@@ -15,15 +15,15 @@ public:
     EventProcessor();
     ~EventProcessor();
     virtual void processEvent(Event *e);
-    SignalWrapper *getSignalWrapper();
+    QImage *getImage();
 
 private:
+    void updateImage(Event *e);
     float distance(Event *e, Cluster *c);
     float getBoltzmanWeight(Event *e, Cluster *c);
-    void assignToCluster(Event *e);
-
+    void assignToCluster(Event *e);    
     std::vector<Cluster*> clusters;
-    SignalWrapper *sig;
+    QImage * img;
 };
 
 #endif // EVENTPROCESSOR_H
