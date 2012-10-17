@@ -11,29 +11,31 @@ EventProcessor::EventProcessor(){
 }
 
 EventProcessor::~EventProcessor(){
+    for(int i = 0; i < clusters.size(); i++)
+        delete clusters[i];
     delete sig;
 }
 
-void EventProcessor::processEvent(Event e){
-    sig->signalEvent(e.posX,e.posY,e.polarity); //signal event to graphical output
-    assignToCluster(e);
+void EventProcessor::processEvent(Event *e){
+    sig->signalEvent(e->posX,e->posY,e->polarity); //signal event to graphical output
+    //assignToCluster(e);
 }
 
 //distance with circular boundary
-float EventProcessor::distance(Event e, Cluster c){
-    return sqrt(pow(float(e.posX-c.posX),2) + pow(float(e.posY-c.posY),2));
+float EventProcessor::distance(Event *e, Cluster *c){
+    return sqrt(pow(float(e->posX-c->posX),2) + pow(float(e->posY-c->posY),2));
 }
 
-float EventProcessor::getBoltzmanWeight(Event e, Cluster c){
+float EventProcessor::getBoltzmanWeight(Event *e, Cluster *c){
     return exp(-SHARPNESS*distance(e,c));
 }
 
 
 //TODO: on/off candidate clusters?
-void EventProcessor::assignToCluster(Event e){
+void EventProcessor::assignToCluster(Event *e){
     if(clusters.empty()){
-        Cluster c;
-        c.addEvent(e);
+        Cluster *c = new Cluster();
+        c->addEvent(e);
         clusters.push_back(c);
     }
     else{
@@ -53,11 +55,11 @@ void EventProcessor::assignToCluster(Event e){
             }
         }
         if(weights[mostProbIndex] > ASSIGN_PROB){
-            clusters[mostProbIndex].addEvent(e);
+            clusters[mostProbIndex]->addEvent(e);
         }
         else{
-            Cluster  c;
-            c.addEvent(e);
+            Cluster  *c = new Cluster();
+            c->addEvent(e);
             clusters.push_back(c);
         }
         delete [] weights;

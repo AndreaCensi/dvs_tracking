@@ -12,7 +12,7 @@ int main(int argc, char **argv){
     CamWidget cw;
     cw.show();
 
-    QObject::connect( ep.getSignalWrapper(),SIGNAL(publishEvent(int,int,int)),&cw, SLOT(newEvent(int,int,int)),Qt::QueuedConnection );
+    QObject::connect( ep.getSignalWrapper(),SIGNAL(publishEvent(int,int,int)),&cw, SLOT(newEvent(int,int,int)));
 
     inf.startReading();
 

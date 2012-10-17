@@ -14,15 +14,15 @@ class EventProcessor : public EventProcessorBase
 public:
     EventProcessor();
     ~EventProcessor();
-    virtual void processEvent(Event e);
+    virtual void processEvent(Event *e);
     SignalWrapper *getSignalWrapper();
 
 private:
-    float distance(Event e, Cluster c);
-    float getBoltzmanWeight(Event e, Cluster c);
-    void assignToCluster(Event e);
+    float distance(Event *e, Cluster *c);
+    float getBoltzmanWeight(Event *e, Cluster *c);
+    void assignToCluster(Event *e);
 
-    std::vector<Cluster> clusters;
+    std::vector<Cluster*> clusters;
     SignalWrapper *sig;
 };
 

@@ -9,9 +9,9 @@ class Cluster
 public:
     Cluster();
     ~Cluster();
-    void addEvent(Event e);
+    void addEvent(Event *e);
     void update();
-    void update(Event e);
+    void update(Event *e);
     void calcMoment();
 
     int posX;
@@ -25,7 +25,7 @@ public:
     //contour
 
 private:
-    RingBuffer<Event> *events;
+    RingBuffer<Event*> *events;
 };
 
 #endif // CLUSTER_H
