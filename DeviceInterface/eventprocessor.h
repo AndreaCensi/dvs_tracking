@@ -6,6 +6,7 @@
 #include "ringbuffer.h"
 #include "cluster.h"
 #include <list>
+#include <vector>
 #include "camwidget.h"
 #include <QImage>
 
@@ -18,15 +19,24 @@ public:
     QImage *getImage();
 
 private:
+    // for graphical output
     void updateImage(Event *e);
+
+    //Cost-function
     float distance(Event *e, Cluster *c);
     float distance(Event *e1, Event *e2);
     float getBoltzmanWeight(Event *e, Cluster *c);
-    void assignToCluster(Event *e);
-    //Event* checkWaitingList();
 
-    Event *onMap;
-    Event *offMap;
+    //Assignement
+    void updateMap(Event *e);
+    void assignToCluster(Event *e);
+
+    Event **onMap;
+    Event **offMap;
+
+    std::vector<Event*> clusterCandidates;
+    std::vector<Cluster*> candidateClusters;
+
     std::list<Cluster*> clusters;
     QImage * img;
 };

@@ -42,7 +42,7 @@ void USBReader::readDVS128Event(const char *data, int numBytes){
                     event->special = true;
                 }
                 else{
-                    event->polarity = /*1 -*/ rawAddr & 1;
+                    event->polarity = 1 - rawAddr & 1;
                     event->posX = (rawAddr >> 1) & 0x7f;
                     event->posY = (rawAddr >> 8) & 0x7f;
                     event->timeStamp = mileStone + (data[i+2] & 0xff | ((data[i+3] & 0xff) << 8));
