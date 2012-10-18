@@ -7,6 +7,7 @@ Event::Event()
     polarity = 0;
     timeStamp = 0;
     special = false;
+    cluster = 0;
 }
 
 Event::~Event(){

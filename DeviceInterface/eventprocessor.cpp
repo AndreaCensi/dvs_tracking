@@ -11,19 +11,21 @@ EventProcessor::EventProcessor(){
 }
 
 EventProcessor::~EventProcessor(){
-    for(unsigned int i = 0; i < clusters.size(); i++)
-        delete clusters[i];
     delete img;
 }
 
 void EventProcessor::processEvent(Event *e){
-    //assignToCluster(e);
+    assignToCluster(e);
 
     //image update
     updateImage(e);
 
     //provisory cleanup
     delete e;
+}
+
+QImage* EventProcessor::getImage(){
+    return img;
 }
 
 void EventProcessor::updateImage(Event *e){
@@ -45,46 +47,15 @@ float EventProcessor::distance(Event *e, Cluster *c){
     return sqrt(pow(float(e->posX-c->posX),2) + pow(float(e->posY-c->posY),2));
 }
 
+float EventProcessor::distance(Event *e1, Event *e2){
+    return sqrt(pow(float(e1->posX-e2->posX),2) + pow(float(e1->posY-e2->posY),2));
+}
+
 float EventProcessor::getBoltzmanWeight(Event *e, Cluster *c){
     return exp(-SHARPNESS*distance(e,c));
 }
 
 
-//TODO: on/off candidate clusters?
 void EventProcessor::assignToCluster(Event *e){
-    if(clusters.empty()){
-        Cluster *c = new Cluster();
-        c->addEvent(e);
-        clusters.push_back(c);
-    }
-    else{
-        // get Boltzman weights
-        float sumBoltz = 0;
-        float *weights = new float[clusters.size()];
-        for(unsigned int i = 0; i < clusters.size(); i++){
-            weights[i] = getBoltzmanWeight(e,clusters[i]);
-            sumBoltz += weights[i];
-        }
-        //normalize
-        int mostProbIndex = 0;
-        for(unsigned int i = 0; i < clusters.size();i++){
-            weights[i] = weights[i]/sumBoltz;
-            if(weights[i] > weights[mostProbIndex]){
-                mostProbIndex = i;
-            }
-        }
-        if(weights[mostProbIndex] > ASSIGN_PROB){
-            clusters[mostProbIndex]->addEvent(e);
-        }
-        else{
-            Cluster  *c = new Cluster();
-            c->addEvent(e);
-            clusters.push_back(c);
-        }
-        delete [] weights;
-    }
-}
-
-QImage* EventProcessor::getImage(){
-    return img;
+    //..
 }

@@ -1,6 +1,8 @@
 #ifndef EVENT_H
 #define EVENT_H
 
+class Cluster;  //forward declaration of cluster
+
 class Event
 {
 public:
@@ -12,6 +14,7 @@ public:
     unsigned int timeStamp;
     int polarity;
     bool special;
+    Cluster *cluster;
 };
 
 #endif // EVENT_H

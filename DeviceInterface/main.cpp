@@ -13,13 +13,5 @@ int main(int argc, char **argv){
     cw.show();
 
     inf.startReading();
-
-//    printf("Press any key to stop transfer.\n\n");
-//    _getch();
-
-//    printf("Press any key to stop the worker thread.\n\n");
-//    _getch();
-//    inf.stopReading();
     return app.exec();
-    //return 0;
 }

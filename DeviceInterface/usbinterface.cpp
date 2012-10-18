@@ -46,25 +46,21 @@ void USBInterface::startReading(){
 
     // Open and query usb devices to find the right one
     for (int i = 0; i < 127; i++){
-        fprintf(stdout,"i: %d\n",i);
         status = dev.Open(i,devList,&usbIoID);
         if ( status != USBIO_ERR_SUCCESS ) {
             if ( status != USBIO_ERR_NO_SUCH_DEVICE_INSTANCE ){
                 fprintf(stdout,"UsbDev.Open returned with error 0x%08X\n",status);
             }
-            fprintf(stdout,"No more devices leaving loop...\n");
             break;
         }
         // Query device descriptor for comparison with PID and VID
         status = dev.GetDeviceDescriptor(&devDesc);
-        fprintf(stdout,"vid: %x\n",devDesc.idVendor);
         if ( status == USBIO_ERR_SUCCESS ){
             found = true;
-            fprintf(stdout,"Valid device found...\n");
             if ( devDesc.iSerialNumber!=0 ){
                 dev.Close();
                 if (devDesc.idVendor == VID && devDesc.idProduct == PID){
-                    fprintf(stdout,"Device found, starting Reader.\n");
+                    fprintf(stdout,"Device found, starting reader.\n");
                     devIndex = i;
                     startReaderThread(devIndex);
                     break;
@@ -113,7 +109,7 @@ void USBInterface::startReaderThread(int devIndex){
     config.InterfaceList[0].AlternateSettingIndex = CFG_ALTSETTING;
     config.InterfaceList[0].MaximumTransferSize = CFG_MAX_TRANSFER;
     // configure the device
-    printf("Configuring the device...\n");
+    printf("Configuring...\n");
     status = dev.SetConfiguration(&config);
     if ( status != USBIO_ERR_SUCCESS ) {
         printf("Could not configure device: %x\n",status);
@@ -132,18 +128,15 @@ void USBInterface::startReaderThread(int devIndex){
         dev.UnconfigureDevice();
         return;
     }
-    // start the worker thread
-    printf("Starting worker thread...\n");
+    // start the reader thread
+    printf("Starting reader thread...\n");
     if ( !reader->StartThread() ) {
-        printf("Unable to start worker thread.\n");
+        printf("Unable to start reader thread.\n");
         dev.UnconfigureDevice();
         return;
     }
-    printf("Worker thread is running.\n");
 
     sendVendorRequest(START_READ);
-    //    dev.UnconfigureDevice();
-    //    dev.Close();
 }
 
 void USBInterface::sendVendorRequest(UCHAR req, const char *buf, DWORD bufSize){
