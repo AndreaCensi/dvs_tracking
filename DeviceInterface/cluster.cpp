@@ -36,25 +36,24 @@ void Cluster::addEvent(Event *e){
 
 //calculates centroid
 void Cluster::calcCentralMoment(){
-    int index = events->latest;
-    while(lastEventTS - events->at(index)->timeStamp < MAX_AGE){
-        int numEvents = events->size;
-        int sumX,sumY,sumT;
-        sumX = sumY = sumT = 0;
-        Event *buffer = *events->buffer;
-        for(int i = 0; i < numEvents;i++){
-            sumX += buffer[i].posX;
-            sumY += buffer[i].posY;
-            sumT += buffer[i].timeStamp;
-        }
-        posX = sumX/numEvents;
-        posY = sumY/numEvents;
+    int numEvents = 0;
+    int sumX,sumY,sumT;
+    sumX = sumY = 0;
+    Event *buffer = *events->buffer;
 
-        index--; // go back in time trough ringbuffer
+    int index = events->latest;
+    while(lastEventTS - events->at(index)->timeStamp < MAX_AGE || numEvents > events->size){
+        sumX += buffer[i].posX;
+        sumY += buffer[i].posY;
+
+        index--; // go back in time through ringbuffer
         if(index < 0){
             index = events->size-1;
         }
+        numEvents++;
     }
+    posX = sumX/numEvents;
+    posY = sumY/numEvents;
 }
 
 void Cluster::calcCountour(){
