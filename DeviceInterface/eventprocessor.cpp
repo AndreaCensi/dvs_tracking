@@ -7,7 +7,7 @@
 #define ASSIGN_PROB 0.6
 //other
 #define DVS_RES 128
-#define MAX_T_DIFF 50
+#define MAX_T_DIFF 50 //50 usec is best!
 
 EventProcessor::EventProcessor(){
     img = new QImage(DVS_RES,DVS_RES,QImage::Format_RGB32);
@@ -30,10 +30,14 @@ EventProcessor::~EventProcessor(){
 }
 
 void EventProcessor::processEvent(Event *e){
-    updateImage(e);
-    //temporary cleanup
     updateMap(e);
-    //assignToCluster(e);
+    std::vector<Event*> candidates = labelingFilter(e);
+    for(unsigned int i = 0; i < candidates.size(); i++){
+        if(candidates[i] != 0)
+            updateImage(candidates[i]);
+    }
+
+    //updateImage(e);
     //delete e;
 }
 
@@ -55,7 +59,6 @@ void EventProcessor::updateImage(Event *e){
     *pixel = color.rgb();
 }
 
-//distance with circular boundary
 float EventProcessor::distance(Event *e, Cluster *c){
     return sqrt(pow(float(e->posX-c->posX),2) + pow(float(e->posY-c->posY),2));
 }
@@ -84,13 +87,49 @@ void EventProcessor::updateMap(Event *e){
 
     tmp = map[x+DVS_RES*y];
     if(tmp != 0 && tmp->cluster == 0){ //delete previous event if it's not assigned to any cluster
-        //TODO: check TDiff?
+        //TODO: check TDiff for one pixel LED flashing?
         delete tmp;
     }
     map[x+DVS_RES*y] = e;
 }
 
+//TODO: on/off candidate clusters?
 void EventProcessor::assignToCluster(Event *e){
+    if(clusters.empty()){
+        Cluster *c = new Cluster();
+        c->addEvent(e);
+        clusters.push_back(c);
+    }
+    else{
+        // get Boltzman weights
+        float sumBoltz = 0;
+        float *weights = new float[clusters.size()];
+        for(unsigned int i = 0; i < clusters.size(); i++){
+            weights[i] = getBoltzmanWeight(e,clusters[i]);
+            sumBoltz += weights[i];
+        }
+        //normalize
+        int mostProbIndex = 0;
+        for(unsigned int i = 0; i < clusters.size();i++){
+            weights[i] = weights[i]/sumBoltz;
+            if(weights[i] > weights[mostProbIndex]){
+                mostProbIndex = i;
+            }
+        }
+        if(weights[mostProbIndex] > ASSIGN_PROB){
+            clusters[mostProbIndex]->addEvent(e);
+        }
+        else{
+            Cluster  *c = new Cluster();
+            c->addEvent(e);
+            clusters.push_back(c);
+        }
+        delete [] weights;
+    }
+}
+
+
+void EventProcessor::mapAssign(Event *e){
     Event **map;
     Event *tmp;
     int x = 127-e->posX;
@@ -103,14 +142,16 @@ void EventProcessor::assignToCluster(Event *e){
         map = offMap;
     }
     //Check neighbouring events, only if inside boundary
+    int range = 1;  //determines size of filter kernel
     int tDiff = 0;
     if(x > 0 && x < DVS_RES-1 && y > 0 && y < DVS_RES-1){
-        for(int u = x-1; u < x+1; u++){
-            for(int v = y-1; v < y+1; v++){
+        for(int u = x-range; u < x+range; u++){
+            for(int v = y-range; v < y+range; v++){
                 tmp =  map[u+DVS_RES*v];
                 if(tmp!=e){
                     tDiff = e->timeStamp - tmp->timeStamp;
-                    if(abs(tDiff) < MAX_T_DIFF){ //if tDiff with neighbouring event small, cluster
+                    tDiff = abs(tDiff);
+                    if(tDiff < MAX_T_DIFF){ //if tDiff with neighbouring event small, cluster
                         if(tmp->cluster == 0){
                             clusterCandidates.push_back(tmp);
                         }
@@ -133,7 +174,7 @@ void EventProcessor::assignToCluster(Event *e){
         }
         else if(candidateClusters.size() > 1){
             int bestIndex = 0;
-            float lowestDist = 256;
+            float lowestDist = 2*DVS_RES;
             float currentDist = 0;
             for(unsigned int i = 0; i < candidateClusters.size();i++){  // assign current event to nearest cluster
                 currentDist = distance(e,candidateClusters[i]);
@@ -154,7 +195,42 @@ void EventProcessor::assignToCluster(Event *e){
                 clusterCandidates[i]->cluster = c;
                 c->addEvent(clusterCandidates[i]);
             }
-            clusters.push_front(c);
+            clusters.push_back(c);
         }
     }
+}
+
+std::vector<Event*> EventProcessor::labelingFilter(Event *e){
+    Event **map = 0;
+    Event *tmp = 0;
+    int x = 127-e->posX;
+    int y = 127-e->posY;
+
+    if(e->polarity == 1){
+        map = onMap;
+    }
+    else{
+        map = offMap;
+    }
+
+    //Check neighbouring events, only if inside boundary
+    std::vector<Event*> candidates;
+    candidates.reserve(8);
+    int range = 1;  //determines size of filter kernel
+    int tDiff = 0;
+    if(x > 0 && x < DVS_RES-1 && y > 0 && y < DVS_RES-1){
+        for(int u = x-range; u < x+range; u++){
+            for(int v = y-range; v < y+range; v++){
+                tmp =  map[u+DVS_RES*v];
+                if(tmp != 0 && tmp != e){
+                    tDiff = e->timeStamp - tmp->timeStamp;
+                    tDiff = abs(tDiff);
+                    if(tDiff < MAX_T_DIFF){ //if tDiff with neighbouring event small, cluster
+                        candidates.push_back(tmp);
+                    }
+                }
+            }
+        }
+    }
+    return candidates;
 }

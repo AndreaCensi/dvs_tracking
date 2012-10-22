@@ -19,25 +19,26 @@ public:
     QImage *getImage();
 
 private:
-    // for graphical output
+    // Graphical output
     void updateImage(Event *e);
 
-    //Cost-function
+    // Cost-function
     float distance(Event *e, Cluster *c);
     float distance(Event *e1, Event *e2);
     float getBoltzmanWeight(Event *e, Cluster *c);
 
-    //Assignement
+    // Assignement
     void updateMap(Event *e);
     void assignToCluster(Event *e);
+    void mapAssign(Event *e);
+    std::vector<Event*> labelingFilter(Event *e);
 
     Event **onMap;
     Event **offMap;
 
     std::vector<Event*> clusterCandidates;
     std::vector<Cluster*> candidateClusters;
-
-    std::list<Cluster*> clusters;
+    std::vector<Cluster*> clusters;
     QImage * img;
 };
 

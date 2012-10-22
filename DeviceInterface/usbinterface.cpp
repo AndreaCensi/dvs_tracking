@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "usbinterface.h"
-#include <iostream>
 
 #define NUM_BUFFERS 5
 

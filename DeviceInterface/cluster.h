@@ -12,17 +12,23 @@ public:
     void addEvent(Event *e);
     void update();
     void update(Event *e);
-    void calcMoment();
+    void calcCentralMoment(Event *e);
+    void calcCountour();
 
     int posX;
     int posY;
-    int avgTime;
-    int polarity;
+    int lastPosX;
+    int lastPosY;
+    int avgTime; // avgTimeStamp? => not for final cluster
+
+    int lastPolarity;
     int lifeTime;
-    int activty;
-    int lastEventTime;
-    //velocity
-    //contour
+
+    float activity;
+    int firstEventTS;
+    int lastEventTS;
+    float velocity;
+    float contour;
 
 private:
     RingBuffer<Event*> *events;
