@@ -37,7 +37,7 @@ void Cluster::addEvent(Event *e){
 //calculates centroid
 void Cluster::calcCentralMoment(){
     int numEvents = 0;
-    int sumX,sumY,sumT;
+    int sumX,sumY;
     sumX = sumY = 0;
     Event *buffer = *events->buffer;
 
