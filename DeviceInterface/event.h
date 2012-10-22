@@ -15,6 +15,7 @@ public:
     int polarity;
     bool special;
     Cluster *cluster;
+    bool assigned;
 };
 
 #endif // EVENT_H

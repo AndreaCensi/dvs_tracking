@@ -7,67 +7,45 @@
 */
 template <typename T>
 class RingBuffer{
-
 public:
     T *buffer;
     int size;
-    int winSize;
-    int start;
-    int end;
+    int latest;
 
     //! Constructor
     /*!
         \param totalSize Size of the buffer.
-        \param windowSize Size of a data window. Allows asking if new data is available. Ensures proper buffer size( multiple of windowSize).
     */
-    RingBuffer(int totalSize = 1024, int windowSize = 256){
-        int remainder = totalSize%windowSize;       //totalSize should be a multiple of windowSize
-        if(remainder == 0)
-            size = totalSize;
-        else size = totalSize - remainder;
-        winSize = windowSize;
-
-        start = 0;
-        end = 0;
+    RingBuffer(int totalSize = 512){
+        latest = 0;
+        size = totalSize;
         buffer = new T[totalSize];
+        for(int i = 0; i < size;i++)
+            buffer[i] = 0;
     }
 
     //! Destructor
     ~RingBuffer(){
+        for(int i = 0; i < size; i++){  //delete buffer entries
+            if(buffer[i])
+                delete  buffer[i];
+        }
         delete [] buffer;
     }
 
     //! Add a value to the buffer.
     /*!
-        \param value A single instance of type T.
+        \param value A pointer to an instance of type T.
     */
     void add(T value){
-        buffer[end] = value;
-        end++;
-        if(end == size)
-            end = 0;
+        latest++;
+        if(latest == size)
+            latest = 0;
+        buffer[latest] = value;
     }
 
-    //! Get latest data window.
-    /*!
-        \return Pointer to new data.
-    */
-    T *newData(){
-        T *at = &buffer[start];
-        start += winSize;
-        start %= size;
-        return at;
-    }
-
-    /*!
-        \return True if new data of at least the windowSize is available.
-    */
-    bool newDataAvailable(){
-        if(start > end)
-            return true;
-        else if (end - start >= winSize)
-            return true;
-        else return false;
+    T at(int i){
+        return buffer[i];
     }
 };
 

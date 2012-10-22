@@ -3,11 +3,11 @@
 #include <math.h>
 
 //parameters from thesis
-#define SHARPNESS 0.7
+#define SHARPNESS 0.7   // of the boltman function
 #define ASSIGN_PROB 0.6
 //other
 #define DVS_RES 128
-#define MAX_T_DIFF 50 //50 usec is best!
+#define MAX_T_DIFF 50 //usec
 
 EventProcessor::EventProcessor(){
     img = new QImage(DVS_RES,DVS_RES,QImage::Format_RGB32);
@@ -30,12 +30,20 @@ EventProcessor::~EventProcessor(){
 }
 
 void EventProcessor::processEvent(Event *e){
-    updateMap(e);
+    //filter background activity
     std::vector<Event*> candidates = labelingFilter(e);
     for(unsigned int i = 0; i < candidates.size(); i++){
-        if(candidates[i] != 0)
-            updateImage(candidates[i]);
+        updateImage(candidates[i]);
+        //assignToCluster(candidates[i]);
     }
+
+    //assign event to cluster
+
+    //merge clusters close by
+
+    //convert candidates to feature clusters
+
+    //delete inactive/old clusters
 
     //updateImage(e);
     //delete e;
@@ -67,6 +75,10 @@ float EventProcessor::distance(Event *e1, Event *e2){
     return sqrt(pow(float(e1->posX-e2->posX),2) + pow(float(e1->posY-e2->posY),2));
 }
 
+float EventProcessor::distance(Cluster *c1, Cluster *c2){
+    return sqrt(pow(float(c1->posX-c2->posX),2) + pow(float(c1->posY-c2->posY),2));
+}
+
 float EventProcessor::getBoltzmanWeight(Event *e, Cluster *c){
     return exp(-SHARPNESS*distance(e,c));
 }
@@ -86,14 +98,13 @@ void EventProcessor::updateMap(Event *e){
     }
 
     tmp = map[x+DVS_RES*y];
-    if(tmp != 0 && tmp->cluster == 0){ //delete previous event if it's not assigned to any cluster
+    if(tmp != 0 && tmp->assigned == false){ //delete previous event if it's not assigned to any cluster
         //TODO: check TDiff for one pixel LED flashing?
         delete tmp;
     }
     map[x+DVS_RES*y] = e;
 }
 
-//TODO: on/off candidate clusters?
 void EventProcessor::assignToCluster(Event *e){
     if(clusters.empty()){
         Cluster *c = new Cluster();
@@ -201,6 +212,9 @@ void EventProcessor::mapAssign(Event *e){
 }
 
 std::vector<Event*> EventProcessor::labelingFilter(Event *e){
+
+    updateMap(e);   // update filter map
+
     Event **map = 0;
     Event *tmp = 0;
     int x = 127-e->posX;
@@ -225,12 +239,15 @@ std::vector<Event*> EventProcessor::labelingFilter(Event *e){
                 if(tmp != 0 && tmp != e){
                     tDiff = e->timeStamp - tmp->timeStamp;
                     tDiff = abs(tDiff);
-                    if(tDiff < MAX_T_DIFF){ //if tDiff with neighbouring event small, cluster
+                    if(tDiff < MAX_T_DIFF && tmp->assigned == false){ //if tDiff with neighbouring event small, cluster
+                        tmp->assigned = true; // set flag, that event is assigned and not to be deleted by the filter map
                         candidates.push_back(tmp);
                     }
                 }
             }
         }
+        if(!candidates.empty())
+            candidates.push_back(e);
     }
     return candidates;
 }

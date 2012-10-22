@@ -11,24 +11,25 @@ public:
     ~Cluster();
     void addEvent(Event *e);
     void update();
-    void update(Event *e);
-    void calcCentralMoment(Event *e);
+    void calcCentralMoment();
     void calcCountour();
+    bool isCandidate();
 
     int posX;
     int posY;
     int lastPosX;
     int lastPosY;
-    int avgTime; // avgTimeStamp? => not for final cluster
 
     int lastPolarity;
     int lifeTime;
 
     float activity;
-    int firstEventTS;
-    int lastEventTS;
+    unsigned int firstEventTS;
+    unsigned int lastEventTS;
+    unsigned int numEvents;  //number of events assigned to that cluster
     float velocity;
     float contour;
+    bool candidate;
 
 private:
     RingBuffer<Event*> *events;

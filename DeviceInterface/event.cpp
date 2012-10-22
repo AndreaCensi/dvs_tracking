@@ -8,6 +8,7 @@ Event::Event()
     timeStamp = 0;
     special = false;
     cluster = 0;
+    assigned = false;
 }
 
 Event::~Event(){
