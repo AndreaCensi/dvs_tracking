@@ -1,6 +1,7 @@
 #include "cluster.h"
 
-#define MAX_AGE 1000 //usec
+#define MAX_AGE_MOMENT 5000 //usec
+#define MAX_AGE_ACTIVITY 1000 //usec
 
 Cluster::Cluster(){
     events = new RingBuffer<Event*>();
@@ -22,27 +23,26 @@ void Cluster::addEvent(Event *e){
     lastPolarity = e->polarity;
     if(firstEventTS == 0)
         firstEventTS = e->timeStamp;
-    lastEventTS = e->timeStamp;
+    lastOverallEventTS = e->timeStamp;
+    lifeTime = lastOverallEventTS - firstEventTS;
 
-    calcCentralMoment();
+    getCentralMoment();
+    getActivity();
     /*
-    central moment
     activity
-    lifetime
-    lastEventTS
-    newPolarity
+    current/next polarity ?
     */
 }
 
 //calculates centroid
-void Cluster::calcCentralMoment(){
+void Cluster::getCentralMoment(){
     int numEvents = 0;
     int sumX,sumY;
     sumX = sumY = 0;
     Event *buffer = *events->buffer;
 
     int index = events->latest;
-    while(lastEventTS - events->at(index)->timeStamp < MAX_AGE || numEvents > events->size){
+    while(lastEventTS - events->at(index)->timeStamp < MAX_AGE_MOMENT || numEvents > events->size){
         sumX += buffer[i].posX;
         sumY += buffer[i].posY;
 
@@ -56,8 +56,27 @@ void Cluster::calcCentralMoment(){
     posY = sumY/numEvents;
 }
 
-void Cluster::calcCountour(){
+float Cluster::getActivity(){
+    int numEvents = 0;
+    int index = events->latest;
+    while(lastOverallEventTS - events->at(index)->timeStamp < MAX_AGE_ACTIVITY || numEvents > events->size){
+        index--; // go back in time through ringbuffer
+        if(index < 0){
+            index = events->size-1;
+        }
+        numEvents++;
+    }
+    activity = MAX_AGE_ACTIVITY/numEvents;
+    return activity;
+}
 
+void Cluster::getCountour(){
+
+}
+
+void Cluster::updateTS(int ts){
+    lastOverallEventTS = ts;
+    lifeTime = lastOverallEventTS - firstEventTS;
 }
 
 bool Cluster::isCandidate(){

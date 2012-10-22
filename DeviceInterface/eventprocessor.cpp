@@ -8,6 +8,8 @@
 //other
 #define DVS_RES 128
 #define MAX_T_DIFF 50 //usec
+#define ACTIVITY_THRESHOLD 5.0
+#define FEATURE_LIFETIME 10000
 
 EventProcessor::EventProcessor(){
     img = new QImage(DVS_RES,DVS_RES,QImage::Format_RGB32);
@@ -33,17 +35,32 @@ void EventProcessor::processEvent(Event *e){
     //filter background activity
     std::vector<Event*> candidates = labelingFilter(e);
     for(unsigned int i = 0; i < candidates.size(); i++){
-        updateImage(candidates[i]);
-        //assignToCluster(candidates[i]);
+        updateImage(candidates[i]); //graphical output
+        assignToCluster(candidates[i]); //assign new events to cluster
     }
 
-    //assign event to cluster
+    //update all clusters with latest timestamp (for liftime and activity measurements)
+    if(!candidates.empty()){
+        for(int i = 0; i < clusters.size();i++){
+            clusters[i].updateTS(e->timeStamp);
+        }
+    }
 
     //merge clusters close by
 
     //convert candidates to feature clusters
+    for(unsigned int i = 0; i < clusters.size();i++){
+        if(clusters[i].lifeTime < FEATURE_LIFETIME){
+            clusters[i].candidate = false;
+        }
+    }
 
     //delete inactive/old clusters
+    for(unsigned int i = 0; i < clusters.size();i++){
+        if(clusters[i].getActivity() < ACTIVITY_THRESHOLD){
+            clusters.erase(clusters.begin()+i);
+        }
+    }
 
     //updateImage(e);
     //delete e;

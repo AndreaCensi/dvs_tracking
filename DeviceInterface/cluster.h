@@ -10,10 +10,9 @@ public:
     Cluster();
     ~Cluster();
     void addEvent(Event *e);
-    void update();
-    void calcCentralMoment();
-    void calcCountour();
     bool isCandidate();
+    void updateTS(int ts);
+    float getActivity();
 
     int posX;
     int posY;
@@ -24,15 +23,17 @@ public:
     int lifeTime;
 
     float activity;
-    unsigned int firstEventTS;
-    unsigned int lastEventTS;
-    unsigned int numEvents;  //number of events assigned to that cluster
+    unsigned int firstEventTS;  //first event assigned to this cluster
+    unsigned int lastOverallEventTS;    // latest event timestamp from camera, used for liftime and activity comparison
     float velocity;
     float contour;
     bool candidate;
 
 private:
     RingBuffer<Event*> *events;
+    void update();
+    void getCentralMoment();
+    void getCountour();
 };
 
 #endif // CLUSTER_H
