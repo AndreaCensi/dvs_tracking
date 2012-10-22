@@ -13,6 +13,9 @@ public:
     bool isCandidate();
     void updateTS(int ts);
     float getActivity();
+    void merge(Cluster *c);
+
+    RingBuffer<Event*> *events;
 
     int posX;
     int posY;
@@ -30,10 +33,9 @@ public:
     bool candidate;
 
 private:
-    RingBuffer<Event*> *events;
     void update();
-    void getCentralMoment();
-    void getCountour();
+    void calcCentralMoment();
+    void calcCountour();
 };
 
 #endif // CLUSTER_H

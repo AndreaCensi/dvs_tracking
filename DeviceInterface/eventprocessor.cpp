@@ -9,7 +9,7 @@
 #define DVS_RES 128
 #define MAX_T_DIFF 50 //usec
 #define ACTIVITY_THRESHOLD 5.0
-#define FEATURE_LIFETIME 10000
+#define MIN_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
 
 EventProcessor::EventProcessor(){
     img = new QImage(DVS_RES,DVS_RES,QImage::Format_RGB32);
@@ -36,28 +36,39 @@ void EventProcessor::processEvent(Event *e){
     std::vector<Event*> candidates = labelingFilter(e);
     for(unsigned int i = 0; i < candidates.size(); i++){
         updateImage(candidates[i]); //graphical output
-        assignToCluster(candidates[i]); //assign new events to cluster
+        //assignToCluster(candidates[i]); //assign new events to cluster
     }
 
     //update all clusters with latest timestamp (for liftime and activity measurements)
     if(!candidates.empty()){
         for(int i = 0; i < clusters.size();i++){
-            clusters[i].updateTS(e->timeStamp);
+            clusters[i]->updateTS(e->timeStamp);
         }
     }
 
     //merge clusters close by
+    for(int i = 0; i < clusters.size(); i++){
+        for(int j = i+1; j < clusters.size(); j++){
+            if(/*close enough*/true){
+                clusters[i]->merge(clusters[j]);
+                delete clusters[j];
+                clusters.erase(clusters.begin()+j);
+            }
+        }
+    }
+
 
     //convert candidates to feature clusters
-    for(unsigned int i = 0; i < clusters.size();i++){
-        if(clusters[i].lifeTime < FEATURE_LIFETIME){
-            clusters[i].candidate = false;
+    for(unsigned int i = 0; i < clusters.size();i++){ // TODO: allow only max number of clusters!!
+        if(clusters[i]->lifeTime > MIN_LIFETIME && clusters[i]->isCandidate()){
+            clusters[i]->candidate = false;
         }
     }
 
     //delete inactive/old clusters
     for(unsigned int i = 0; i < clusters.size();i++){
-        if(clusters[i].getActivity() < ACTIVITY_THRESHOLD){
+        if(clusters[i]->getActivity() < ACTIVITY_THRESHOLD){
+            delete clusters[i];
             clusters.erase(clusters.begin()+i);
         }
     }

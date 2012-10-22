@@ -47,6 +47,10 @@ public:
     T at(int i){
         return buffer[i];
     }
+
+    void set(int i, T value){
+        buffer[i] = value;
+    }
 };
 
 

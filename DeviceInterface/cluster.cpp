@@ -1,7 +1,7 @@
 #include "cluster.h"
 
 #define MAX_AGE_MOMENT 5000 //usec
-#define MAX_AGE_ACTIVITY 1000 //usec
+#define MAX_AGE_ACTIVITY 1000.0 //usec
 
 Cluster::Cluster(){
     events = new RingBuffer<Event*>();
@@ -26,8 +26,8 @@ void Cluster::addEvent(Event *e){
     lastOverallEventTS = e->timeStamp;
     lifeTime = lastOverallEventTS - firstEventTS;
 
-    getCentralMoment();
-    getActivity();
+    calcCentralMoment();
+
     /*
     activity
     current/next polarity ?
@@ -35,20 +35,20 @@ void Cluster::addEvent(Event *e){
 }
 
 //calculates centroid
-void Cluster::getCentralMoment(){
+void Cluster::calcCentralMoment(){
     int numEvents = 0;
     int sumX,sumY;
     sumX = sumY = 0;
     Event *buffer = *events->buffer;
 
-    int index = events->latest;
-    while(lastEventTS - events->at(index)->timeStamp < MAX_AGE_MOMENT || numEvents > events->size){
+    int i = events->latest;
+    while(lastOverallEventTS - events->at(i)->timeStamp < MAX_AGE_MOMENT || numEvents > events->size){
         sumX += buffer[i].posX;
         sumY += buffer[i].posY;
 
-        index--; // go back in time through ringbuffer
-        if(index < 0){
-            index = events->size-1;
+        i--; // go back in time through ringbuffer
+        if(i < 0){
+            i = events->size-1;
         }
         numEvents++;
     }
@@ -58,11 +58,11 @@ void Cluster::getCentralMoment(){
 
 float Cluster::getActivity(){
     int numEvents = 0;
-    int index = events->latest;
-    while(lastOverallEventTS - events->at(index)->timeStamp < MAX_AGE_ACTIVITY || numEvents > events->size){
-        index--; // go back in time through ringbuffer
-        if(index < 0){
-            index = events->size-1;
+    int i = events->latest;
+    while(lastOverallEventTS - events->at(i)->timeStamp < MAX_AGE_ACTIVITY || numEvents > events->size){
+        i--; // go back in time through ringbuffer
+        if(i < 0){
+            i = events->size-1;
         }
         numEvents++;
     }
@@ -70,7 +70,7 @@ float Cluster::getActivity(){
     return activity;
 }
 
-void Cluster::getCountour(){
+void Cluster::calcCountour(){
 
 }
 
@@ -81,4 +81,46 @@ void Cluster::updateTS(int ts){
 
 bool Cluster::isCandidate(){
     return candidate;
+}
+
+void Cluster::merge(Cluster *c){
+    //update firstEventTS and lifetime
+    if(firstEventTS > c->firstEventTS){
+        updateTS(c->firstEventTS);
+    }
+
+    //generate new event buffer
+    RingBuffer<Event*> *tmp = new RingBuffer<Event*>();
+    tmp->latest = tmp->size-1;  //set latest timestamp index
+    int counter = 0;
+    int i,j;
+    i = events->latest;
+    j = c->events->latest;
+    while(counter < events->size){
+        if(events->at(i)->timeStamp > c->events->at(j)->timeStamp){ // if this event is newer
+            tmp->set(((tmp->size-1)-counter), events->at(i));
+            i--;
+            if(i < 0){
+                i = events->size-1;
+            }
+        }
+        else{
+            tmp->set(((tmp->size-1)-counter), c->events->at(j));
+            j--;
+            if(j < 0){
+                j = c->events->size-1;
+            }
+        }
+        counter++;
+    }
+    delete events;
+    events = tmp;
+
+    //if one is a feature cluster, make the new cluster a feature cluster
+    if(!candidate || !c->candidate){
+        candidate = false;
+    }
+
+    //update cluster position (central moment)
+    calcCentralMoment();
 }
