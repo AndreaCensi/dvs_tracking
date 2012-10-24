@@ -3,13 +3,14 @@
 #include <math.h>
 
 //parameters from thesis
-#define SHARPNESS 0.7   // of the boltman function
-#define ASSIGN_PROB 0.6
+#define SHARPNESS 0.7f  // of the boltman function
+#define ASSIGN_PROB 0.6f
 //other
 #define DVS_RES 128
 #define MAX_T_DIFF 50 //usec
-#define ACTIVITY_THRESHOLD 5.0
+#define ACTIVITY_THRESHOLD 5.0f
 #define MIN_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
+#define MERGE_THRESHOLD 100.0f
 
 EventProcessor::EventProcessor(){
     img = new QImage(DVS_RES,DVS_RES,QImage::Format_RGB32);
@@ -49,10 +50,31 @@ void EventProcessor::processEvent(Event *e){
     //merge clusters close by
     for(int i = 0; i < clusters.size(); i++){
         for(int j = i+1; j < clusters.size(); j++){
-            if(/*close enough*/true){
-                clusters[i]->merge(clusters[j]);
-                delete clusters[j];
-                clusters.erase(clusters.begin()+j);
+            if(distance(clusters[i],clusters[j]) < MERGE_THRESHOLD){
+                if(!clusters[i]->isCandidate() && !clusters[j]->isCandidate())
+                    break;
+                else if(clusters[i]->isCandidate() && clusters[j]->isCandidate()){
+                    if(clusters[i]->lifeTime < clusters[j]->lifeTime){
+                        delete clusters[i];
+                        clusters.erase(clusters.begin()+i);
+                        i--;
+                    }
+                    else{
+                        delete clusters[j];
+                        clusters.erase(clusters.begin()+j);
+                        j--;
+                    }
+                }
+                else if(clusters[i]->isCandidate()){
+                    delete clusters[i];
+                    clusters.erase(clusters.begin()+i);
+                    i--;
+                }
+                else{
+                    delete clusters[j];
+                    clusters.erase(clusters.begin()+j);
+                    j--;
+                }
             }
         }
     }

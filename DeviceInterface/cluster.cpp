@@ -83,7 +83,10 @@ bool Cluster::isCandidate(){
     return candidate;
 }
 
+//merge the events and lifetime of two clusters - not needed!
 void Cluster::merge(Cluster *c){
+    if(!this->isCandidate() && !c->isCandidate())
+        return;
     //update firstEventTS and lifetime
     if(firstEventTS > c->firstEventTS){
         updateTS(c->firstEventTS);
