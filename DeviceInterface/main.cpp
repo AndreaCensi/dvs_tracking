@@ -9,7 +9,7 @@ int main(int argc, char **argv){
     QApplication app(argc,argv);
     EventProcessor ep;
     USBInterface inf(&ep);
-    CamWidget cw(ep.getImage());
+    CamWidget cw(ep.getImage(),ep.getClusters());
     cw.show();
 
     inf.startReading();

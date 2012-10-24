@@ -3,14 +3,16 @@
 #include <math.h>
 
 //parameters from thesis
-#define SHARPNESS 0.7f  // of the boltman function
+#define SHARPNESS 0.7f  // of the Boltzman function
 #define ASSIGN_PROB 0.6f
-//other
-#define DVS_RES 128
 #define MAX_T_DIFF 50 //usec
 #define ACTIVITY_THRESHOLD 5.0f
 #define MIN_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
-#define MERGE_THRESHOLD 100.0f
+#define MERGE_THRESHOLD 1.0f // 100 in code !?
+
+//other
+#define DVS_RES 128
+
 
 EventProcessor::EventProcessor(){
     img = new QImage(DVS_RES,DVS_RES,QImage::Format_RGB32);
@@ -22,6 +24,7 @@ EventProcessor::EventProcessor(){
         onMap[i] = 0;
         offMap[i] = 0;
     }
+
     clusterCandidates.reserve(9); // adapt number to filter size
     candidateClusters.reserve(8);
 }
@@ -32,24 +35,43 @@ EventProcessor::~EventProcessor(){
     delete offMap;
 }
 
+QImage* EventProcessor::getImage(){
+    return img;
+}
+
+std::vector<Cluster*>* EventProcessor::getClusters(){
+    return &clusters;
+}
+
 void EventProcessor::processEvent(Event *e){
+    // do not process if special event
+    if(e->isSpecial())
+        return;
+
     //filter background activity
     std::vector<Event*> candidates = labelingFilter(e);
     for(unsigned int i = 0; i < candidates.size(); i++){
         updateImage(candidates[i]); //graphical output
-        //assignToCluster(candidates[i]); //assign new events to cluster
+        assignToCluster(candidates[i]); //assign new events to clusters
     }
 
     //update all clusters with latest timestamp (for liftime and activity measurements)
-    if(!candidates.empty()){
-        for(int i = 0; i < clusters.size();i++){
-            clusters[i]->updateTS(e->timeStamp);
-        }
+    for(unsigned int i = 0; i < clusters.size();i++){
+        clusters[i]->updateTS(e->timeStamp);
     }
 
+    maintainClusters();
+
+    //tmp cleanup
+//    for(unsigned int i = 0; i < candidates.size(); i++)
+//        delete candidates[i];
+
+}
+
+void EventProcessor::maintainClusters(){
     //merge clusters close by
-    for(int i = 0; i < clusters.size(); i++){
-        for(int j = i+1; j < clusters.size(); j++){
+    for(unsigned int i = 0; i < clusters.size(); i++){
+        for(unsigned int j = i+1; j < clusters.size(); j++){
             if(distance(clusters[i],clusters[j]) < MERGE_THRESHOLD){
                 if(!clusters[i]->isCandidate() && !clusters[j]->isCandidate())
                     break;
@@ -79,7 +101,6 @@ void EventProcessor::processEvent(Event *e){
         }
     }
 
-
     //convert candidates to feature clusters
     for(unsigned int i = 0; i < clusters.size();i++){ // TODO: allow only max number of clusters!!
         if(clusters[i]->lifeTime > MIN_LIFETIME && clusters[i]->isCandidate()){
@@ -92,15 +113,10 @@ void EventProcessor::processEvent(Event *e){
         if(clusters[i]->getActivity() < ACTIVITY_THRESHOLD){
             delete clusters[i];
             clusters.erase(clusters.begin()+i);
+            i--;
         }
     }
-
-    //updateImage(e);
-    //delete e;
-}
-
-QImage* EventProcessor::getImage(){
-    return img;
+    //printf("#clusters: %d\n",clusters.size());
 }
 
 void EventProcessor::updateImage(Event *e){
@@ -296,8 +312,10 @@ std::vector<Event*> EventProcessor::labelingFilter(Event *e){
                 }
             }
         }
-        if(!candidates.empty())
+        if(!candidates.empty()){
+            e->assigned = true;
             candidates.push_back(e);
+        }
     }
     return candidates;
 }

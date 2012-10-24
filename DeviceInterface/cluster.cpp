@@ -29,7 +29,6 @@ void Cluster::addEvent(Event *e){
     calcCentralMoment();
 
     /*
-    activity
     current/next polarity ?
     */
 }
@@ -39,12 +38,11 @@ void Cluster::calcCentralMoment(){
     int numEvents = 0;
     int sumX,sumY;
     sumX = sumY = 0;
-    Event *buffer = *events->buffer;
 
     int i = events->latest;
-    while(lastOverallEventTS - events->at(i)->timeStamp < MAX_AGE_MOMENT || numEvents > events->size){
-        sumX += buffer[i].posX;
-        sumY += buffer[i].posY;
+    while( events->at(i) != 0 && (lastOverallEventTS - events->at(i)->timeStamp < MAX_AGE_MOMENT || numEvents > events->size)){
+        sumX += events->at(i)->posX;
+        sumY += events->at(i)->posY;
 
         i--; // go back in time through ringbuffer
         if(i < 0){
@@ -59,7 +57,7 @@ void Cluster::calcCentralMoment(){
 float Cluster::getActivity(){
     int numEvents = 0;
     int i = events->latest;
-    while(lastOverallEventTS - events->at(i)->timeStamp < MAX_AGE_ACTIVITY || numEvents > events->size){
+    while( events->at(i) != 0 && (lastOverallEventTS - events->at(i)->timeStamp < MAX_AGE_ACTIVITY || numEvents > events->size)){
         i--; // go back in time through ringbuffer
         if(i < 0){
             i = events->size-1;

@@ -4,9 +4,10 @@
 #include <QColor>
 #include <stdio.h>
 
-CamWidget::CamWidget(QImage *i, QWidget *parent) : QWidget(parent)
+CamWidget::CamWidget(QImage *i, std::vector<Cluster*> *c, QWidget *parent) : QWidget(parent)
 {
     img = i;
+    clusters = c;
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -22,9 +23,13 @@ void CamWidget::paintEvent(QPaintEvent *event){
     QColor color = Qt::black;
     painter.drawImage(rect,*img);
 
-    //draw a circle -> for later cluster tracking
-//    painter.setPen(Qt::green);
-//    painter.drawEllipse(63*4,63*4,20,20);
+    //draw circle around cluster
+    for(int i = 0; i < clusters->size(); i++){
+        int x = 127-clusters->at(i)->posX;
+        int y = 127-clusters->at(i)->posY;
+        painter.setPen(Qt::green);
+        painter.drawEllipse(x*4,y*4,50,50);
+    }
 
     for(int x = 0; x < 128; x++){
         for(int y = 0; y < 128; y++){

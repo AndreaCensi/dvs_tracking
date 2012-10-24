@@ -16,7 +16,8 @@ public:
     EventProcessor();
     ~EventProcessor();
     virtual void processEvent(Event *e);
-    QImage *getImage();
+    QImage* getImage();
+    std::vector<Cluster*>* getClusters();
 
 private:
     // Graphical output
@@ -33,6 +34,9 @@ private:
     void assignToCluster(Event *e);
     void mapAssign(Event *e);
     std::vector<Event*> labelingFilter(Event *e);
+
+    //maintanance
+    void maintainClusters();
 
     Event **onMap;
     Event **offMap;

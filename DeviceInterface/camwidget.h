@@ -3,13 +3,14 @@
 
 #include <QWidget>
 #include "event.h"
+#include "cluster.h"
 
 class CamWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    CamWidget(QImage *i, QWidget *parent = 0);
+    CamWidget(QImage *i, std::vector<Cluster*> *c, QWidget *parent = 0);
     void setImage(QImage *i);
 
 protected:
@@ -17,6 +18,7 @@ protected:
 
 private:
     QImage *img;
+    std::vector<Cluster*>* clusters;
     int counter;
 };
 

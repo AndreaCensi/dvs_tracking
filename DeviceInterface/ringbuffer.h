@@ -41,6 +41,8 @@ public:
         latest++;
         if(latest == size)
             latest = 0;
+        if(buffer[latest])
+            delete buffer[latest];
         buffer[latest] = value;
     }
 
