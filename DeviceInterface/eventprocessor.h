@@ -15,7 +15,7 @@ class EventProcessor : public EventProcessorBase
 public:
     EventProcessor();
     ~EventProcessor();
-    virtual void processEvent(Event *e);
+    virtual void processEvent(Event e);
     QImage* getImage();
     std::vector<Cluster*>* getClusters();
 
@@ -35,16 +35,16 @@ private:
     float cumulativeDistribution(float l, float x);
 
     // Assignement
-    void updateMap(Event *e);
-    void assignToCluster(Event *e);
-    void mapAssign(Event *e);
-    std::vector<Event*> labelingFilter(Event *e);
+    void updateMap(Event e);
+    void assignToCluster(Event e);
+    //void mapAssign(Event *e);
+    std::vector<Event> labelingFilter(Event e);
 
     //maintanance
     void maintainClusters();
 
-    Event **onMap;
-    Event **offMap;
+    Event *onMap;
+    Event *offMap;
 
     std::vector<Event*> clusterCandidates;
     std::vector<Cluster*> candidateClusters;

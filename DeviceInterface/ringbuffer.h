@@ -20,16 +20,10 @@ public:
         latest = 0;
         size = totalSize;
         buffer = new T[totalSize];
-        for(int i = 0; i < size;i++)
-            buffer[i] = 0;
     }
 
     //! Destructor
     ~RingBuffer(){
-        for(int i = 0; i < size; i++){  //delete buffer entries
-            if(buffer[i])
-                delete  buffer[i];
-        }
         delete [] buffer;
     }
 
@@ -41,8 +35,6 @@ public:
         latest++;
         if(latest == size)
             latest = 0;
-        if(buffer[latest])
-            delete buffer[latest];
         buffer[latest] = value;
     }
 

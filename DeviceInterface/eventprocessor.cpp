@@ -23,11 +23,12 @@ EventProcessor::EventProcessor(){
     img = new QImage(DVS_RES,DVS_RES,QImage::Format_RGB32);
 
     int length = DVS_RES*DVS_RES;
-    onMap = new Event*[length];
-    offMap = new Event*[length];
+    onMap = new Event[length];
+    offMap = new Event[length];
+    Event e;
     for(int i = 0; i < length;i++){
-        onMap[i] = 0;
-        offMap[i] = 0;
+        onMap[i] = e;
+        offMap[i] = e;
     }
 
     clusterCandidates.reserve(9); // adapt number to filter size
@@ -36,8 +37,8 @@ EventProcessor::EventProcessor(){
 
 EventProcessor::~EventProcessor(){
     delete img;
-    delete onMap;
-    delete offMap;
+    delete [] onMap;
+    delete [] offMap;
 }
 
 QImage* EventProcessor::getImage(){
@@ -48,21 +49,21 @@ std::vector<Cluster*>* EventProcessor::getClusters(){
     return &clusters;
 }
 
-void EventProcessor::processEvent(Event *e){
+void EventProcessor::processEvent(Event e){
     // do not process if special event
-    if(e->isSpecial())
+    if(e.isSpecial())
         return;
 
     //filter background activity
-    std::vector<Event*> candidates = labelingFilter(e);
+    std::vector<Event> candidates = labelingFilter(e);
     for(unsigned int i = 0; i < candidates.size(); i++){
-        updateImage(candidates[i]); //graphical output
+        updateImage(&candidates[i]); //graphical output
         assignToCluster(candidates[i]); //assign new events to clusters
     }
 
-    //update all clusters with latest timestamp (for liftime and activity measurements)
+    //update all clusters with latest timestamp (for lifetime and activity measurements)
     for(unsigned int i = 0; i < clusters.size();i++){
-        clusters[i]->updateTS(e->timeStamp);
+        clusters[i]->updateTS(e.timeStamp);
     }
 
     maintainClusters();
@@ -164,43 +165,37 @@ float EventProcessor::cumulativeDistribution(float l, float x){
     return (x < 0) ? 0 : (1-exp(-x*l));
 }
 
-void EventProcessor::updateMap(Event *e){
+void EventProcessor::updateMap(Event e){
     //assign event to on/off map
-    Event **map;
-    Event *tmp;
-    int x = 127-e->posX;
-    int y = 127-e->posY;
+    Event *map;
 
-    if(e->polarity == 1){
+    int x = 127-e.posX;
+    int y = 127-e.posY;
+
+    if(e.polarity == 1){
         map = onMap;
     }
     else{
         map = offMap;
     }
 
-    tmp = map[x+DVS_RES*y];
-    if(tmp != 0 && tmp->assigned == false){ //delete previous event if it's not assigned to any cluster
-        //TODO: check TDiff for one pixel LED flashing?
-        delete tmp;
-    }
     map[x+DVS_RES*y] = e;
 }
 
-void EventProcessor::assignToCluster(Event *e){
+void EventProcessor::assignToCluster(Event e){
     if(clusters.empty()){
         Cluster *c = new Cluster();
         c->addEvent(e);
         clusters.push_back(c);
     }
     else{
-        // get Boltzman weights
         float sum = 0;
         float lowest = 10000.0f;
         float cost = 0;
         int clusterIndex = 0;
         for(unsigned int i = 0; i < clusters.size(); i++){
-            if(distance(e,clusters[i]) < CLUSTER_ASSIGN_CHANCE){
-                cost = getSpatioTemporalCost(e,clusters[i]);
+            if(distance(&e,clusters[i]) < CLUSTER_ASSIGN_CHANCE){
+                cost = getSpatioTemporalCost(&e,clusters[i]);
                 if(cost < CLUSTER_ASSIGN_THRESHOLD){
                     if(cost < lowest){
                         lowest = cost;
@@ -227,87 +222,18 @@ void EventProcessor::assignToCluster(Event *e){
 }
 
 
-void EventProcessor::mapAssign(Event *e){
-    Event **map;
-    Event *tmp;
-    int x = 127-e->posX;
-    int y = 127-e->posY;
 
-    if(e->polarity == 1){
-        map = onMap;
-    }
-    else{
-        map = offMap;
-    }
-    //Check neighbouring events, only if inside boundary
-    int range = 1;  //determines size of filter kernel
-    int tDiff = 0;
-    if(x > 0 && x < DVS_RES-1 && y > 0 && y < DVS_RES-1){
-        for(int u = x-range; u < x+range; u++){
-            for(int v = y-range; v < y+range; v++){
-                tmp =  map[u+DVS_RES*v];
-                if(tmp!=e){
-                    tDiff = e->timeStamp - tmp->timeStamp;
-                    tDiff = abs(tDiff);
-                    if(tDiff < MAX_T_DIFF){ //if tDiff with neighbouring event small, cluster
-                        if(tmp->cluster == 0){
-                            clusterCandidates.push_back(tmp);
-                        }
-                        else{
-                            candidateClusters.push_back(tmp->cluster);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    if(clusterCandidates.size() > 0){
-        clusterCandidates.push_back(e); //add current event to clusterCandidates if neighbours found
-        //check if any events are already assigned to a cluster
-        if(candidateClusters.size() == 1){  //if one cluster found, assign events to existing cluster
-            for(unsigned int i = 0; i < clusterCandidates.size();i++){
-                clusterCandidates[i]->cluster = candidateClusters[0];
-                candidateClusters[0]->addEvent(clusterCandidates[i]);
-            }
-        }
-        else if(candidateClusters.size() > 1){
-            int bestIndex = 0;
-            float lowestDist = 2*DVS_RES;
-            float currentDist = 0;
-            for(unsigned int i = 0; i < candidateClusters.size();i++){  // assign current event to nearest cluster
-                currentDist = distance(e,candidateClusters[i]);
-                if(currentDist < lowestDist){
-                    lowestDist = currentDist;
-                    bestIndex = i;
-                }
-            }
-            e->cluster = candidateClusters[bestIndex];
-            candidateClusters[bestIndex]->addEvent(e);
-            for(unsigned int i = 0; i < clusterCandidates.size();i++){  //execute cluster assignment for alles unassigned neighbouring events
-                assignToCluster(clusterCandidates[i]);
-            }
-        }
-        else{ //no clusters, make new one
-            Cluster *c = new Cluster();
-            for(unsigned int i = 0; i < clusterCandidates.size();i++){
-                clusterCandidates[i]->cluster = c;
-                c->addEvent(clusterCandidates[i]);
-            }
-            clusters.push_back(c);
-        }
-    }
-}
 
-std::vector<Event*> EventProcessor::labelingFilter(Event *e){
+std::vector<Event> EventProcessor::labelingFilter(Event e){
 
     updateMap(e);   // update filter map
 
-    Event **map = 0;
+    Event *map = 0;
     Event *tmp = 0;
-    int x = 127-e->posX;
-    int y = 127-e->posY;
+    int x = 127-e.posX;
+    int y = 127-e.posY;
 
-    if(e->polarity == 1){
+    if(e.polarity == 1){
         map = onMap;
     }
     else{
@@ -315,26 +241,26 @@ std::vector<Event*> EventProcessor::labelingFilter(Event *e){
     }
 
     //Check neighbouring events, only if inside boundary
-    std::vector<Event*> candidates;
+    std::vector<Event> candidates;
     candidates.reserve(8);
     int range = 1;  //determines size of filter kernel
     int tDiff = 0;
-    if(x > 0 && x < DVS_RES-1 && y > 0 && y < DVS_RES-1){
+    if(x >= range && x < DVS_RES-range && y >= range && y < DVS_RES-range){
         for(int u = x-range; u < x+range; u++){
             for(int v = y-range; v < y+range; v++){
-                tmp =  map[u+DVS_RES*v];
-                if(tmp != 0 && tmp != e){
-                    tDiff = e->timeStamp - tmp->timeStamp;
+                tmp =  &map[u+DVS_RES*v];
+                if(!(u == x && v == y)){
+                    tDiff = e.timeStamp - tmp->timeStamp;
                     tDiff = abs(tDiff);
                     if(tDiff < MAX_T_DIFF && tmp->assigned == false){ //if tDiff with neighbouring event small, cluster
                         tmp->assigned = true; // set flag, that event is assigned and not to be deleted by the filter map
-                        candidates.push_back(tmp);
+                        candidates.push_back(*tmp);
                     }
                 }
             }
         }
         if(!candidates.empty()){
-            e->assigned = true;
+            e.assigned = true;
             candidates.push_back(e);
         }
     }
@@ -390,3 +316,74 @@ void EventProcessor::maintainClusters(){
         }
     }
 }
+
+//void EventProcessor::mapAssign(Event *e){
+//    Event **map;
+//    Event *tmp;
+//    int x = 127-e->posX;
+//    int y = 127-e->posY;
+
+//    if(e->polarity == 1){
+//        map = onMap;
+//    }
+//    else{
+//        map = offMap;
+//    }
+//    //Check neighbouring events, only if inside boundary
+//    int range = 1;  //determines size of filter kernel
+//    int tDiff = 0;
+//    if(x > 0 && x < DVS_RES-1 && y > 0 && y < DVS_RES-1){
+//        for(int u = x-range; u < x+range; u++){
+//            for(int v = y-range; v < y+range; v++){
+//                tmp =  map[u+DVS_RES*v];
+//                if(tmp!=e){
+//                    tDiff = e->timeStamp - tmp->timeStamp;
+//                    tDiff = abs(tDiff);
+//                    if(tDiff < MAX_T_DIFF){ //if tDiff with neighbouring event small, cluster
+//                        if(tmp->cluster == 0){
+//                            clusterCandidates.push_back(tmp);
+//                        }
+//                        else{
+//                            candidateClusters.push_back(tmp->cluster);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    if(clusterCandidates.size() > 0){
+//        clusterCandidates.push_back(e); //add current event to clusterCandidates if neighbours found
+//        //check if any events are already assigned to a cluster
+//        if(candidateClusters.size() == 1){  //if one cluster found, assign events to existing cluster
+//            for(unsigned int i = 0; i < clusterCandidates.size();i++){
+//                clusterCandidates[i]->cluster = candidateClusters[0];
+//                candidateClusters[0]->addEvent(clusterCandidates[i]);
+//            }
+//        }
+//        else if(candidateClusters.size() > 1){
+//            int bestIndex = 0;
+//            float lowestDist = 2*DVS_RES;
+//            float currentDist = 0;
+//            for(unsigned int i = 0; i < candidateClusters.size();i++){  // assign current event to nearest cluster
+//                currentDist = distance(e,candidateClusters[i]);
+//                if(currentDist < lowestDist){
+//                    lowestDist = currentDist;
+//                    bestIndex = i;
+//                }
+//            }
+//            e->cluster = candidateClusters[bestIndex];
+//            candidateClusters[bestIndex]->addEvent(e);
+//            for(unsigned int i = 0; i < clusterCandidates.size();i++){  //execute cluster assignment for alles unassigned neighbouring events
+//                assignToCluster(clusterCandidates[i]);
+//            }
+//        }
+//        else{ //no clusters, make new one
+//            Cluster *c = new Cluster();
+//            for(unsigned int i = 0; i < clusterCandidates.size();i++){
+//                clusterCandidates[i]->cluster = c;
+//                c->addEvent(clusterCandidates[i]);
+//            }
+//            clusters.push_back(c);
+//        }
+//    }
+//}

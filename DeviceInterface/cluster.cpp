@@ -6,7 +6,7 @@
 #define MAX_AGE_ACTIVITY 1000.0 //usec
 
 Cluster::Cluster(){
-    events = new RingBuffer<Event*>();
+    events = new RingBuffer<Event>();
     posX = lastPosX = -1;
     posY = lastPosY = -1;
     lastPolarity = -1;
@@ -16,6 +16,11 @@ Cluster::Cluster(){
     candidate = true;
     temporalPredictor = -1; // next occurance of events
     transitionHistory = 0;
+
+    Event e;
+    for(int i = 0; i < events->size; i++){
+        events->add(e);
+    }
 }
 
 Cluster::~Cluster(){
@@ -24,12 +29,12 @@ Cluster::~Cluster(){
         delete transitionHistory;
 }
 
-void Cluster::addEvent(Event *e){
+void Cluster::addEvent(Event e){
     events->add(e);
-    lastPolarity = e->polarity;
+    lastPolarity = e.polarity;
     if(firstEventTS == 0)
-        firstEventTS = e->timeStamp;
-    lastOverallEventTS = e->timeStamp;
+        firstEventTS = e.timeStamp;
+    lastOverallEventTS = e.timeStamp;
     lifeTime = lastOverallEventTS - firstEventTS;
 
     calcMoments();
@@ -46,11 +51,11 @@ void Cluster::calcMoments(){
     M10 = M01 = M20 = M02 = 0;
 
     int i = events->latest;
-    while( events->at(i) != 0 && (lastOverallEventTS - events->at(i)->timeStamp < MAX_AGE_MOMENT || M00 > events->size)){
-        M10 += events->at(i)->posX;
-        M01 += events->at(i)->posY;
-        M20 += pow(float(events->at(i)->posX),2);
-        M02 += pow(float(events->at(i)->posY),2);
+    while(lastOverallEventTS - events->at(i).timeStamp < MAX_AGE_MOMENT || M00 > events->size){
+        M10 += events->at(i).posX;
+        M01 += events->at(i).posY;
+        M20 += pow(float(events->at(i).posX),2);
+        M02 += pow(float(events->at(i).posY),2);
 
         i--; // go back in time through ringbuffer
         if(i < 0){
@@ -78,7 +83,7 @@ void Cluster::calcMoments(){
 float Cluster::getActivity(){
     int numEvents = 0;
     int i = events->latest;
-    while( events->at(i) != 0 && (lastOverallEventTS - events->at(i)->timeStamp < MAX_AGE_ACTIVITY || numEvents > events->size)){
+    while(lastOverallEventTS - events->at(i).timeStamp < MAX_AGE_ACTIVITY || numEvents > events->size){
         i--; // go back in time through ringbuffer
         if(i < 0){
             i = events->size-1;
@@ -99,46 +104,46 @@ bool Cluster::isCandidate(){
 }
 
 //merge the events and lifetime of two clusters - NOT NEEDED!
-void Cluster::merge(Cluster *c){
-    if(!this->isCandidate() && !c->isCandidate())
-        return;
-    //update firstEventTS and lifetime
-    if(firstEventTS > c->firstEventTS){
-        updateTS(c->firstEventTS);
-    }
+//void Cluster::merge(Cluster *c){
+//    if(!this->isCandidate() && !c->isCandidate())
+//        return;
+//    //update firstEventTS and lifetime
+//    if(firstEventTS > c->firstEventTS){
+//        updateTS(c->firstEventTS);
+//    }
 
-    //generate new event buffer
-    RingBuffer<Event*> *tmp = new RingBuffer<Event*>();
-    tmp->latest = tmp->size-1;  //set latest timestamp index
-    int counter = 0;
-    int i,j;
-    i = events->latest;
-    j = c->events->latest;
-    while(counter < events->size){
-        if(events->at(i)->timeStamp > c->events->at(j)->timeStamp){ // if this event is newer
-            tmp->set(((tmp->size-1)-counter), events->at(i));
-            i--;
-            if(i < 0){
-                i = events->size-1;
-            }
-        }
-        else{
-            tmp->set(((tmp->size-1)-counter), c->events->at(j));
-            j--;
-            if(j < 0){
-                j = c->events->size-1;
-            }
-        }
-        counter++;
-    }
-    delete events;
-    events = tmp;
+//    //generate new event buffer
+//    RingBuffer<Event*> *tmp = new RingBuffer<Event*>();
+//    tmp->latest = tmp->size-1;  //set latest timestamp index
+//    int counter = 0;
+//    int i,j;
+//    i = events->latest;
+//    j = c->events->latest;
+//    while(counter < events->size){
+//        if(events->at(i)->timeStamp > c->events->at(j)->timeStamp){ // if this event is newer
+//            tmp->set(((tmp->size-1)-counter), events->at(i));
+//            i--;
+//            if(i < 0){
+//                i = events->size-1;
+//            }
+//        }
+//        else{
+//            tmp->set(((tmp->size-1)-counter), c->events->at(j));
+//            j--;
+//            if(j < 0){
+//                j = c->events->size-1;
+//            }
+//        }
+//        counter++;
+//    }
+//    delete events;
+//    events = tmp;
 
-    //if one is a feature cluster, make the new cluster a feature cluster
-    if(!candidate || !c->candidate){
-        candidate = false;
-    }
+//    //if one is a feature cluster, make the new cluster a feature cluster
+//    if(!candidate || !c->candidate){
+//        candidate = false;
+//    }
 
-    //update cluster position (central moment)
-    calcMoments();
-}
+//    //update cluster position (central moment)
+//    calcMoments();
+//}

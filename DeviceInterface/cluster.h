@@ -10,13 +10,13 @@ class Cluster
 public:
     Cluster();
     ~Cluster();
-    void addEvent(Event *e);
+    void addEvent(Event e);
     bool isCandidate();
     void updateTS(int ts);
     float getActivity();
-    void merge(Cluster *c);
+    //void merge(Cluster *c);
 
-    RingBuffer<Event*> *events;
+    RingBuffer<Event> *events;
 
     float posX;
     float posY;

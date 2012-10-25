@@ -10,7 +10,7 @@ public:
     }
     virtual ~EventProcessorBase(){
     }
-    virtual void processEvent(Event *e){
+    virtual void processEvent(Event e){
     }
 };
 
