@@ -3,19 +3,21 @@
 #include <algorithm>
 
 #define MAX_AGE_MOMENT 5000 //usec
-#define MAX_AGE_ACTIVITY 1000.0 //usec
+#define MAX_AGE_ACTIVITY 100000 //usec
 
 Cluster::Cluster(){
     events = new RingBuffer<Event>();
     posX = lastPosX = -1;
     posY = lastPosY = -1;
     lastPolarity = -1;
-    activity = 0;
+    activity = 1000;
     firstEventTS = 0;
     activity = 0;
     candidate = true;
     temporalPredictor = -1; // next occurance of events
     transitionHistory = 0;
+
+    eventCount = 0;
 
     Event e;
     for(int i = 0; i < events->size; i++){
@@ -46,12 +48,12 @@ void Cluster::addEvent(Event e){
 
 //calculates centroid
 void Cluster::calcMoments(){
-    float M00 = 0;  // Area of the cluster/ number of events in cluster
+    int M00 = 0;  // Area of the cluster/ number of events in cluster
     float M10,M01,M20,M02;
     M10 = M01 = M20 = M02 = 0;
 
     int i = events->latest;
-    while(lastOverallEventTS - events->at(i).timeStamp < MAX_AGE_MOMENT || M00 > events->size){
+    while((lastOverallEventTS - events->at(i).timeStamp) < MAX_AGE_MOMENT || M00 > 128){
         M10 += events->at(i).posX;
         M01 += events->at(i).posY;
         M20 += pow(float(events->at(i).posX),2);
@@ -63,15 +65,16 @@ void Cluster::calcMoments(){
         }
         M00++;
     }
+    printf("#cluster area: %d  \r",M00);
 
     //centroid/ cluster position
-    posX = M10/M00;
-    posY = M01/M00;
+    posX = M10/float(M00);
+    posY = M01/float(M00);
 
     //contour
     float varianceX = M20 - posX*M10;
     float varianceY = M02 - posY*M01;
-    float sqrtM00 = sqrt(M00);
+    float sqrtM00 = sqrt(float(M00));
 
     float tmp = sqrt(varianceX)/sqrtM00 * 2;
     contourX = (1 > tmp) ? 1 : tmp;
@@ -90,7 +93,8 @@ float Cluster::getActivity(){
         }
         numEvents++;
     }
-    activity = float(MAX_AGE_ACTIVITY/numEvents);
+    if(numEvents > 0)
+        activity = float(MAX_AGE_ACTIVITY/numEvents);
     return activity;
 }
 

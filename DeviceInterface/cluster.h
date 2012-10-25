@@ -34,6 +34,7 @@ public:
     float contourY;
     bool candidate;
     float temporalPredictor;
+    int eventCount;
 
     TransitionHistory *transitionHistory;
 

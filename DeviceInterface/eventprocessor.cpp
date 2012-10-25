@@ -5,13 +5,13 @@
 //parameters from thesis
 #define ASSIGN_SHARPNESS 0.7f  // of the Boltzman function
 #define ASSIGN_PROB 0.6f
-#define ASSIGN_THRESHOLD 1.4f
 #define CLUSTER_ASSIGN_CHANCE 100.0f
 #define CLUSTER_ASSIGN_THRESHOLD 1.4f
 #define MAX_T_DIFF 50 //usec
-#define ACTIVITY_THRESHOLD 5.0f
-#define MIN_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
-#define MERGE_THRESHOLD 100.0f
+#define ACTIVITY_THRESHOLD 1.0f
+#define MIN_CONVERSION_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
+#define MIN_CANDIDATE_LIFETIME 100000   // minimum lifetime before deletion
+#define MERGE_THRESHOLD 10.0f
 #define SPATIAL_SHARPNESS 2.0f
 #define TEMPORAL_SHARPNESS 500.0f
 
@@ -208,8 +208,7 @@ void EventProcessor::assignToCluster(Event e){
         //normalize
         if(cost < CLUSTER_ASSIGN_THRESHOLD){
             float p = exp(lowest*-ASSIGN_SHARPNESS)/sum;  //probability
-
-            if(p > ASSIGN_THRESHOLD){
+            if(p > ASSIGN_PROB){
                 clusters[clusterIndex]->addEvent(e);
             }
         }
@@ -302,14 +301,14 @@ void EventProcessor::maintainClusters(){
 
     //convert candidates to feature clusters
     for(unsigned int i = 0; i < clusters.size();i++){ // TODO: allow only max number of clusters!!
-        if(clusters[i]->lifeTime > MIN_LIFETIME && clusters[i]->isCandidate()){
+        if(clusters[i]->lifeTime > MIN_CONVERSION_LIFETIME && clusters[i]->isCandidate()){
             clusters[i]->candidate = false;
         }
     }
 
     //delete inactive/old clusters
     for(unsigned int i = 0; i < clusters.size();i++){
-        if(clusters[i]->getActivity() < ACTIVITY_THRESHOLD){
+        if(clusters[i]->lifeTime > MIN_CANDIDATE_LIFETIME && clusters[i]->getActivity() < ACTIVITY_THRESHOLD){
             delete clusters[i];
             clusters.erase(clusters.begin()+i);
             i--;
