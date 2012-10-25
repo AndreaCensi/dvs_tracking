@@ -25,9 +25,14 @@ private:
 
     // Cost-function
     float distance(Event *e, Cluster *c);
+    float distanceToContour(Event *e, Cluster *c);
     float distance(Event *e1, Event *e2);
     float distance(Cluster *c1, Cluster *c2);
     float getBoltzmanWeight(Event *e, Cluster *c);
+    float getSpatioTemporalCost(Event *e, Cluster *c);
+    float boundaryCost(Event *e, Cluster *c);
+    float temporalCost(Event *e, Cluster *c);
+    float cumulativeDistribution(float l, float x);
 
     // Assignement
     void updateMap(Event *e);

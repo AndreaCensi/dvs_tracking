@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     event.cpp \
     eventprocessor.cpp \
     cluster.cpp \
-    signalwrapper.cpp
+    signalwrapper.cpp \
+    transitionhistory.cpp
 
 HEADERS += \
     usbinterface.h \
@@ -27,7 +28,8 @@ HEADERS += \
     eventprocessor.h \
     cluster.h \
     signalwrapper.h \
-    eventprocessorbase.h
+    eventprocessorbase.h \
+    transitionhistory.h
 
 
 

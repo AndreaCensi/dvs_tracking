@@ -3,12 +3,17 @@
 #include <math.h>
 
 //parameters from thesis
-#define SHARPNESS 0.7f  // of the Boltzman function
+#define ASSIGN_SHARPNESS 0.7f  // of the Boltzman function
 #define ASSIGN_PROB 0.6f
+#define ASSIGN_THRESHOLD 1.4f
+#define CLUSTER_ASSIGN_CHANCE 100.0f
+#define CLUSTER_ASSIGN_THRESHOLD 1.4f
 #define MAX_T_DIFF 50 //usec
 #define ACTIVITY_THRESHOLD 5.0f
 #define MIN_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
-#define MERGE_THRESHOLD 1.0f // 100 in code !?
+#define MERGE_THRESHOLD 100.0f
+#define SPATIAL_SHARPNESS 2.0f
+#define TEMPORAL_SHARPNESS 500.0f
 
 //other
 #define DVS_RES 128
@@ -63,60 +68,9 @@ void EventProcessor::processEvent(Event *e){
     maintainClusters();
 
     //tmp cleanup
-//    for(unsigned int i = 0; i < candidates.size(); i++)
-//        delete candidates[i];
+    //    for(unsigned int i = 0; i < candidates.size(); i++)
+    //        delete candidates[i];
 
-}
-
-void EventProcessor::maintainClusters(){
-    //merge clusters close by
-    for(unsigned int i = 0; i < clusters.size(); i++){
-        for(unsigned int j = i+1; j < clusters.size(); j++){
-            if(distance(clusters[i],clusters[j]) < MERGE_THRESHOLD){
-                if(!clusters[i]->isCandidate() && !clusters[j]->isCandidate())
-                    break;
-                else if(clusters[i]->isCandidate() && clusters[j]->isCandidate()){
-                    if(clusters[i]->lifeTime < clusters[j]->lifeTime){
-                        delete clusters[i];
-                        clusters.erase(clusters.begin()+i);
-                        i--;
-                    }
-                    else{
-                        delete clusters[j];
-                        clusters.erase(clusters.begin()+j);
-                        j--;
-                    }
-                }
-                else if(clusters[i]->isCandidate()){
-                    delete clusters[i];
-                    clusters.erase(clusters.begin()+i);
-                    i--;
-                }
-                else{
-                    delete clusters[j];
-                    clusters.erase(clusters.begin()+j);
-                    j--;
-                }
-            }
-        }
-    }
-
-    //convert candidates to feature clusters
-    for(unsigned int i = 0; i < clusters.size();i++){ // TODO: allow only max number of clusters!!
-        if(clusters[i]->lifeTime > MIN_LIFETIME && clusters[i]->isCandidate()){
-            clusters[i]->candidate = false;
-        }
-    }
-
-    //delete inactive/old clusters
-    for(unsigned int i = 0; i < clusters.size();i++){
-        if(clusters[i]->getActivity() < ACTIVITY_THRESHOLD){
-            delete clusters[i];
-            clusters.erase(clusters.begin()+i);
-            i--;
-        }
-    }
-    //printf("#clusters: %d\n",clusters.size());
 }
 
 void EventProcessor::updateImage(Event *e){
@@ -137,6 +91,10 @@ float EventProcessor::distance(Event *e, Cluster *c){
     return sqrt(pow(float(e->posX-c->posX),2) + pow(float(e->posY-c->posY),2));
 }
 
+float EventProcessor::distanceToContour(Event *e, Cluster *c){
+    return 0;
+}
+
 float EventProcessor::distance(Event *e1, Event *e2){
     return sqrt(pow(float(e1->posX-e2->posX),2) + pow(float(e1->posY-e2->posY),2));
 }
@@ -146,7 +104,64 @@ float EventProcessor::distance(Cluster *c1, Cluster *c2){
 }
 
 float EventProcessor::getBoltzmanWeight(Event *e, Cluster *c){
-    return exp(-SHARPNESS*distance(e,c));
+    return exp(-ASSIGN_SHARPNESS*distance(e,c));
+}
+
+float EventProcessor::getSpatioTemporalCost(Event *e, Cluster *c){
+    float spatial = boundaryCost(e,c);
+    float temporal = temporalCost(e,c);
+
+    float pSpatial = 1 - cumulativeDistribution(1/SPATIAL_SHARPNESS,spatial);
+    float pTemporal = 1 - cumulativeDistribution(1/TEMPORAL_SHARPNESS,temporal);
+
+    return -log(pSpatial * pTemporal);
+}
+
+float EventProcessor::boundaryCost(Event *e, Cluster *c){
+    float dx = 0;
+    if(!(c->posX + c->contourX >= e->posX && c->posX - c->contourX <= e->posX)){
+        dx = std::min(pow(c->posX + c->contourX - e->posX,2),(pow(c->posX - c->contourX - e->posX,2)));
+    }
+
+    float dy = 0;
+    if(!(c->posY + c->contourY >= e->posY && c->posY - c->contourY <= e->posY)){
+        dy = std::min(pow(c->posY + c->contourY - e->posY,2),(pow(c->posY - c->contourY - e->posY,2)));
+    }
+    return sqrt(dx + dy);
+}
+
+float EventProcessor::temporalCost(Event *e, Cluster *c){
+    if(!c->transitionHistory){
+        return 0.5;
+    }
+    else{
+        int relative = (e->timeStamp - c->transitionHistory->phase) % c->transitionHistory->period;
+        if(relative < 0){
+            relative = c->transitionHistory->phase - relative;
+        }
+        int min = 100000;
+
+        // find matching transition in transition history
+        //        for (int i = -1; i < this.signal.getSize(); i++) {
+        //            Transition t = this.signal.getTransition(i);
+        //            if (type == t.state) {
+        //                int difference = Math.abs(relative - t.time);
+
+        //                if (min > difference) {
+        //                    min = difference;
+        //                }
+        //            }
+        //        }
+
+        return min;
+
+        return 0;
+    }
+
+}
+
+float EventProcessor::cumulativeDistribution(float l, float x){
+    return (x < 0) ? 0 : (1-exp(-x*l));
 }
 
 void EventProcessor::updateMap(Event *e){
@@ -179,29 +194,35 @@ void EventProcessor::assignToCluster(Event *e){
     }
     else{
         // get Boltzman weights
-        float sumBoltz = 0;
-        float *weights = new float[clusters.size()];
+        float sum = 0;
+        float lowest = 10000.0f;
+        float cost = 0;
+        int clusterIndex = 0;
         for(unsigned int i = 0; i < clusters.size(); i++){
-            weights[i] = getBoltzmanWeight(e,clusters[i]);
-            sumBoltz += weights[i];
-        }
-        //normalize
-        int mostProbIndex = 0;
-        for(unsigned int i = 0; i < clusters.size();i++){
-            weights[i] = weights[i]/sumBoltz;
-            if(weights[i] > weights[mostProbIndex]){
-                mostProbIndex = i;
+            if(distance(e,clusters[i]) < CLUSTER_ASSIGN_CHANCE){
+                cost = getSpatioTemporalCost(e,clusters[i]);
+                if(cost < CLUSTER_ASSIGN_THRESHOLD){
+                    if(cost < lowest){
+                        lowest = cost;
+                        clusterIndex = i;
+                    }
+                    sum += exp(cost*-ASSIGN_SHARPNESS); //Boltzmann weight sum
+                }
             }
         }
-        if(weights[mostProbIndex] > ASSIGN_PROB){
-            clusters[mostProbIndex]->addEvent(e);
+        //normalize
+        if(cost < CLUSTER_ASSIGN_THRESHOLD){
+            float p = exp(lowest*-ASSIGN_SHARPNESS)/sum;  //probability
+
+            if(p > ASSIGN_THRESHOLD){
+                clusters[clusterIndex]->addEvent(e);
+            }
         }
         else{
             Cluster  *c = new Cluster();
             c->addEvent(e);
             clusters.push_back(c);
         }
-        delete [] weights;
     }
 }
 
@@ -318,4 +339,54 @@ std::vector<Event*> EventProcessor::labelingFilter(Event *e){
         }
     }
     return candidates;
+}
+
+void EventProcessor::maintainClusters(){
+    //merge clusters close by
+    for(unsigned int i = 0; i < clusters.size(); i++){
+        for(unsigned int j = i+1; j < clusters.size(); j++){
+            if(distance(clusters[i],clusters[j]) < MERGE_THRESHOLD){
+                if(!clusters[i]->isCandidate() && !clusters[j]->isCandidate())
+                    break;
+                else if(clusters[i]->isCandidate() && clusters[j]->isCandidate()){
+                    if(clusters[i]->lifeTime < clusters[j]->lifeTime){
+                        delete clusters[i];
+                        clusters.erase(clusters.begin()+i);
+                        i--;
+                    }
+                    else{
+                        delete clusters[j];
+                        clusters.erase(clusters.begin()+j);
+                        j--;
+                    }
+                }
+                else if(clusters[i]->isCandidate()){
+                    delete clusters[i];
+                    clusters.erase(clusters.begin()+i);
+                    i--;
+                }
+                else{
+                    delete clusters[j];
+                    clusters.erase(clusters.begin()+j);
+                    j--;
+                }
+            }
+        }
+    }
+
+    //convert candidates to feature clusters
+    for(unsigned int i = 0; i < clusters.size();i++){ // TODO: allow only max number of clusters!!
+        if(clusters[i]->lifeTime > MIN_LIFETIME && clusters[i]->isCandidate()){
+            clusters[i]->candidate = false;
+        }
+    }
+
+    //delete inactive/old clusters
+    for(unsigned int i = 0; i < clusters.size();i++){
+        if(clusters[i]->getActivity() < ACTIVITY_THRESHOLD){
+            delete clusters[i];
+            clusters.erase(clusters.begin()+i);
+            i--;
+        }
+    }
 }

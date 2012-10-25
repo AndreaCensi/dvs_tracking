@@ -1,4 +1,6 @@
 #include "cluster.h"
+#include <math.h>
+#include <algorithm>
 
 #define MAX_AGE_MOMENT 5000 //usec
 #define MAX_AGE_ACTIVITY 1000.0 //usec
@@ -12,10 +14,14 @@ Cluster::Cluster(){
     firstEventTS = 0;
     activity = 0;
     candidate = true;
+    temporalPredictor = -1; // next occurance of events
+    transitionHistory = 0;
 }
 
 Cluster::~Cluster(){
     delete events;
+    if(transitionHistory)
+        delete transitionHistory;
 }
 
 void Cluster::addEvent(Event *e){
@@ -26,7 +32,7 @@ void Cluster::addEvent(Event *e){
     lastOverallEventTS = e->timeStamp;
     lifeTime = lastOverallEventTS - firstEventTS;
 
-    calcCentralMoment();
+    calcMoments();
 
     /*
     current/next polarity ?
@@ -34,24 +40,39 @@ void Cluster::addEvent(Event *e){
 }
 
 //calculates centroid
-void Cluster::calcCentralMoment(){
-    int numEvents = 0;
-    int sumX,sumY;
-    sumX = sumY = 0;
+void Cluster::calcMoments(){
+    float M00 = 0;  // Area of the cluster/ number of events in cluster
+    float M10,M01,M20,M02;
+    M10 = M01 = M20 = M02 = 0;
 
     int i = events->latest;
-    while( events->at(i) != 0 && (lastOverallEventTS - events->at(i)->timeStamp < MAX_AGE_MOMENT || numEvents > events->size)){
-        sumX += events->at(i)->posX;
-        sumY += events->at(i)->posY;
+    while( events->at(i) != 0 && (lastOverallEventTS - events->at(i)->timeStamp < MAX_AGE_MOMENT || M00 > events->size)){
+        M10 += events->at(i)->posX;
+        M01 += events->at(i)->posY;
+        M20 += pow(float(events->at(i)->posX),2);
+        M02 += pow(float(events->at(i)->posY),2);
 
         i--; // go back in time through ringbuffer
         if(i < 0){
             i = events->size-1;
         }
-        numEvents++;
+        M00++;
     }
-    posX = sumX/numEvents;
-    posY = sumY/numEvents;
+
+    //centroid/ cluster position
+    posX = M10/M00;
+    posY = M01/M00;
+
+    //contour
+    float varianceX = M20 - posX*M10;
+    float varianceY = M02 - posY*M01;
+    float sqrtM00 = sqrt(M00);
+
+    float tmp = sqrt(varianceX)/sqrtM00 * 2;
+    contourX = (1 > tmp) ? 1 : tmp;
+
+    tmp = sqrt(varianceY)/sqrtM00 * 2;
+    contourY = (1 > tmp) ? 1 : tmp;
 }
 
 float Cluster::getActivity(){
@@ -64,12 +85,8 @@ float Cluster::getActivity(){
         }
         numEvents++;
     }
-    activity = MAX_AGE_ACTIVITY/numEvents;
+    activity = float(MAX_AGE_ACTIVITY/numEvents);
     return activity;
-}
-
-void Cluster::calcCountour(){
-
 }
 
 void Cluster::updateTS(int ts){
@@ -81,7 +98,7 @@ bool Cluster::isCandidate(){
     return candidate;
 }
 
-//merge the events and lifetime of two clusters - not needed!
+//merge the events and lifetime of two clusters - NOT NEEDED!
 void Cluster::merge(Cluster *c){
     if(!this->isCandidate() && !c->isCandidate())
         return;
@@ -123,5 +140,5 @@ void Cluster::merge(Cluster *c){
     }
 
     //update cluster position (central moment)
-    calcCentralMoment();
+    calcMoments();
 }

@@ -24,11 +24,13 @@ void CamWidget::paintEvent(QPaintEvent *event){
     painter.drawImage(rect,*img);
 
     //draw circle around cluster
-    for(int i = 0; i < clusters->size(); i++){
-        int x = 127-clusters->at(i)->posX;
-        int y = 127-clusters->at(i)->posY;
-        painter.setPen(Qt::green);
-        painter.drawEllipse(x*4,y*4,50,50);
+    for(unsigned int i = 0; i < clusters->size(); i++){
+        //if(!clusters->at(i)->candidate){
+            int x = 127-clusters->at(i)->posX;
+            int y = 127-clusters->at(i)->posY;
+            painter.setPen(Qt::green);
+            painter.drawEllipse(x*4,y*4,50,50);
+        //}
     }
 
     for(int x = 0; x < 128; x++){

@@ -3,6 +3,7 @@
 
 #include "ringbuffer.h"
 #include "event.h"
+#include "transitionhistory.h"
 
 class Cluster
 {
@@ -17,10 +18,10 @@ public:
 
     RingBuffer<Event*> *events;
 
-    int posX;
-    int posY;
-    int lastPosX;
-    int lastPosY;
+    float posX;
+    float posY;
+    float lastPosX;
+    float lastPosY;
 
     int lastPolarity;
     int lifeTime;
@@ -29,12 +30,16 @@ public:
     unsigned int firstEventTS;  //first event assigned to this cluster
     unsigned int lastOverallEventTS;    // latest event timestamp from camera, used for liftime and activity comparison
     float velocity;
-    float contour;
+    float contourX;
+    float contourY;
     bool candidate;
+    float temporalPredictor;
+
+    TransitionHistory *transitionHistory;
 
 private:
     void update();
-    void calcCentralMoment();
+    void calcMoments();
     void calcCountour();
 };
 
