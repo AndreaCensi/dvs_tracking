@@ -308,7 +308,9 @@ void EventProcessor::maintainClusters(){
 
     //delete inactive/old clusters
     for(unsigned int i = 0; i < clusters.size();i++){
-        if(clusters[i]->lifeTime > MIN_CANDIDATE_LIFETIME && clusters[i]->getActivity() < ACTIVITY_THRESHOLD){
+        float activity = clusters[i]->getActivity();
+        printf("activity: %f  \r",activity);
+        if(clusters[i]->lifeTime > MIN_CANDIDATE_LIFETIME &&  activity < ACTIVITY_THRESHOLD){
             delete clusters[i];
             clusters.erase(clusters.begin()+i);
             i--;

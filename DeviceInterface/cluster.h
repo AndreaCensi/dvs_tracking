@@ -17,6 +17,7 @@ public:
     //void merge(Cluster *c);
 
     RingBuffer<Event> *events;
+    RingBuffer<int> *eventsPerInterval;
 
     float posX;
     float posY;
@@ -26,9 +27,9 @@ public:
     int lastPolarity;
     int lifeTime;
 
-    float activity;
+//    float activity;
     unsigned int firstEventTS;  //first event assigned to this cluster
-    unsigned int lastOverallEventTS;    // latest event timestamp from camera, used for liftime and activity comparison
+    unsigned int lastEventTS;    // latest event timestamp from camera, used for liftime and activity comparison
     float velocity;
     float contourX;
     float contourY;
