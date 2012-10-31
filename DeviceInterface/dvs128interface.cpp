@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "usbinterface.h"
+#include "dvs128interface.h"
 
 #define NUM_BUFFERS 5
 
@@ -21,18 +21,18 @@
 GUID usbIoID = USBIO_IID;
 HDEVINFO devList;
 
-USBInterface::USBInterface(EventProcessorBase *ep){
+DVS128Interface::DVS128Interface(EventProcessorBase *ep){
     devList = NULL;
     devIndex = -1;
     reader = new USBReader(ep);
 }
 
-USBInterface::~USBInterface(){
+DVS128Interface::~DVS128Interface(){
     stopReading();
     delete reader;
 }
 
-void USBInterface::startReading(){
+void DVS128Interface::startReading(){
     CUsbIo dev;
     USB_DEVICE_DESCRIPTOR devDesc;
     DWORD status;
@@ -81,13 +81,13 @@ void USBInterface::startReading(){
     }
 }
 
-void USBInterface::stopReading(){
+void DVS128Interface::stopReading(){
     sendVendorRequest(STOP_READ);
     reader->ShutdownThread();
     reader->Close();
 }
 
-void USBInterface::startReaderThread(int devIndex){
+void DVS128Interface::startReaderThread(int devIndex){
     CUsbIo dev; //Device instance
     USBIO_SET_CONFIGURATION config; // Device config
     DWORD status;
@@ -138,7 +138,7 @@ void USBInterface::startReaderThread(int devIndex){
     sendVendorRequest(START_READ);
 }
 
-void USBInterface::sendVendorRequest(UCHAR req, const char *buf, DWORD bufSize){
+void DVS128Interface::sendVendorRequest(UCHAR req, const char *buf, DWORD bufSize){
     CUsbIo dev;
     DWORD status;
     // open the device
@@ -168,7 +168,7 @@ void USBInterface::sendVendorRequest(UCHAR req, const char *buf, DWORD bufSize){
     dev.Close();
 }
 
-USBReader* USBInterface::getReaderInstance(){
+USBReader* DVS128Interface::getReaderInstance(){
     return reader;
 }
 

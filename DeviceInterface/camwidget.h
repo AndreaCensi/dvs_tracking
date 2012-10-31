@@ -14,7 +14,7 @@ public:
     void setImage(QImage *i);
 
 protected:
-    void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *);
 
 private:
     QImage *img;

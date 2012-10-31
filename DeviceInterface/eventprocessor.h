@@ -19,7 +19,7 @@ public:
     QImage* getImage();
     std::vector<Cluster*>* getClusters();
 
-private:
+//private:
     // Graphical output
     void updateImage(Event *e);
 

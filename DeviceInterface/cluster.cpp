@@ -4,7 +4,7 @@
 
 #define MAX_AGE_MOMENT 10000 //5000 usec?
 #define MAX_AGE_ACTIVITY 10000 //usec
-#define NUM_TIMESLOTS 100
+#define NUM_TIMESLOTS 10
 #define TIME_WINDOW 1000 //usec
 #define PI 3.14159265359
 
@@ -17,7 +17,7 @@ Cluster::Cluster(){
     lastPolarity = -1;
     firstEventTS = 0;
     lastEventTS = 0;
-//    activity = 100.0f;
+    //    activity = 100.0f;
     candidate = true;
     temporalPredictor = -1; // next occurance of events
     transitionHistory = 0;
@@ -41,18 +41,24 @@ Cluster::~Cluster(){
 }
 
 void Cluster::addEvent(Event e){
+
+    // add to activity history (eventsPerInterval)
+    int lastEventIndex = (lastEventTS/TIME_WINDOW)%NUM_TIMESLOTS;
+    int index = (e.timeStamp/TIME_WINDOW)%NUM_TIMESLOTS;
+    if(lastEventIndex == index){    // if belonging to same interval, add up
+        int sum = eventsPerInterval->at(index);
+        eventsPerInterval->set(index,sum+1);
+    }
+    else{   //else reset to 0 + 1
+        eventsPerInterval->set(index,1);
+    }
+
     events->add(e);
     lastPolarity = e.polarity;
     if(firstEventTS == 0)
         firstEventTS = e.timeStamp;
     lastEventTS = e.timeStamp;
     lifeTime = e.timeStamp - firstEventTS;
-
-
-    // add to activity history (eventsPerInterval)
-    int index = (e.timeStamp/TIME_WINDOW)%NUM_TIMESLOTS;
-    int sum = eventsPerInterval->at(index);
-    eventsPerInterval->set(index,sum+1);
 
     calcMoments();
     /*
@@ -67,7 +73,7 @@ void Cluster::calcMoments(){
     M10 = M01 = M20 = M02 = 0;
 
     int i = events->latest;
-    while((events->at(events->latest).timeStamp - events->at(i).timeStamp) < MAX_AGE_MOMENT || M00 > events->size){
+    while((events->at(events->latest).timeStamp - events->at(i).timeStamp) < MAX_AGE_MOMENT && M00 < events->size){
         M10 += events->at(i).posX;
         M01 += events->at(i).posY;
         M20 += pow(float(events->at(i).posX),2);
@@ -98,17 +104,17 @@ void Cluster::calcMoments(){
 }
 
 float Cluster::getActivity(){
-//    int numEvents = 0;
-//    int i = events->latest;
-//    while(lastOverallEventTS - events->at(i).timeStamp < MAX_AGE_ACTIVITY || numEvents > events->size){
-//        i--; // go back in time through ringbuffer
-//        if(i < 0){
-//            i = events->size-1;
-//        }
-//        numEvents++;
-//    }
-//    if(numEvents > 0)
-//        activity = float(MAX_AGE_ACTIVITY/numEvents);
+    //    int numEvents = 0;
+    //    int i = events->latest;
+    //    while(lastOverallEventTS - events->at(i).timeStamp < MAX_AGE_ACTIVITY && numEvents < events->size){
+    //        i--; // go back in time through ringbuffer
+    //        if(i < 0){
+    //            i = events->size-1;
+    //        }
+    //        numEvents++;
+    //    }
+    //    if(numEvents > 0)
+    //        activity = float(MAX_AGE_ACTIVITY/numEvents);
     int sum = 0;
     for(int i = 0; i < eventsPerInterval->size; i++){
         sum += eventsPerInterval->at(i);
@@ -127,7 +133,7 @@ void Cluster::updateTS(int ts){
     if(lastEventIndex!=tsIndex){
         int numSlots = 0;   //number of slots to overwrite
         if(lastEventIndex > tsIndex)
-            numSlots = lastEventIndex + NUM_TIMESLOTS - tsIndex;
+            numSlots = NUM_TIMESLOTS - lastEventIndex + tsIndex;
         else{
             numSlots = tsIndex - lastEventIndex;
         }

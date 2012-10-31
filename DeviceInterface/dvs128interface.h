@@ -5,11 +5,11 @@
 #include "usbreader.h"
 #include "eventprocessorbase.h"
 
-class USBInterface
+class DVS128Interface
 {
 public:
-    USBInterface(EventProcessorBase *ep);
-    ~USBInterface();
+    DVS128Interface(EventProcessorBase *ep);
+    ~DVS128Interface();
     void startReading();
     void stopReading();
     void sendVendorRequest(UCHAR req, const char *buf = NULL, DWORD bufSize = 0);

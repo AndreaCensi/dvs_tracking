@@ -9,17 +9,17 @@ INCLUDEPATH += \
     inc/usbiolib
 
 SOURCES += main.cpp \
-    usbinterface.cpp \
     usbreader.cpp \
     camwidget.cpp \
     event.cpp \
     eventprocessor.cpp \
     cluster.cpp \
     signalwrapper.cpp \
-    transitionhistory.cpp
+    transitionhistory.cpp \
+    dvs128interface.cpp \
+    eventgenerator.cpp
 
 HEADERS += \
-    usbinterface.h \
     usbreader.h \
     stdafx.h \
     ringbuffer.h \
@@ -29,7 +29,9 @@ HEADERS += \
     cluster.h \
     signalwrapper.h \
     eventprocessorbase.h \
-    transitionhistory.h
+    transitionhistory.h \
+    dvs128interface.h \
+    eventgenerator.h
 
 
 

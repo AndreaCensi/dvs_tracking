@@ -17,7 +17,7 @@ CamWidget::CamWidget(QImage *i, std::vector<Cluster*> *c, QWidget *parent) : QWi
     counter = 0;
 }
 
-void CamWidget::paintEvent(QPaintEvent *event){
+void CamWidget::paintEvent(QPaintEvent *){
     QPainter painter(this);
     QRect rect(0,0,512,512);
     QColor color = Qt::black;

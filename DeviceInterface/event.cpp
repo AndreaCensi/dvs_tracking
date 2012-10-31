@@ -2,8 +2,8 @@
 
 Event::Event()
 {
-    posX = -1;
-    posY = -1;
+    posX = 0;
+    posY = 0;
     polarity = 0;
     timeStamp = 0;
     special = false;

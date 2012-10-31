@@ -3,6 +3,10 @@
 
 #include "event.h"
 
+/*
+Inherit  from this class and implement processEvent to process incoming events.
+A reference to the instance of the child class must be provided to the usbinterface.
+*/
 class EventProcessorBase
 {
 public:

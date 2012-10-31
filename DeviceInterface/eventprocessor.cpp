@@ -8,7 +8,7 @@
 #define CLUSTER_ASSIGN_CHANCE 100.0f
 #define CLUSTER_ASSIGN_THRESHOLD 1.4f
 #define MAX_T_DIFF 50 //usec
-#define ACTIVITY_THRESHOLD 1.0f
+#define ACTIVITY_THRESHOLD 0.1f //1.0f
 #define MIN_CONVERSION_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
 #define MIN_CANDIDATE_LIFETIME 100000   // minimum lifetime before deletion
 #define MERGE_THRESHOLD 10.0f
@@ -55,23 +55,21 @@ void EventProcessor::processEvent(Event e){
         return;
 
     //filter background activity
-    std::vector<Event> candidates = labelingFilter(e);
-    for(unsigned int i = 0; i < candidates.size(); i++){
-        updateImage(&candidates[i]); //graphical output
-        assignToCluster(candidates[i]); //assign new events to clusters
-    }
+//    std::vector<Event> candidates = labelingFilter(e);
+//    for(unsigned int i = 0; i < candidates.size(); i++){
+//        updateImage(&candidates[i]); //graphical output
+//        assignToCluster(candidates[i]); //assign new events to clusters
+//    }
+
+        updateImage(&e); //graphical output
+//        assignToCluster(e); //assign new events to clusters
 
     //update all clusters with latest timestamp (for lifetime and activity measurements)
-    for(unsigned int i = 0; i < clusters.size();i++){
-        clusters[i]->updateTS(e.timeStamp);
-    }
+//    for(unsigned int i = 0; i < clusters.size();i++){
+//        clusters[i]->updateTS(e.timeStamp);
+//    }
 
-    maintainClusters();
-
-    //tmp cleanup
-    //    for(unsigned int i = 0; i < candidates.size(); i++)
-    //        delete candidates[i];
-
+//    maintainClusters();
 }
 
 void EventProcessor::updateImage(Event *e){
@@ -187,6 +185,7 @@ void EventProcessor::assignToCluster(Event e){
         Cluster *c = new Cluster();
         c->addEvent(e);
         clusters.push_back(c);
+        //printf("new cluster - empty\n");
     }
     else{
         float sum = 0;
@@ -213,6 +212,7 @@ void EventProcessor::assignToCluster(Event e){
             }
         }
         else{
+            //printf("new cluster - low p\n");
             Cluster  *c = new Cluster();
             c->addEvent(e);
             clusters.push_back(c);
@@ -301,6 +301,7 @@ void EventProcessor::maintainClusters(){
 
     //convert candidates to feature clusters
     for(unsigned int i = 0; i < clusters.size();i++){ // TODO: allow only max number of clusters!!
+        //printf("lifetime: %d  \r",clusters[i]->lifeTime);
         if(clusters[i]->lifeTime > MIN_CONVERSION_LIFETIME && clusters[i]->isCandidate()){
             clusters[i]->candidate = false;
         }
@@ -309,7 +310,8 @@ void EventProcessor::maintainClusters(){
     //delete inactive/old clusters
     for(unsigned int i = 0; i < clusters.size();i++){
         float activity = clusters[i]->getActivity();
-        printf("activity: %f  \r",activity);
+//        if(activity < ACTIVITY_THRESHOLD && activity > 0)
+//            printf("activity: %f  \r",activity);
         if(clusters[i]->lifeTime > MIN_CANDIDATE_LIFETIME &&  activity < ACTIVITY_THRESHOLD){
             delete clusters[i];
             clusters.erase(clusters.begin()+i);
