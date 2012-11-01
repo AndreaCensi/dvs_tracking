@@ -17,7 +17,6 @@ Cluster::Cluster(){
     lastPolarity = -1;
     firstEventTS = 0;
     lastEventTS = 0;
-    //    activity = 100.0f;
     candidate = true;
     temporalPredictor = -1; // next occurance of events
     transitionHistory = 0;
@@ -41,7 +40,6 @@ Cluster::~Cluster(){
 }
 
 void Cluster::addEvent(Event e){
-
     // add to activity history (eventsPerInterval)
     int lastEventIndex = (lastEventTS/TIME_WINDOW)%NUM_TIMESLOTS;
     int index = (e.timeStamp/TIME_WINDOW)%NUM_TIMESLOTS;
@@ -53,6 +51,7 @@ void Cluster::addEvent(Event e){
         eventsPerInterval->set(index,1);
     }
 
+    //add event to cluster
     events->add(e);
     lastPolarity = e.polarity;
     if(firstEventTS == 0)
@@ -85,13 +84,13 @@ void Cluster::calcMoments(){
         }
         M00++;
     }
-    //printf("#cluster area: %d  \r",M00);
+    printf("#cluster area: %d \n",M00);
 
     //centroid/ cluster position
     posX = M10/float(M00);
     posY = M01/float(M00);
 
-    //contour
+    //contour -------------------------------- RECHECK!
     float varianceX = M20 - posX*M10;
     float varianceY = M02 - posY*M01;
     float sqrtM00 = sqrt(float(M00));

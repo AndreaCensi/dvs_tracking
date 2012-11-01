@@ -10,8 +10,9 @@ class CamWidget : public QWidget
     Q_OBJECT
 
 public:
-    CamWidget(QImage *i, std::vector<Cluster*> *c, QWidget *parent = 0);
-    void setImage(QImage *i);
+    CamWidget(std::vector<Cluster*> *c, QWidget *parent = 0);
+    ~CamWidget();
+    void updateImage(Event *e);
 
 protected:
     void paintEvent(QPaintEvent *);

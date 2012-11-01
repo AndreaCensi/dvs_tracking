@@ -5,13 +5,13 @@
 //parameters from thesis
 #define ASSIGN_SHARPNESS 0.7f  // of the Boltzman function
 #define ASSIGN_PROB 0.6f
-#define CLUSTER_ASSIGN_CHANCE 100.0f
+#define CLUSTER_ASSIGN_CHANCE 10.0f //100 with squared distance
 #define CLUSTER_ASSIGN_THRESHOLD 1.4f
 #define MAX_T_DIFF 50 //usec
-#define ACTIVITY_THRESHOLD 0.1f //1.0f
+#define ACTIVITY_THRESHOLD 1.0f //1.0f
 #define MIN_CONVERSION_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
 #define MIN_CANDIDATE_LIFETIME 100000   // minimum lifetime before deletion
-#define MERGE_THRESHOLD 10.0f
+#define MERGE_THRESHOLD 10.0f   //100 with squared distance
 #define SPATIAL_SHARPNESS 2.0f
 #define TEMPORAL_SHARPNESS 500.0f
 
@@ -20,8 +20,6 @@
 
 
 EventProcessor::EventProcessor(){
-    img = new QImage(DVS_RES,DVS_RES,QImage::Format_RGB32);
-
     int length = DVS_RES*DVS_RES;
     onMap = new Event[length];
     offMap = new Event[length];
@@ -33,20 +31,15 @@ EventProcessor::EventProcessor(){
 
     clusterCandidates.reserve(9); // adapt number to filter size
     candidateClusters.reserve(8);
+
+    camWidget = new CamWidget(&clusters);
+    camWidget->show();
 }
 
 EventProcessor::~EventProcessor(){
-    delete img;
+    delete camWidget;
     delete [] onMap;
     delete [] offMap;
-}
-
-QImage* EventProcessor::getImage(){
-    return img;
-}
-
-std::vector<Cluster*>* EventProcessor::getClusters(){
-    return &clusters;
 }
 
 void EventProcessor::processEvent(Event e){
@@ -55,43 +48,25 @@ void EventProcessor::processEvent(Event e){
         return;
 
     //filter background activity
-//    std::vector<Event> candidates = labelingFilter(e);
-//    for(unsigned int i = 0; i < candidates.size(); i++){
-//        updateImage(&candidates[i]); //graphical output
-//        assignToCluster(candidates[i]); //assign new events to clusters
-//    }
+    //    std::vector<Event> candidates = labelingFilter(e);
+    //    for(unsigned int i = 0; i < candidates.size(); i++){
+    //        camWidget->updateImage(&candidates[i]); //graphical output
+    //        assignToCluster(candidates[i]); //assign new events to clusters
+    //    }
 
-        updateImage(&e); //graphical output
-//        assignToCluster(e); //assign new events to clusters
+    camWidget->updateImage(&e); //graphical output
+    //        assignToCluster(e); //assign new events to clusters
 
     //update all clusters with latest timestamp (for lifetime and activity measurements)
-//    for(unsigned int i = 0; i < clusters.size();i++){
-//        clusters[i]->updateTS(e.timeStamp);
-//    }
+    //    for(unsigned int i = 0; i < clusters.size();i++){
+    //        clusters[i]->updateTS(e.timeStamp);
+    //    }
 
-//    maintainClusters();
-}
-
-void EventProcessor::updateImage(Event *e){
-    int x = 127-e->posX;
-    int y = 127-e->posY;
-    int type = e->polarity;
-    QColor color;
-    if(type == 1)
-        color = Qt::red;
-    else
-        color = Qt::blue;
-    QRgb *pixel = (QRgb*)img->scanLine(y);
-    pixel = &pixel[x];
-    *pixel = color.rgb();
+    //    maintainClusters();
 }
 
 float EventProcessor::distance(Event *e, Cluster *c){
     return sqrt(pow(float(e->posX-c->posX),2) + pow(float(e->posY-c->posY),2));
-}
-
-float EventProcessor::distanceToContour(Event *e, Cluster *c){
-    return 0;
 }
 
 float EventProcessor::distance(Event *e1, Event *e2){
@@ -100,6 +75,10 @@ float EventProcessor::distance(Event *e1, Event *e2){
 
 float EventProcessor::distance(Cluster *c1, Cluster *c2){
     return sqrt(pow(float(c1->posX-c2->posX),2) + pow(float(c1->posY-c2->posY),2));
+}
+
+float EventProcessor::squaredDistance(Cluster *c1, Cluster *c2){
+    return pow(float(c1->posX-c2->posX),2) + pow(float(c1->posY-c2->posY),2);
 }
 
 float EventProcessor::getBoltzmanWeight(Event *e, Cluster *c){
@@ -224,7 +203,6 @@ void EventProcessor::assignToCluster(Event e){
 
 
 std::vector<Event> EventProcessor::labelingFilter(Event e){
-
     updateMap(e);   // update filter map
 
     Event *map = 0;
@@ -310,8 +288,8 @@ void EventProcessor::maintainClusters(){
     //delete inactive/old clusters
     for(unsigned int i = 0; i < clusters.size();i++){
         float activity = clusters[i]->getActivity();
-//        if(activity < ACTIVITY_THRESHOLD && activity > 0)
-//            printf("activity: %f  \r",activity);
+        //        if(activity < ACTIVITY_THRESHOLD && activity > 0)
+        //            printf("activity: %f  \r",activity);
         if(clusters[i]->lifeTime > MIN_CANDIDATE_LIFETIME &&  activity < ACTIVITY_THRESHOLD){
             delete clusters[i];
             clusters.erase(clusters.begin()+i);

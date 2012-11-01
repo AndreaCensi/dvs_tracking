@@ -95,7 +95,7 @@ void DVS128Interface::startReaderThread(int devIndex){
     // open the device
     status = dev.Open(devIndex,devList,&usbIoID);
     if ( status != USBIO_ERR_SUCCESS ) {
-        printf("Could not open device: %x",status);
+        printf("Could not open device: %x\n",status);
         return;
     }
 
