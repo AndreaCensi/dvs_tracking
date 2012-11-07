@@ -5,8 +5,8 @@
 //parameters from thesis
 #define ASSIGN_SHARPNESS 0.7f  // of the Boltzman function
 #define ASSIGN_PROB 0.6f
-#define CLUSTER_ASSIGN_CHANCE 10.0f //100 with squared distance
-#define CLUSTER_ASSIGN_THRESHOLD 1.4f //1.4f
+#define EVENT_ASSIGN_CHANCE 10.0f //100 with squared distance
+#define EVENT_ASSIGN_THRESHOLD 1.4f //1.4f
 #define MAX_T_DIFF 50 //usec
 #define ACTIVITY_THRESHOLD 1.0f //1.0f
 #define MIN_CONVERSION_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
@@ -109,8 +109,8 @@ float EventProcessor::boundaryCost(Event *e, Cluster *c){
 }
 
 float EventProcessor::temporalCost(Event *e, Cluster *c){
-    if(!c->transitionHistory){
-        return 0.5;
+    if(!c->transitionHistory){ //later: isComputable by a certain criterion
+        return 0.5f;
     }
     else{
         int relative = (e->timeStamp - c->transitionHistory->phase) % c->transitionHistory->period;
@@ -168,12 +168,11 @@ void EventProcessor::assignToCluster(Event e){
     else{
         float sum = 0;
         float lowest = 10000.0f;
-        float cost = 0;
         int clusterIndex = 0;
         for(unsigned int i = 0; i < clusters.size(); i++){
-            if(distance(&e,clusters[i]) < CLUSTER_ASSIGN_CHANCE){
-                cost = getSpatioTemporalCost(&e,clusters[i]);
-                if(cost < CLUSTER_ASSIGN_THRESHOLD){
+            if(distance(&e,clusters[i]) < EVENT_ASSIGN_CHANCE){
+                float cost = getSpatioTemporalCost(&e,clusters[i]);
+                if(cost < EVENT_ASSIGN_THRESHOLD){
                     if(cost < lowest){
                         lowest = cost;
                         clusterIndex = i;
@@ -183,7 +182,7 @@ void EventProcessor::assignToCluster(Event e){
             }
         }
         //normalize
-        if(cost < CLUSTER_ASSIGN_THRESHOLD){
+        if(lowest < EVENT_ASSIGN_THRESHOLD){
             float p = exp(lowest*-ASSIGN_SHARPNESS)/sum;  //probability
             if(p > ASSIGN_PROB){
                 clusters[clusterIndex]->addEvent(e);

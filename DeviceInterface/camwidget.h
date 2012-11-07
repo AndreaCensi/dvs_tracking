@@ -10,7 +10,7 @@ class CamWidget : public QWidget
     Q_OBJECT
 
 public:
-    CamWidget(std::vector<Cluster*> *c, QWidget *parent = 0);
+    CamWidget(std::vector<Cluster*> *c = 0, QWidget *parent = 0);
     ~CamWidget();
     void updateImage(Event *e);
 

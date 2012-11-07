@@ -18,6 +18,7 @@ private:
     void readDVS128Event(const char* data, int numBytes);
     unsigned int mileStone;
     EventProcessorBase *eventProcessor;
+    Event eventBuffer[128];
 };
 
 #endif // USBREADER_H

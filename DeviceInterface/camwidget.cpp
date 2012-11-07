@@ -44,15 +44,17 @@ void CamWidget::paintEvent(QPaintEvent *){
     painter.drawImage(rect,*img);
 
     //draw circle around cluster
-    for(unsigned int i = 0; i < clusters->size(); i++){
-        if(!clusters->at(i)->candidate){
-            int x = (127-clusters->at(i)->posX)*4;
-            int y = (127-clusters->at(i)->posY)*4;
-            painter.setPen(Qt::green);
-            painter.drawEllipse(QPoint(x,y),30,30);
+    if(clusters){
+        for(unsigned int i = 0; i < clusters->size(); i++){
+            if(!clusters->at(i)->candidate){
+                int x = (127-clusters->at(i)->posX)*4;
+                int y = (127-clusters->at(i)->posY)*4;
+                painter.setPen(Qt::green);
+                painter.drawEllipse(QPoint(x,y),30,30);
+            }
+            //printf("x,y: %f %f                     \r",clusters->at(i)->posX,clusters->at(i)->posY);
+            printf("#clusters: %d  \r",clusters->size());
         }
-        //printf("x,y: %f %f                     \r",clusters->at(i)->posX,clusters->at(i)->posY);
-        printf("#clusters: %d  \r",clusters->size());
     }
 
     for(int x = 0; x < 128; x++){
