@@ -24,7 +24,7 @@ void USBReader::ProcessData(CUsbIoBuf* buf){
 }
 
 void USBReader::readDVS128Event(const char *data, int numBytes){
-    printf("#Events: %d  \r",numBytes/DVS128_FRAME_LENGTH);
+    //printf("#Events: %d  \r",numBytes/DVS128_FRAME_LENGTH);
     if(numBytes%DVS128_FRAME_LENGTH != 0){
         printf("Incorrect data size!");
     }

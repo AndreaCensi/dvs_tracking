@@ -30,37 +30,22 @@ def get_device():
     return None
 
 usbiocnt = 0L
-def usbio(dh, f1, f2, dc):
+def usbio(dh, c_id, f, dc): #c_id: channel id, f1,f2: frequency, dc: duty cycle
     global usbiocnt
     usbiocnt += 1
+
+    f1 = (f >> 8) & 0xFF
+    f2 = f & 0xFF
     
-    dout = array.array('B', [0]*4)
+    dout = array.array('B', [0]*5)
 
     dout[0] = 0xFF & 0x00
-    dout[1] = 0xFF & (f1)
-    dout[2] = 0xFF & (f2)
-    dout[3] = 0xFF & (dc)  
+    dout[1] = 0xFF & c_id
+    dout[2] = f1
+    dout[3] = f2
+    dout[4] = 0xFF & dc  
 
     dh.bulkWrite(EP_OUT, dout.tostring())
-
-    #if usbiocnt % PWMperADC == 0:
-    if 1:
-
-        din = dh.bulkRead(EP_IN, 4)
-        l = len(din)
-        if l != 4:
-            print "unexpected bulk read length: %d" % l
-        else:
-            if usbiocnt % PWMperADC == 0:
-                adc( (din[2] << 8) + din[3] )
-
-
-def blink(dh,freq,dtyc):
-    f1 = (freq >> 8) & 0xFF
-    f2 = freq & 0xFF
-    dc = dtyc & 0xFF
-    usbio(dh,f1,f2,dc)
-
  
 def main():
 
@@ -70,12 +55,13 @@ def main():
 
     key_in = ""
     while key_in != 'q':
-        key_in = raw_input('Enter frequency and duty cycle [f,dc]: ')
+        key_in = raw_input('Set PWM [channel_ID,frequency,duty_cycle]: ')
         if key_in != 'q':
-            values = key_in.split(',') 
-            freq = int(values[0])
-            dtyc = int(values[1]) # in 0-100 %
-            blink(dh,freq, dtyc)
+            values = key_in.split(',')
+            c_id = int(values[0])
+            freq = int(values[1])
+            dtyc = int(values[2]) # in 0-100 %
+            usbio(dh,c_id,freq, dtyc)
 
     dh.releaseInterface()
     del dh

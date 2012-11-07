@@ -6,7 +6,7 @@
 #define ASSIGN_SHARPNESS 0.7f  // of the Boltzman function
 #define ASSIGN_PROB 0.6f
 #define CLUSTER_ASSIGN_CHANCE 10.0f //100 with squared distance
-#define CLUSTER_ASSIGN_THRESHOLD 1.4f
+#define CLUSTER_ASSIGN_THRESHOLD 1.4f //1.4f
 #define MAX_T_DIFF 50 //usec
 #define ACTIVITY_THRESHOLD 1.0f //1.0f
 #define MIN_CONVERSION_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
@@ -48,21 +48,21 @@ void EventProcessor::processEvent(Event e){
         return;
 
     //filter background activity
-    //    std::vector<Event> candidates = labelingFilter(e);
-    //    for(unsigned int i = 0; i < candidates.size(); i++){
-    //        camWidget->updateImage(&candidates[i]); //graphical output
-    //        assignToCluster(candidates[i]); //assign new events to clusters
-    //    }
+    std::vector<Event> candidates = labelingFilter(e);
+    for(unsigned int i = 0; i < candidates.size(); i++){
+        camWidget->updateImage(&candidates[i]); //graphical output
+        assignToCluster(candidates[i]); //assign new events to clusters
+    }
 
-    camWidget->updateImage(&e); //graphical output
-    //        assignToCluster(e); //assign new events to clusters
+    //camWidget->updateImage(&e); //graphical output
+    assignToCluster(e); //assign new events to clusters
 
     //update all clusters with latest timestamp (for lifetime and activity measurements)
-    //    for(unsigned int i = 0; i < clusters.size();i++){
-    //        clusters[i]->updateTS(e.timeStamp);
-    //    }
+    for(unsigned int i = 0; i < clusters.size();i++){
+        clusters[i]->updateTS(e.timeStamp);
+    }
 
-    //    maintainClusters();
+    maintainClusters();
 }
 
 float EventProcessor::distance(Event *e, Cluster *c){
@@ -164,7 +164,6 @@ void EventProcessor::assignToCluster(Event e){
         Cluster *c = new Cluster();
         c->addEvent(e);
         clusters.push_back(c);
-        //printf("new cluster - empty\n");
     }
     else{
         float sum = 0;
@@ -191,7 +190,6 @@ void EventProcessor::assignToCluster(Event e){
             }
         }
         else{
-            //printf("new cluster - low p\n");
             Cluster  *c = new Cluster();
             c->addEvent(e);
             clusters.push_back(c);
@@ -199,8 +197,35 @@ void EventProcessor::assignToCluster(Event e){
     }
 }
 
-
-
+//void EventProcessor::assignToCluster(Event e){
+//    if(clusters.empty()){
+//        Cluster *c = new Cluster();
+//        c->addEvent(e);
+//        clusters.push_back(c);
+//    }
+//    else{
+//        float lowest = 10000.0f;
+//        float cost = 0;
+//        int clusterIndex = 0;
+//        for(unsigned int i = 0; i < clusters.size(); i++){
+//            cost=distance(&e,clusters[i]);
+//            if(cost < CLUSTER_ASSIGN_CHANCE){
+//                if(cost < lowest){
+//                    lowest = cost;
+//                    clusterIndex = i;
+//                }
+//            }
+//        }
+//        if(cost < CLUSTER_ASSIGN_THRESHOLD){
+//            clusters[clusterIndex]->addEvent(e);
+//        }
+//        else{
+//            Cluster  *c = new Cluster();
+//            c->addEvent(e);
+//            clusters.push_back(c);
+//        }
+//    }
+//}
 
 std::vector<Event> EventProcessor::labelingFilter(Event e){
     updateMap(e);   // update filter map
@@ -288,8 +313,6 @@ void EventProcessor::maintainClusters(){
     //delete inactive/old clusters
     for(unsigned int i = 0; i < clusters.size();i++){
         float activity = clusters[i]->getActivity();
-        //        if(activity < ACTIVITY_THRESHOLD && activity > 0)
-        //            printf("activity: %f  \r",activity);
         if(clusters[i]->lifeTime > MIN_CANDIDATE_LIFETIME &&  activity < ACTIVITY_THRESHOLD){
             delete clusters[i];
             clusters.erase(clusters.begin()+i);

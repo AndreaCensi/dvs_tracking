@@ -2,9 +2,9 @@
 #include <math.h>
 #include <algorithm>
 
-#define MAX_AGE_MOMENT 10000 //5000 usec?
+#define MAX_AGE_MOMENT 5000 //5000 usec?
 #define MAX_AGE_ACTIVITY 10000 //usec
-#define NUM_TIMESLOTS 10
+#define NUM_TIMESLOTS 100
 #define TIME_WINDOW 1000 //usec
 #define PI 3.14159265359
 
@@ -84,7 +84,7 @@ void Cluster::calcMoments(){
         }
         M00++;
     }
-    printf("#cluster area: %d \n",M00);
+    //printf("#cluster area: %d \r",M00);
 
     //centroid/ cluster position
     posX = M10/float(M00);

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 1.0.0?>
+<framework-data>
+  <options>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.ssc" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.wdt" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.flashc" value="true"/>
+    <option id="com.atmel.avr32.sf.uc3b.component.option.touch.at42qt1060" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.pdca" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.service.option.newlibaddon" value="none"/>
+    <option id="com.atmel.avr32.sf.uc3b.component.option.joystick" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.component.option.sdmmc" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.component.option.accelerometer" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.component.option.nand_gpio" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.adc" value="true"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.usart" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.service.option.delay" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.eic" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.component.option.audio.tlv320aic23b" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.cpu.cc" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.dsplib" value="none"/>
+    <option id="com.atmel.avr32.sf.uc3b.service.option.debug.dsplib" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.usbb" value="true"/>
+    <option id="com.atmel.avr32.sf.uc3b.service.option.audiomixer" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.component.option.audio.dac.pwmdac" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.gpio" value="true"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.rtc" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.service.option.freertos" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.component.option.touch.qt1081" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.service.option.usbb" value="None"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.spi" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.twi" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.service.option.memory" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.service.option.pictures.jpg" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.tc" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.pm" value="true"/>
+    <option id="com.atmel.avr32.sf.uc3b.component.option.dataflash.at25dfx" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.service.option.memory.ecchamming" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.service.option.fat" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.intc" value="true"/>
+    <option id="com.atmel.avr32.sf.uc3b.service.option.autobaud" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.component.option.touch.qt60168" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.pwm" value="true"/>
+    <option id="com.atmel.avr32.sf.uc3b.driver.option.cpu.mpu" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.component.option.dataflash" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.component.option.display" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.service.option.debug" value="false"/>
+    <option id="com.atmel.avr32.sf.uc3b.service.option.polarssl" value="false"/>
+  </options>
+  <files>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/USBB/ENUM/DEVICE/usb_device_task.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/USBB/ENUM/DEVICE/usb_device_task.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/FLASHC/flashc.c" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/FLASHC/flashc.c" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/PWM/pwm.c" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/PWM/pwm.c" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/PM/pm.c" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/PM/pm.c" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/INTC/exception.x" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/INTC/exception.S" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/USBB/ENUM/HOST/usb_host_enum.c" framework="com.atmel.avr32.sf.uc3b" version="1.7.0" source="DRIVERS/USBB/ENUM/HOST/usb_host_enum.c" changed="true"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/USBB/usbb.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/USBB/usbb.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/INTC/intc.c" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/INTC/intc.c" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/ADC/adc.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/ADC/adc.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/INTC/intc.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/INTC/intc.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/USBB/ENUM/HOST/usb_host_enum.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/USBB/ENUM/HOST/usb_host_enum.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/USBB/ENUM/DEVICE/usb_device_task.c" framework="com.atmel.avr32.sf.uc3b" version="1.7.0" source="DRIVERS/USBB/ENUM/DEVICE/usb_device_task.c" changed="true"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/PM/power_clocks_lib.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/PM/power_clocks_lib.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/USBB/ENUM/DEVICE/usb_standard_request.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/USBB/ENUM/DEVICE/usb_standard_request.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/UTILS/PREPROCESSOR/stringz.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="UTILS/PREPROCESSOR/stringz.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/UTILS/PREPROCESSOR/mrepeat.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="UTILS/PREPROCESSOR/mrepeat.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/UTILS/PREPROCESSOR/preprocessor.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="UTILS/PREPROCESSOR/preprocessor.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/USBB/usb_drv.c" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/USBB/usb_drv.c" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/GPIO/gpio.h" framework="com.atmel.avr32.sf.uc3b" version="1.7.0" source="DRIVERS/GPIO/gpio.h" changed="true"/>
+    <file path="src/SOFTWARE_FRAMEWORK/UTILS/compiler.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="UTILS/compiler.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/USBB/ENUM/usb_task.c" framework="com.atmel.avr32.sf.uc3b" version="1.7.0" source="DRIVERS/USBB/ENUM/usb_task.c" changed="true"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/PWM/pwm.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/PWM/pwm.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/GPIO/gpio.c" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/GPIO/gpio.c" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/PM/power_clocks_lib.c" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/PM/power_clocks_lib.c" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/USBB/ENUM/HOST/usb_host_task.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/USBB/ENUM/HOST/usb_host_task.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/UTILS/PREPROCESSOR/tpaste.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="UTILS/PREPROCESSOR/tpaste.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/PM/pm.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/PM/pm.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/USBB/usb_drv.h" framework="com.atmel.avr32.sf.uc3b" version="1.7.0" source="DRIVERS/USBB/usb_drv.h" changed="true"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/ADC/adc.c" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/ADC/adc.c" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/USBB/ENUM/HOST/usb_host_task.c" framework="com.atmel.avr32.sf.uc3b" version="1.7.0" source="DRIVERS/USBB/ENUM/HOST/usb_host_task.c" changed="true"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/USBB/ENUM/usb_task.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/USBB/ENUM/usb_task.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/FLASHC/flashc.h" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/FLASHC/flashc.h" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/USBB/ENUM/DEVICE/usb_standard_request.c" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/USBB/ENUM/DEVICE/usb_standard_request.c" changed="false"/>
+    <file path="src/SOFTWARE_FRAMEWORK/DRIVERS/PM/pm_conf_clocks.c" framework="com.atmel.avr32.sf.uc3b" version="1.6.0" source="DRIVERS/PM/pm_conf_clocks.c" changed="false"/>
+  </files>
+</framework-data>
