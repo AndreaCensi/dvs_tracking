@@ -116,6 +116,8 @@ static unsigned int channel_id[7];
 // we don't, as pwm_channel_init() does not use the .ccnt field...!?!?
 
 void set_pwm(U8 c_id, U8 freq1, U8 freq2, U8 dtyc){
+	if(c_id < 0 || c_id >= NUM_CHANNELS)
+		return;
 	unsigned int c = c_id;
 	unsigned int f = (freq1 << 8) | freq2;
 	f = 128906/f;
