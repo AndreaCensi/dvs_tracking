@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'signalwrapper.h'
 **
-** Created: Wed 7. Nov 18:02:29 2012
+** Created: Thu 8. Nov 12:51:00 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

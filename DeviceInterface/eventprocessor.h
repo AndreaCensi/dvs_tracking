@@ -8,6 +8,7 @@
 #include <list>
 #include <vector>
 #include "camwidget.h"
+#include "filter.h"
 #include <QImage>
 
 class EventProcessor : public EventProcessorBase
@@ -31,10 +32,10 @@ private:
     float cumulativeDistribution(float l, float x);
 
     // Assignement
-    void updateMap(Event e);
+//    void updateMap(Event e);
     void assignToCluster(Event e);
     //void mapAssign(Event *e);
-    std::vector<Event> labelingFilter(Event e);
+    //std::vector<Event> labelingFilter(Event e);
 
     //maintanance
     void maintainClusters();
@@ -48,6 +49,9 @@ private:
 
     //graphical output
     CamWidget *camWidget;
+
+    Filter *filter;
+
 };
 
 #endif // EVENTPROCESSOR_H

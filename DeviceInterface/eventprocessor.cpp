@@ -14,20 +14,15 @@
 #define MERGE_THRESHOLD 10.0f   //100 with squared distance
 #define SPATIAL_SHARPNESS 2.0f
 #define TEMPORAL_SHARPNESS 500.0f
+#define NEIGHBORHOOD 8
 
 //other
 #define DVS_RES 128
 
 
 EventProcessor::EventProcessor(){
-    int length = DVS_RES*DVS_RES;
-    onMap = new Event[length];
-    offMap = new Event[length];
-    Event e;
-    for(int i = 0; i < length;i++){
-        onMap[i] = e;
-        offMap[i] = e;
-    }
+
+    filter = new Filter();
 
     clusterCandidates.reserve(9); // adapt number to filter size
     candidateClusters.reserve(8);
@@ -38,8 +33,7 @@ EventProcessor::EventProcessor(){
 
 EventProcessor::~EventProcessor(){
     delete camWidget;
-    delete [] onMap;
-    delete [] offMap;
+    delete filter;
 }
 
 void EventProcessor::processEvent(Event e){
@@ -48,14 +42,11 @@ void EventProcessor::processEvent(Event e){
         return;
 
     //filter background activity
-    std::vector<Event> candidates = labelingFilter(e);
-    for(unsigned int i = 0; i < candidates.size(); i++){
+    Event* candidates = filter->labelingFilter(e,MAX_T_DIFF);
+    for(int i = 0; i < filter->size(); i++){
         camWidget->updateImage(&candidates[i]); //graphical output
         assignToCluster(candidates[i]); //assign new events to clusters
     }
-
-    //camWidget->updateImage(&e); //graphical output
-    assignToCluster(e); //assign new events to clusters
 
     //update all clusters with latest timestamp (for lifetime and activity measurements)
     for(unsigned int i = 0; i < clusters.size();i++){
@@ -142,23 +133,6 @@ float EventProcessor::cumulativeDistribution(float l, float x){
     return (x < 0) ? 0 : (1-exp(-x*l));
 }
 
-void EventProcessor::updateMap(Event e){
-    //assign event to on/off map
-    Event *map;
-
-    int x = 127-e.posX;
-    int y = 127-e.posY;
-
-    if(e.polarity == 1){
-        map = onMap;
-    }
-    else{
-        map = offMap;
-    }
-
-    map[x+DVS_RES*y] = e;
-}
-
 void EventProcessor::assignToCluster(Event e){
     if(clusters.empty()){
         Cluster *c = new Cluster();
@@ -194,78 +168,6 @@ void EventProcessor::assignToCluster(Event e){
             clusters.push_back(c);
         }
     }
-}
-
-//void EventProcessor::assignToCluster(Event e){
-//    if(clusters.empty()){
-//        Cluster *c = new Cluster();
-//        c->addEvent(e);
-//        clusters.push_back(c);
-//    }
-//    else{
-//        float lowest = 10000.0f;
-//        float cost = 0;
-//        int clusterIndex = 0;
-//        for(unsigned int i = 0; i < clusters.size(); i++){
-//            cost=distance(&e,clusters[i]);
-//            if(cost < CLUSTER_ASSIGN_CHANCE){
-//                if(cost < lowest){
-//                    lowest = cost;
-//                    clusterIndex = i;
-//                }
-//            }
-//        }
-//        if(cost < CLUSTER_ASSIGN_THRESHOLD){
-//            clusters[clusterIndex]->addEvent(e);
-//        }
-//        else{
-//            Cluster  *c = new Cluster();
-//            c->addEvent(e);
-//            clusters.push_back(c);
-//        }
-//    }
-//}
-
-std::vector<Event> EventProcessor::labelingFilter(Event e){
-    updateMap(e);   // update filter map
-
-    Event *map = 0;
-    Event *tmp = 0;
-    int x = 127-e.posX;
-    int y = 127-e.posY;
-
-    if(e.polarity == 1){
-        map = onMap;
-    }
-    else{
-        map = offMap;
-    }
-
-    //Check neighbouring events, only if inside boundary
-    std::vector<Event> candidates;
-    candidates.reserve(8);
-    int range = 1;  //determines size of filter kernel
-    int tDiff = 0;
-    if(x >= range && x < DVS_RES-range && y >= range && y < DVS_RES-range){
-        for(int u = x-range; u < x+range; u++){
-            for(int v = y-range; v < y+range; v++){
-                tmp =  &map[u+DVS_RES*v];
-                if(!(u == x && v == y)){
-                    tDiff = e.timeStamp - tmp->timeStamp;
-                    tDiff = abs(tDiff);
-                    if(tDiff < MAX_T_DIFF && tmp->assigned == false){ //if tDiff with neighbouring event small, cluster
-                        tmp->assigned = true; // set flag, that event is assigned and not to be deleted by the filter map
-                        candidates.push_back(*tmp);
-                    }
-                }
-            }
-        }
-        if(!candidates.empty()){
-            e.assigned = true;
-            candidates.push_back(e);
-        }
-    }
-    return candidates;
 }
 
 void EventProcessor::maintainClusters(){
