@@ -52,9 +52,6 @@ private:
     CamWidget *camWidget;
 
     Filter *filter;
-
-    Logger *logger;
-
 };
 
 #endif // EVENTPROCESSOR_H

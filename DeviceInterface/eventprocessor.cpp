@@ -23,8 +23,6 @@ EventProcessor::EventProcessor(){
 
     filter = new Filter();
 
-    logger = new Logger();
-
     //clusterCandidates.reserve(9); // adapt number to filter size
     //candidateClusters.reserve(8);
 
@@ -33,10 +31,8 @@ EventProcessor::EventProcessor(){
 }
 
 EventProcessor::~EventProcessor(){
-    logger->saveToFile("C:/Users/giselher/Documents/uzh/test1.txt");
     delete camWidget;
     delete filter;
-    delete logger;
 }
 
 void EventProcessor::processEvent(Event e){
@@ -44,8 +40,8 @@ void EventProcessor::processEvent(Event e){
     if(e.isSpecial())
         return;
 
+    //printf("TS: %d            \r",e.timeStamp);
     camWidget->updateImage(&e);
-    logger->log(&e);
     //filter background activity
 //    Event* candidates = filter->labelingFilter(e,MAX_T_DIFF);
 //    for(int i = 0; i < filter->size(); i++){

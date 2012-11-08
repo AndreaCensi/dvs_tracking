@@ -7,9 +7,11 @@ USBReader::USBReader(EventProcessorBase *ep)
 {
     eventProcessor = ep;
     mileStone = 0;
+    logger = new Logger();
 }
 
 USBReader::~USBReader(){
+    delete logger;
 }
 
 void USBReader::ProcessData(CUsbIoBuf* buf){
@@ -47,6 +49,10 @@ void USBReader::readDVS128Event(const char *data, int numBytes){
                     event.posX = (rawAddr >> 1) & 0x7f;
                     event.posY = (rawAddr >> 8) & 0x7f;
                     event.timeStamp = mileStone + (data[i+2] & 0xff | ((data[i+3] & 0xff) << 8));
+
+                    //logging
+                    if(mileStone > 0 && !logger->done())
+                        logger->log(&event);
                 }
                 //processEvent
                 eventProcessor->processEvent(event);

@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "eventprocessorbase.h"
 #include "event.h"
+#include "logger.h"
 
 class USBReader : public CUsbIoReader
 {
@@ -19,6 +20,7 @@ private:
     unsigned int mileStone;
     EventProcessorBase *eventProcessor;
     Event eventBuffer[128];
+    Logger *logger;
 };
 
 #endif // USBREADER_H
