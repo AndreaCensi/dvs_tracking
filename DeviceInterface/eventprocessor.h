@@ -9,6 +9,7 @@
 #include <vector>
 #include "camwidget.h"
 #include "filter.h"
+#include "logger.h"
 #include <QImage>
 
 class EventProcessor : public EventProcessorBase
@@ -43,14 +44,16 @@ private:
     Event *onMap;
     Event *offMap;
 
-    std::vector<Event*> clusterCandidates;
-    std::vector<Cluster*> candidateClusters;
+//    std::vector<Event*> clusterCandidates;
+//    std::vector<Cluster*> candidateClusters;
     std::vector<Cluster*> clusters;
 
     //graphical output
     CamWidget *camWidget;
 
     Filter *filter;
+
+    Logger *logger;
 
 };
 

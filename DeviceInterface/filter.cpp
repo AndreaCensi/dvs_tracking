@@ -1,7 +1,7 @@
 #include "filter.h"
 #include <math.h>
 
-#define NEIGHBORHOOD 8  //neighborhood of filter kernel
+#define NEIGHBORHOOD 9  //neighborhood of filter kernel
 #define RADIUS 1    //range of filter kernel
 
 Filter::Filter(int res)
@@ -12,8 +12,6 @@ Filter::Filter(int res)
     offMap = new Event[length];
 
     candidates = new Event[NEIGHBORHOOD];
-//    for(int i = 0; i < NEIGHBORHOOD;i++)
-//        candidates[i] = 0;
 
     Event e;
     for(int i = 0; i < length;i++){ //fill with dummy events

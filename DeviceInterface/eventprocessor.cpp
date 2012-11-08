@@ -8,13 +8,12 @@
 #define EVENT_ASSIGN_CHANCE 10.0f //100 with squared distance
 #define EVENT_ASSIGN_THRESHOLD 1.4f //1.4f
 #define MAX_T_DIFF 50 //usec
-#define ACTIVITY_THRESHOLD 1.0f //1.0f
+#define ACTIVITY_THRESHOLD 2.0f //1.0f
 #define MIN_CONVERSION_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
 #define MIN_CANDIDATE_LIFETIME 100000   // minimum lifetime before deletion
 #define MERGE_THRESHOLD 10.0f   //100 with squared distance
 #define SPATIAL_SHARPNESS 2.0f
 #define TEMPORAL_SHARPNESS 500.0f
-#define NEIGHBORHOOD 8
 
 //other
 #define DVS_RES 128
@@ -24,16 +23,20 @@ EventProcessor::EventProcessor(){
 
     filter = new Filter();
 
-    clusterCandidates.reserve(9); // adapt number to filter size
-    candidateClusters.reserve(8);
+    logger = new Logger();
+
+    //clusterCandidates.reserve(9); // adapt number to filter size
+    //candidateClusters.reserve(8);
 
     camWidget = new CamWidget(&clusters);
     camWidget->show();
 }
 
 EventProcessor::~EventProcessor(){
+    logger->saveToFile("C:/Users/giselher/Documents/uzh/test1.txt");
     delete camWidget;
     delete filter;
+    delete logger;
 }
 
 void EventProcessor::processEvent(Event e){
@@ -41,19 +44,21 @@ void EventProcessor::processEvent(Event e){
     if(e.isSpecial())
         return;
 
+    camWidget->updateImage(&e);
+    logger->log(&e);
     //filter background activity
-    Event* candidates = filter->labelingFilter(e,MAX_T_DIFF);
-    for(int i = 0; i < filter->size(); i++){
-        camWidget->updateImage(&candidates[i]); //graphical output
-        assignToCluster(candidates[i]); //assign new events to clusters
-    }
+//    Event* candidates = filter->labelingFilter(e,MAX_T_DIFF);
+//    for(int i = 0; i < filter->size(); i++){
+//        camWidget->updateImage(&candidates[i]); //graphical output
+//        assignToCluster(candidates[i]); //assign new events to clusters
+//    }
 
-    //update all clusters with latest timestamp (for lifetime and activity measurements)
-    for(unsigned int i = 0; i < clusters.size();i++){
-        clusters[i]->updateTS(e.timeStamp);
-    }
+//    //update all clusters with latest timestamp (for lifetime and activity measurements)
+//    for(unsigned int i = 0; i < clusters.size();i++){
+//        clusters[i]->updateTS(e.timeStamp);
+//    }
 
-    maintainClusters();
+//    maintainClusters();
 }
 
 float EventProcessor::distance(Event *e, Cluster *c){

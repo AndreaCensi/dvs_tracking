@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     transitionhistory.cpp \
     dvs128interface.cpp \
     eventgenerator.cpp \
-    filter.cpp
+    filter.cpp \
+    logger.cpp
 
 HEADERS += \
     usbreader.h \
@@ -33,7 +34,8 @@ HEADERS += \
     transitionhistory.h \
     dvs128interface.h \
     eventgenerator.h \
-    filter.h
+    filter.h \
+    logger.h
 
 
 
