@@ -26,7 +26,7 @@ EventProcessor::EventProcessor(){
     //clusterCandidates.reserve(9); // adapt number to filter size
     //candidateClusters.reserve(8);
 
-    camWidget = new CamWidget(&clusters);
+    camWidget = new CamWidget(&clusters,filter->getHistogram());
     camWidget->show();
 }
 
@@ -41,13 +41,15 @@ void EventProcessor::processEvent(Event e){
         return;
 
     //printf("TS: %d            \r",e.timeStamp);
-    camWidget->updateImage(&e);
+
+    //camWidget->updateImage(&e);
+
     //filter background activity
-//    Event* candidates = filter->labelingFilter(e,MAX_T_DIFF);
-//    for(int i = 0; i < filter->size(); i++){
-//        camWidget->updateImage(&candidates[i]); //graphical output
-//        assignToCluster(candidates[i]); //assign new events to clusters
-//    }
+    Event* candidates = filter->labelingFilter(e,MAX_T_DIFF);
+    for(int i = 0; i < filter->availableEvents(); i++){
+        camWidget->updateImage(&candidates[i]); //graphical output
+        //assignToCluster(candidates[i]); //assign new events to clusters
+    }
 
 //    //update all clusters with latest timestamp (for lifetime and activity measurements)
 //    for(unsigned int i = 0; i < clusters.size();i++){

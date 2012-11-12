@@ -6,10 +6,11 @@
 
 #define DVS_RES 128
 
-CamWidget::CamWidget(std::vector<Cluster*> *c, QWidget *parent) : QWidget(parent)
+CamWidget::CamWidget(std::vector<Cluster*> *c, int *hist, QWidget *parent) : QWidget(parent)
 {
     img = new QImage(DVS_RES,DVS_RES,QImage::Format_RGB32);
     clusters = c;
+    histogram = hist;
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -40,23 +41,34 @@ void CamWidget::updateImage(Event *e){
 void CamWidget::paintEvent(QPaintEvent *){
     QPainter painter(this);
     QRect rect(0,0,512,512);
-    QColor color = Qt::black;
     painter.drawImage(rect,*img);
-
+    painter.setPen(Qt::green);
     //draw circle around cluster
     if(clusters){
         for(unsigned int i = 0; i < clusters->size(); i++){
             if(!clusters->at(i)->candidate){
                 int x = (127-clusters->at(i)->posX)*4;
                 int y = (127-clusters->at(i)->posY)*4;
-                painter.setPen(Qt::green);
+
                 painter.drawEllipse(QPoint(x,y),30,30);
             }
             //printf("x,y: %f %f                     \r",clusters->at(i)->posX,clusters->at(i)->posY);
-//            printf("#clusters: %d  \r",clusters->size());
+            //            printf("#clusters: %d  \r",clusters->size());
         }
     }
 
+    painter.setPen(Qt::yellow);
+    // draw histogram
+    for(int i = 0; i < 256; i++){
+        int x = i*2;
+        int startY = 508;
+        int endY = startY-histogram[i]/64;
+        painter.drawLine(x,startY,x,endY);
+    }
+
+
+    //reset image
+    QColor color = Qt::black;
     for(int x = 0; x < 128; x++){
         for(int y = 0; y < 128; y++){
             QRgb *pixel = (QRgb*)img->scanLine(y);

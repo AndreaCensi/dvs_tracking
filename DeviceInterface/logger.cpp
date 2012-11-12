@@ -6,38 +6,32 @@
 
 Logger::Logger()
 {
-    eventLog.timeStamp.reserve(1000000);
-    eventLog.x.reserve(1000000);
-    eventLog.y.reserve(1000000);
-    eventLog.type.reserve(1000000);
+    eventLog.reserve(1000000);
     finished = false;
 }
 
-void Logger::log(Event *e){
-    if(eventLog.timeStamp.empty())
-        printf("logging started...\n");
-    eventLog.timeStamp.append(e->timeStamp);
-    eventLog.x.append(e->posX);
-    eventLog.y.append(e->posY);
-    eventLog.type.append(e->polarity);
+void Logger::log(Event e){
+    if(eventLog.empty())
+        printf("Logging started...\n");
+    eventLog.append(e);
 }
 
 void Logger::saveToFile(QString filename){
-    printf("saving...\n");
+    printf("Saving...\n");
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         return;
     QTextStream out(&file);
-    for(int i = 0; i < eventLog.timeStamp.size(); i++){
-        out << eventLog.timeStamp.at(i) << "\t" << eventLog.x.at(i) << "\t" << eventLog.y.at(i) << "\t" << eventLog.type.at(i) << "\n";             // Desired output
+    for(int i = 0; i < eventLog.size(); i++){
+        out << eventLog.at(i).timeStamp << "\t" << eventLog.at(i).posX << "\t" << eventLog.at(i).posY << "\t" << eventLog.at(i).polarity << "\n";   // Desired output
     }
     file.close();
-        printf("done.\n");
+        printf("Done.\n");
 }
 
 int Logger::getInterval(){
-    if(eventLog.timeStamp.size() > 1)
-        return eventLog.timeStamp.back()-eventLog.timeStamp.at(0);
+    if(eventLog.size() > 1)
+        return eventLog.back().timeStamp-eventLog.at(0).timeStamp;
     else
         return 0;
 }

@@ -2,7 +2,7 @@
 #include <math.h>
 #include <algorithm>
 
-#define MAX_AGE_MOMENT 5000 //5000 usec?
+#define MAX_AGE_MOMENT 20000 //5000 usec?
 #define MAX_AGE_ACTIVITY 10000 //usec
 #define NUM_TIMESLOTS 100
 #define TIME_WINDOW 1000 //usec

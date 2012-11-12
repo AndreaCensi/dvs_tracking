@@ -10,20 +10,15 @@ class Logger
 {
 public:
     Logger();
-    void log(Event *e);
+    void log(Event e);
     void saveToFile(QString filename);
     int getInterval();
     bool done();
 
 private:
-    struct Log{
-        QList<unsigned int> timeStamp;
-        QList<int> x;
-        QList<int> y;
-        QList<int> type;
-    };
-    Log eventLog;
+    QList<Event> eventLog;
     bool finished;
+
 };
 
 #endif // LOGGER_H

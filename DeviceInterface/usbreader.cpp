@@ -51,8 +51,8 @@ void USBReader::readDVS128Event(const char *data, int numBytes){
                     event.timeStamp = mileStone + (data[i+2] & 0xff | ((data[i+3] & 0xff) << 8));
 
                     //logging
-                    if(mileStone > 0 && !logger->done())
-                        logger->log(&event);
+//                    if(mileStone > 0 && !logger->done())
+//                        logger->log(&event);
                 }
                 //processEvent
                 eventProcessor->processEvent(event);

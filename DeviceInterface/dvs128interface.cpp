@@ -1,13 +1,14 @@
 #include "stdafx.h"
 #include "dvs128interface.h"
 
+// USB reader thread
 #define NUM_BUFFERS 5
 
 //Device config
 #define  VID 0x152A //vendor ID
 #define  PID 0x8400 //product ID
 #define  ENDPOINT 0x86
-#define	 ENDPOINT_FIFO_SIZE 512
+#define	 ENDPOINT_FIFO_SIZE 4096
 #define  CFG_INDEX 0
 #define  CFG_NUM_INTERFACES 1
 #define  CFG_INTERFACE 0

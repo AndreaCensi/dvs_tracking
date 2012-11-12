@@ -9,12 +9,17 @@ public:
     Filter(int res = 128);
     ~Filter();
     Event* labelingFilter(Event e, int maxTDiff);
-    int size();
+    int availableEvents();
+    int *getHistogram();
+
 private:
     void updateMap(Event e);
+    bool checkHistogram(Event *e);
     void reset();
 
     int resolution;
+
+    int lastAgeingTS;
 
     int index;
     bool empty;
@@ -22,6 +27,8 @@ private:
 
     Event *onMap;
     Event *offMap;
+
+    int *isiHistogram;
 };
 
 #endif // FILTER_H
