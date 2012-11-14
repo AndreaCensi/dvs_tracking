@@ -8,7 +8,7 @@ class Filter
 public:
     Filter(int res = 128);
     ~Filter();
-    Event* labelingFilter(Event e, int maxTDiff);
+    Event* labelingFilter(Event e);
     int availableEvents();
     int *getHistogram();
 

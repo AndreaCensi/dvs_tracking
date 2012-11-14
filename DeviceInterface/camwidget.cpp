@@ -62,7 +62,7 @@ void CamWidget::paintEvent(QPaintEvent *){
     for(int i = 0; i < 256; i++){
         int x = i*2;
         int startY = 508;
-        int endY = startY-histogram[i]/64;
+        int endY = startY-histogram[i]/128;
         painter.drawLine(x,startY,x,endY);
     }
 

@@ -4,11 +4,12 @@
 #define NEIGHBORHOOD 9  //neighborhood of filter kernel
 #define RADIUS 1    //range of filter kernel
 #define ISI_RES 256
-#define MAX_DT  2000
-#define MIN_DT  200
-#define MAX_COUNT 4096
+#define MAX_DT  2500
+#define MIN_DT  400
+#define MAX_COUNT 5000
 #define AGEING_INTERVAL 1000
-#define THRESHOLD 2048
+#define THRESHOLD 2000
+#define MAX_T_DIFF 50 //usec for temporal correlation of events
 
 Filter::Filter(int res)
 {
@@ -44,7 +45,7 @@ void Filter::reset(){
     index = 0;
 }
 
-Event* Filter::labelingFilter(Event e, int maxTDiff){
+Event* Filter::labelingFilter(Event e){
     reset();    //reset vars
 
     int x = 127-e.posX;
@@ -94,7 +95,7 @@ Event* Filter::labelingFilter(Event e, int maxTDiff){
                     if(!(u == x && v == y)){
                         tDiff = e.timeStamp - tmp->timeStamp;
                         tDiff = abs(tDiff);
-                        if(tDiff < maxTDiff && tmp->assigned == false){ //if tDiff with neighbouring event small, cluster
+                        if(tDiff < MAX_T_DIFF && tmp->assigned == false){ //if tDiff with neighbouring event small, cluster
                             tmp->assigned = true; // set flag, that event is assigned and not to be deleted by the filter map
                             candidates[index] = *tmp;
                             index++;

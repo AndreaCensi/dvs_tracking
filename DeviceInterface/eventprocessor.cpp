@@ -7,7 +7,6 @@
 #define ASSIGN_PROB 0.6f
 #define EVENT_ASSIGN_CHANCE 10.0f //100 with squared distance
 #define EVENT_ASSIGN_THRESHOLD 1.4f //1.4f
-#define MAX_T_DIFF 50 //usec
 #define ACTIVITY_THRESHOLD 2.0f //1.0f
 #define MIN_CONVERSION_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
 #define MIN_CANDIDATE_LIFETIME 100000   // minimum lifetime before deletion
@@ -45,7 +44,7 @@ void EventProcessor::processEvent(Event e){
     //camWidget->updateImage(&e);
 
     //filter background activity
-    Event* candidates = filter->labelingFilter(e,MAX_T_DIFF);
+    Event* candidates = filter->labelingFilter(e);
     for(int i = 0; i < filter->availableEvents(); i++){
         camWidget->updateImage(&candidates[i]); //graphical output
         //assignToCluster(candidates[i]); //assign new events to clusters
