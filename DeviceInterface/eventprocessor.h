@@ -21,7 +21,7 @@ public:
     virtual void processEvent(Event e);
     std::vector<Cluster*>* getClusters();
 
-private:
+//private:
     // Cost-function
     float distance(Event *e, Cluster *c);
     float distance(Event *e1, Event *e2);

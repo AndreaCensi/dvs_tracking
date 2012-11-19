@@ -48,15 +48,15 @@ void EventProcessor::processEvent(Event e){
     Event* candidates = filter->labelingFilter(e);
     for(int i = 0; i < filter->availableEvents(); i++){
         camWidget->updateImage(&candidates[i]); //graphical output
-        //assignToCluster(candidates[i]); //assign new events to clusters
+        assignToCluster(candidates[i]); //assign new events to clusters
     }
 
-    //    //update all clusters with latest timestamp (for lifetime and activity measurements)
+    //update all clusters with latest timestamp (for lifetime and activity measurements)
     for(unsigned int i = 0; i < clusters.size();i++){
-        //clusters[i]->updateTS(e.timeStamp);
+        clusters[i]->updateTS(e.timeStamp);
     }
 
-    //maintainClusters();
+    maintainClusters();
 }
 
 float EventProcessor::distance(Event *e, Cluster *c){
@@ -112,9 +112,9 @@ float EventProcessor::temporalCost(Event *e, Cluster *c){
             relative = c->transitionHistory->phase - relative;
         }
 
-        int onDiff = abs(relative - c->transitionHistory->phase);
-        int offDiff = abs(relative - (c->transitionHistory->phase+c->transitionHistory->period/2));
-        if(onDiff < offDiff)
+        int onDiff = relative;
+        int offDiff = abs(c->transitionHistory->period/2 - relative);
+        if(e->polarity == 1)
             return onDiff;
         else
             return offDiff;
