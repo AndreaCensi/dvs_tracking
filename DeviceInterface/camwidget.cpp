@@ -44,7 +44,7 @@ void CamWidget::paintEvent(QPaintEvent *){
     painter.drawImage(rect,*img);
     painter.setPen(Qt::green);
     //draw circle around cluster
-    if(clusters){
+    if(clusters->size() > 0){
         for(unsigned int i = 0; i < clusters->size(); i++){
             if(!clusters->at(i)->candidate){
                 int x = (127-clusters->at(i)->posX)*4;
@@ -53,9 +53,19 @@ void CamWidget::paintEvent(QPaintEvent *){
                 painter.drawEllipse(QPoint(x,y),30,30);
             }
             //printf("x,y: %f %f                     \r",clusters->at(i)->posX,clusters->at(i)->posY);
-            printf("#clusters: %d  \r",clusters->size());
+            //            printf("#clusters: %d  \r",clusters->size());
         }
+
+        if(!clusters->at(0)->candidate){
+            int phase = clusters->at(0)->transitionHistory->phase;
+            int period= clusters->at(0)->transitionHistory->period;
+
+            printf("phase: %d period: %d                     \r",phase, period);
+        }
+
     }
+
+
 
     painter.setPen(Qt::yellow);
     // draw histogram

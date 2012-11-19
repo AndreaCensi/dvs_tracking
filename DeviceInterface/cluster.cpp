@@ -13,18 +13,14 @@ Cluster::Cluster(){
     events = new RingBuffer<Event>();
     eventsPerInterval = new RingBuffer<int>(NUM_TIMESLOTS);
 
-    posX = lastPosX = -1;
-    posY = lastPosY = -1;
+    posX = -1;
+    posY = -1;
     currentState = 0;
     firstEventTS = 0;
     lastEventTS = 0;
     candidate = true;
-    temporalPredictor = -1; // next occurance of events
     transitionHistory = 0;
-    velocity = -1;
-    eventCount = 0;
     assigned = false;
-    isStatic = false;
 
     Event e;
     for(int i = 0; i < events->size; i++){
@@ -202,48 +198,3 @@ void Cluster::convert(){
     candidate = false;
     transitionHistory = new TransitionHistory();
 }
-
-//merge the events and lifetime of two clusters - NOT NEEDED!
-//void Cluster::merge(Cluster *c){
-//    if(!this->isCandidate() && !c->isCandidate())
-//        return;
-//    //update firstEventTS and lifetime
-//    if(firstEventTS > c->firstEventTS){
-//        updateTS(c->firstEventTS);
-//    }
-
-//    //generate new event buffer
-//    RingBuffer<Event*> *tmp = new RingBuffer<Event*>();
-//    tmp->latest = tmp->size-1;  //set latest timestamp index
-//    int counter = 0;
-//    int i,j;
-//    i = events->latest;
-//    j = c->events->latest;
-//    while(counter < events->size){
-//        if(events->at(i)->timeStamp > c->events->at(j)->timeStamp){ // if this event is newer
-//            tmp->set(((tmp->size-1)-counter), events->at(i));
-//            i--;
-//            if(i < 0){
-//                i = events->size-1;
-//            }
-//        }
-//        else{
-//            tmp->set(((tmp->size-1)-counter), c->events->at(j));
-//            j--;
-//            if(j < 0){
-//                j = c->events->size-1;
-//            }
-//        }
-//        counter++;
-//    }
-//    delete events;
-//    events = tmp;
-
-//    //if one is a feature cluster, make the new cluster a feature cluster
-//    if(!candidate || !c->candidate){
-//        candidate = false;
-//    }
-
-//    //update cluster position (central moment)
-//    calcMoments();
-//}
