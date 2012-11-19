@@ -5,14 +5,13 @@
 #include "camwidget.h"
 #include "eventgenerator.h"
 
-int main(int argc, char **argv){
-    QApplication app(argc,argv);
-    EventProcessor ep;
-    DVS128Interface dvs(&ep);
-    dvs.startReading();
-    return app.exec();
-}
-
+//int main(int argc, char **argv){
+//    QApplication app(argc,argv);
+//    EventProcessor ep;
+//    DVS128Interface dvs(&ep);
+//    dvs.startReading();
+//    return app.exec();
+//}
 
 //activity test
 //int main(int argc, char **argv){
@@ -69,3 +68,43 @@ int main(int argc, char **argv){
 //    printf("x: %f, y: %f\n",c.posX,c.posY);
 //    printf("cX: %f, cY: %f\n",c.contourX,c.contourY);
 //}
+
+//transition test
+int main(int argc, char **argv){
+    Cluster c;
+
+    int t = 0;
+    for(int i = 0; i < 32; i++){
+        int numEvents = rand()%15 + 4;
+        for(int j = 0; j < 1; j++){
+            Event e;
+            e.timeStamp = t + 950 + rand()%100;
+            e.polarity = i&0x1;
+            c.addEvent(e);
+            c.updateTS(e.timeStamp);
+
+        }
+        t+=1000;
+    }
+
+    c.convert();
+    for(int i = 0; i < 150; i++){
+        int numEvents = rand()%15 + 4;
+        for(int j = 0; j < 1; j++){
+            Event e;
+            e.timeStamp = t + 950 + rand()%100;
+            e.polarity = i&0x1;
+            c.addEvent(e);
+            c.updateTS(e.timeStamp);
+        }
+        t+=1000;
+    }
+
+//    for(int i = 0; i < 4; i++){
+//        printf("%d ",c.transitionHistory->at(i)->timeStamp);
+//    }
+//    printf("\n");
+
+    printf("phase: %d\n", c.transitionHistory->phase);
+    printf("period: %d\n", c.transitionHistory->period);
+}

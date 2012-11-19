@@ -4,7 +4,7 @@
 #define NEIGHBORHOOD 9  //neighborhood of filter kernel
 #define RADIUS 1    //range of filter kernel
 #define ISI_RES 256
-#define MAX_DT  2500
+#define MAX_DT  3000
 #define MIN_DT  400
 #define MAX_COUNT 5000
 #define AGEING_INTERVAL 1000
@@ -67,8 +67,9 @@ Event* Filter::labelingFilter(Event e){
 
     if(interval > MIN_DT && interval < MAX_DT){
         int histIndex = (interval-MIN_DT)/((MAX_DT-MIN_DT)/ISI_RES);
-        if(isiHistogram[histIndex] < MAX_COUNT)
+        if(isiHistogram[histIndex] < MAX_COUNT){
             isiHistogram[histIndex]++;
+        }
         if(isiHistogram[histIndex] > THRESHOLD)
             accept = true;
     }

@@ -29,6 +29,7 @@ private:
     Event *offMap;
 
     int *isiHistogram;
+    int sumHistogram;
 };
 
 #endif // FILTER_H

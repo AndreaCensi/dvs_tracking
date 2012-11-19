@@ -6,6 +6,7 @@
 #define MAX_AGE_ACTIVITY 10000 //usec
 #define NUM_TIMESLOTS 100
 #define TIME_WINDOW 1000 //usec
+#define TRANSITION_WINDOW 200 //usec
 #define PI 3.14159265359
 
 Cluster::Cluster(){
@@ -14,7 +15,7 @@ Cluster::Cluster(){
 
     posX = lastPosX = -1;
     posY = lastPosY = -1;
-    lastPolarity = -1;
+    currentState = 0;
     firstEventTS = 0;
     lastEventTS = 0;
     candidate = true;
@@ -22,6 +23,8 @@ Cluster::Cluster(){
     transitionHistory = 0;
     velocity = -1;
     eventCount = 0;
+    assigned = false;
+    isStatic = false;
 
     Event e;
     for(int i = 0; i < events->size; i++){
@@ -53,7 +56,6 @@ void Cluster::addEvent(Event e){
 
     //add event to cluster
     events->add(e);
-    lastPolarity = e.polarity;
     if(firstEventTS == 0)
         firstEventTS = e.timeStamp;
     lastEventTS = e.timeStamp;
@@ -127,7 +129,7 @@ void Cluster::updateTS(int ts){
     lifeTime = ts - firstEventTS;
 
     //update activity timewindow
-    int lastEventIndex = (lastEventTS/TIME_WINDOW)%NUM_TIMESLOTS;
+    int lastEventIndex = (lastEventTS/TIME_WINDOW)%NUM_TIMESLOTS;   //last event assigned to cluster
     int tsIndex = (ts/TIME_WINDOW)%NUM_TIMESLOTS;
     if(lastEventIndex!=tsIndex){
         int numSlots = 0;   //number of slots to overwrite
@@ -144,10 +146,61 @@ void Cluster::updateTS(int ts){
             index++;
         }
     }
+
+    // update cluster state for transitions history
+    updateState(ts);
 }
 
 bool Cluster::isCandidate(){
     return candidate;
+}
+
+void Cluster::updateState(int ts){
+    if(!transitionHistory || assigned)    //return if temporal pattern has already been assigned
+        return;
+
+    if(transitionHistory->isFull()){    //if enough data is available, calculate transitions
+        transitionHistory->compileTransitions();
+        this->assigned = true;
+        return;
+    }
+
+    int sumOff = 0;
+    int sumOn = 0;
+
+    int i = events->latest;
+    while((events->at(events->latest).timeStamp - events->at(i).timeStamp) < TRANSITION_WINDOW && (sumOff + sumOn) < events->size){
+        if(events->at(i).polarity == 1)
+            sumOn++;
+        else if(events->at(i).polarity == 0)
+            sumOff++;
+        i--; // go back in time through ringbuffer
+        if(i < 0){
+            i = events->size-1;
+        }
+    }
+
+    if(sumOn > sumOff && currentState == 0){
+        currentState = 1;
+
+        Transition t;
+        t.timeStamp = ts - TRANSITION_WINDOW/2;
+        t.polarity = 1;
+        transitionHistory->add(t);
+    }
+    else if( sumOff > sumOn && currentState == 1){
+        currentState = 0;
+
+        Transition t;
+        t.timeStamp = ts - TRANSITION_WINDOW/2;
+        t.polarity = 0;
+        transitionHistory->add(t);
+    }
+}
+
+void Cluster::convert(){
+    candidate = false;
+    transitionHistory = new TransitionHistory();
 }
 
 //merge the events and lifetime of two clusters - NOT NEEDED!

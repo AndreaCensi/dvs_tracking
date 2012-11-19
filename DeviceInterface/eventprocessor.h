@@ -10,6 +10,7 @@
 #include "camwidget.h"
 #include "filter.h"
 #include "logger.h"
+#include "temporalpattern.h"
 #include <QImage>
 
 class EventProcessor : public EventProcessorBase
@@ -35,6 +36,7 @@ private:
     // Assignement
 //    void updateMap(Event e);
     void assignToCluster(Event e);
+    void assignTemporalPattern(Cluster *c);
     //void mapAssign(Event *e);
     //std::vector<Event> labelingFilter(Event e);
 
@@ -47,6 +49,7 @@ private:
 //    std::vector<Event*> clusterCandidates;
 //    std::vector<Cluster*> candidateClusters;
     std::vector<Cluster*> clusters;
+    std::vector<TemporalPattern*> patterns;
 
     //graphical output
     CamWidget *camWidget;

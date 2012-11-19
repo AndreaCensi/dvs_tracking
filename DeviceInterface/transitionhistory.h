@@ -1,21 +1,28 @@
 #ifndef TRANSITIONHISTORY_H
 #define TRANSITIONHISTORY_H
 
+#include "ringbuffer.h"
+#include "transition.h"
+#include "event.h"
+
 class TransitionHistory
 {
 public:
     TransitionHistory();
     ~TransitionHistory();
 
-    void reset();
+    void add(Transition t);
+    Transition* at(int i);
+    bool isFull();
+    void compileTransitions();
+
     int period;
     int phase;
 
 private:
-    struct Transition{
-        int time;
-        int state;
-    };
+    void reset();
+    RingBuffer<Transition> *transitionHistory;
+    int size;
 };
 
 #endif // TRANSITIONHISTORY_H

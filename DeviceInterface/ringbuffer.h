@@ -11,13 +11,14 @@ public:
     T *buffer;
     int size;
     int latest;
+    int newInsert;
 
     //! Constructor
     /*!
         \param totalSize Size of the buffer.
     */
     RingBuffer(int totalSize = 512){
-        latest = 0;
+        latest = newInsert = 0;
         size = totalSize;
         buffer = new T[totalSize];
     }
@@ -32,10 +33,13 @@ public:
         \param value A pointer to an instance of type T.
     */
     void add(T value){
-        latest++;
-        if(latest == size)
-            latest = 0;
-        buffer[latest] = value;
+        buffer[newInsert] = value;
+        newInsert++;
+        if(newInsert == size)
+            newInsert = 0;
+        latest = newInsert-1;
+        if(latest == -1)
+            latest = size - 1;
     }
 
     T at(int i){

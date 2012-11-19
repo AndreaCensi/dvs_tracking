@@ -7,12 +7,13 @@
 #define ASSIGN_PROB 0.6f
 #define EVENT_ASSIGN_CHANCE 10.0f //100 with squared distance
 #define EVENT_ASSIGN_THRESHOLD 1.4f //1.4f
-#define ACTIVITY_THRESHOLD 2.0f //1.0f
+#define ACTIVITY_THRESHOLD 1.0f //1.0f
 #define MIN_CONVERSION_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
 #define MIN_CANDIDATE_LIFETIME 100000   // minimum lifetime before deletion
 #define MERGE_THRESHOLD 10.0f   //100 with squared distance
 #define SPATIAL_SHARPNESS 2.0f
 #define TEMPORAL_SHARPNESS 500.0f
+#define CLUSTER_ASSIGN_THRESHOLD 0.4f
 
 //other
 #define DVS_RES 128
@@ -50,12 +51,12 @@ void EventProcessor::processEvent(Event e){
         //assignToCluster(candidates[i]); //assign new events to clusters
     }
 
-//    //update all clusters with latest timestamp (for lifetime and activity measurements)
-//    for(unsigned int i = 0; i < clusters.size();i++){
-//        clusters[i]->updateTS(e.timeStamp);
-//    }
+    //    //update all clusters with latest timestamp (for lifetime and activity measurements)
+    for(unsigned int i = 0; i < clusters.size();i++){
+        //clusters[i]->updateTS(e.timeStamp);
+    }
 
-//    maintainClusters();
+    //maintainClusters();
 }
 
 float EventProcessor::distance(Event *e, Cluster *c){
@@ -102,7 +103,7 @@ float EventProcessor::boundaryCost(Event *e, Cluster *c){
 }
 
 float EventProcessor::temporalCost(Event *e, Cluster *c){
-    if(!c->transitionHistory){ //later: isComputable by a certain criterion
+    if(!c->assigned){
         return 0.5f;
     }
     else{
@@ -110,23 +111,13 @@ float EventProcessor::temporalCost(Event *e, Cluster *c){
         if(relative < 0){
             relative = c->transitionHistory->phase - relative;
         }
-        int min = 100000;
 
-        // find matching transition in transition history
-        //        for (int i = -1; i < this.signal.getSize(); i++) {
-        //            Transition t = this.signal.getTransition(i);
-        //            if (type == t.state) {
-        //                int difference = Math.abs(relative - t.time);
-
-        //                if (min > difference) {
-        //                    min = difference;
-        //                }
-        //            }
-        //        }
-
-        return min;
-
-        return 0;
+        int onDiff = abs(relative - c->transitionHistory->phase);
+        int offDiff = abs(relative - (c->transitionHistory->phase+c->transitionHistory->period/2));
+        if(onDiff < offDiff)
+            return onDiff;
+        else
+            return offDiff;
     }
 
 }
@@ -172,6 +163,32 @@ void EventProcessor::assignToCluster(Event e){
     }
 }
 
+void EventProcessor::assignTemporalPattern(Cluster *c){
+    //    if (!c->assigned) {
+    //        if (c->isStatic) {    // default value for isStatic ???
+    //            float min = 100000;
+    //            int patternIndex = 0;
+
+    //            for(int i = 0; i < patterns.size();i++){
+    //                float cost = getPatternAssignmentCost(c, patterns.at(i));
+
+    //                if (min > cost) {
+    //                    min = cost;
+    //                    patternIndex = i;
+    //                }
+    //            }
+    //            if (min < CLUSTER_ASSIGN_THRESHOLD) {
+    //                c->pattern = patterns.at(patternIndex);
+    //            }
+    //            else {
+    //                TemporalPattern p;
+    //                p.add(c);
+    //                patterns.push_back(p);
+    //            }
+    //        }
+    //    }
+}
+
 void EventProcessor::maintainClusters(){
     //merge clusters close by
     for(unsigned int i = 0; i < clusters.size(); i++){
@@ -209,7 +226,7 @@ void EventProcessor::maintainClusters(){
     for(unsigned int i = 0; i < clusters.size();i++){ // TODO: allow only max number of clusters!!
         //printf("lifetime: %d  \r",clusters[i]->lifeTime);
         if(clusters[i]->lifeTime > MIN_CONVERSION_LIFETIME && clusters[i]->isCandidate()){
-            clusters[i]->candidate = false;
+            clusters[i]->convert();
         }
     }
 
@@ -221,6 +238,11 @@ void EventProcessor::maintainClusters(){
             clusters.erase(clusters.begin()+i);
             i--;
         }
+    }
+
+    // Assign temporal pattern to feature cluster
+    for(unsigned int i = 0; i < clusters.size();i++){
+        //assignTemporalPattern(clusters.at(i));
     }
 }
 
