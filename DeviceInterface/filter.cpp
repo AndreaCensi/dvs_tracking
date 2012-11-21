@@ -85,7 +85,7 @@ Event* Filter::labelingFilter(Event e){
     // update map
     map[x+resolution*y] = e;
 
-    if(accept){
+    if(true){
         //Check neighbouring events, only if inside boundary
         int range = RADIUS;  //determines size of filter kernel
         int tDiff = 0;

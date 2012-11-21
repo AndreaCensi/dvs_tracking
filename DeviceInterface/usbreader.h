@@ -5,6 +5,7 @@
 #include "eventprocessorbase.h"
 #include "event.h"
 #include "logger.h"
+#include "ringbuffer.h"
 
 class USBReader : public CUsbIoReader
 {
@@ -19,7 +20,6 @@ private:
     void readDVS128Event(const char* data, int numBytes);
     unsigned int mileStone;
     EventProcessorBase *eventProcessor;
-    Event eventBuffer[128];
     Logger *logger;
 };
 

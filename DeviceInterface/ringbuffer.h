@@ -7,19 +7,22 @@
 */
 template <typename T>
 class RingBuffer{
+
 public:
+
     T *buffer;
     int size;
-    int latest;
-    int newInsert;
+    int start;
+    int end;
 
     //! Constructor
     /*!
         \param totalSize Size of the buffer.
     */
-    RingBuffer(int totalSize = 512){
-        latest = newInsert = 0;
+    RingBuffer(int totalSize = 8192){
         size = totalSize;
+        start = 0;
+        end = 0;
         buffer = new T[totalSize];
     }
 
@@ -30,16 +33,13 @@ public:
 
     //! Add a value to the buffer.
     /*!
-        \param value A pointer to an instance of type T.
+        \param value A single instance of type T.
     */
     void add(T value){
-        buffer[newInsert] = value;
-        newInsert++;
-        if(newInsert == size)
-            newInsert = 0;
-        latest = newInsert-1;
-        if(latest == -1)
-            latest = size - 1;
+        buffer[end] = value;
+        end++;
+        if(end == size)
+            end = 0;
     }
 
     T at(int i){
@@ -48,6 +48,47 @@ public:
 
     void set(int i, T value){
         buffer[i] = value;
+    }
+
+    /*!
+        \return Size of new data available.
+    */
+    int available(){
+        if (end > start)
+            return end - start;
+        else if(start > end)
+            return size - start + end;
+        else return 0;
+    }
+
+    int latest(){
+        int i = end - 1;
+        if(end - 1 < 0)
+            i = size - 1;
+        return i;
+    }
+
+    T* getNext(){
+        if(start != end){
+            T *at = &buffer[start];
+            start++;
+            if(start == size)
+                start = 0;
+            return at;
+        }
+        else return 0;
+    }
+
+    //! Get latest data window. Available should be called first to know how much new data there is.
+    /*!
+        \return Pointer to new data.
+    */
+    T* newData(){
+        T *at = &buffer[start];
+        int length = newData();
+        start += length;
+        start %= size;
+        return at;
     }
 };
 

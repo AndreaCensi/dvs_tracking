@@ -20,11 +20,12 @@ public:
     ~EventProcessor();
     virtual void processEvent(Event e);
     std::vector<Cluster*>* getClusters();
+    void run();
+    void stop();
 
-//private:
+private:
     // Cost-function
     float distance(Event *e, Cluster *c);
-    float distance(Event *e1, Event *e2);
     float distance(Cluster *c1, Cluster *c2);
     float squaredDistance(Cluster *c1, Cluster *c2);
     float getBoltzmanWeight(Event *e, Cluster *c);
@@ -34,7 +35,7 @@ public:
     float cumulativeDistribution(float l, float x);
 
     // Assignement
-//    void updateMap(Event e);
+    //    void updateMap(Event e);
     void assignToCluster(Event e);
     void assignTemporalPattern(Cluster *c);
     //void mapAssign(Event *e);
@@ -46,8 +47,8 @@ public:
     Event *onMap;
     Event *offMap;
 
-//    std::vector<Event*> clusterCandidates;
-//    std::vector<Cluster*> candidateClusters;
+    //    std::vector<Event*> clusterCandidates;
+    //    std::vector<Cluster*> candidateClusters;
     std::vector<Cluster*> clusters;
     std::vector<TemporalPattern*> patterns;
 
@@ -55,6 +56,10 @@ public:
     CamWidget *camWidget;
 
     Filter *filter;
+
+    RingBuffer<Event> *eventBuffer;
+
+    bool exit;
 };
 
 #endif // EVENTPROCESSOR_H

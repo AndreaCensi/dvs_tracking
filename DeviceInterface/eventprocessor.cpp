@@ -20,11 +20,11 @@
 
 
 EventProcessor::EventProcessor(){
-
     filter = new Filter();
 
     camWidget = new CamWidget(&clusters,filter->getHistogram());
     camWidget->show();
+    exit = false;
 }
 
 EventProcessor::~EventProcessor(){
@@ -36,6 +36,8 @@ void EventProcessor::processEvent(Event e){
     // do not process if special event
     if(e.isSpecial())
         return;
+
+    //camWidget->updateImage(&e);
 
     //filter background activity
     Event* candidates = filter->labelingFilter(e);
@@ -54,10 +56,6 @@ void EventProcessor::processEvent(Event e){
 
 float EventProcessor::distance(Event *e, Cluster *c){
     return sqrt(pow(float(e->posX-c->posX),2) + pow(float(e->posY-c->posY),2));
-}
-
-float EventProcessor::distance(Event *e1, Event *e2){
-    return sqrt(pow(float(e1->posX-e2->posX),2) + pow(float(e1->posY-e2->posY),2));
 }
 
 float EventProcessor::distance(Cluster *c1, Cluster *c2){
@@ -205,5 +203,23 @@ void EventProcessor::maintainClusters(){
             clusters.erase(clusters.begin()+i);
             i--;
         }
+    }
+}
+
+void EventProcessor::stop(){
+    exit = true;
+}
+
+void EventProcessor::run(){
+    while(!exit){
+        int size;
+        if((size = getEventBuffer()->available()) > 0){
+            Event *e;
+            while((e = getEventBuffer()->getNext()) != 0){
+                processEvent(*e);
+            }
+        }
+        else
+            msleep(10);
     }
 }

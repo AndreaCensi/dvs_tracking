@@ -10,6 +10,7 @@ int main(int argc, char **argv){
     EventProcessor ep;
     DVS128Interface dvs(&ep);
     dvs.startReading();
+    ep.start();
     return app.exec();
 }
 
@@ -120,4 +121,30 @@ int main(int argc, char **argv){
 //    printf("temporal cost 1: %f\n",cost1);
 //    printf("temporal cost 2: %f\n",cost2);
 //    return app.exec();
+//}
+
+//ringbuffer test
+//int main(int argc, char **argv){
+//    RingBuffer<int> buf;
+//    for(int i = 0; i < 10; i++){
+//        buf.add(i);
+//    }
+
+//    for(int i = 0; i < 10; i++){
+//        printf("%d ",buf.buffer[i]);
+//    }
+//    printf("\navailable: %d\n",buf.available());
+//    int *x;
+//    while( (x = buf.getNext()) != 0){
+//        printf("%d ",*x);
+//    }
+//    printf("\navailable: %d\n",buf.available());
+//    for(int i = 0; i < 5; i++){
+//        buf.add(i+10);
+//    }
+//    printf("\navailable: %d\n",buf.available());
+//    while( (x = buf.getNext()) != 0){
+//        printf("%d ",*x);
+//    }
+//    printf("\navailable: %d\n",buf.available());
 //}

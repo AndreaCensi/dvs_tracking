@@ -55,8 +55,10 @@ void USBReader::readDVS128Event(const char *data, int numBytes){
 //                        logger->log(&event);
                 }
                 //processEvent
-                eventProcessor->processEvent(event);
+                eventProcessor->getEventBuffer()->add(event);
+                //eventProcessor->processEvent(event);
             }
         }
+        //signal availability of new events
     }
 }

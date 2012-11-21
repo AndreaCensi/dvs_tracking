@@ -2,15 +2,16 @@
 #include <math.h>
 #include <algorithm>
 
-#define MAX_AGE_MOMENT 20000 //5000 usec?
+#define NUM_EVENTS 256
+#define MAX_AGE_MOMENT 5000 //5000 usec?
 #define MAX_AGE_ACTIVITY 10000 //usec
 #define NUM_TIMESLOTS 100
 #define TIME_WINDOW 1000 //usec
 #define TRANSITION_WINDOW 200 //usec
-#define PI 3.14159265359
+#define PI 3.14159
 
 Cluster::Cluster(){
-    events = new RingBuffer<Event>();
+    events = new RingBuffer<Event>(NUM_EVENTS);
     eventsPerInterval = new RingBuffer<int>(NUM_TIMESLOTS);
 
     posX = -1;
@@ -69,8 +70,8 @@ void Cluster::calcMoments(){
     float M10,M01,M20,M02;
     M10 = M01 = M20 = M02 = 0;
 
-    int i = events->latest;
-    while((events->at(events->latest).timeStamp - events->at(i).timeStamp) < MAX_AGE_MOMENT && M00 < events->size){
+    int i = events->latest();
+    while((events->at(events->latest()).timeStamp - events->at(i).timeStamp) < MAX_AGE_MOMENT && M00 < events->size){
         M10 += events->at(i).posX;
         M01 += events->at(i).posY;
         M20 += pow(float(events->at(i).posX),2);
@@ -101,17 +102,6 @@ void Cluster::calcMoments(){
 }
 
 float Cluster::getActivity(){
-    //    int numEvents = 0;
-    //    int i = events->latest;
-    //    while(lastOverallEventTS - events->at(i).timeStamp < MAX_AGE_ACTIVITY && numEvents < events->size){
-    //        i--; // go back in time through ringbuffer
-    //        if(i < 0){
-    //            i = events->size-1;
-    //        }
-    //        numEvents++;
-    //    }
-    //    if(numEvents > 0)
-    //        activity = float(MAX_AGE_ACTIVITY/numEvents);
     int sum = 0;
     for(int i = 0; i < eventsPerInterval->size; i++){
         sum += eventsPerInterval->at(i);
@@ -164,8 +154,8 @@ void Cluster::updateState(int ts){
     int sumOff = 0;
     int sumOn = 0;
 
-    int i = events->latest;
-    while((events->at(events->latest).timeStamp - events->at(i).timeStamp) < TRANSITION_WINDOW && (sumOff + sumOn) < events->size){
+    int i = events->latest();
+    while((events->at(events->latest()).timeStamp - events->at(i).timeStamp) < TRANSITION_WINDOW && (sumOff + sumOn) < events->size){
         if(events->at(i).polarity == 1)
             sumOn++;
         else if(events->at(i).polarity == 0)
