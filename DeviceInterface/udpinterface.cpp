@@ -1,6 +1,6 @@
 #include "udpinterface.h"
 
-#define DVS128_FRAME_LENGTH 4
+#define FRAME_LENGTH 6
 
 UDPInterface::UDPInterface(EventProcessorBase *ep, QObject *parent) : QObject(parent){
     eventProcessor = ep;
@@ -31,31 +31,24 @@ void UDPInterface::readPendingDatagrams(){
 
 void UDPInterface::readEvents(QByteArray data){
     int numBytes = data.size();
-    if(numBytes%DVS128_FRAME_LENGTH != 0){
+    if(numBytes%FRAME_LENGTH != 0){
         printf("Incorrect data size: %d bytes\n",numBytes);
         return;
     }
-    for(int i = 0; i < numBytes; i+=DVS128_FRAME_LENGTH){
-        if((data[i+3] & 0x80) == 0x80){
-            mileStone += 0x4000L;
-        }
-        else if ((data[i+3] & 0x40) == 0x40){
-            mileStone = 0;
+    for(int i = 0; i < numBytes; i+=FRAME_LENGTH){
+        Event event;
+        unsigned int rawAddr  = ((data[i+1] & 0xff) | ((data[i] & 0xff) << 8));
+        if((rawAddr & (0x8000)) != 0){  //special event
+            event.special = true;
         }
         else{
-            Event event;
-            unsigned int rawAddr  = (data[i+0] & 0xFF) | ((data[i+1] & 0xFF) << 8);
-            if((rawAddr & (0x8000)) != 0){  //special event
-                event.special = true;
-            }
-            else{
-                event.polarity = 1 - rawAddr & 1;
-                event.posX = (rawAddr >> 1) & 0x7f;
-                event.posY = (rawAddr >> 8) & 0x7f;
-                event.timeStamp = mileStone + (data[i+2] & 0xff | ((data[i+3] & 0xff) << 8));
-
-            }
-            eventProcessor->getEventBuffer()->add(event);
+            event.polarity = 1 - rawAddr & 1;
+            event.posX = (rawAddr >> 1) & 0x7f;
+            event.posY = (rawAddr >> 8) & 0x7f;
+            event.timeStamp = (data[i+5] & 0xff | ((data[i+4] & 0xff) << 8) |
+                               ((data[i+3] & 0xff) << 16) | ((data[i+2] & 0xff) << 24));
         }
+//        printf("ts: %d\n",event.timeStamp);
+        eventProcessor->getEventBuffer()->add(event);
     }
 }
