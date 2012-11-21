@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     filter.cpp \
     logger.cpp \
     temporalpattern.cpp \
-    transition.cpp
+    transition.cpp \
+    udpinterface.cpp
 
 HEADERS += \
     usbreader.h \
@@ -39,7 +40,8 @@ HEADERS += \
     filter.h \
     logger.h \
     temporalpattern.h \
-    transition.h
+    transition.h \
+    udpinterface.h
 
 
 

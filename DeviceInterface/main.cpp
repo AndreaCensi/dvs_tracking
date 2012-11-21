@@ -3,13 +3,14 @@
 #include "dvs128interface.h"
 #include "eventprocessor.h"
 #include "camwidget.h"
-#include "eventgenerator.h"
+#include "udpinterface.h"
 
 int main(int argc, char **argv){
     QApplication app(argc,argv);
     EventProcessor ep;
-    DVS128Interface dvs(&ep);
-    dvs.startReading();
+    UDPInterface udpIf(&ep);
+//    DVS128Interface dvs(&ep);
+//    dvs.startReading();
     ep.start();
     return app.exec();
 }
