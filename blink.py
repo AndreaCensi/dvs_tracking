@@ -46,9 +46,14 @@ def usbio(dh, c_id, f, dc): #c_id: channel id, f1,f2: frequency, dc: duty cycle
     dout[4] = 0xFF & dc  
 
     dh.bulkWrite(EP_OUT, dout.tostring())
+
+def run_preset(dh):
+    f = array.array('I',[700,900,1100,1300,1500])
+    for i in range(5):
+        usbio(dh,i,f[i],50)
+        
  
 def main():
-
     dev = get_device()
     dh = dev.open()
     dh.claimInterface(IFACE)
@@ -56,7 +61,9 @@ def main():
     key_in = ""
     while key_in != 'q':
         key_in = raw_input('Set PWM [channel_ID,frequency,duty_cycle]: ')
-        if key_in != 'q':
+        if key_in == 'preset':
+            run_preset(dh)
+        elif key_in != 'q':
             values = key_in.split(',')
             c_id = int(values[0])
             freq = int(values[1])

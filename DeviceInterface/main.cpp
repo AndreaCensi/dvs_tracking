@@ -8,9 +8,9 @@
 int main(int argc, char **argv){
     QApplication app(argc,argv);
     EventProcessor ep;
-    UDPInterface udpIf(&ep);
-//    DVS128Interface dvs(&ep);
-//    dvs.startReading();
+    //UDPInterface udpIf(&ep);
+    DVS128Interface dvs(&ep);
+    dvs.startReading();
     ep.start();
     return app.exec();
 }

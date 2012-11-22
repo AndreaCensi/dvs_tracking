@@ -77,7 +77,7 @@ void init_clock() {
 
 //pwm
 
-#define NUM_CHANNELS	3
+#define NUM_CHANNELS	5
 
 #define	PWM_PIN_PA7				AVR32_PWM_0_0_PIN
 #define PWM_FUNCTION_PA7		AVR32_PWM_0_0_FUNCTION
@@ -140,7 +140,9 @@ void init_pwm() {
 	// set PWM GPIOs
 	gpio_enable_module_pin(PWM_PIN_PA11, PWM_FUNCTION_PA11);
 	gpio_enable_module_pin(PWM_PIN_PA12, PWM_FUNCTION_PA12);
+	gpio_enable_module_pin(PWM_PIN_PA13, PWM_FUNCTION_PA13);
 	gpio_enable_module_pin(PWM_PIN_PA14, PWM_FUNCTION_PA14);
+	gpio_enable_module_pin(PWM_PIN_PA15, PWM_FUNCTION_PA15);
 
 	int i;
 	for (i = 0; i < NUM_CHANNELS; i++) {
@@ -160,7 +162,9 @@ void init_pwm() {
 
 	channel_id[0] = PWM_CHANNEL_ID_PA11;
 	channel_id[1] = PWM_CHANNEL_ID_PA12;
-	channel_id[2] = PWM_CHANNEL_ID_PA14;
+	channel_id[2] = PWM_CHANNEL_ID_PA13;
+	channel_id[3] = PWM_CHANNEL_ID_PA14;
+	channel_id[4] = PWM_CHANNEL_ID_PA15;
 
 	for (i = 0; i < NUM_CHANNELS; i++) {
 		set_pwm(i,0,1,50);
