@@ -220,7 +220,8 @@ void EventProcessor::run(){
                 if(e->isSpecial())
                     return;
 
-                //camWidget->updateImage(e);
+//                camWidget->updateImage(e);
+//                assignToCluster(*e);
 
                 //filter background activity
                 Event* candidates = filter->labelingFilter(*e);

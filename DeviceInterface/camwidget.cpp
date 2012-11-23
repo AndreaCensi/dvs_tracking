@@ -76,6 +76,7 @@ void CamWidget::paintEvent(QPaintEvent *){
         painter.drawLine(x,startY,x,endY);
     }
 
+    painter.end();
 
     //reset image
     QColor color = Qt::black;

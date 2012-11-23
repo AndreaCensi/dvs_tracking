@@ -28,6 +28,7 @@
 
 #define FOSC0           12000000                              //!< Osc0 frequency: Hz.
 #define OSC0_STARTUP    AVR32_PM_OSCCTRL0_STARTUP_2048_RCOSC  //!< Osc0 startup time: RCOsc periods.
+
 void init_clock() {
 	// source: gpio_local_bus_example.c
 
@@ -111,15 +112,16 @@ void init_clock() {
 static pwm_opt_t pwm_opt;
 static avr32_pwm_channel_t pwm_channel[7];
 static unsigned int channel_id[7];
+
+static unsigned int freq_preset[5] = {700,900,1100,1300,1500};
 // WARNING! the PWM example app does:
 //avr32_pwm_channel_t pwm_channel = { .ccnt = 0 };  // One channel config.
 // we don't, as pwm_channel_init() does not use the .ccnt field...!?!?
 
-void set_pwm(U8 c_id, U8 freq1, U8 freq2, U8 dtyc){
+void set_pwm(U8 c_id, unsigned int f, U8 dtyc){
 	if(c_id < 0 || c_id >= NUM_CHANNELS)
 		return;
 	unsigned int c = c_id;
-	unsigned int f = (freq1 << 8) | freq2;
 	f = 128906/f;
 
 	pwm_channel[c].cdty = f-f*dtyc/100; // Channel duty cycle, should be < CPRD.
@@ -167,7 +169,7 @@ void init_pwm() {
 	channel_id[4] = PWM_CHANNEL_ID_PA15;
 
 	for (i = 0; i < NUM_CHANNELS; i++) {
-		set_pwm(i,0,1,50);
+		set_pwm(i,freq_preset[i],50);
 	}
 }
 
@@ -210,8 +212,9 @@ void device_task(void) {
 		usb_read_ep_rxpacket(EP_TEMP_OUT, out_buf, out_data_length, NULL);
 		Usb_ack_out_received_free(EP_TEMP_OUT);
 
+		unsigned int f = (out_buf[2] << 8) | out_buf[3];
 		// update PWM:
-		set_pwm(out_buf[1], out_buf[2], out_buf[3],out_buf[4]);
+		set_pwm(out_buf[1], f, out_buf[4]);
 	}
 }
 
@@ -249,12 +252,13 @@ int main() {
 	pcl_switch_to_osc(PCL_OSC0, FOSC0, OSC0_STARTUP);
 
 	init_clock();
-	init_pwm();
-	gpio_local_init();
 
 	pcl_configure_usb_clock();
 
 	usb_task_init();
+
+	init_pwm();
+	gpio_local_init();
 
 #if USB_DEVICE_FEATURE == ENABLED
 	device_task_init();

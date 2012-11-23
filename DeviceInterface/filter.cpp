@@ -5,7 +5,7 @@
 #define RADIUS 1    //range of filter kernel
 #define ISI_RES 256
 #define MAX_DT  3000
-#define MIN_DT  400
+#define MIN_DT  200
 #define MAX_COUNT 5000
 #define AGEING_INTERVAL 1000
 #define THRESHOLD 2000

@@ -2,12 +2,14 @@
 #include <math.h>
 #include <algorithm>
 
-#define NUM_EVENTS 256
+#define NUM_EVENTS 128
 #define MAX_AGE_MOMENT 5000 //5000 usec?
 #define MAX_AGE_ACTIVITY 10000 //usec
 #define NUM_TIMESLOTS 100
 #define TIME_WINDOW 1000 //usec
 #define TRANSITION_WINDOW 200 //usec
+#define NUM_MOMENTS 100
+#define MOMENT_RESOLUTION 100
 #define PI 3.14159
 
 Cluster::Cluster(){
@@ -58,13 +60,14 @@ void Cluster::addEvent(Event e){
     lastEventTS = e.timeStamp;
     lifeTime = e.timeStamp - firstEventTS;
 
-    calcMoments();
-    /*
-    current/next polarity ?
-    */
+    extractMoments();
 }
 
-//calculates centroid
+void Cluster::extractMoments(){
+
+}
+
+//calculates centroid and contour
 void Cluster::calcMoments(){
     int M00 = 0;  // Area of the cluster/ number of events in cluster
     float M10,M01,M20,M02;

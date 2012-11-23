@@ -18,8 +18,6 @@ public:
     void convert(); //convert to candidate to feature cluster
 
     RingBuffer<Event> *events;
-    RingBuffer<int> *eventsPerInterval;
-    TemporalPattern pattern;
 
     float posX;
     float posY;
@@ -38,10 +36,19 @@ public:
     TransitionHistory *transitionHistory;
 
 private:
+    struct Position{
+        int x;
+        int y;
+    };
+
     void update();
+    void extractMoments();
     void calcMoments();
     void calcCountour();
     void updateState(int ts);
+
+    RingBuffer<int> *eventsPerInterval;
+    RingBuffer<Position> *moments;
 };
 
 #endif // CLUSTER_H
