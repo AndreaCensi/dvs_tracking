@@ -80,13 +80,13 @@ void init_clock() {
 
 #define NUM_CHANNELS	5
 
-#define	PWM_PIN_PA7				AVR32_PWM_0_0_PIN
-#define PWM_FUNCTION_PA7		AVR32_PWM_0_0_FUNCTION
-#define PWM_CHANNEL_ID_PA7		0
+#define	PWM_PIN_PA07			AVR32_PWM_0_0_PIN
+#define PWM_FUNCTION_PA07		AVR32_PWM_0_0_FUNCTION
+#define PWM_CHANNEL_ID_PA07		0
 
-#define	PWM_PIN_PA8				AVR32_PWM_1_0_PIN
-#define PWM_FUNCTION_PA8		AVR32_PWM_1_0_FUNCTION
-#define PWM_CHANNEL_ID_PA8		1
+#define	PWM_PIN_PA08			AVR32_PWM_1_0_PIN
+#define PWM_FUNCTION_PA08		AVR32_PWM_1_0_FUNCTION
+#define PWM_CHANNEL_ID_PA08		1
 
 #define	PWM_PIN_PA11			AVR32_PWM_0_1_PIN
 #define PWM_FUNCTION_PA11		AVR32_PWM_0_1_FUNCTION
@@ -108,12 +108,16 @@ void init_clock() {
 #define PWM_FUNCTION_PA15		AVR32_PWM_4_0_FUNCTION
 #define PWM_CHANNEL_ID_PA15		4
 
+
+// channel presets
+static unsigned int freq_preset[5] = {900,1250,1600,1,1950};	// Hz
+static unsigned int dc_preset[5] = {50,50,50,0,50};				// duty cycle in %
+
 // storage:
 static pwm_opt_t pwm_opt;
 static avr32_pwm_channel_t pwm_channel[7];
 static unsigned int channel_id[7];
 
-static unsigned int freq_preset[5] = {700,900,1100,1300,1500};
 // WARNING! the PWM example app does:
 //avr32_pwm_channel_t pwm_channel = { .ccnt = 0 };  // One channel config.
 // we don't, as pwm_channel_init() does not use the .ccnt field...!?!?
@@ -140,11 +144,14 @@ void set_pwm(U8 c_id, unsigned int f, U8 dtyc){
 
 void init_pwm() {
 	// set PWM GPIOs
+//	gpio_enable_module_pin(PWM_PIN_PA07, PWM_FUNCTION_PA07);
+//	gpio_enable_module_pin(PWM_PIN_PA08, PWM_FUNCTION_PA08);
 	gpio_enable_module_pin(PWM_PIN_PA11, PWM_FUNCTION_PA11);
 	gpio_enable_module_pin(PWM_PIN_PA12, PWM_FUNCTION_PA12);
 	gpio_enable_module_pin(PWM_PIN_PA13, PWM_FUNCTION_PA13);
 	gpio_enable_module_pin(PWM_PIN_PA14, PWM_FUNCTION_PA14);
 	gpio_enable_module_pin(PWM_PIN_PA15, PWM_FUNCTION_PA15);
+
 
 	int i;
 	for (i = 0; i < NUM_CHANNELS; i++) {
@@ -167,10 +174,8 @@ void init_pwm() {
 	channel_id[2] = PWM_CHANNEL_ID_PA13;
 	channel_id[3] = PWM_CHANNEL_ID_PA14;
 	channel_id[4] = PWM_CHANNEL_ID_PA15;
-
-	for (i = 0; i < NUM_CHANNELS; i++) {
-		set_pwm(i,freq_preset[i],50);
-	}
+//	channel_id[5] = PWM_CHANNEL_ID_PA07;
+//	channel_id[6] = PWM_CHANNEL_ID_PA08;
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -257,12 +262,12 @@ int main() {
 
 	usb_task_init();
 
-	init_pwm();
-	gpio_local_init();
-
 #if USB_DEVICE_FEATURE == ENABLED
 	device_task_init();
 #endif
+
+	init_pwm();
+	gpio_local_init();
 
 	gpio_local_enable_pin_output_driver(AVR32_PIN_PA10);
 	gpio_local_enable_pin_output_driver(AVR32_PIN_PA11);
@@ -271,6 +276,12 @@ int main() {
 	gpio_local_clr_gpio_pin(AVR32_PIN_PA10);
 	gpio_local_clr_gpio_pin(AVR32_PIN_PA11);
 	gpio_local_clr_gpio_pin(AVR32_PIN_PA12);
+
+	//set default frequencies:
+	int i;
+	for (i = 0; i < NUM_CHANNELS; i++) {
+		set_pwm(i,freq_preset[i],dc_preset[i]);
+	}
 
 	while (TRUE) {
 		usb_task();

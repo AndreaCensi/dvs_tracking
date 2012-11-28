@@ -220,25 +220,26 @@ void EventProcessor::run(){
                 if(e->isSpecial())
                     return;
 
-//                camWidget->updateImage(e);
+                if(e->polarity == 1)
+                    camWidget->updateImage(e);
 //                assignToCluster(*e);
 
-                //filter background activity
-                Event* candidates = filter->labelingFilter(*e);
-                for(int i = 0; i < filter->availableEvents(); i++){
-                    camWidget->updateImage(&candidates[i]); //graphical output
-                    assignToCluster(candidates[i]); //assign new events to clusters
-                }
+//                //filter background activity
+//                Event* candidates = filter->labelingFilter(*e);
+//                for(int i = 0; i < filter->availableEvents(); i++){
+//                    camWidget->updateImage(&candidates[i]); //graphical output
+//                    assignToCluster(candidates[i]); //assign new events to clusters
+//                }
             }
-            //update all clusters with latest timestamp (for lifetime and activity measurements)
-            int timeStamp = getEventBuffer()->at(getEventBuffer()->latest()).timeStamp;
-            for(unsigned int i = 0; i < clusters.size();i++){
-                clusters[i]->updateTS(timeStamp);
-            }
+//            //update all clusters with latest timestamp (for lifetime and activity measurements)
+//            int timeStamp = getEventBuffer()->at(getEventBuffer()->latest()).timeStamp;
+//            for(unsigned int i = 0; i < clusters.size();i++){
+//                clusters[i]->updateTS(timeStamp);
+//            }
 
-            maintainClusters();
+//            maintainClusters();
         }
         else
-            msleep(10);
+            msleep(1);
     }
 }

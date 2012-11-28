@@ -15,6 +15,7 @@
 Cluster::Cluster(){
     events = new RingBuffer<Event>(NUM_EVENTS);
     eventsPerInterval = new RingBuffer<int>(NUM_TIMESLOTS);
+    moments = new RingBuffer<Position>(NUM_MOMENTS);
 
     posX = -1;
     posY = -1;
@@ -37,6 +38,7 @@ Cluster::Cluster(){
 Cluster::~Cluster(){
     delete events;
     delete eventsPerInterval;
+    delete moments;
     if(transitionHistory)
         delete transitionHistory;
 }
@@ -57,13 +59,36 @@ void Cluster::addEvent(Event e){
     events->add(e);
     if(firstEventTS == 0)
         firstEventTS = e.timeStamp;
-    lastEventTS = e.timeStamp;
     lifeTime = e.timeStamp - firstEventTS;
 
-    extractMoments();
+    //extract current central moment
+    extractMoments(&e);
+
+    lastEventTS = e.timeStamp;
 }
 
-void Cluster::extractMoments(){
+void Cluster::extractMoments(Event *e){
+    int lastEventIndex = (lastEventTS/MOMENT_RESOLUTION)%NUM_MOMENTS;   //last event assigned to cluster
+    int tsIndex = (ts/MOMENT_RESOLUTION)%NUM_MOMENTS;
+
+    //reset timeslots if expired
+    if(lastEventIndex!=tsIndex){
+        int numSlots = 0;   //number of slots to overwrite
+        if(lastEventIndex > tsIndex)
+            numSlots = NUM_TIMESLOTS - lastEventIndex + tsIndex;
+        else{
+            numSlots = tsIndex - lastEventIndex;
+        }
+        int index = lastEventIndex + 1;
+        for(int i = 0; i < numSlots;i++){
+            if(index > NUM_TIMESLOTS - 1)
+                index = 0;
+            eventsPerInterval->set(index,0);
+            index++;
+        }
+    }
+
+    //add event
 
 }
 

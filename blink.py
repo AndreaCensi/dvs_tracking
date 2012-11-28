@@ -21,6 +21,10 @@ T = 0.00
 PWMperADC = 33
 BAR = 80
 
+# channel presets
+f = array.array('I',[900,1250,1600,1,1950])
+dc = array.array('I',[50,50,50,0,50])
+
 def get_device():
     for bus in busses:
         devices = bus.devices
@@ -48,9 +52,8 @@ def usbio(dh, c_id, f, dc): #c_id: channel id, f1,f2: frequency, dc: duty cycle
     dh.bulkWrite(EP_OUT, dout.tostring())
 
 def run_preset(dh):
-    f = array.array('I',[700,900,1100,1300,1500])
     for i in range(5):
-        usbio(dh,i,f[i],50)
+        usbio(dh,i,f[i],dc[i])
         
  
 def main():

@@ -36,19 +36,25 @@ public:
     TransitionHistory *transitionHistory;
 
 private:
-    struct Position{
+    struct Moment{
         int x;
         int y;
+        int count;
+        void reset(){
+            x = 0;
+            y = 0;
+            count = 0;
+        }
     };
 
     void update();
-    void extractMoments();
+    void extractMoments(Event *e);
     void calcMoments();
     void calcCountour();
     void updateState(int ts);
 
     RingBuffer<int> *eventsPerInterval;
-    RingBuffer<Position> *moments;
+    RingBuffer<Moment> *moments;
 };
 
 #endif // CLUSTER_H
