@@ -110,7 +110,7 @@ void init_clock() {
 
 
 // channel presets
-static unsigned int freq_preset[5] = {900,1250,1600,1,1950};	// Hz
+static unsigned int freq_preset[5] = {900,1070,1240,1,1410};	// Hz
 static unsigned int dc_preset[5] = {50,50,50,0,50};				// duty cycle in %
 
 // storage:

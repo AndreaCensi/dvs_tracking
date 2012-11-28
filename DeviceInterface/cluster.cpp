@@ -83,7 +83,7 @@ void Cluster::extractMoments(Event *e){
         for(int i = 0; i < numSlots;i++){
             if(index > NUM_TIMESLOTS - 1)
                 index = 0;
-            eventsPerInterval->set(index,0);
+            moments->at(index).reset();
             index++;
         }
     }
