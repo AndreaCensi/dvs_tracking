@@ -10,13 +10,9 @@
 #define TRANSITION_WINDOW 200 //usec
 #define NUM_MOMENTS 100
 #define MOMENT_RESOLUTION 100
-#define PI 3.14159
+#define PI 3.14159265f
 
 Cluster::Cluster(){
-    events = new RingBuffer<Event>(NUM_EVENTS);
-    eventsPerInterval = new RingBuffer<int>(NUM_TIMESLOTS);
-    moments = new RingBuffer<Position>(NUM_MOMENTS);
-
     posX = -1;
     posY = -1;
     currentState = 0;
@@ -26,12 +22,22 @@ Cluster::Cluster(){
     transitionHistory = 0;
     assigned = false;
 
+    events = new RingBuffer<Event>(NUM_EVENTS);
+    eventsPerInterval = new RingBuffer<int>(NUM_TIMESLOTS);
+    moments = new RingBuffer<Moment>(NUM_MOMENTS);
+
     Event e;
     for(int i = 0; i < events->size; i++){
         events->add(e);
     }
     for(int i = 0; i < NUM_TIMESLOTS; i++){
         eventsPerInterval->add(0);
+    }
+
+    Moment m;
+    for(int i = 0; i < NUM_MOMENTS; i++){
+        moments->set(i,m);
+        printf("m00: %d ", moments->at(i).m00);
     }
 }
 
@@ -63,21 +69,22 @@ void Cluster::addEvent(Event e){
 
     //extract current central moment
     extractMoments(&e);
+    //calcMoments();
 
     lastEventTS = e.timeStamp;
 }
 
 void Cluster::extractMoments(Event *e){
     int lastEventIndex = (lastEventTS/MOMENT_RESOLUTION)%NUM_MOMENTS;   //last event assigned to cluster
-    int tsIndex = (ts/MOMENT_RESOLUTION)%NUM_MOMENTS;
+    int currentIndex = (e->timeStamp/MOMENT_RESOLUTION)%NUM_MOMENTS;
 
     //reset timeslots if expired
-    if(lastEventIndex!=tsIndex){
+    if(lastEventIndex!=currentIndex){
         int numSlots = 0;   //number of slots to overwrite
-        if(lastEventIndex > tsIndex)
-            numSlots = NUM_TIMESLOTS - lastEventIndex + tsIndex;
+        if(lastEventIndex > currentIndex)
+            numSlots = NUM_TIMESLOTS - lastEventIndex + currentIndex;
         else{
-            numSlots = tsIndex - lastEventIndex;
+            numSlots = currentIndex - lastEventIndex;
         }
         int index = lastEventIndex + 1;
         for(int i = 0; i < numSlots;i++){
@@ -89,7 +96,37 @@ void Cluster::extractMoments(Event *e){
     }
 
     //add event
+    Moment *m = &moments->at(currentIndex);
+    m->m10 += e->posX;
+    m->m01 += e->posY;
+    m->m00++;
 
+    int  m00,m10,m01;
+    m00 = m10 = m01 = 0;
+    float m20,m02;
+    m20 = m02 = 0;
+
+    for(int i = 0; i < NUM_MOMENTS;i++){
+        m10 += moments->at(i).m10;
+        m01 += moments->at(i).m01;
+        m20 += pow(float(events->at(i).posX),2);
+        m02 += pow(float(events->at(i).posY),2);
+        m00 += moments->at(i).m00;
+    }
+
+    posX = float(m10)/float(m00);
+    posY = float(m01)/float(m00);
+
+    //contour -------------------------------- DRAW!
+    float varianceX = m20 - posX*m10;
+    float varianceY = m02 - posY*m01;
+    float sqrtM00 = sqrt(float(m00));
+
+    float tmp = sqrt(varianceX)/sqrtM00 * 2;
+    contourX = (1 > tmp) ? 1 : tmp;
+
+    tmp = sqrt(varianceY)/sqrtM00 * 2;
+    contourY = (1 > tmp) ? 1 : tmp;
 }
 
 //calculates centroid and contour
@@ -117,7 +154,7 @@ void Cluster::calcMoments(){
     posX = M10/float(M00);
     posY = M01/float(M00);
 
-    //contour -------------------------------- RECHECK!
+    //contour -------------------------------- DRAW!
     float varianceX = M20 - posX*M10;
     float varianceY = M02 - posY*M01;
     float sqrtM00 = sqrt(float(M00));

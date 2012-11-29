@@ -56,25 +56,24 @@ void CamWidget::paintEvent(QPaintEvent *){
             //            printf("#clusters: %d  \r",clusters->size());
         }
 
-        if(!clusters->at(0)->candidate){
-            int phase = clusters->at(0)->transitionHistory->phase;
-            int period= clusters->at(0)->transitionHistory->period;
+//        if(!clusters->at(0)->candidate){
+//            int phase = clusters->at(0)->transitionHistory->phase;
+//            int period= clusters->at(0)->transitionHistory->period;
 
-            printf("phase: %d period: %d                     \r",phase, period);
-        }
-
+//            printf("phase: %d period: %d                     \r",phase, period);
+//        }
     }
 
 
 
-    painter.setPen(Qt::yellow);
-    // draw histogram
-    for(int i = 0; i < 256; i++){
-        int x = i*2;
-        int startY = 508;
-        int endY = startY-histogram[i]/128;
-        painter.drawLine(x,startY,x,endY);
-    }
+//    painter.setPen(Qt::yellow);
+//    // draw histogram
+//    for(int i = 0; i < 256; i++){
+//        int x = i*2;
+//        int startY = 508;
+//        int endY = startY-histogram[i]/128;
+//        painter.drawLine(x,startY,x,endY);
+//    }
 
     painter.end();
 

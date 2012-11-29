@@ -35,15 +35,16 @@ public:
 
     TransitionHistory *transitionHistory;
 
-private:
+// private:
     struct Moment{
-        int x;
-        int y;
-        int count;
+        int m10;
+        int m01;
+        int m00;
+        Moment() : m10(0),m01(0),m00(0){}
         void reset(){
-            x = 0;
-            y = 0;
-            count = 0;
+            m10 = 0;
+            m01 = 0;
+            m00 = 0;
         }
     };
 
