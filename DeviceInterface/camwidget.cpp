@@ -52,7 +52,7 @@ void CamWidget::paintEvent(QPaintEvent *){
 
                 painter.drawEllipse(QPoint(x,y),30,30);
             }
-            //printf("x,y: %f %f                     \r",clusters->at(i)->posX,clusters->at(i)->posY);
+            printf("x,y: %f %f                     \r",clusters->at(i)->posX,clusters->at(i)->posY);
             //            printf("#clusters: %d  \r",clusters->size());
         }
 

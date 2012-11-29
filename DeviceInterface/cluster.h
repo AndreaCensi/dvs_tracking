@@ -35,16 +35,24 @@ public:
 
     TransitionHistory *transitionHistory;
 
-// private:
+    // private:
     struct Moment{
         int m10;
         int m01;
         int m00;
-        Moment() : m10(0),m01(0),m00(0){}
+        float m20;
+        float m02;
+
         void reset(){
             m10 = 0;
             m01 = 0;
             m00 = 0;
+            m20 = 0;
+            m02 = 0;
+        }
+
+        Moment(){
+            reset();
         }
     };
 

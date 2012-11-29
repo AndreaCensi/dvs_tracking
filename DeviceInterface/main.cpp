@@ -5,15 +5,15 @@
 #include "camwidget.h"
 #include "udpinterface.h"
 
-//int main(int argc, char **argv){
-//    QApplication app(argc,argv);
-//    EventProcessor ep;
-//    //UDPInterface udpIf(&ep);
-//    DVS128Interface dvs(&ep);
-//    dvs.startReading();
-//    ep.start();
-//    return app.exec();
-//}
+int main(int argc, char **argv){
+    QApplication app(argc,argv);
+    EventProcessor ep;
+    //UDPInterface udpIf(&ep);
+    DVS128Interface dvs(&ep);
+    dvs.startReading();
+    ep.start();
+    return app.exec();
+}
 
 //activity test
 //int main(int argc, char **argv){
@@ -151,28 +151,29 @@
 //}
 
 // momentextractor test
-int main(int argc, char **argv){
-    Cluster c;
-    int counter = 0;
+//int main(int argc, char **argv){
+//    Cluster c;
+//    int counter = 0;
 
-    for(int i = 0; i < c.moments->size;i++)
-        printf("%d ",c.moments->at(i).m00);
-    printf("\n");
-    printf("counter: %d\n",counter);
-    for(int i = 0; i < 200;i++){
-        Event e;
-        e.posX = 50;
-        e.posY = 50;
-        e.timeStamp = counter;
-        c.addEvent(e);
+//    for(int i = 0; i < c.moments->size;i++)
+//        printf("%d ",c.moments->at(i).m00);
+//    printf("\n");
+//    printf("counter: %d\n",counter);
+//    for(int i = 0; i < 10000;i++){
+//        Event e;
+//        e.posX = 50;
+//        e.posY = 50;
+//        e.timeStamp = counter;
+//        c.addEvent(e);
 
-        counter += 10;
-    }
+//        counter += 10;
+//    }
 
-    for(int i = 0; i < c.moments->size;i++)
-        printf("%d ",c.moments->at(i).m00);
-    printf("\n");
-    printf("counter: %d\n",counter);
+//    for(int i = 0; i < c.moments->size;i++)
+//        printf("%d ",c.moments->at(i).m00);
+//    printf("\n");
+//    printf("counter: %d\n\n",counter);
+//    printf("posX: %f, posY: %f\n", c.posX,c.posY);
 
-    return 0;
-}
+//    return 0;
+//}

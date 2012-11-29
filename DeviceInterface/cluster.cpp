@@ -37,7 +37,6 @@ Cluster::Cluster(){
     Moment m;
     for(int i = 0; i < NUM_MOMENTS; i++){
         moments->set(i,m);
-        printf("m00: %d ", moments->at(i).m00);
     }
 }
 
@@ -90,16 +89,30 @@ void Cluster::extractMoments(Event *e){
         for(int i = 0; i < numSlots;i++){
             if(index > NUM_TIMESLOTS - 1)
                 index = 0;
-            moments->at(index).reset();
+//            moments->at(index).reset();
+
+            Moment m;
+            m.m10 = 0;
+            m.m01 = 0;
+            m.m00 = 0;
+            m.m20 = 0;
+            m.m02 = 0;
+
+            moments->set(index,m);
+
             index++;
         }
     }
 
     //add event
-    Moment *m = &moments->at(currentIndex);
-    m->m10 += e->posX;
-    m->m01 += e->posY;
-    m->m00++;
+    Moment m;
+    m.m10 = moments->at(currentIndex).m10 + e->posX;
+    m.m01 = moments->at(currentIndex).m01 + e->posY;
+    m.m00 = moments->at(currentIndex).m00 + 1;
+    m.m20 = moments->at(currentIndex).m20 + pow(float(e->posX),2);
+    m.m02 = moments->at(currentIndex).m02 + pow(float(e->posY),2);
+
+    moments->set(currentIndex,m);
 
     int  m00,m10,m01;
     m00 = m10 = m01 = 0;
@@ -109,8 +122,8 @@ void Cluster::extractMoments(Event *e){
     for(int i = 0; i < NUM_MOMENTS;i++){
         m10 += moments->at(i).m10;
         m01 += moments->at(i).m01;
-        m20 += pow(float(events->at(i).posX),2);
-        m02 += pow(float(events->at(i).posY),2);
+        m20 += moments->at(i).m20;
+        m02 += moments->at(i).m02;
         m00 += moments->at(i).m00;
     }
 
