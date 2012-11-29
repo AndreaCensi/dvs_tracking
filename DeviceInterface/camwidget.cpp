@@ -49,19 +49,21 @@ void CamWidget::paintEvent(QPaintEvent *){
             if(!clusters->at(i)->candidate){
                 int x = (127-clusters->at(i)->posX)*4;
                 int y = (127-clusters->at(i)->posY)*4;
+                int contX = clusters->at(i)->contourX*4;
+                int contY = clusters->at(i)->contourY*4;
 
-                painter.drawEllipse(QPoint(x,y),30,30);
+                painter.drawEllipse(QPoint(x,y),contX,contY);
             }
-            printf("x,y: %f %f                     \r",clusters->at(i)->posX,clusters->at(i)->posY);
+//            printf("x,y: %f %f                     \r",clusters->at(i)->posX,clusters->at(i)->posY);
             //            printf("#clusters: %d  \r",clusters->size());
         }
 
-//        if(!clusters->at(0)->candidate){
-//            int phase = clusters->at(0)->transitionHistory->phase;
-//            int period= clusters->at(0)->transitionHistory->period;
+        if(!clusters->at(0)->candidate){
+            int phase = clusters->at(0)->transitionHistory->phase;
+            int period= clusters->at(0)->transitionHistory->period;
 
-//            printf("phase: %d period: %d                     \r",phase, period);
-//        }
+            printf("phase: %d period: %d                     \r",phase, period);
+        }
     }
 
 
