@@ -20,7 +20,7 @@
 #define MOMENT_RESOLUTION 100
 
 //Path
-#define PATH_LENGTH 64
+#define PATH_LENGTH 128
 #define MIN_PATH_INTERVAL 20000
 #define MAX_PATH_DISTANCE 4 //squared distance
 
@@ -36,6 +36,7 @@ Cluster::Cluster(){
     candidate = true;
     transitionHistory = 0;
     assigned = false;
+    velocity = 0;
 
     events = new RingBuffer<Event>(NUM_EVENTS);
     eventsPerInterval = new RingBuffer<int>(NUM_TIMESLOTS);
@@ -221,7 +222,7 @@ void Cluster::updateState(int ts){
     int sumOn = 0;
 
     int i = events->latest();
-    while((events->at(events->latest()).timeStamp - events->at(i).timeStamp) < TRANSITION_WINDOW && (sumOff + sumOn) < events->size){
+    while((events->latest()->timeStamp - events->at(i).timeStamp) < TRANSITION_WINDOW && (sumOff + sumOn) < events->size){
         if(events->at(i).polarity == 1)
             sumOn++;
         else if(events->at(i).polarity == 0)
@@ -251,7 +252,7 @@ void Cluster::updateState(int ts){
 }
 
 void Cluster::updatePath(int ts){
-    if(virgin){
+    if(virgin){ //----------------------------------------!
         Position p;
         p.x = posX;
         p.y = posY;
@@ -260,10 +261,10 @@ void Cluster::updatePath(int ts){
         return;
     }
 
-    Position *p = &path->at(path->latest());
+    Position *p = path->latest();
 
     int deltaT = ts - p->timestamp;
-    float deltaD = pow(float(posX-p->posX),2) + pow(float(posY-p->posY),2);
+    float deltaD = pow(float(posX-p->x),2) + pow(float(posY-p->y),2);
 
     if(deltaT > MIN_PATH_INTERVAL || deltaD > MAX_PATH_DISTANCE){
         Position p;
@@ -272,6 +273,22 @@ void Cluster::updatePath(int ts){
         p.timestamp = ts;
         path->add();
     }
+}
+
+void Cluster::updateVelocity(){
+    if(virgin)
+        return;
+
+    Position *current = path->latest();
+    int i = path->latest()-1;
+    if(i < 0)
+        i = path->size-1;
+    Position *last = path->at(i);
+
+    int deltaT = current->timestamp - last->timestamp;
+    float deltaD = sqrt(pow(float(current->x-last->x),2) + pow(float(current->y-last->y),2));
+
+    velocity = deltaD/float(deltaT);
 }
 
 void Cluster::convert(){

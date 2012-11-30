@@ -222,7 +222,7 @@ void EventProcessor::run(){
                 //                }
             }
             //update all clusters with latest timestamp (for lifetime and activity measurements)
-            int timeStamp = getEventBuffer()->at(getEventBuffer()->latest()).timeStamp;
+            int timeStamp = getEventBuffer()->latest()->timeStamp;
             for(unsigned int i = 0; i < clusters.size();i++){
                 clusters[i]->updateTS(timeStamp);
             }

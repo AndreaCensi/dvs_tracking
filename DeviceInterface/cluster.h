@@ -23,6 +23,7 @@ public:
 
     int currentState;
     int lifeTime;
+    float velocity;
 
     bool assigned;
 
@@ -74,6 +75,7 @@ private:
     void extractMoments(Event *e);
     void updateState(int ts);
     void updatePath(int ts);
+    void updateVelocity();
 
     RingBuffer<int> *eventsPerInterval;
     RingBuffer<Moment> *moments;

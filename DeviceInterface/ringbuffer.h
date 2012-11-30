@@ -68,6 +68,13 @@ public:
         return i;
     }
 
+    T* latest(){
+        int i = end - 1;
+        if(end - 1 < 0)
+            i = size - 1;
+        return &buffer[i];
+    }
+
     T* getNext(){
         if(start != end){
             T *at = &buffer[start];
