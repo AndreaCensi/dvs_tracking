@@ -11,13 +11,12 @@
 #define MIN_CONVERSION_LIFETIME 1000000 // minimal lifetime for a candidate cluster to become a feature cluster
 #define MIN_CANDIDATE_LIFETIME 100000   // minimum lifetime before deletion
 #define MERGE_THRESHOLD 10.0f   //100 with squared distance
-#define SPATIAL_SHARPNESS 2.0f
+#define SPATIAL_SHARPNESS 2.0f //2.0
 #define TEMPORAL_SHARPNESS 500.0f
 #define CLUSTER_ASSIGN_THRESHOLD 0.4f
 
 //other
 #define DVS_RES 128
-
 
 EventProcessor::EventProcessor(){
     filter = new Filter();
@@ -110,7 +109,6 @@ float EventProcessor::temporalCost(Event *e, Cluster *c){
         else
             return offDiff;
     }
-
 }
 
 float EventProcessor::cumulativeDistribution(float l, float x){
@@ -118,40 +116,33 @@ float EventProcessor::cumulativeDistribution(float l, float x){
 }
 
 void EventProcessor::assignToCluster(Event e){
-    if(clusters.empty()){
-        Cluster *c = new Cluster();
-        c->addEvent(e);
-        clusters.push_back(c);
-    }
-    else{
-        float sum = 0;
-        float lowest = 10000.0f;
-        int clusterIndex = 0;
-        for(unsigned int i = 0; i < clusters.size(); i++){
-            if(distance(&e,clusters[i]) < EVENT_ASSIGN_CHANCE){
-                float cost = getSpatioTemporalCost(&e,clusters[i]);
-                if(cost < EVENT_ASSIGN_THRESHOLD){
-                    if(cost < lowest){
-                        lowest = cost;
-                        clusterIndex = i;
-                    }
-                    sum += exp(cost*-ASSIGN_SHARPNESS); //Boltzmann weight sum
+    float sum = 0;
+    float lowest = 100000.0f;
+    int clusterIndex = 0;
+    for(unsigned int i = 0; i < clusters.size(); i++){
+        if(distance(&e,clusters[i]) < EVENT_ASSIGN_CHANCE){
+            float cost = getSpatioTemporalCost(&e,clusters[i]);
+            if(cost < EVENT_ASSIGN_THRESHOLD){
+                if(cost < lowest){
+                    lowest = cost;
+                    clusterIndex = i;
                 }
+                sum += exp(cost*-ASSIGN_SHARPNESS); //Boltzmann weight sum
             }
-        }
-        //normalize
-        if(lowest < EVENT_ASSIGN_THRESHOLD){
-            float p = exp(lowest*-ASSIGN_SHARPNESS)/sum;  //probability
-            if(p > ASSIGN_PROB){
-                clusters[clusterIndex]->addEvent(e);
-            }
-        }
-        else{
-            Cluster  *c = new Cluster();
-            c->addEvent(e);
-            clusters.push_back(c);
         }
     }
+    //normalize
+    if(lowest < EVENT_ASSIGN_THRESHOLD){
+        float p = exp(lowest*-ASSIGN_SHARPNESS)/sum;  //probability
+        if(p > ASSIGN_PROB){
+            clusters[clusterIndex]->addEvent(e);
+        }
+        return;
+    }
+    // create a new cluster
+    Cluster  *c = new Cluster();
+    c->addEvent(e);
+    clusters.push_back(c);
 }
 
 void EventProcessor::maintainClusters(){
@@ -220,14 +211,15 @@ void EventProcessor::run(){
                 if(e->isSpecial())
                     return;
 
-//              camWidget->updateImage(e);
+                camWidget->updateImage(e);
+                assignToCluster(*e);
 
                 //filter background activity
-                Event* candidates = filter->labelingFilter(*e);
-                for(int i = 0; i < filter->availableEvents(); i++){
-                    camWidget->updateImage(&candidates[i]); //graphical output
-                    assignToCluster(candidates[i]); //assign new events to clusters
-                }
+                //                Event* candidates = filter->labelingFilter(*e);
+                //                for(int i = 0; i < filter->availableEvents(); i++){
+                //                    camWidget->updateImage(&candidates[i]); //graphical output
+                //                    assignToCluster(candidates[i]); //assign new events to clusters
+                //                }
             }
             //update all clusters with latest timestamp (for lifetime and activity measurements)
             int timeStamp = getEventBuffer()->at(getEventBuffer()->latest()).timeStamp;

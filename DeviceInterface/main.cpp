@@ -8,7 +8,7 @@
 int main(int argc, char **argv){
     QApplication app(argc,argv);
     EventProcessor ep;
-    //UDPInterface udpIf(&ep);
+//    UDPInterface udpIf(&ep);
     DVS128Interface dvs(&ep);
     dvs.startReading();
     ep.start();
@@ -46,7 +46,7 @@ int main(int argc, char **argv){
 //moment test
 //int main(int argc, char **argv){
 //    Cluster c;
-//    Event e[5];
+//    Event e[6];
 //    e[0].posX = 50;
 //    e[0].posY = 50;
 
@@ -56,14 +56,17 @@ int main(int argc, char **argv){
 //    e[2].posX = 49;
 //    e[2].posY = 50;
 
-//    e[3].posX = 52;
-//    e[3].posY = 53;
+//    e[3].posX = 50;
+//    e[3].posY = 49;
 
-//    e[4].posX = 48;
-//    e[4].posY = 50;
+//    e[4].posX = 50;
+//    e[4].posY = 51;
 
-//    for(int i = 0; i < 5; i++){
-//        e[i].timeStamp = 10000+i*4;
+//    e[5].posX = 50;
+//    e[5].posY = 55;
+
+//    for(int i = 0; i < 6; i++){
+//        e[i].timeStamp = 10000+i*50;
 //        e[i].polarity = 1;
 //        c.addEvent(e[i]);
 //    }

@@ -1,6 +1,6 @@
 #include "transitionhistory.h"
 
-#define NUM_TRANS 128
+#define NUM_TRANS 256
 
 TransitionHistory::TransitionHistory()
 {

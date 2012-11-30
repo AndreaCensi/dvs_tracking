@@ -14,13 +14,10 @@ SOURCES += main.cpp \
     event.cpp \
     eventprocessor.cpp \
     cluster.cpp \
-    signalwrapper.cpp \
     transitionhistory.cpp \
     dvs128interface.cpp \
-    eventgenerator.cpp \
     filter.cpp \
     logger.cpp \
-    temporalpattern.cpp \
     transition.cpp \
     udpinterface.cpp
 
@@ -32,14 +29,11 @@ HEADERS += \
     event.h \
     eventprocessor.h \
     cluster.h \
-    signalwrapper.h \
     eventprocessorbase.h \
     transitionhistory.h \
     dvs128interface.h \
-    eventgenerator.h \
     filter.h \
     logger.h \
-    temporalpattern.h \
     transition.h \
     udpinterface.h
 

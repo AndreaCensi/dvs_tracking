@@ -3,13 +3,26 @@
 #include <algorithm>
 
 #define NUM_EVENTS 128
-#define MAX_AGE_MOMENT 5000 //5000 usec?
+
+// cluster maintanance
+#define MAX_AGE_MOMENT 5000 //5000 usec
 #define MAX_AGE_ACTIVITY 10000 //usec
+
+// Activity measurements
 #define NUM_TIMESLOTS 100
 #define TIME_WINDOW 1000 //usec
+
+// Transition history sampling
 #define TRANSITION_WINDOW 200 //usec
+
+// Moments - Position and contour
 #define NUM_MOMENTS 100
 #define MOMENT_RESOLUTION 100
+
+//Path
+#define PATH_LENGTH 64
+
+
 #define PI 3.14159265f
 
 Cluster::Cluster(){
@@ -25,18 +38,24 @@ Cluster::Cluster(){
     events = new RingBuffer<Event>(NUM_EVENTS);
     eventsPerInterval = new RingBuffer<int>(NUM_TIMESLOTS);
     moments = new RingBuffer<Moment>(NUM_MOMENTS);
+    path = new RingBuffer<Position>(PATH_LENGTH);
 
     Event e;
     for(int i = 0; i < events->size; i++){
-        events->add(e);
+        events->set(i,e);
     }
     for(int i = 0; i < NUM_TIMESLOTS; i++){
-        eventsPerInterval->add(0);
+        eventsPerInterval->set(i,0);
     }
 
     Moment m;
     for(int i = 0; i < NUM_MOMENTS; i++){
         moments->set(i,m);
+    }
+
+    Position p;
+    for(int i = 0; i < PATH_LENGTH; i++){
+        path->set(i,p);
     }
 }
 
@@ -44,6 +63,7 @@ Cluster::~Cluster(){
     delete events;
     delete eventsPerInterval;
     delete moments;
+    delete path;
     if(transitionHistory)
         delete transitionHistory;
 }
@@ -142,43 +162,6 @@ void Cluster::extractMoments(Event *e){
     contourY = (1 > tmp) ? 1 : tmp;
 }
 
-//calculates centroid and contour
-void Cluster::calcMoments(){
-    int M00 = 0;  // Area of the cluster/ number of events in cluster
-    float M10,M01,M20,M02;
-    M10 = M01 = M20 = M02 = 0;
-
-    int i = events->latest();
-    while((events->at(events->latest()).timeStamp - events->at(i).timeStamp) < MAX_AGE_MOMENT && M00 < events->size){
-        M10 += events->at(i).posX;
-        M01 += events->at(i).posY;
-        M20 += pow(float(events->at(i).posX),2);
-        M02 += pow(float(events->at(i).posY),2);
-
-        i--; // go back in time through ringbuffer
-        if(i < 0){
-            i = events->size-1;
-        }
-        M00++;
-    }
-    //printf("#cluster area: %d \r",M00);
-
-    //centroid/ cluster position
-    posX = M10/float(M00);
-    posY = M01/float(M00);
-
-    //contour -------------------------------- DRAW!
-    float varianceX = M20 - posX*M10;
-    float varianceY = M02 - posY*M01;
-    float sqrtM00 = sqrt(float(M00));
-
-    float tmp = sqrt(varianceX)/sqrtM00 * 2;
-    contourX = (1 > tmp) ? 1 : tmp;
-
-    tmp = sqrt(varianceY)/sqrtM00 * 2;
-    contourY = (1 > tmp) ? 1 : tmp;
-}
-
 float Cluster::getActivity(){
     int sum = 0;
     for(int i = 0; i < eventsPerInterval->size; i++){
@@ -213,6 +196,9 @@ void Cluster::updateTS(int ts){
 
     // update cluster state for transitions history
     updateState(ts);
+
+    //update the cluster path - used for velocity predictions
+    updatePath(ts);
 }
 
 bool Cluster::isCandidate(){
@@ -260,6 +246,10 @@ void Cluster::updateState(int ts){
         t.polarity = 0;
         transitionHistory->add(t);
     }
+}
+
+void Cluster::updatePath(int ts){
+
 }
 
 void Cluster::convert(){

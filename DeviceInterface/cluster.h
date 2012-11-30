@@ -4,7 +4,6 @@
 #include "ringbuffer.h"
 #include "event.h"
 #include "transitionhistory.h"
-#include "temporalpattern.h"
 
 class Cluster
 {
@@ -35,7 +34,7 @@ public:
 
     TransitionHistory *transitionHistory;
 
-    // private:
+private:
     struct Moment{
         int m10;
         int m01;
@@ -56,14 +55,29 @@ public:
         }
     };
 
-    void update();
+    struct Position{
+        float x;
+        float y;
+        int timestamp;
+
+        void reset(){
+            x = 0;
+            y = 0;
+            ts = 0;
+        }
+
+        Position(){
+            reset();
+        }
+    };
+
     void extractMoments(Event *e);
-    void calcMoments();
-    void calcCountour();
     void updateState(int ts);
+    void updatePath(int ts);
 
     RingBuffer<int> *eventsPerInterval;
     RingBuffer<Moment> *moments;
+    RingBuffer<Position> *path;
 };
 
 #endif // CLUSTER_H
