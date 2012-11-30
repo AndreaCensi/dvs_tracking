@@ -21,6 +21,8 @@
 
 //Path
 #define PATH_LENGTH 64
+#define MIN_PATH_INTERVAL 20000
+#define MAX_PATH_DISTANCE 4 //squared distance
 
 
 #define PI 3.14159265f
@@ -249,7 +251,27 @@ void Cluster::updateState(int ts){
 }
 
 void Cluster::updatePath(int ts){
+    if(virgin){
+        Position p;
+        p.x = posX;
+        p.y = posY;
+        p.timestamp = ts;
+        path->add();
+        return;
+    }
 
+    Position *p = &path->at(path->latest());
+
+    int deltaT = ts - p->timestamp;
+    float deltaD = pow(float(posX-p->posX),2) + pow(float(posY-p->posY),2);
+
+    if(deltaT > MIN_PATH_INTERVAL || deltaD > MAX_PATH_DISTANCE){
+        Position p;
+        p.x = posX;
+        p.y = posY;
+        p.timestamp = ts;
+        path->add();
+    }
 }
 
 void Cluster::convert(){
