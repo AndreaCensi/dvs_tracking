@@ -47,7 +47,7 @@ void EventProcessor::processEvent(Event e){
 
     //update all clusters with latest timestamp (for lifetime and activity measurements)
     for(unsigned int i = 0; i < clusters.size();i++){
-        clusters[i]->updateTS(e.timeStamp);
+        clusters[i]->update(e.timeStamp);
     }
 
     maintainClusters();

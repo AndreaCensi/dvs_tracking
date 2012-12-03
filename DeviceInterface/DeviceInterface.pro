@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     filter.cpp \
     logger.cpp \
     transition.cpp \
-    udpinterface.cpp
+    udpinterface.cpp \
+    vector2d.cpp
 
 HEADERS += \
     usbreader.h \
@@ -35,7 +36,8 @@ HEADERS += \
     filter.h \
     logger.h \
     transition.h \
-    udpinterface.h
+    udpinterface.h \
+    vector2d.h
 
 
 

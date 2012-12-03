@@ -33,10 +33,10 @@ Cluster::Cluster(){
     currentState = 0;
     firstEventTS = 0;
     lastEventTS = 0;
+    lastUpdateTS = 0;
     candidate = true;
     transitionHistory = 0;
     assigned = false;
-    velocity = 0;
 
     events = new RingBuffer<Event>(NUM_EVENTS);
     eventsPerInterval = new RingBuffer<int>(NUM_TIMESLOTS);
@@ -91,7 +91,10 @@ void Cluster::addEvent(Event e){
 
     //extract current central moment
     extractMoments(&e);
-    //calcMoments();
+
+    //update the cluster path and velocity
+    updatePath(ts);
+    updateVelocity();
 
     lastEventTS = e.timeStamp;
 }
@@ -112,7 +115,7 @@ void Cluster::extractMoments(Event *e){
         for(int i = 0; i < numSlots;i++){
             if(index > NUM_TIMESLOTS - 1)
                 index = 0;
-//            moments->at(index).reset();
+            //            moments->at(index).reset();
 
             Moment m;
             m.m10 = 0;
@@ -174,8 +177,8 @@ float Cluster::getActivity(){
     return activity;
 }
 
-void Cluster::updateTS(int ts){
-    // update latest timestamp and lifetime
+void Cluster::update(int ts){
+    // update lifetime
     lifeTime = ts - firstEventTS;
 
     //update activity timewindow
@@ -200,8 +203,8 @@ void Cluster::updateTS(int ts){
     // update cluster state for transitions history
     updateState(ts);
 
-    //update the cluster path - used for velocity predictions
-    updatePath(ts);
+    // set last update time
+    lastUpdateTS = ts;
 }
 
 bool Cluster::isCandidate(){
@@ -252,15 +255,6 @@ void Cluster::updateState(int ts){
 }
 
 void Cluster::updatePath(int ts){
-    if(virgin){ //----------------------------------------!
-        Position p;
-        p.x = posX;
-        p.y = posY;
-        p.timestamp = ts;
-        path->add();
-        return;
-    }
-
     Position *p = path->latest();
 
     int deltaT = ts - p->timestamp;
@@ -276,19 +270,33 @@ void Cluster::updatePath(int ts){
 }
 
 void Cluster::updateVelocity(){
-    if(virgin)
-        return;
 
+    //set last velocity
     Position *current = path->latest();
     int i = path->latest()-1;
     if(i < 0)
         i = path->size-1;
     Position *last = path->at(i);
 
-    int deltaT = current->timestamp - last->timestamp;
-    float deltaD = sqrt(pow(float(current->x-last->x),2) + pow(float(current->y-last->y),2));
+    if(last->timestamp == 0)    // do not overestimate velocity if cluster new.
+        return;
 
-    velocity = deltaD/float(deltaT);
+    int deltaT = current->timestamp - last->timestamp;
+    float deltaDx = current->x-last->x;
+    float deltaDy = current->y-last->y;
+
+    velocity.x = deltaDx/float(deltaT);
+    velocity.y = deltaDy/float(deltaT);
+
+    // get velocity relative
+    float angle = 0;  //calc rotation angle to align velocity vector to x-axis
+    Vector2D xAxis(1,0);
+    if(velocity.norm() > 0)
+        angle = acos(velocity.normalizedDot(xAxis));
+    if(velocity.y > 0)
+        angle = 2*PI - angle;
+
+
 }
 
 void Cluster::convert(){

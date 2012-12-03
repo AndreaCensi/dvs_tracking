@@ -4,6 +4,7 @@
 #include "ringbuffer.h"
 #include "event.h"
 #include "transitionhistory.h"
+#include "vector2d.h"
 
 class Cluster
 {
@@ -12,7 +13,7 @@ public:
     ~Cluster();
     void addEvent(Event e);
     bool isCandidate();
-    void updateTS(int ts);
+    void update(int ts);
     float getActivity();
     void convert(); //convert to candidate to feature cluster
 
@@ -23,12 +24,15 @@ public:
 
     int currentState;
     int lifeTime;
-    float velocity;
+
+    Vector2D velocity;
 
     bool assigned;
 
     unsigned int firstEventTS;  //first event assigned to this cluster
     unsigned int lastEventTS;    // latest event timestamp from camera, used for liftime and activity comparison
+    unsigned int lastUpdateTS;
+
     float contourX;
     float contourY;
     bool candidate;
@@ -64,7 +68,7 @@ private:
         void reset(){
             x = 0;
             y = 0;
-            ts = 0;
+            timestamp = 0;
         }
 
         Position(){
