@@ -1,7 +1,7 @@
 #include "vector2d.h"
 #include "math.h"
 
-#define PI 3.14159265f;
+const float Vector2D::PI = 3.14159265f;
 
 Vector2D::Vector2D(float xVal, float yVal)
 {
@@ -9,14 +9,14 @@ Vector2D::Vector2D(float xVal, float yVal)
     y = yVal;
 }
 
-float Vector2D::toRadian(float degree)
-{
-    return ( degree*PI/180.0f);
+float Vector2D::toRadian(float degree){
+    float result = degree*PI/180.0f;
+    return result;
 }
 
-float Vector2D::toDegree(float radian)
-{
-    return ( radian*180.0f/PI );
+float Vector2D::toDegree(float radian){
+    float result = radian*180.0f/PI;
+    return result;
 }
 
 float Vector2D::norm()
@@ -43,8 +43,7 @@ float Vector2D::normalizedDot(Vector2D v){
     return ( normedV1.x*normedV2.x + normedV1.y*normedV2.y );
 }
 
-Vector2D Vector2D::rotate( float angle )
-{
+Vector2D Vector2D::rotate( float angle ){
     Vector2D v;
     v.x = cos(angle)*x -  sin(angle)*y;
     v.y = sin(angle)*x + cos(angle)*y;

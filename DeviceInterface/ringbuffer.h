@@ -61,7 +61,7 @@ public:
         else return 0;
     }
 
-    int latest(){
+    int latestIndex(){
         int i = end - 1;
         if(end - 1 < 0)
             i = size - 1;

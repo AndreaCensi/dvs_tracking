@@ -11,6 +11,7 @@
 // Activity measurements
 #define NUM_TIMESLOTS 100
 #define TIME_WINDOW 1000 //usec
+#define MIN_SUM 50  // preventing noise from staying a cluster
 
 // Transition history sampling
 #define TRANSITION_WINDOW 200 //usec
@@ -93,8 +94,8 @@ void Cluster::addEvent(Event e){
     extractMoments(&e);
 
     //update the cluster path and velocity
-    updatePath(ts);
-    updateVelocity();
+    updatePath(e.timeStamp);
+    //updateVelocity();
 
     lastEventTS = e.timeStamp;
 }
@@ -173,8 +174,12 @@ float Cluster::getActivity(){
     for(int i = 0; i < eventsPerInterval->size; i++){
         sum += eventsPerInterval->at(i);
     }
-    float activity = sum/(contourX*contourY*PI);
-    return activity;
+    if (sum < MIN_SUM)
+        return 0;
+    else{
+        float activity = sum/(contourX*contourY*PI);
+        return activity;
+    }
 }
 
 void Cluster::update(int ts){
@@ -224,7 +229,7 @@ void Cluster::updateState(int ts){
     int sumOff = 0;
     int sumOn = 0;
 
-    int i = events->latest();
+    int i = events->latestIndex();
     while((events->latest()->timeStamp - events->at(i).timeStamp) < TRANSITION_WINDOW && (sumOff + sumOn) < events->size){
         if(events->at(i).polarity == 1)
             sumOn++;
@@ -265,7 +270,7 @@ void Cluster::updatePath(int ts){
         p.x = posX;
         p.y = posY;
         p.timestamp = ts;
-        path->add();
+        path->add(p);
     }
 }
 
@@ -273,10 +278,10 @@ void Cluster::updateVelocity(){
 
     //set last velocity
     Position *current = path->latest();
-    int i = path->latest()-1;
+    int i = path->latestIndex()-1;
     if(i < 0)
         i = path->size-1;
-    Position *last = path->at(i);
+    Position *last = &path->at(i);
 
     if(last->timestamp == 0)    // do not overestimate velocity if cluster new.
         return;
@@ -287,8 +292,12 @@ void Cluster::updateVelocity(){
 
     velocity.x = deltaDx/float(deltaT);
     velocity.y = deltaDy/float(deltaT);
+}
 
+void Cluster::predictRelativePosition(){
     // get velocity relative
+
+    // calculate vector rotation angle
     float angle = 0;  //calc rotation angle to align velocity vector to x-axis
     Vector2D xAxis(1,0);
     if(velocity.norm() > 0)
@@ -296,7 +305,9 @@ void Cluster::updateVelocity(){
     if(velocity.y > 0)
         angle = 2*PI - angle;
 
+    Vector2D xAligned = velocity.rotate(angle);
 
+    // compute new forward velocity... => jaer code: SyntheticVelocityPredictor
 }
 
 void Cluster::convert(){

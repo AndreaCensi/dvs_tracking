@@ -76,10 +76,25 @@ private:
         }
     };
 
+    struct Acceleration{
+        float m;
+        float a;
+
+        void reset(){
+            m = 0;
+            a = 0;
+        }
+
+        Acceleration(){
+            reset();
+        }
+    };
+
     void extractMoments(Event *e);
     void updateState(int ts);
     void updatePath(int ts);
     void updateVelocity();
+    void predictRelativePosition();
 
     RingBuffer<int> *eventsPerInterval;
     RingBuffer<Moment> *moments;

@@ -211,20 +211,20 @@ void EventProcessor::run(){
                 if(e->isSpecial())
                     return;
 
-                camWidget->updateImage(e);
-                assignToCluster(*e);
+                //                camWidget->updateImage(e);
+                //                assignToCluster(*e);
 
-                //filter background activity
-                //                Event* candidates = filter->labelingFilter(*e);
-                //                for(int i = 0; i < filter->availableEvents(); i++){
-                //                    camWidget->updateImage(&candidates[i]); //graphical output
-                //                    assignToCluster(candidates[i]); //assign new events to clusters
-                //                }
+                //                filter background activity
+                Event* candidates = filter->labelingFilter(*e);
+                for(int i = 0; i < filter->availableEvents(); i++){
+                    camWidget->updateImage(&candidates[i]); //graphical output
+                    assignToCluster(candidates[i]); //assign new events to clusters
+                }
             }
             //update all clusters with latest timestamp (for lifetime and activity measurements)
             int timeStamp = getEventBuffer()->latest()->timeStamp;
             for(unsigned int i = 0; i < clusters.size();i++){
-                clusters[i]->updateTS(timeStamp);
+                clusters[i]->update(timeStamp);
             }
 
             maintainClusters();

@@ -11,7 +11,9 @@ public:
     Vector2D normalize();
     float dot(Vector2D v);
     float normalizedDot(Vector2D v);
-    float rotate(float angle);
+    Vector2D rotate(float angle);
+
+    static const float PI;
 
     float x;
     float y;
