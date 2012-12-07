@@ -49,3 +49,8 @@ Vector2D Vector2D::rotate( float angle ){
     v.y = sin(angle)*x + cos(angle)*y;
     return v;
 }
+
+void Vector2D::reset(){
+    x = 0.0f;
+    y = 0.0f;
+}

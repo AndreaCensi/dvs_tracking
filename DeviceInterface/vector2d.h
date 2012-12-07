@@ -12,6 +12,7 @@ public:
     float dot(Vector2D v);
     float normalizedDot(Vector2D v);
     Vector2D rotate(float angle);
+    void reset();
 
     static const float PI;
 

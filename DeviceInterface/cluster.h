@@ -99,6 +99,9 @@ private:
     RingBuffer<int> *eventsPerInterval;
     RingBuffer<Moment> *moments;
     RingBuffer<Position> *path;
+
+    Vector2D estimatedVelocity;
+    Acceleration acceleration;
 };
 
 #endif // CLUSTER_H

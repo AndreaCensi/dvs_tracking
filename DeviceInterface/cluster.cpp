@@ -275,7 +275,6 @@ void Cluster::updatePath(int ts){
 }
 
 void Cluster::updateVelocity(){
-
     //set last velocity
     Position *current = path->latest();
     int i = path->latestIndex()-1;
@@ -295,17 +294,64 @@ void Cluster::updateVelocity(){
 }
 
 void Cluster::predictRelativePosition(){
-    // get velocity relative
+    if(estimatedVelocity.x == 0.0f && estimatedVelocity.y == 0.0f)  //virgin state
+        estimatedVelocity = velocity;
+    else{       // else estimate new velocity from acceleration...
+        if(velocity.normalizedDot(estimatedVelocity) <= -20.7){
+            acceleration.reset();
+        }
+        else{
+            // calculate new relative velocity
+            float angle = 0;  //calc rotation angle to align velocity vector to x-axis
+            Vector2D xAxis(1,0);
+            if(velocity.norm() > 0)
+                angle = acos(velocity.normalizedDot(xAxis));
+            if(velocity.y > 0)
+                angle = 2*PI - angle;
 
-    // calculate vector rotation angle
-    float angle = 0;  //calc rotation angle to align velocity vector to x-axis
-    Vector2D xAxis(1,0);
-    if(velocity.norm() > 0)
-        angle = acos(velocity.normalizedDot(xAxis));
-    if(velocity.y > 0)
-        angle = 2*PI - angle;
+            Vector2D forward = estimatedVelocity.rotate(angle);
+            Vector2D target = velocity.rotate(angle);
 
-    Vector2D xAligned = velocity.rotate(angle);
+            float m = target.norm()-forward.norm();
+            //filter and set acceleration magnitude...
+            float a = 0;
+            if(target.norm() > 0)
+                a = 1-target.normalizedDot(xAxis);
+            if(target.y < 0)
+                a = -a;
+            //filter and set acceleration angle...
+        }
+
+        //estimate new position
+        float angle = 0;
+        Vector2D xAxis(1,0);
+        if(velocity.norm() > 0)
+            angle = acos(velocity.normalizedDot(xAxis));
+        if(velocity.y > 0)
+            angle = 2*PI - angle;
+        Vector2D forward = estimatedVelocity.rotate(angle);
+
+        float m = forward.norm() + acceleration.m * delta;
+        float a = acceleration.a * delta;
+
+        Vector2D newVelocity;
+        newVelocity.x = m * cos(abs(a));
+        int sgn = 0;
+        if(a != 0.0f)
+            sgn = a < 0 ? -1 : 1;
+        newVelocity.y = m * sin(abs(a)) * sgn;
+
+        newVelocity = newVelocity.rotate(-angle);
+
+        // filter - synthetic velocity
+        Vector2D measured;
+        Vector2D predicted;
+        if(measured.normalizedDot(predicted) < 0.5){
+            acceleration.reset();
+            estimatedVelocity = velocity;
+        }
+
+    }
 
     // compute new forward velocity... => jaer code: SyntheticVelocityPredictor
 }
