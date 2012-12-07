@@ -14,6 +14,7 @@ public:
         map = new T[w*h];
         width = w;
         height = h;
+        reset();
     }
 
     ~Map(){

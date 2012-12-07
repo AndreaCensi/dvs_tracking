@@ -1,16 +1,16 @@
 #include <QApplication>
 
 #include "dvs128interface.h"
-#include "eventprocessor.h"
+#include "tracker.h"
 #include "camwidget.h"
 #include "udpinterface.h"
 
 int main(int argc, char **argv){
     QApplication app(argc,argv);
-    EventProcessor ep;
-    //    UDPInterface udpIf(&ep);
-    DVS128Interface dvs(&ep);
+    Tracker t;
+    //    UDPInterface udpIf(&t);
+    DVS128Interface dvs(&t);
     dvs.startReading();
-    ep.start();
+    t.start();
     return app.exec();
 }

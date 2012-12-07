@@ -4,7 +4,7 @@
 class Interval
 {
 public:
-    Interval(unsigned int ts = 0, int posX = -1, int posY = -1, unsigned int dT = 0, float w = 1.0f);
+    Interval(unsigned int ts = 0, int posX = -1, int posY = -1, unsigned int dT = 0);
     unsigned int timeStamp;
     int x;
     int y;

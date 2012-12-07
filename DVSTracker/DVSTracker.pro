@@ -12,12 +12,12 @@ SOURCES += main.cpp \
     usbreader.cpp \
     camwidget.cpp \
     event.cpp \
-    eventprocessor.cpp \
     dvs128interface.cpp \
     logger.cpp \
     transition.cpp \
     udpinterface.cpp \
-    interval.cpp
+    interval.cpp \
+    tracker.cpp
 
 HEADERS += \
     usbreader.h \
@@ -25,14 +25,14 @@ HEADERS += \
     ringbuffer.h \
     camwidget.h \
     event.h \
-    eventprocessor.h \
     eventprocessorbase.h \
     dvs128interface.h \
     logger.h \
     transition.h \
     udpinterface.h \
     interval.h \
-    map.h
+    map.h \
+    tracker.h
 
 
 
