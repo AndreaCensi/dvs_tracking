@@ -47,12 +47,17 @@ bool FrequencyAccumulator::hasExpired(){
         return false;
 }
 
-void FrequencyAccumulator::evaluate(){
+std::vector FrequencyAccumulator::evaluate(){
     weightMap = filter->smoothen(weightMap);
-
+    std::vector maxima = findMaxima();
+    return maxima;
 }
 
 void FrequencyAccumulator::reset(){
     weightMap->reset();
     lastReset = lastUpdate;
+}
+
+std::vector FrequencyAccumulator::findMaxima(){
+    // search for maxima in the map, use minDistance!
 }

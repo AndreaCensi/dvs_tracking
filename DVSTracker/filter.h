@@ -14,8 +14,8 @@ public:
 
 private:
     //operations on kernel
-    float get(int x, int y);
-    void set(int x, int y, float value);
+    float kernelGet(int x, int y);
+    void kernelSet(int x, int y, float value);
     void generateKernel();
     float convolute();
     bool outOfBounds(Map<float> *buffer, int x, int y);

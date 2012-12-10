@@ -23,8 +23,8 @@ Tracker::Tracker(std::vector<int> frequencies){
     pnTransitions = new Map<Transition>[DVS_RES*DVS_RES];
 
     for(int i = 0; i < targetFrequencies.size();i++){
-        FrequencyAccumulator fa;
-        weightBuffers.push_back();
+        weightBuffers.push_back(FrequencyAccumulator(targetFrequencies[i],
+                                                     1.0f,5,1.0f,5.0f,128,128));
     }
 
 }
@@ -50,7 +50,16 @@ void Tracker::processEvent(Event e){
 
     // Calculate importance of interval for each frequency
     for(int i = 0; i < weightBuffers.size(); i++){
-
+        FrequencyAccumulator *buf = &weightBuffers.at(i);
+        buf->update(dt);
+        std::vector maxima;
+        if(buf->hasExpired()){
+            maxima = buf->evaluate();
+            buf->reset();
+        }
+        if(maxima.size() > 0){
+            // continue processing
+        }
     }
 
 }

@@ -33,7 +33,7 @@ private:
     Map<Transition> *npTransitions;
 
     std::vector<int> targetFrequencies;
-    std::vector<Map<FrequencyAccumulator> > weightBuffers;
+    std::vector<FrequencyAccumulator > weightBuffers;
 
     bool exit;
 };

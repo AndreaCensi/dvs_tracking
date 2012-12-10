@@ -4,6 +4,7 @@
 #include "map.h"
 #include "interval.h"
 #include "filter.h"
+#include "vector"
 
 class FrequencyAccumulator
 {
@@ -12,13 +13,14 @@ public:
     ~FrequencyAccumulator();
     void update(Interval interval);
     bool hasExpired();
-    void evaluate();
+    std::vector evaluate();
     void reset();
 
     static const float PI;
 
 private:
     float getWeight(Interval interval, int frequency, double variance);
+    std::vector findMaxima();
 
     Map<float> *weightMap;
     int targetFrequency;

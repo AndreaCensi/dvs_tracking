@@ -30,9 +30,9 @@ Map<float>* Filter::smoothen(Map<float> *buffer){
                     int u = w-r+x;
                     int v = h-r+y;
                     if(outOfBounds(u,v))
-                        filteredWeight += get(x,y) * 0.5;   //avg value???-----------------------
+                        filteredWeight += kernelGet(x,y) * 0.5;   //avg value???-----------------------
                     else
-                        filteredWeight += get(x,y) * buffer->get(u,v);
+                        filteredWeight += kernelGet(x,y) * buffer->get(u,v);
                 }
             }
             // Set new value
@@ -48,26 +48,25 @@ void Filter::generateKernel(){
     int r = kernelSize/2;
     for(int y = -r; y <= y+r;y++){
         for(int x = -r; x <= x+r;x++){
-            float value = float((1.0/(variance*variance*2*PI)*exp(-(x*x+y*y)/(2*pow(tDiff/variance),2))));
-            set(x,y,value);
+            float value = (1.0/(variance*variance*2*PI)*exp(-(x*x+y*y)/(2*pow(variance,2)));
+            kernelSet(x,y,value);
         }
     }
-
 }
 
 bool Filter::outOfBounds(Map<float> *buffer,int x, int y){
-    if( x > 0 && y > 0 && x < buffer->width && y < buffer->height)
+    if( x >= 0 && y >= 0 && x < buffer->width && y < buffer->height)
         return true;
     else
         return false;
 }
 
-float Filter::get(int x, int y){
+float Filter::kernelGet(int x, int y){
     int index = x + y*kernelSize;
     return kernel[index];
 }
 
-float Filter::set(int x, int y, float value){
+void Filter::kernelSet(int x, int y, float value){
     int index = x + y*kernelSize;
     kernel[index] = value;
 }
