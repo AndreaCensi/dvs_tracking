@@ -47,7 +47,7 @@ void USBReader::readDVS128Event(const char *data, int numBytes){
             else{
                 event.x = (rawAddr >> 1) & 0x7f;
                 event.y = (rawAddr >> 8) & 0x7f;
-                event.timeStamp = mileStone + (data[i+2] & 0xff | ((data[i+3] & 0xff) << 8));
+                event.timeStamp = (mileStone + (data[i+2] & 0xff | ((data[i+3] & 0xff) << 8)))/1000000.0;
                 event.type = 1 - rawAddr & 1;
 
                 //logging

@@ -4,8 +4,8 @@
 class Transition
 {
 public:
-    Transition(unsigned int ts = 0, int posX = -1, int posY = -1, int polarityType = -1);
-    unsigned int timeStamp;
+    Transition(double ts = 0, int posX = -1, int posY = -1, int polarityType = -1);
+    double timeStamp;
     int x;
     int y;
     int type;

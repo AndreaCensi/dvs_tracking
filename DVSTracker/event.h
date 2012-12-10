@@ -6,11 +6,11 @@ class Cluster;  //forward declaration of cluster
 class Event
 {
 public:
-    Event(unsigned int ts = 0, int posX = -1, int posY = -1, int polarityType = -1, int specialEvent = false);
+    Event(double ts = 0, int posX = -1, int posY = -1, int polarityType = -1, int specialEvent = false);
     ~Event();
     bool isSpecial();
 
-    unsigned int timeStamp;
+    double timeStamp;
     int x;
     int y;
     int type;

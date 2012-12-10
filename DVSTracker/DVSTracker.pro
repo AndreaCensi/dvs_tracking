@@ -17,7 +17,9 @@ SOURCES += main.cpp \
     transition.cpp \
     udpinterface.cpp \
     interval.cpp \
-    tracker.cpp
+    tracker.cpp \
+    frequencyaccumulator.cpp \
+    filter.cpp
 
 HEADERS += \
     usbreader.h \
@@ -32,7 +34,9 @@ HEADERS += \
     udpinterface.h \
     interval.h \
     map.h \
-    tracker.h
+    tracker.h \
+    frequencyaccumulator.h \
+    filter.h
 
 
 

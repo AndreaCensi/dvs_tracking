@@ -21,11 +21,6 @@ public:
         delete [] map;
     }
 
-    void insert(T obj){
-        int index = obj.x + obj.y*width;
-        map[index] = obj;
-    }
-
     void insert(int x, int y, T obj){
         int index = x + y*width;
         map[index] = obj;

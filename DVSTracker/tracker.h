@@ -8,11 +8,13 @@
 #include "transition.h"
 #include "interval.h"
 #include "map.h"
+#include "frequencyaccumulator.h"
+#include <vector>
 
 class Tracker : public EventProcessorBase
 {
 public:
-    Tracker();
+    Tracker(std::vector<int> frequencies);
     ~Tracker();
     virtual void processEvent(Event e);
     void run();
@@ -30,7 +32,8 @@ private:
     Map<Transition> *pnTransitions;
     Map<Transition> *npTransitions;
 
-    Map<Transition> *weightedIntervalBuffers;
+    std::vector<int> targetFrequencies;
+    std::vector<Map<FrequencyAccumulator> > weightBuffers;
 
     bool exit;
 };

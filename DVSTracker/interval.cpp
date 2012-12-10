@@ -1,6 +1,6 @@
 #include "interval.h"
 
-Interval::Interval(unsigned int ts, int posX, int posY, unsigned int dT)
+Interval::Interval(double ts, int posX, int posY, double dT)
 {
     timeStamp = ts;
     x = posX;

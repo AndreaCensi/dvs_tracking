@@ -1,6 +1,6 @@
 #include "transition.h"
 
-Transition::Transition(unsigned int ts, int posX, int posY, int polarityType)
+Transition::Transition(double ts, int posX, int posY, int polarityType)
 {
     timeStamp = ts;
     x = posX;
