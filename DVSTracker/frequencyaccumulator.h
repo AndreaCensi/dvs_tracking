@@ -5,26 +5,27 @@
 #include "interval.h"
 #include "filter.h"
 #include "vector"
+#include "localmaximum.h"
 
 class FrequencyAccumulator
 {
 public:
-    FrequencyAccumulator(int frequency, float sigma, int filterSize, float filterVariance, float minDist, int w = 128, int h = 128);
+    FrequencyAccumulator(int frequency = 0, float sigma = 1.0, int filterSize = 5, float filterVariance = 1.0, float minDist = 0, int w = 128, int h = 128);
     ~FrequencyAccumulator();
     void update(Interval interval);
     bool hasExpired();
-    std::vector evaluate();
+    std::vector<LocalMaximum> evaluate();
     void reset();
 
     static const float PI;
 
-private:
-    float getWeight(Interval interval, int frequency, double variance);
-    std::vector findMaxima();
+//private:
+    float getWeight(double interval, int frequency, float standardDeviation);
+    std::vector<LocalMaximum> findMaxima();
 
     Map<float> *weightMap;
     int targetFrequency;
-    float variance;
+    float sd;
     float minDistance;
     double lastReset;
     double lastUpdate;

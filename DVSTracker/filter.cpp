@@ -1,12 +1,13 @@
 #include "filter.h"
+#include <math.h>
 
 
 const float Filter::PI = 3.14159265f;
 
-Filter::Filter(int size, float var)
+Filter::Filter(int size, float standardDeviation)
 {
     kernelSize = size;
-    variance = var;
+    sd = standardDeviation;
     kernel = new float[size*size];
     generateKernel();
 }
@@ -16,21 +17,21 @@ Filter::~Filter(){
 }
 
 Map<float>* Filter::smoothen(Map<float> *buffer){
-    Map<float> *filteredMap = new Map<filter>[buffer->height*buffer->width];
+    Map<float> *filteredMap = new Map<float>[buffer->height*buffer->width];
 
     // Go through 2D map
     for(int h = 0; h < buffer->height; h++){
         for(int w = 0; w < buffer->width; w++){
             float filteredWeight = 0;
-            int r = kernelsize/2;
+            int r = kernelSize/2;
 
             // Convolute with kernel
             for(int y = 0; y < kernelSize; y++){
                 for(int x = 0; x < kernelSize; x++){
                     int u = w-r+x;
                     int v = h-r+y;
-                    if(outOfBounds(u,v))
-                        filteredWeight += kernelGet(x,y) * 0.5;   //avg value???-----------------------
+                    if(outOfBounds(buffer,u,v))
+                        filteredWeight += kernelGet(x,y) * 0.5f;   //avg value???-----------------------
                     else
                         filteredWeight += kernelGet(x,y) * buffer->get(u,v);
                 }
@@ -46,11 +47,16 @@ Map<float>* Filter::smoothen(Map<float> *buffer){
 
 void Filter::generateKernel(){
     int r = kernelSize/2;
-    for(int y = -r; y <= y+r;y++){
-        for(int x = -r; x <= x+r;x++){
-            float value = (1.0/(variance*variance*2*PI)*exp(-(x*x+y*y)/(2*pow(variance,2)));
-            kernelSet(x,y,value);
+    float sum = 0;
+    for(int y = -r; y <= r;y++){
+        for(int x = -r; x <= r;x++){
+            float value = (1.0f/(sd*sd*2*PI))*exp(-(x*x+y*y)/(2*pow(sd,2)));
+            sum += value;
+            kernelSet(x+r,y+r,value);
         }
+    }
+    for(int i = 0; i < kernelSize*kernelSize;i++){
+        kernel[i] = kernel[i]/sum;
     }
 }
 

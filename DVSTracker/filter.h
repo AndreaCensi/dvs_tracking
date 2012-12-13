@@ -6,9 +6,9 @@
 class Filter
 {
 public:
-    Filter(int size, float var);
+    Filter(int size, float standardDeviation);
     ~Filter();
-    Map<float>* smoothen(Map<float> buffer);
+    Map<float>* smoothen(Map<float> *buffer);
 
     static const float PI;
 
@@ -21,7 +21,7 @@ private:
     bool outOfBounds(Map<float> *buffer, int x, int y);
 
     int kernelSize;
-    float variance;
+    float sd;
     float *kernel;
 
 };

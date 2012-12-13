@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     interval.cpp \
     tracker.cpp \
     frequencyaccumulator.cpp \
-    filter.cpp
+    filter.cpp \
+    localmaximum.cpp
 
 HEADERS += \
     usbreader.h \
@@ -36,7 +37,8 @@ HEADERS += \
     map.h \
     tracker.h \
     frequencyaccumulator.h \
-    filter.h
+    filter.h \
+    localmaximum.h
 
 
 

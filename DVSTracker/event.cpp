@@ -1,6 +1,6 @@
 #include "event.h"
 
-Event::Event(double ts, int posX, int posY, int polarityType, int specialEvent)
+Event::Event(double ts, int posX, int posY, int polarityType, bool specialEvent)
 {
     timeStamp = ts;
     x = posX;

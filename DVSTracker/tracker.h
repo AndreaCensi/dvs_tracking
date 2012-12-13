@@ -20,7 +20,7 @@ public:
     void run();
     void stop();
 
-private:
+//private:
     Transition getTransition(Event e);
     Interval getInterval(Transition t);
 
@@ -33,7 +33,7 @@ private:
     Map<Transition> *npTransitions;
 
     std::vector<int> targetFrequencies;
-    std::vector<FrequencyAccumulator > weightBuffers;
+    FrequencyAccumulator *weightBuffers;
 
     bool exit;
 };

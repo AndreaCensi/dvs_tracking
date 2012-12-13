@@ -1,20 +1,19 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include <stdio.h>
+
 template <typename T>
-class Map
-{
-private:
+class Map{
+public:
     T *map;
     int width;
     int height;
 
-public:
     Map(int w = 128, int h = 128){
-        map = new T[w*h];
         width = w;
         height = h;
-        reset();
+        map = new T[width*height];
     }
 
     ~Map(){
@@ -26,14 +25,17 @@ public:
         map[index] = obj;
     }
 
-    void get(int x, int y){
+    void set(int i, T obj){
+        map[i] = obj;
+    }
+
+    T get(int x, int y){
         int index = x + y*width;
         return map[index];
     }
 
-    void reset(){
-        for(int i = 0; i < width*height;i++)
-            map[i] = 0;
+    int size(){
+        return width*height;
     }
 };
 
