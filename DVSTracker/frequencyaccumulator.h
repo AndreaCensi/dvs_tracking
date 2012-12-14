@@ -10,7 +10,8 @@
 class FrequencyAccumulator
 {
 public:
-    FrequencyAccumulator(int frequency = 0, float sigma = 1.0, int filterSize = 5, float filterVariance = 1.0, float minDist = 0, int w = 128, int h = 128);
+    FrequencyAccumulator(int frequency = 0, float sigma = 1.0, int filterSize = 5, float filterSigma = 1.0,
+                         float minDist = 0, int numMaxima = 0, int w = 128, int h = 128);
     ~FrequencyAccumulator();
     void update(Interval interval);
     bool hasExpired();
@@ -19,14 +20,15 @@ public:
 
     static const float PI;
 
-//private:
-    float getWeight(double interval, int frequency, float standardDeviation);
+private:
+    float getWeight(double interval, int frequency, float sd);
     std::vector<LocalMaximum> findMaxima();
 
     Map<float> *weightMap;
     int targetFrequency;
     float sd;
     float minDistance;
+    int nMaxima;
     double lastReset;
     double lastUpdate;
 

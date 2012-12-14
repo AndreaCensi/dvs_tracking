@@ -24,50 +24,50 @@
 //}
 
 //interval test
-int main(int argc, char **argv){
-    QApplication app(argc,argv);
-    Event e[5];
+//int main(int argc, char **argv){
+//    QApplication app(argc,argv);
+//    Event e[5];
 
-    e[0].x = 15;
-    e[0].y = 37;
-    e[0].timeStamp = 0.123410;
-    e[0].type = 1;
+//    e[0].x = 15;
+//    e[0].y = 37;
+//    e[0].timeStamp = 0.123410;
+//    e[0].type = 1;
 
-    e[1].x = 15;
-    e[1].y = 37;
-    e[1].timeStamp = 0.123745;
-    e[1].type = 0;
+//    e[1].x = 15;
+//    e[1].y = 37;
+//    e[1].timeStamp = 0.123745;
+//    e[1].type = 0;
 
-    e[2].x = 15;
-    e[2].y = 37;
-    e[2].timeStamp = 0.124745;
-    e[2].type = 1;
+//    e[2].x = 15;
+//    e[2].y = 37;
+//    e[2].timeStamp = 0.124745;
+//    e[2].type = 1;
 
-    e[3].x = 15;
-    e[3].y = 37;
-    e[3].timeStamp = 0.125745;
-    e[3].type = 0;
+//    e[3].x = 15;
+//    e[3].y = 37;
+//    e[3].timeStamp = 0.125745;
+//    e[3].type = 0;
 
-    e[4].x = 15;
-    e[4].y = 37;
-    e[4].timeStamp = 0.126745;
-    e[4].type = 1;
+//    e[4].x = 15;
+//    e[4].y = 37;
+//    e[4].timeStamp = 0.126745;
+//    e[4].type = 1;
 
-    //init frequencies
-    std::vector<int> frequencies;
-    frequencies.push_back(900);
-    frequencies.push_back(1070);
-    frequencies.push_back(1240);
-    frequencies.push_back(1410);
+//    //init frequencies
+//    std::vector<int> frequencies;
+//    frequencies.push_back(900);
+//    frequencies.push_back(1070);
+//    frequencies.push_back(1240);
+//    frequencies.push_back(1410);
 
-    Tracker tracker(frequencies);
+//    Tracker tracker(frequencies);
 
-    for(int i = 0; i < 4; i++){
-        tracker.processEvent(e[i]);
-    }
+//    for(int i = 0; i < 4; i++){
+//        tracker.processEvent(e[i]);
+//    }
 
-    return app.exec();
-}
+//    return app.exec();
+//}
 
 
 // test gaussian kernel
@@ -138,4 +138,38 @@ int main(int argc, char **argv){
 //    return app.exec();
 //}
 
+// test filtering
+int main(int argc, char **argv){
+    QApplication app(argc,argv);
 
+    int size = 5;
+    Map<float> *map = new Map<float>(size,size);
+    Filter f(3,5.0);
+
+    float value = -0.5f;
+    for(int i = 0; i < size*size; i++){
+        value = value*-1;
+        map->set(i,value);
+    }
+
+    for(int y = 0; y < size; y++){
+        for(int x = 0; x < size; x++){
+            printf("%f ",map->get(x,y));
+        }
+        printf("\n");
+    }
+    printf("\n");
+
+    map = f.smoothen(map);
+
+    for(int y = 0; y < size; y++){
+        for(int x = 0; x < size; x++){
+            printf("%f ",map->get(x,y));
+        }
+        printf("\n");
+    }
+
+    delete map;
+
+    return app.exec();
+}

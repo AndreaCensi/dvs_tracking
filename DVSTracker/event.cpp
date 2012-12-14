@@ -1,4 +1,5 @@
 #include "event.h"
+#include "stdio.h"
 
 Event::Event(double ts, int posX, int posY, int polarityType, bool specialEvent)
 {

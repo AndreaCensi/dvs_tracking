@@ -14,7 +14,6 @@ Tracker::Tracker(std::vector<int> frequencies){
     camWidget->show();
     exit = false;
 
-
     //Members
     targetFrequencies = frequencies;
 
@@ -23,13 +22,12 @@ Tracker::Tracker(std::vector<int> frequencies){
     npTransitions = new Map<Transition>(DVS_RES,DVS_RES);
     pnTransitions = new Map<Transition>(DVS_RES,DVS_RES);
 
-    weightBuffers = new FrequencyAccumulator[targetFrequencies.size()];
+    weightBuffers = new FrequencyAccumulator*[targetFrequencies.size()];
 
     for(unsigned int i = 0; i < targetFrequencies.size();i++){
-        FrequencyAccumulator fa(targetFrequencies[i],SIGMA,5,1.0f,5.0f,128,128);
-        weightBuffers[i] = fa;
+        weightBuffers[i] = new FrequencyAccumulator(
+                    targetFrequencies[i],SIGMA,5,1.0f,8,5.0f,128,128);
     }
-
 }
 
 Tracker::~Tracker(){
@@ -37,6 +35,10 @@ Tracker::~Tracker(){
     delete latestEvents;
     delete npTransitions;
     delete pnTransitions;
+
+    for(unsigned int i = 0; i < targetFrequencies.size();i++){
+        delete weightBuffers[i];
+    }
     delete [] weightBuffers;
 }
 
@@ -48,7 +50,7 @@ void Tracker::processEvent(Event e){
         return;
     }
 
-    printf("Transition recorded at: %f\n",t.timeStamp);
+//    printf("Transition recorded at: %f\n",t.timeStamp);
 
     // Get interval to last transition
     Interval dt = getInterval(t);
@@ -58,11 +60,11 @@ void Tracker::processEvent(Event e){
     }
 
 
-    printf("Interval recorded with dt,ts: %f,%f\n",dt.deltaT,dt.timeStamp);
+//    printf("Interval recorded with dt, ts: %f,%f\n",dt.deltaT,dt.timeStamp);
 
-    // Calculate importance of interval for each frequency
+    //Calculate importance of interval for each frequency
     for(unsigned int i = 0; i < targetFrequencies.size(); i++){
-        FrequencyAccumulator *buf = &weightBuffers[i];
+        FrequencyAccumulator *buf = weightBuffers[i];
         buf->update(dt);
         std::vector<LocalMaximum> maxima;
         if(buf->hasExpired()){

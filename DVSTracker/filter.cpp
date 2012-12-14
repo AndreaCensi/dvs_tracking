@@ -1,6 +1,7 @@
 #include "filter.h"
 #include <math.h>
 
+#define OOB_AVG 0.5f        //avg value???-----------------------
 
 const float Filter::PI = 3.14159265f;
 
@@ -17,13 +18,13 @@ Filter::~Filter(){
 }
 
 Map<float>* Filter::smoothen(Map<float> *buffer){
-    Map<float> *filteredMap = new Map<float>[buffer->height*buffer->width];
+    Map<float> *filteredMap = new Map<float>(buffer->height,buffer->width);
 
+    int r = kernelSize/2;
     // Go through 2D map
     for(int h = 0; h < buffer->height; h++){
         for(int w = 0; w < buffer->width; w++){
-            float filteredWeight = 0;
-            int r = kernelSize/2;
+            float filteredWeight = 0.0f;
 
             // Convolute with kernel
             for(int y = 0; y < kernelSize; y++){
@@ -31,16 +32,15 @@ Map<float>* Filter::smoothen(Map<float> *buffer){
                     int u = w-r+x;
                     int v = h-r+y;
                     if(outOfBounds(buffer,u,v))
-                        filteredWeight += kernelGet(x,y) * 0.5f;   //avg value???-----------------------
+                        filteredWeight += (kernelGet(x,y) * OOB_AVG);
                     else
-                        filteredWeight += kernelGet(x,y) * buffer->get(u,v);
+                        filteredWeight += (kernelGet(x,y) * buffer->get(u,v));
                 }
             }
             // Set new value
             filteredMap->insert(w,h,filteredWeight);
         }
     }
-
     delete buffer;
     return filteredMap;
 }
@@ -55,6 +55,8 @@ void Filter::generateKernel(){
             kernelSet(x+r,y+r,value);
         }
     }
+
+    //normalize kernel
     for(int i = 0; i < kernelSize*kernelSize;i++){
         kernel[i] = kernel[i]/sum;
     }
@@ -62,9 +64,9 @@ void Filter::generateKernel(){
 
 bool Filter::outOfBounds(Map<float> *buffer,int x, int y){
     if( x >= 0 && y >= 0 && x < buffer->width && y < buffer->height)
-        return true;
-    else
         return false;
+    else
+        return true;
 }
 
 float Filter::kernelGet(int x, int y){
