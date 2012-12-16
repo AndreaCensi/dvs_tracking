@@ -6,7 +6,11 @@
 #define DVS_RES 128
 
 //parameteres
-#define SIGMA 0.002f // +- random value -- STILL TO BE CHOSEN!
+#define SIGMA_W 0.0002f // +- random value -- STILL TO BE CHOSEN!
+#define FILTER_SIZE 5
+#define SIGMA_FILTER 0.75f
+#define MIN_DIST 4.0f
+#define NUM_MAXIMA 8
 
 Tracker::Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
     //Members
@@ -26,7 +30,7 @@ Tracker::Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObjec
 
     for(unsigned int i = 0; i < targetFrequencies.size();i++){
         weightBuffers[i] = new FrequencyAccumulator(
-                    targetFrequencies[i],SIGMA,5,1.0f,8,5.0f,128,128);
+                    targetFrequencies[i],SIGMA_W,FILTER_SIZE,SIGMA_FILTER,MIN_DIST,NUM_MAXIMA,DVS_RES,DVS_RES);
     }
 }
 
@@ -49,12 +53,10 @@ void Tracker::processEvent(Event e){
         return;
     }
 
-    //    printf("Transition recorded at: %f\n",t.timeStamp);
-
     // Get interval to last transition
     Interval dt = getInterval(t);
-    if(dt.timeStamp == 0){
-        //        printf("No interval found\n");
+    if(dt.timeStamp == 0 || dt.deltaT < 0){
+        //printf("No interval found\n");
         return;
     }
 
@@ -67,6 +69,7 @@ void Tracker::processEvent(Event e){
         std::vector<LocalMaximum> maxima;
         if(buf->hasExpired()){
             maxima = buf->evaluate();
+            updateWeightWidget(i,buf);
             buf->reset();
         }
         if(maxima.size() > 0){
@@ -119,7 +122,7 @@ void Tracker::run(){
                     return;
 
                 //process events here
-                updateCamWidget(e);
+                //updateCamWidget(e);
                 processEvent(*e);
             }
         }
@@ -136,4 +139,20 @@ void Tracker::updateCamWidget(Event *e){
     if(widget == 0)
         return;
     widget->updateImage(e);
+}
+
+void Tracker::updateWeightWidget(int i, FrequencyAccumulator *buf){
+    for(int y = 0; y < DVS_RES;y++){
+        for(int x = 0; x < DVS_RES;x++){
+            float value = buf->weightMap->get(x,y);
+//            if(value > 0)
+//                printf("%f\n",value);
+            int grey = int(value/4.0);
+            if(grey > 255)
+                grey = 255;
+            if(grey > 0){
+                widget->updateImage(x,y,grey);
+            }
+        }
+    }
 }

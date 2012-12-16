@@ -43,8 +43,8 @@ void UDPInterface::readEvents(QByteArray data){
             event.special = true;
         }
         else{
-            event.timeStamp = (data[i+5] & 0xff | ((data[i+4] & 0xff) << 8) |
-                               ((data[i+3] & 0xff) << 16) | ((data[i+2] & 0xff) << 24));
+            event.timeStamp = ((data[i+5] & 0xff | ((data[i+4] & 0xff) << 8) |
+                               ((data[i+3] & 0xff) << 16) | ((data[i+2] & 0xff) << 24)))/1000000.0;
             event.x = (rawAddr >> 1) & 0x7f;
             event.y = (rawAddr >> 8) & 0x7f;
             event.type = 1 - rawAddr & 1;

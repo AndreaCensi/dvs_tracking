@@ -43,6 +43,7 @@ private:
     bool exit;
 
     void updateCamWidget(Event *e);
+    void updateWeightWidget(int i, FrequencyAccumulator *buf);
 
 signals:
     void updateCamWidget(int,int);

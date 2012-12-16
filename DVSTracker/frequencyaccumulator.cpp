@@ -23,7 +23,7 @@ FrequencyAccumulator::FrequencyAccumulator(
     nMaxima = numMaxima;
 
     // Smoohing filter
-    filter = new Filter(filterSize,filterSigma);
+    filter = new Filter(filterSize,filterSigma, w, h);
 }
 
 FrequencyAccumulator::~FrequencyAccumulator(){    
@@ -37,6 +37,9 @@ void FrequencyAccumulator::update(Interval interval){
     int y = interval.y;
     float prevWeight = weightMap->get(x,y);
     float weight = getWeight(interval.deltaT,targetFrequency,sd) + prevWeight;
+
+//    printf("dt: %f, w: %f\n",interval.deltaT,weight);
+
     weightMap->insert(x,y,weight);
 }
 
@@ -56,9 +59,6 @@ bool FrequencyAccumulator::hasExpired(){
 
 std::vector<LocalMaximum> FrequencyAccumulator::evaluate(){
     weightMap = filter->smoothen(weightMap);
-
-    //updateWidget();
-
     std::vector<LocalMaximum> maxima = findMaxima();
     return maxima;
 }
@@ -82,15 +82,4 @@ std::vector<LocalMaximum> FrequencyAccumulator::findMaxima(){
         }
     }
     return maxima;
-}
-
-void FrequencyAccumulator::updateWidget(){
-    for(int y = 0; y < weightMap->height; y++){
-        for(int x = 0; x < weightMap->width; x++){
-            int greyValue = weightMap->get(x,y) * 10;
-            if(greyValue > 255)
-                greyValue = 255;
-            //send signal...
-        }
-    }
 }

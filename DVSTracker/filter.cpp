@@ -1,12 +1,13 @@
 #include "filter.h"
 #include <math.h>
 
-#define OOB_AVG 0.5f        //avg value???-----------------------
+#define OOB_VAL 0.0f        //avg value???-----------------------
 
 const float Filter::PI = 3.14159265f;
 
-Filter::Filter(int size, float standardDeviation)
+Filter::Filter(int size, float standardDeviation, int mapW, int mapH)
 {
+    filteredMap = new Map<float>(mapW,mapH);
     kernelSize = size;
     sd = standardDeviation;
     kernel = new float[size*size];
@@ -14,12 +15,11 @@ Filter::Filter(int size, float standardDeviation)
 }
 
 Filter::~Filter(){
+    delete filteredMap;
     delete [] kernel;
 }
 
 Map<float>* Filter::smoothen(Map<float> *buffer){
-    Map<float> *filteredMap = new Map<float>(buffer->height,buffer->width);
-
     int r = kernelSize/2;
     // Go through 2D map
     for(int h = 0; h < buffer->height; h++){
@@ -32,7 +32,7 @@ Map<float>* Filter::smoothen(Map<float> *buffer){
                     int u = w-r+x;
                     int v = h-r+y;
                     if(outOfBounds(buffer,u,v))
-                        filteredWeight += (kernelGet(x,y) * OOB_AVG);
+                        filteredWeight += (kernelGet(x,y) * OOB_VAL);
                     else
                         filteredWeight += (kernelGet(x,y) * buffer->get(u,v));
                 }
@@ -41,8 +41,10 @@ Map<float>* Filter::smoothen(Map<float> *buffer){
             filteredMap->insert(w,h,filteredWeight);
         }
     }
-    delete buffer;
-    return filteredMap;
+
+    Map<float> *tmp = filteredMap;
+    filteredMap = buffer;
+    return tmp;
 }
 
 void Filter::generateKernel(){

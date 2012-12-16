@@ -6,7 +6,7 @@
 class Filter
 {
 public:
-    Filter(int size, float standardDeviation);
+    Filter(int size, float standardDeviation, int mapW, int mapH);
     ~Filter();
     Map<float>* smoothen(Map<float> *buffer);
 
@@ -20,6 +20,7 @@ public:
     float convolute();
     bool outOfBounds(Map<float> *buffer, int x, int y);
 
+    Map<float> *filteredMap;
     int kernelSize;
     float sd;
     float *kernel;

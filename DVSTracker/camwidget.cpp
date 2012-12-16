@@ -59,7 +59,10 @@ void CamWidget::updateImage(int from, int size){
 }
 
 void CamWidget::updateImage(int x, int y, int greyValue){
-    QColor color(greyValue,greyValue,greyValue);
+    x = 127-x;
+    y = 127-y;
+
+    QColor color = QColor(greyValue,greyValue,greyValue);
     QRgb *pixel = (QRgb*)img->scanLine(y);
     pixel = &pixel[x];
     *pixel = color.rgb();

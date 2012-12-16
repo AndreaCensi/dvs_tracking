@@ -22,8 +22,6 @@ int main(int argc, char **argv){
     Tracker t(udpIf.getEventBuffer(),frequencies);
     t.setWidget(&widget);
 
-
-
     //connect signals/slots
     QObject::connect(&t,SIGNAL(updateCamWidget(int,int)),
                      &widget,SLOT(updateImage(int,int)),Qt::QueuedConnection);
@@ -91,7 +89,7 @@ int main(int argc, char **argv){
 
 //    int size = 5;
 
-//    Filter f(size,1.0);
+//    Filter f(size,0.5);
 //    float sum = 0;
 //    for(int y = 0; y < size; y++){
 //        for(int x = 0; x < size; x++){
@@ -157,26 +155,27 @@ int main(int argc, char **argv){
 //int main(int argc, char **argv){
 //    QApplication app(argc,argv);
 
-//    int size = 5;
-//    Map<float> *map = new Map<float>(size,size);
-//    Filter f(3,0.5);
+//    int m_size = 32;
+//    int f_size = 5;
+//    Map<float> *map = new Map<float>(m_size,m_size);
+//    Filter f(5,0.5);
 
-//    for(int y = 0; y < 3; y++){
-//        for(int x = 0; x < 3; x++){
-//            printf("%f ",f.kernel[x+y*3]);
+//    for(int y = 0; y < f_size; y++){
+//        for(int x = 0; x < f_size; x++){
+//            printf("%f ",f.kernel[x+y*f_size]);
 //        }
 //        printf("\n");
 //    }
 //    printf("\n");
 
-//    float value = -0.5f;
-//    for(int i = 0; i < size*size; i++){
+//    float value = -1000.0f;
+//    for(int i = 0; i < m_size*m_size; i++){
 //        value = value*-1;
 //        map->set(i,value);
 //    }
 
-//    for(int y = 0; y < size; y++){
-//        for(int x = 0; x < size; x++){
+//    for(int y = 0; y < m_size; y++){
+//        for(int x = 0; x < m_size; x++){
 //            printf("%f ",map->get(x,y));
 //        }
 //        printf("\n");
@@ -185,8 +184,8 @@ int main(int argc, char **argv){
 
 //    map = f.smoothen(map);
 
-//    for(int y = 0; y < size; y++){
-//        for(int x = 0; x < size; x++){
+//    for(int y = 0; y < m_size; y++){
+//        for(int x = 0; x < m_size; x++){
 //            printf("%f ",map->get(x,y));
 //        }
 //        printf("\n");

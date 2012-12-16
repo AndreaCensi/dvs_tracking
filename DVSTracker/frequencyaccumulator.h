@@ -16,6 +16,7 @@ public:
     void update(Interval interval);
     bool hasExpired();
     std::vector<LocalMaximum> evaluate();
+    Map<float> *weightMap;
     void reset();
 
     static const float PI;
@@ -23,9 +24,7 @@ public:
 private:
     float getWeight(double interval, int frequency, float sd);
     std::vector<LocalMaximum> findMaxima();
-    void updateWidget();
 
-    Map<float> *weightMap;
     int targetFrequency;
     float sd;
     float minDistance;
