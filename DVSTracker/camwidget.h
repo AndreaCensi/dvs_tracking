@@ -3,21 +3,28 @@
 
 #include <QWidget>
 #include "event.h"
+#include "ringbuffer.h"
 
 class CamWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    CamWidget(QWidget *parent = 0);
+    CamWidget(RingBuffer<Event> *buffer = 0,QWidget *parent = 0);
     ~CamWidget();
-    void updateImage(Event *e);
 
 protected:
     void paintEvent(QPaintEvent *);
 
 private:
     QImage *img;
+    RingBuffer<Event> *eventBuffer;
+    int bufSize;
+
+public slots:
+    void updateImage(Event *e);
+    void updateImage(int from, int size);
+    void updateImage(int x, int y, int greyValue);
 };
 
 #endif // CAMWIDGET_H

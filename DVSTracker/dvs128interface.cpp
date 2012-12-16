@@ -22,10 +22,10 @@
 GUID usbIoID = USBIO_IID;
 HDEVINFO devList;
 
-DVS128Interface::DVS128Interface(EventProcessorBase *ep){
+DVS128Interface::DVS128Interface(){
     devList = NULL;
     devIndex = -1;
-    reader = new USBReader(ep);
+    reader = new USBReader();
 }
 
 DVS128Interface::~DVS128Interface(){

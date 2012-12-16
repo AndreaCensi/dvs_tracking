@@ -3,14 +3,15 @@
 
 #define DVS128_FRAME_LENGTH 4
 
-USBReader::USBReader(EventProcessorBase *ep)
+USBReader::USBReader()
 {
-    eventProcessor = ep;
+    eventBuffer = new RingBuffer<Event>(8192);
     mileStone = 0;
     //logger = new Logger();
 }
 
 USBReader::~USBReader(){
+    delete eventBuffer;
     //delete logger;
 }
 
@@ -55,7 +56,11 @@ void USBReader::readDVS128Event(const char *data, int numBytes){
                 //                        logger->log(&event);
             }
             //processEvent
-            eventProcessor->getEventBuffer()->add(event);
+            eventBuffer->add(event);
         }
     }
+}
+
+RingBuffer<Event>* USBReader::getEventBuffer(){
+    return eventBuffer;
 }

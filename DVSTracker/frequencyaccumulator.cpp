@@ -26,9 +26,8 @@ FrequencyAccumulator::FrequencyAccumulator(
     filter = new Filter(filterSize,filterSigma);
 }
 
-FrequencyAccumulator::~FrequencyAccumulator(){
-        delete weightMap;
-
+FrequencyAccumulator::~FrequencyAccumulator(){    
+    delete weightMap;
     delete filter;
 }
 
@@ -57,6 +56,9 @@ bool FrequencyAccumulator::hasExpired(){
 
 std::vector<LocalMaximum> FrequencyAccumulator::evaluate(){
     weightMap = filter->smoothen(weightMap);
+
+    //updateWidget();
+
     std::vector<LocalMaximum> maxima = findMaxima();
     return maxima;
 }
@@ -80,4 +82,15 @@ std::vector<LocalMaximum> FrequencyAccumulator::findMaxima(){
         }
     }
     return maxima;
+}
+
+void FrequencyAccumulator::updateWidget(){
+    for(int y = 0; y < weightMap->height; y++){
+        for(int x = 0; x < weightMap->width; x++){
+            int greyValue = weightMap->get(x,y) * 10;
+            if(greyValue > 255)
+                greyValue = 255;
+            //send signal...
+        }
+    }
 }

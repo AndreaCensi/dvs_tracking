@@ -2,7 +2,6 @@
 #define USBREADER_H
 
 #include "stdafx.h"
-#include "eventprocessorbase.h"
 #include "event.h"
 #include "logger.h"
 #include "ringbuffer.h"
@@ -10,16 +9,18 @@
 class USBReader : public CUsbIoReader
 {
 public:
-    USBReader(EventProcessorBase *ep);
+    USBReader();
     ~USBReader();
+    RingBuffer<Event>* getEventBuffer();
 
 protected:
     virtual void ProcessData(CUsbIoBuf* Buf);
 
 private:
     void readDVS128Event(const char* data, int numBytes);
+    RingBuffer<Event> *eventBuffer;
     unsigned int mileStone;
-    EventProcessorBase *eventProcessor;
+
     //Logger *logger;
 };
 

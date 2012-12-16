@@ -7,23 +7,24 @@
 */
 template <typename T>
 class RingBuffer{
-
-public:
-
-    T *buffer;
-    int size;
+private:
+    int length;
     int start;
     int end;
 
+public:
+    T *buffer;
+
+
     //! Constructor
     /*!
-        \param totalSize Size of the buffer.
+        \param totallength length of the buffer.
     */
-    RingBuffer(int totalSize = 8192){
-        size = totalSize;
+    RingBuffer(int totalLength = 8192){
+        length = totalLength;
         start = 0;
         end = 0;
-        buffer = new T[totalSize];
+        buffer = new T[totalLength];
     }
 
     //! Destructor
@@ -38,7 +39,7 @@ public:
     void add(T value){
         buffer[end] = value;
         end++;
-        if(end == size)
+        if(end == length)
             end = 0;
     }
 
@@ -46,32 +47,36 @@ public:
         return buffer[i];
     }
 
+    T* ref(int i){
+        return &buffer[i];
+    }
+
     void set(int i, T value){
         buffer[i] = value;
     }
 
     /*!
-        \return Size of new data available.
+        \return length of new data available.
     */
     int available(){
         if (end > start)
             return end - start;
         else if(start > end)
-            return size - start + end;
+            return length - start + end;
         else return 0;
     }
 
     int latestIndex(){
         int i = end - 1;
         if(end - 1 < 0)
-            i = size - 1;
+            i = length - 1;
         return i;
     }
 
     T* latest(){
         int i = end - 1;
         if(end - 1 < 0)
-            i = size - 1;
+            i = length - 1;
         return &buffer[i];
     }
 
@@ -79,7 +84,7 @@ public:
         if(start != end){
             T *at = &buffer[start];
             start++;
-            if(start == size)
+            if(start == length)
                 start = 0;
             return at;
         }
@@ -94,8 +99,12 @@ public:
         T *at = &buffer[start];
         int length = newData();
         start += length;
-        start %= size;
+        start %= length;
         return at;
+    }
+
+    int size(){
+        return length;
     }
 };
 

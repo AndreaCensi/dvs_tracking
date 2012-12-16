@@ -8,14 +8,14 @@
 //parameteres
 #define SIGMA 0.002f // +- random value -- STILL TO BE CHOSEN!
 
-Tracker::Tracker(std::vector<int> frequencies){
-    // Visual output
-    camWidget = new CamWidget();
-    camWidget->show();
-    exit = false;
-
+Tracker::Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
     //Members
+    eventBuffer = buffer;
     targetFrequencies = frequencies;
+
+    widget = 0;
+
+    exit = false;
 
     // init maps
     latestEvents = new Map<Event>(DVS_RES,DVS_RES);
@@ -31,7 +31,6 @@ Tracker::Tracker(std::vector<int> frequencies){
 }
 
 Tracker::~Tracker(){
-    delete camWidget;
     delete latestEvents;
     delete npTransitions;
     delete pnTransitions;
@@ -46,21 +45,20 @@ void Tracker::processEvent(Event e){
     // Record, if there is a transition
     Transition t = getTransition(e);
     if(t.timeStamp == 0){
-        printf("No transition found\n");
+        //        printf("No transition found\n");
         return;
     }
 
-//    printf("Transition recorded at: %f\n",t.timeStamp);
+    //    printf("Transition recorded at: %f\n",t.timeStamp);
 
     // Get interval to last transition
     Interval dt = getInterval(t);
     if(dt.timeStamp == 0){
-        printf("No interval found\n");
+        //        printf("No interval found\n");
         return;
     }
 
-
-//    printf("Interval recorded with dt, ts: %f,%f\n",dt.deltaT,dt.timeStamp);
+    //    printf("Interval recorded with dt, ts: %f,%f\n",dt.deltaT,dt.timeStamp);
 
     //Calculate importance of interval for each frequency
     for(unsigned int i = 0; i < targetFrequencies.size(); i++){
@@ -110,20 +108,32 @@ void Tracker::stop(){
 
 void Tracker::run(){
     while(!exit){
-        int size;
-        if((size = getEventBuffer()->available()) > 0){
+        if((eventBuffer->available()) > 0){
+
+            //updateCamWidget(eventBuffer->latestIndex(),eventBuffer->available());
+
             Event *e;
-            while((e = getEventBuffer()->getNext()) != 0){
+            while((e = eventBuffer->getNext()) != 0){
                 // do not process if special event
                 if(e->isSpecial())
                     return;
 
                 //process events here
-                camWidget->updateImage(e);
+                updateCamWidget(e);
                 processEvent(*e);
             }
         }
         else
             msleep(1);
     }
+}
+
+void Tracker::setWidget(CamWidget *camWidget){
+    widget = camWidget;
+}
+
+void Tracker::updateCamWidget(Event *e){
+    if(widget == 0)
+        return;
+    widget->updateImage(e);
 }

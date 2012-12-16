@@ -1,7 +1,7 @@
 #ifndef EVENTPROCESSOR_H
 #define EVENTPROCESSOR_H
 
-#include "eventprocessorbase.h"
+#include <QThread>
 #include "event.h"
 #include "ringbuffer.h"
 #include "camwidget.h"
@@ -9,14 +9,18 @@
 #include "interval.h"
 #include "map.h"
 #include "frequencyaccumulator.h"
+#include "camwidget.h"
 #include <vector>
 
-class Tracker : public EventProcessorBase
+
+class Tracker : public QThread
 {
+    Q_OBJECT
 public:
-    Tracker(std::vector<int> frequencies);
+    Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObject *parent = 0);
     ~Tracker();
-    virtual void processEvent(Event e);
+    void processEvent(Event e);
+    void setWidget(CamWidget *camWidget);
     void run();
     void stop();
 
@@ -24,8 +28,9 @@ private:
     Transition getTransition(Event e);
     Interval getInterval(Transition t);
 
-    //graphical output
-    CamWidget *camWidget;
+    RingBuffer<Event> *eventBuffer;
+
+    CamWidget *widget;
 
     //storage
     Map<Event> *latestEvents;
@@ -36,6 +41,11 @@ private:
     FrequencyAccumulator **weightBuffers;
 
     bool exit;
+
+    void updateCamWidget(Event *e);
+
+signals:
+    void updateCamWidget(int,int);
 };
 
 #endif // EVENTPROCESSOR_H

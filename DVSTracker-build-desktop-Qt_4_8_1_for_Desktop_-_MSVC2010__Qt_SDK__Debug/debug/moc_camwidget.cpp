@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'camwidget.h'
 **
-** Created: Thu 13. Dec 16:13:14 2012
+** Created: Sun 16. Dec 16:46:27 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,26 +23,39 @@ static const uint qt_meta_data_CamWidget[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: signature, parameters, type, tag, flags
+      13,   11,   10,   10, 0x0a,
+      43,   33,   10,   10, 0x0a,
+      78,   64,   10,   10, 0x0a,
+
        0        // eod
 };
 
 static const char qt_meta_stringdata_CamWidget[] = {
-    "CamWidget\0"
+    "CamWidget\0\0e\0updateImage(Event*)\0"
+    "from,size\0updateImage(int,int)\0"
+    "x,y,greyValue\0updateImage(int,int,int)\0"
 };
 
 void CamWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
+        CamWidget *_t = static_cast<CamWidget *>(_o);
+        switch (_id) {
+        case 0: _t->updateImage((*reinterpret_cast< Event*(*)>(_a[1]))); break;
+        case 1: _t->updateImage((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 2: _t->updateImage((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        default: ;
+        }
+    }
 }
 
 const QMetaObjectExtraData CamWidget::staticMetaObjectExtraData = {
@@ -76,6 +89,11 @@ int CamWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 3)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 3;
+    }
     return _id;
 }
 QT_END_MOC_NAMESPACE

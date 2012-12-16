@@ -12,7 +12,7 @@ public:
 
     static const float PI;
 
-private:
+//private:
     //operations on kernel
     float kernelGet(int x, int y);
     void kernelSet(int x, int y, float value);

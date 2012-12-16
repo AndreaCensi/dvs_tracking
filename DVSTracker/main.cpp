@@ -5,23 +5,38 @@
 #include "camwidget.h"
 #include "udpinterface.h"
 
-//int main(int argc, char **argv){
-//    QApplication app(argc,argv);
+int main(int argc, char **argv){
+    QApplication app(argc,argv);
 
-//    //init frequencies
-//    std::vector<int> frequencies;
-//    frequencies.push_back(900);
-//    frequencies.push_back(1070);
-//    frequencies.push_back(1240);
-//    frequencies.push_back(1410);
+    //init frequencies
+    std::vector<int> frequencies;
+    frequencies.push_back(900);
+    frequencies.push_back(1070);
+    frequencies.push_back(1240);
+    frequencies.push_back(1410);
 
-//    Tracker t(frequencies);
-//    //    UDPInterface udpIf(&t);
-//    DVS128Interface dvs(&t);
-//    dvs.startReading();
-//    t.start();
-//    return app.exec();
-//}
+    //tracking
+    UDPInterface udpIf;
+    //    DVS128Interface dvs();
+    CamWidget widget(udpIf.getEventBuffer());
+    Tracker t(udpIf.getEventBuffer(),frequencies);
+    t.setWidget(&widget);
+
+
+
+    //connect signals/slots
+    QObject::connect(&t,SIGNAL(updateCamWidget(int,int)),
+                     &widget,SLOT(updateImage(int,int)),Qt::QueuedConnection);
+
+    widget.show();
+    t.start();
+    //    dvs.startReading();
+
+    int ret = app.exec();
+    //    dvs.stopReading();
+    t.stop();
+    return ret;
+}
 
 //interval test
 //int main(int argc, char **argv){
@@ -139,37 +154,45 @@
 //}
 
 // test filtering
-int main(int argc, char **argv){
-    QApplication app(argc,argv);
+//int main(int argc, char **argv){
+//    QApplication app(argc,argv);
 
-    int size = 5;
-    Map<float> *map = new Map<float>(size,size);
-    Filter f(3,5.0);
+//    int size = 5;
+//    Map<float> *map = new Map<float>(size,size);
+//    Filter f(3,0.5);
 
-    float value = -0.5f;
-    for(int i = 0; i < size*size; i++){
-        value = value*-1;
-        map->set(i,value);
-    }
+//    for(int y = 0; y < 3; y++){
+//        for(int x = 0; x < 3; x++){
+//            printf("%f ",f.kernel[x+y*3]);
+//        }
+//        printf("\n");
+//    }
+//    printf("\n");
 
-    for(int y = 0; y < size; y++){
-        for(int x = 0; x < size; x++){
-            printf("%f ",map->get(x,y));
-        }
-        printf("\n");
-    }
-    printf("\n");
+//    float value = -0.5f;
+//    for(int i = 0; i < size*size; i++){
+//        value = value*-1;
+//        map->set(i,value);
+//    }
 
-    map = f.smoothen(map);
+//    for(int y = 0; y < size; y++){
+//        for(int x = 0; x < size; x++){
+//            printf("%f ",map->get(x,y));
+//        }
+//        printf("\n");
+//    }
+//    printf("\n");
 
-    for(int y = 0; y < size; y++){
-        for(int x = 0; x < size; x++){
-            printf("%f ",map->get(x,y));
-        }
-        printf("\n");
-    }
+//    map = f.smoothen(map);
 
-    delete map;
+//    for(int y = 0; y < size; y++){
+//        for(int x = 0; x < size; x++){
+//            printf("%f ",map->get(x,y));
+//        }
+//        printf("\n");
+//    }
 
-    return app.exec();
-}
+//    delete map;
+
+//    return app.exec();
+//}

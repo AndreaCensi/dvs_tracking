@@ -28,7 +28,6 @@ HEADERS += \
     ringbuffer.h \
     camwidget.h \
     event.h \
-    eventprocessorbase.h \
     dvs128interface.h \
     logger.h \
     transition.h \

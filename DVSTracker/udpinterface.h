@@ -3,23 +3,26 @@
 
 #include <QObject>
 #include <QUdpSocket>
-#include "eventprocessorbase.h"
+#include "event.h"
+#include "ringbuffer.h"
 
 class UDPInterface : public QObject
 {
     Q_OBJECT
 public:
-    explicit UDPInterface(EventProcessorBase *ep, QObject *parent = 0);
+    explicit UDPInterface(QObject *parent = 0);
     ~UDPInterface();
+    RingBuffer<Event>* getEventBuffer();
     void run();
-signals:
     
 public slots:
     void readPendingDatagrams();
+
 private:
     void readEvents(QByteArray data);
+
+    RingBuffer<Event> *eventBuffer;
     QUdpSocket *socket;
-    EventProcessorBase *eventProcessor;
     unsigned int mileStone;
 };
 

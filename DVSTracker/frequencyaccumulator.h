@@ -23,6 +23,7 @@ public:
 private:
     float getWeight(double interval, int frequency, float sd);
     std::vector<LocalMaximum> findMaxima();
+    void updateWidget();
 
     Map<float> *weightMap;
     int targetFrequency;

@@ -2,8 +2,8 @@
 
 #define EVENT_FRAME_LENGTH 6
 
-UDPInterface::UDPInterface(EventProcessorBase *ep, QObject *parent) : QObject(parent){
-    eventProcessor = ep;
+UDPInterface::UDPInterface(QObject *parent) : QObject(parent){
+    eventBuffer = new RingBuffer<Event>(8192);
     mileStone = 0;
 
     socket = new QUdpSocket(this);
@@ -13,6 +13,7 @@ UDPInterface::UDPInterface(EventProcessorBase *ep, QObject *parent) : QObject(pa
 }
 
 UDPInterface::~UDPInterface(){
+    delete eventBuffer;
     delete socket;
 }
 
@@ -49,6 +50,10 @@ void UDPInterface::readEvents(QByteArray data){
             event.type = 1 - rawAddr & 1;
         }
         //        printf("ts: %d\n",event.timeStamp);
-        eventProcessor->getEventBuffer()->add(event);
+        eventBuffer->add(event);
     }
+}
+
+RingBuffer<Event>* UDPInterface::getEventBuffer(){
+    return eventBuffer;
 }

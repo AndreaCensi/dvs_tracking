@@ -3,12 +3,11 @@
 
 #include "stdafx.h"
 #include "usbreader.h"
-#include "eventprocessorbase.h"
 
 class DVS128Interface
 {
 public:
-    DVS128Interface(EventProcessorBase *ep);
+    DVS128Interface();
     ~DVS128Interface();
     void startReading();
     void stopReading();

@@ -6,8 +6,9 @@
 
 #define DVS_RES 128
 
-CamWidget::CamWidget(QWidget *parent) : QWidget(parent)
+CamWidget::CamWidget(RingBuffer<Event> *buffer,QWidget *parent) : QWidget(parent)
 {
+    eventBuffer = buffer;
     img = new QImage(DVS_RES,DVS_RES,QImage::Format_RGB32);
 
     QTimer *timer = new QTimer(this);
@@ -30,6 +31,35 @@ void CamWidget::updateImage(Event *e){
         color = Qt::red;
     else
         color = Qt::blue;
+    QRgb *pixel = (QRgb*)img->scanLine(y);
+    pixel = &pixel[x];
+    *pixel = color.rgb();
+}
+
+void CamWidget::updateImage(int from, int size){
+    int index = from;
+    for(int i = 0; i < size;i++){
+        if (index == eventBuffer->size())
+            index = 0;
+        Event *e = eventBuffer->ref(index);
+        int x = 127-e->x;
+        int y = 127-e->y;
+        int type = e->type;
+        QColor color;
+        if(type == 1)
+            color = Qt::red;
+        else
+            color = Qt::blue;
+        QRgb *pixel = (QRgb*)img->scanLine(y);
+        pixel = &pixel[x];
+        *pixel = color.rgb();
+
+        index++;
+    }
+}
+
+void CamWidget::updateImage(int x, int y, int greyValue){
+    QColor color(greyValue,greyValue,greyValue);
     QRgb *pixel = (QRgb*)img->scanLine(y);
     pixel = &pixel[x];
     *pixel = color.rgb();
