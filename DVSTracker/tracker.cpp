@@ -68,7 +68,7 @@ void Tracker::processEvent(Event e){
         buf->update(dt);
         std::vector<LocalMaximum> maxima;
         if(buf->hasExpired()){
-            maxima = buf->evaluate();
+            //maxima = buf->evaluate();
             updateWeightWidget(i,buf);
             buf->reset();
         }
