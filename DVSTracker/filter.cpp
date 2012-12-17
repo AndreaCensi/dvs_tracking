@@ -1,15 +1,13 @@
 #include "filter.h"
 #include <math.h>
 
-#define OOB_VAL 0.0f        //avg value???-----------------------
-
 const float Filter::PI = 3.14159265f;
 
 static int int3x3kernel[9] = {1,2,1,2,4,2,1,2,1};
 
 Filter::Filter(int size, float standardDeviation, int mapW, int mapH)
 {
-    filteredMap = new Map<float>(mapW,mapH);
+    filteredMap = new Map<int>(mapW,mapH);
     kernelSize = size;
     sd = standardDeviation;
     kernel = new float[size*size];
@@ -21,7 +19,7 @@ Filter::~Filter(){
     delete [] kernel;
 }
 
-Map<float>* Filter::smoothen(Map<float> *buffer){
+Map<int>* Filter::smoothen(Map<int> *buffer){
     int r = kernelSize/2;
     // Go through 2D map
     for(int h = 0; h < buffer->height; h++){
@@ -34,7 +32,7 @@ Map<float>* Filter::smoothen(Map<float> *buffer){
                     int u = w-r+x;
                     int v = h-r+y;
                     if(!outOfBounds(buffer,u,v))
-                        filteredWeight += int(buffer->get(u,v)) << (kernelGet(x,y));
+                        filteredWeight += (buffer->get(u,v) << kernelGet(x,y));
                 }
             }
             // Set new value
@@ -42,7 +40,7 @@ Map<float>* Filter::smoothen(Map<float> *buffer){
         }
     }
 
-    Map<float> *tmp = filteredMap;
+    Map<int> *tmp = filteredMap;
     filteredMap = buffer;
     return tmp;
 }
@@ -64,7 +62,7 @@ void Filter::generateKernel(){
     }
 }
 
-bool Filter::outOfBounds(Map<float> *buffer,int x, int y){
+bool Filter::outOfBounds(Map<int> *buffer,int x, int y){
     if( x >= 0 && y >= 0 && x < buffer->width && y < buffer->height)
         return false;
     else

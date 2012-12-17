@@ -8,7 +8,7 @@ class Filter
 public:
     Filter(int size, float standardDeviation, int mapW, int mapH);
     ~Filter();
-    Map<float>* smoothen(Map<float> *buffer);
+    Map<int>* smoothen(Map<int> *buffer);
 
     static const float PI;
 
@@ -18,9 +18,9 @@ private:
     void kernelSet(int x, int y, float value);
     void generateKernel();
     float convolute();
-    bool outOfBounds(Map<float> *buffer, int x, int y);
+    bool outOfBounds(Map<int> *buffer, int x, int y);
 
-    Map<float> *filteredMap;
+    Map<int> *filteredMap;
     int kernelSize;
     float sd;
     float *kernel;

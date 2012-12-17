@@ -16,13 +16,13 @@ public:
     void update(Interval interval);
     bool hasExpired();
     std::vector<LocalMaximum> evaluate();
-    Map<float> *weightMap;
+    Map<int> *weightMap;
     void reset();
 
     static const float PI;
 
 private:
-    float getWeight(double interval, int frequency, float sd);
+    int getWeight(double interval, int frequency, float sd);
     std::vector<LocalMaximum> findMaxima();
 
     int targetFrequency;
