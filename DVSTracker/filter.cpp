@@ -1,7 +1,7 @@
 #include "filter.h"
 #include <math.h>
 
-#define NUM_BUFFERS 2
+#define NUM_BUFFERS 3
 
 const float Filter::PI = 3.14159265f;
 

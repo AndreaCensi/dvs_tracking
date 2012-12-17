@@ -3,7 +3,7 @@
 const float FrequencyAccumulator::PI = 3.14159265f;
 
 #define N_GUESSES 16
-#define NUM_BUFFERS 5
+#define NUM_BUFFERS 3
 
 FrequencyAccumulator::FrequencyAccumulator(
         int frequency, float sigma, int filterSize,
