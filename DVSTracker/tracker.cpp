@@ -7,7 +7,7 @@
 
 //parameteres
 #define SIGMA_W 0.0002f // +- random value -- STILL TO BE CHOSEN!
-#define FILTER_SIZE 5
+#define FILTER_SIZE 3
 #define SIGMA_FILTER 0.75f
 #define MIN_DIST 4.0f
 #define NUM_MAXIMA 8
@@ -127,7 +127,7 @@ void Tracker::run(){
             }
         }
         else
-            msleep(1);
+            msleep(10);
     }
 }
 

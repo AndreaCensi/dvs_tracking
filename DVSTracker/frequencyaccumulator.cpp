@@ -58,7 +58,7 @@ bool FrequencyAccumulator::hasExpired(){
 }
 
 std::vector<LocalMaximum> FrequencyAccumulator::evaluate(){
-    weightMap = filter->smoothen(weightMap);
+    //weightMap = filter->smoothen(weightMap);
     std::vector<LocalMaximum> maxima = findMaxima();
     return maxima;
 }

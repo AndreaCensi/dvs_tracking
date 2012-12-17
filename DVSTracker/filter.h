@@ -12,9 +12,9 @@ public:
 
     static const float PI;
 
-//private:
+private:
     //operations on kernel
-    float kernelGet(int x, int y);
+    int kernelGet(int x, int y);
     void kernelSet(int x, int y, float value);
     void generateKernel();
     float convolute();
@@ -24,7 +24,6 @@ public:
     int kernelSize;
     float sd;
     float *kernel;
-
 };
 
 #endif // FILTER_H

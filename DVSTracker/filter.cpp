@@ -5,6 +5,8 @@
 
 const float Filter::PI = 3.14159265f;
 
+static int int3x3kernel[9] = {1,2,1,2,4,2,1,2,1};
+
 Filter::Filter(int size, float standardDeviation, int mapW, int mapH)
 {
     filteredMap = new Map<float>(mapW,mapH);
@@ -24,21 +26,19 @@ Map<float>* Filter::smoothen(Map<float> *buffer){
     // Go through 2D map
     for(int h = 0; h < buffer->height; h++){
         for(int w = 0; w < buffer->width; w++){
-            float filteredWeight = 0.0f;
+            int filteredWeight = 0;
 
             // Convolute with kernel
             for(int y = 0; y < kernelSize; y++){
                 for(int x = 0; x < kernelSize; x++){
                     int u = w-r+x;
                     int v = h-r+y;
-                    if(outOfBounds(buffer,u,v))
-                        filteredWeight += (kernelGet(x,y) * OOB_VAL);
-                    else
-                        filteredWeight += (kernelGet(x,y) * buffer->get(u,v));
+                    if(!outOfBounds(buffer,u,v))
+                        filteredWeight += int(buffer->get(u,v)) << (kernelGet(x,y));
                 }
             }
             // Set new value
-            filteredMap->insert(w,h,filteredWeight);
+            filteredMap->insert(w,h,filteredWeight/16);
         }
     }
 
@@ -71,9 +71,9 @@ bool Filter::outOfBounds(Map<float> *buffer,int x, int y){
         return true;
 }
 
-float Filter::kernelGet(int x, int y){
+int Filter::kernelGet(int x, int y){
     int index = x + y*kernelSize;
-    return kernel[index];
+    return int3x3kernel[index];
 }
 
 void Filter::kernelSet(int x, int y, float value){
