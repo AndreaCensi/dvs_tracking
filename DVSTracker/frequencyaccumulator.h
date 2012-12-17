@@ -15,8 +15,14 @@ public:
     ~FrequencyAccumulator();
     void update(Interval interval);
     bool hasExpired();
-    std::vector<LocalMaximum> evaluate();
+    bool isEvaluated();
+    void evaluate();
+
     Map<int> *weightMap;
+    Map<int> **buffers;
+    Map<int> *filteredMap;
+    Map<int> *lastBuffer;
+
     void reset();
 
     static const float PI;
@@ -24,6 +30,9 @@ public:
 private:
     int getWeight(double interval, int frequency, float sd);
     std::vector<LocalMaximum> findMaxima();
+    void switchBuffer();
+
+    int bufferIndex;
 
     int targetFrequency;
     float sd;

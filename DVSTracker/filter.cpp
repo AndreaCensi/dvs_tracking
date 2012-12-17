@@ -1,29 +1,50 @@
 #include "filter.h"
 #include <math.h>
 
+#define NUM_BUFFERS 2
+
 const float Filter::PI = 3.14159265f;
 
-static int int3x3kernel[9] = {1,2,1,2,4,2,1,2,1};
+static int int3x3kernel[9] = {0,1,0,1,2,1,0,1,0}; // bit shift values
 
-Filter::Filter(int size, float standardDeviation, int mapW, int mapH)
+Filter::Filter(int size, float standardDeviation, int mapW, int mapH, QObject *parent) : QThread(parent)
 {
-    filteredMap = new Map<int>(mapW,mapH);
+    outputBuffers = new Map<int>*[NUM_BUFFERS];
+    for(int i = 0; i < NUM_BUFFERS; i++)
+        outputBuffers[i] = new Map<int>(mapW,mapH);
+
+    bufferIndex = 0;
+    filteredMap = outputBuffers[bufferIndex];
+
+    inputBuffer = 0;
+
     kernelSize = size;
     sd = standardDeviation;
     kernel = new float[size*size];
-    generateKernel();
+
+    //threading
+    exit = false;
+    paused = true;
+
+    // smoothing status
+    done = false;
+
+    //generateKernel();
 }
 
 Filter::~Filter(){
-    delete filteredMap;
+    for(int i = 0; i < NUM_BUFFERS; i++)
+        delete outputBuffers[i];
+    delete [] outputBuffers;
     delete [] kernel;
 }
 
-Map<int>* Filter::smoothen(Map<int> *buffer){
+void Filter::smoothen(Map<int> *buf){
     int r = kernelSize/2;
+
     // Go through 2D map
-    for(int h = 0; h < buffer->height; h++){
-        for(int w = 0; w < buffer->width; w++){
+    for(int h = 0; h < buf->height; h++){
+        for(int w = 0; w < buf->width; w++){
             int filteredWeight = 0;
 
             // Convolute with kernel
@@ -31,18 +52,17 @@ Map<int>* Filter::smoothen(Map<int> *buffer){
                 for(int x = 0; x < kernelSize; x++){
                     int u = w-r+x;
                     int v = h-r+y;
-                    if(!outOfBounds(buffer,u,v))
-                        filteredWeight += (buffer->get(u,v) << kernelGet(x,y));
+                    if(!outOfBounds(buf,u,v))
+                        filteredWeight += (buf->get(u,v) << kernelGet(x,y));
                 }
             }
             // Set new value
-            filteredMap->insert(w,h,filteredWeight/16);
+            filteredMap->insert(w,h,(filteredWeight >> 4));
         }
     }
-
-    Map<int> *tmp = filteredMap;
-    filteredMap = buffer;
-    return tmp;
+    // clear buffer
+    for(int i = 0; i < buf->size(); i++)
+        buf->set(i,0);
 }
 
 void Filter::generateKernel(){
@@ -62,11 +82,19 @@ void Filter::generateKernel(){
     }
 }
 
-bool Filter::outOfBounds(Map<int> *buffer,int x, int y){
-    if( x >= 0 && y >= 0 && x < buffer->width && y < buffer->height)
+bool Filter::outOfBounds(Map<int> *buf,int x, int y){
+    if( x >= 0 && y >= 0 && x < buf->width && y < buf->height)
         return false;
     else
         return true;
+}
+
+void Filter::switchBuffer(){
+    if(bufferIndex == NUM_BUFFERS-1)
+        bufferIndex = 0;
+    else
+        bufferIndex++;
+    filteredMap = outputBuffers[bufferIndex];
 }
 
 int Filter::kernelGet(int x, int y){
@@ -77,4 +105,48 @@ int Filter::kernelGet(int x, int y){
 void Filter::kernelSet(int x, int y, float value){
     int index = x + y*kernelSize;
     kernel[index] = value;
+}
+
+Map<int>* Filter::getFilteredMap(){
+    Map<int> *latest = filteredMap;
+    switchBuffer(); //take next Buffer
+    return latest;
+}
+
+void Filter::setMap(Map<int> *buf){
+    inputBuffer = buf;
+}
+
+bool Filter::isDone(){
+    return done;
+}
+
+void Filter::resume(){
+    mutex.lock();
+    paused = false;
+    mutex.unlock();
+    waitCond.wakeOne();
+}
+
+void Filter::pause(){
+    mutex.lock();
+    paused = true;
+    mutex.unlock();
+}
+
+void Filter::stop(){
+    exit = true;
+}
+
+void Filter::run(){
+    while(!exit){
+        mutex.lock();
+        if(paused)
+            waitCond.wait(&mutex);
+        mutex.unlock();
+        done = false;
+        smoothen(inputBuffer);
+        pause();
+        done = true;
+    }
 }

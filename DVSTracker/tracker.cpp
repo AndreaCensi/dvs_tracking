@@ -6,11 +6,11 @@
 #define DVS_RES 128
 
 //parameteres
-#define SIGMA_W 0.0002f // +- random value -- STILL TO BE CHOSEN!
+#define SIGMA_W 0.0002f
 #define FILTER_SIZE 3
 #define SIGMA_FILTER 0.75f
 #define MIN_DIST 4.0f
-#define NUM_MAXIMA 8
+#define NUM_MAXIMA 3
 
 Tracker::Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
     //Members
@@ -68,9 +68,11 @@ void Tracker::processEvent(Event e){
         buf->update(dt);
         std::vector<LocalMaximum> maxima;
         if(buf->hasExpired()){
-            maxima = buf->evaluate();
-            updateWeightWidget(i,buf);
+            buf->evaluate();
             buf->reset();
+        }
+        if(buf->isEvaluated()){
+            updateWeightWidget(i,buf);
         }
         if(maxima.size() > 0){
             // continue processing
@@ -109,6 +111,32 @@ void Tracker::stop(){
     exit = true;
 }
 
+void Tracker::setWidget(CamWidget *camWidget){
+    widget = camWidget;
+}
+
+void Tracker::updateCamWidget(Event *e){
+    if(widget == 0)
+        return;
+    widget->updateImage(e);
+}
+
+void Tracker::updateWeightWidget(int i, FrequencyAccumulator *buf){
+    for(int y = 0; y < DVS_RES;y++){
+        for(int x = 0; x < DVS_RES;x++){
+            int value = buf->filteredMap->get(x,y);
+            //            if(value > 0)
+            //                printf("%f\n",value);
+            int grey = int(value >> 2);
+            if(grey > 255)
+                grey = 255;
+            if(grey > 0){
+                widget->updateImage(x,y,grey);
+            }
+        }
+    }
+}
+
 void Tracker::run(){
     while(!exit){
         if((eventBuffer->available()) > 0){
@@ -128,31 +156,5 @@ void Tracker::run(){
         }
         else
             msleep(10);
-    }
-}
-
-void Tracker::setWidget(CamWidget *camWidget){
-    widget = camWidget;
-}
-
-void Tracker::updateCamWidget(Event *e){
-    if(widget == 0)
-        return;
-    widget->updateImage(e);
-}
-
-void Tracker::updateWeightWidget(int i, FrequencyAccumulator *buf){
-    for(int y = 0; y < DVS_RES;y++){
-        for(int x = 0; x < DVS_RES;x++){
-            float value = buf->weightMap->get(x,y);
-//            if(value > 0)
-//                printf("%f\n",value);
-            int grey = int(value/4.0);
-            if(grey > 255)
-                grey = 255;
-            if(grey > 0){
-                widget->updateImage(x,y,grey);
-            }
-        }
     }
 }

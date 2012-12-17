@@ -3,18 +3,30 @@
 const float FrequencyAccumulator::PI = 3.14159265f;
 
 #define N_GUESSES 16
+#define NUM_BUFFERS 5
 
 FrequencyAccumulator::FrequencyAccumulator(
         int frequency, float sigma, int filterSize,
         float filterSigma, float minDist, int numMaxima, int w, int h)
 {
     // Weights
-    weightMap = new Map<int>(w,h);
-    for(int i = 0; i < weightMap->size();i++)
-        weightMap->set(i,0);
+    buffers = new Map<int>*[NUM_BUFFERS];
+    for(int i = 0; i < NUM_BUFFERS; i++){
+        buffers[i] = new Map<int>(w,h);
+        weightMap = buffers[i];
+        for(int i = 0; i < weightMap->size();i++)
+            weightMap->set(i,0);
+    }
 
+    bufferIndex = 0;
+    weightMap = buffers[bufferIndex];
+    filteredMap = 0;
+
+    //parameters
     targetFrequency = frequency;
     sd = sigma;
+
+    //interval measurement
     lastReset = 0;
     lastUpdate = 0;
 
@@ -24,10 +36,15 @@ FrequencyAccumulator::FrequencyAccumulator(
 
     // Smoohing filter
     filter = new Filter(filterSize,filterSigma, w, h);
+    filter->start();
 }
 
-FrequencyAccumulator::~FrequencyAccumulator(){    
-    delete weightMap;
+FrequencyAccumulator::~FrequencyAccumulator(){
+    filter->stop();
+    filter->wait();
+    for(int i = 0; i < NUM_BUFFERS; i++)
+        delete buffers[i];
+    delete [] buffers;
     delete filter;
 }
 
@@ -37,9 +54,6 @@ void FrequencyAccumulator::update(Interval interval){
     int y = interval.y;
     int prevWeight = weightMap->get(x,y);
     int weight = getWeight(interval.deltaT,targetFrequency,sd) + prevWeight;
-
-//    printf("dt: %f, w: %f\n",interval.deltaT,weight);
-
     weightMap->insert(x,y,weight);
 }
 
@@ -57,16 +71,22 @@ bool FrequencyAccumulator::hasExpired(){
         return false;
 }
 
-std::vector<LocalMaximum> FrequencyAccumulator::evaluate(){
-    weightMap = filter->smoothen(weightMap);
-    std::vector<LocalMaximum> maxima = findMaxima();
-    return maxima;
+bool FrequencyAccumulator::isEvaluated(){
+    return filter->isDone();
+}
+
+void FrequencyAccumulator::evaluate(){
+    filter->setMap(weightMap);  // set map to filter
+    filter->resume();   // start filtering
+    filteredMap = filter->getFilteredMap(); //get filtered map
+    switchBuffer(); //
+
+//    weightMap = filter->smoothen(weightMap);
+//    std::vector<LocalMaximum> maxima = findMaxima();
+//    return maxima;
 }
 
 void FrequencyAccumulator::reset(){
-    // reset values
-    for(int i = 0; i < weightMap->size();i++)
-        weightMap->set(i,0);
     lastReset = lastUpdate;
 }
 
@@ -82,4 +102,12 @@ std::vector<LocalMaximum> FrequencyAccumulator::findMaxima(){
         }
     }
     return maxima;
+}
+
+void FrequencyAccumulator::switchBuffer(){
+    if(bufferIndex == NUM_BUFFERS-1)
+        bufferIndex = 0;
+    else
+        bufferIndex++;
+    weightMap = buffers[bufferIndex];
 }

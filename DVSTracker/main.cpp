@@ -33,6 +33,9 @@ int main(int argc, char **argv){
     int ret = app.exec();
     //    dvs.stopReading();
     t.stop();
+    t.wait();   //wait for thread to finish
+    //    dvs.stopReading();
+
     return ret;
 }
 
