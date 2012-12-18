@@ -5,7 +5,7 @@
 #include "interval.h"
 #include "filter.h"
 #include "vector"
-#include "localmaximum.h"
+#include "maxima.h"
 
 class FrequencyAccumulator
 {
@@ -15,7 +15,7 @@ public:
     ~FrequencyAccumulator();
     void update(Interval interval);
     bool hasExpired();
-    std::vector<LocalMaximum> evaluate();
+    Maxima* findMaxima();
     Map<int> *weightMap;
     void reset();
 
@@ -23,7 +23,8 @@ public:
 
 private:
     int getWeight(double interval, int frequency, float sd);
-    std::vector<LocalMaximum> findMaxima();
+
+    Maxima *maxima;
 
     int targetFrequency;
     float sd;

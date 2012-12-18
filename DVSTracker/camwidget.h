@@ -25,6 +25,7 @@ public slots:
     void updateImage(Event *e);
     void updateImage(int from, int size);
     void updateImage(int x, int y, int greyValue);
+    void setMaxima(int x, int y, int i);
 };
 
 #endif // CAMWIDGET_H

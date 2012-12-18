@@ -20,7 +20,9 @@ SOURCES += main.cpp \
     tracker.cpp \
     frequencyaccumulator.cpp \
     filter.cpp \
-    localmaximum.cpp
+    maxima.cpp \
+    localmaximum.cpp \
+    hypothesislogger.cpp
 
 HEADERS += \
     usbreader.h \
@@ -37,7 +39,9 @@ HEADERS += \
     tracker.h \
     frequencyaccumulator.h \
     filter.h \
-    localmaximum.h
+    maxima.h \
+    localmaximum.h \
+    hypothesislogger.h
 
 
 

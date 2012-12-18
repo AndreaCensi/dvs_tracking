@@ -1,5 +1,6 @@
 #include "tracker.h"
 #include "stdio.h"
+#include "maxima.h"
 #include "localmaximum.h"
 #include <math.h>
 
@@ -9,8 +10,8 @@
 #define SIGMA_W 0.0002f // +- random value -- STILL TO BE CHOSEN!
 #define FILTER_SIZE 3
 #define SIGMA_FILTER 0.75f
-#define MIN_DIST 4.0f
-#define NUM_MAXIMA 8
+#define MIN_DIST 16.0f
+#define NUM_MAXIMA 3
 
 Tracker::Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
     //Members
@@ -66,14 +67,13 @@ void Tracker::processEvent(Event e){
     for(unsigned int i = 0; i < targetFrequencies.size(); i++){
         FrequencyAccumulator *buf = weightBuffers[i];
         buf->update(dt);
-        std::vector<LocalMaximum> maxima;
+        Maxima *maxima = 0;
         if(buf->hasExpired()){
-            //maxima = buf->evaluate();
-            updateWeightWidget(i,buf);
+            maxima = buf->findMaxima();
+            // process maxima HERE
+
+            updateWeightWidget(i,buf,maxima);
             buf->reset();
-        }
-        if(maxima.size() > 0){
-            // continue processing
         }
     }
 
@@ -141,12 +141,10 @@ void Tracker::updateCamWidget(Event *e){
     widget->updateImage(e);
 }
 
-void Tracker::updateWeightWidget(int i, FrequencyAccumulator *buf){
+void Tracker::updateWeightWidget(int bufID, FrequencyAccumulator *buf, Maxima *m){
     for(int y = 0; y < DVS_RES;y++){
         for(int x = 0; x < DVS_RES;x++){
             float value = buf->weightMap->get(x,y);
-//            if(value > 0)
-//                printf("%f\n",value);
             int grey = int(value/4.0);
             if(grey > 255)
                 grey = 255;
@@ -154,5 +152,12 @@ void Tracker::updateWeightWidget(int i, FrequencyAccumulator *buf){
                 widget->updateImage(x,y,grey);
             }
         }
+    }
+    for(int i = 0; i < m->size();i++){
+        if(m->get(i)->weight == 0)
+            continue;
+        int x = m->get(i)->x;
+        int y = m->get(i)->y;
+        widget->setMaxima(x,y,bufID);
     }
 }

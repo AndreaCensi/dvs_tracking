@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'camwidget.h'
 **
-** Created: Sun 16. Dec 18:14:06 2012
+** Created: Tue 18. Dec 14:34:24 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CamWidget[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -34,6 +34,7 @@ static const uint qt_meta_data_CamWidget[] = {
       13,   11,   10,   10, 0x0a,
       43,   33,   10,   10, 0x0a,
       78,   64,   10,   10, 0x0a,
+     109,  103,   10,   10, 0x0a,
 
        0        // eod
 };
@@ -42,6 +43,7 @@ static const char qt_meta_stringdata_CamWidget[] = {
     "CamWidget\0\0e\0updateImage(Event*)\0"
     "from,size\0updateImage(int,int)\0"
     "x,y,greyValue\0updateImage(int,int,int)\0"
+    "x,y,i\0setMaxima(int,int,int)\0"
 };
 
 void CamWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -53,6 +55,7 @@ void CamWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 0: _t->updateImage((*reinterpret_cast< Event*(*)>(_a[1]))); break;
         case 1: _t->updateImage((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 2: _t->updateImage((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 3: _t->setMaxima((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         default: ;
         }
     }
@@ -90,9 +93,9 @@ int CamWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }

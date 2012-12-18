@@ -13,6 +13,8 @@ FrequencyAccumulator::FrequencyAccumulator(
     for(int i = 0; i < weightMap->size();i++)
         weightMap->set(i,0);
 
+    maxima = new Maxima(numMaxima,minDist);
+
     targetFrequency = frequency;
     sd = sigma;
     lastReset = 0;
@@ -28,6 +30,7 @@ FrequencyAccumulator::FrequencyAccumulator(
 
 FrequencyAccumulator::~FrequencyAccumulator(){    
     delete weightMap;
+    delete maxima;
     delete filter;
 }
 
@@ -57,28 +60,20 @@ bool FrequencyAccumulator::hasExpired(){
         return false;
 }
 
-std::vector<LocalMaximum> FrequencyAccumulator::evaluate(){
-    weightMap = filter->smoothen(weightMap);
-    std::vector<LocalMaximum> maxima = findMaxima();
-    return maxima;
-}
-
 void FrequencyAccumulator::reset(){
     // reset values
     for(int i = 0; i < weightMap->size();i++)
         weightMap->set(i,0);
+    maxima->reset();
     lastReset = lastUpdate;
 }
 
-std::vector<LocalMaximum> FrequencyAccumulator::findMaxima(){
+Maxima* FrequencyAccumulator::findMaxima(){
     // search for maxima in the map, use minDistance!
-    std::vector<LocalMaximum> maxima;
     for(int h = 0; h < weightMap->height; h++){
         for(int w = 0; w < weightMap->width; w++){
-            // don't process if no weight has been added
-            if(weightMap->get(w,h) == 0.0f)
-                continue;
-            // find maxima
+            int weight = weightMap->get(w,h);
+            maxima->update(w,h,weight);
         }
     }
     return maxima;

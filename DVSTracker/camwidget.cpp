@@ -83,3 +83,28 @@ void CamWidget::paintEvent(QPaintEvent *){
         }
     }
 }
+
+void CamWidget::setMaxima(int x, int y, int i){
+    x = 127-x;
+    y = 127-y;
+
+    QColor color;
+    switch (i){
+    case 0:
+        color = Qt::red;
+        break;
+    case 1:
+        color = Qt::blue;
+        break;
+    case 2:
+        color = Qt::green;
+        break;
+    case 3:
+        color = Qt::yellow;
+        break;
+    }
+
+    QRgb *pixel = (QRgb*)img->scanLine(y);
+    pixel = &pixel[x];
+    *pixel = color.rgb();
+}

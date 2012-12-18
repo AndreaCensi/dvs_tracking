@@ -4,10 +4,11 @@
 class LocalMaximum
 {
 public:
-    LocalMaximum();
+    LocalMaximum(int posX = 0, int posY = 0, int w = 0);
+    void set(int posX, int posY, int w);
     int x;
     int y;
-    float weight;
+    int weight;
 };
 
 #endif // LOCALMAXIMUM_H
