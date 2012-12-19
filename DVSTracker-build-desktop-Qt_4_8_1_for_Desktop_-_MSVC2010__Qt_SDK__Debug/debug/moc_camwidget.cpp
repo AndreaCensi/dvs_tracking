@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'camwidget.h'
 **
-** Created: Tue 18. Dec 14:34:24 2012
+** Created: Wed 19. Dec 12:31:43 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -34,7 +34,7 @@ static const uint qt_meta_data_CamWidget[] = {
       13,   11,   10,   10, 0x0a,
       43,   33,   10,   10, 0x0a,
       78,   64,   10,   10, 0x0a,
-     109,  103,   10,   10, 0x0a,
+     111,  103,   10,   10, 0x0a,
 
        0        // eod
 };
@@ -43,7 +43,7 @@ static const char qt_meta_stringdata_CamWidget[] = {
     "CamWidget\0\0e\0updateImage(Event*)\0"
     "from,size\0updateImage(int,int)\0"
     "x,y,greyValue\0updateImage(int,int,int)\0"
-    "x,y,i\0setMaxima(int,int,int)\0"
+    "x,y,w,i\0updateImage(int,int,int,int)\0"
 };
 
 void CamWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -55,7 +55,7 @@ void CamWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 0: _t->updateImage((*reinterpret_cast< Event*(*)>(_a[1]))); break;
         case 1: _t->updateImage((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 2: _t->updateImage((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 3: _t->setMaxima((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 3: _t->updateImage((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
         default: ;
         }
     }

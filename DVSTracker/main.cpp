@@ -20,6 +20,7 @@ int main(int argc, char **argv){
     //    DVS128Interface dvs();
     CamWidget widget(udpIf.getEventBuffer());
     Tracker t(udpIf.getEventBuffer(),frequencies);
+    widget.setWeightBuffers(t.weightBuffers);
     t.setWidget(&widget);
 
     //connect signals/slots

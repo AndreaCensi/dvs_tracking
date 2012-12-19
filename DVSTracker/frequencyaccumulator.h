@@ -19,12 +19,12 @@ public:
     Map<int> *weightMap;
     void reset();
 
+    Maxima *maxima;
+
     static const float PI;
 
 private:
     int getWeight(double interval, int frequency, float sd);
-
-    Maxima *maxima;
 
     int targetFrequency;
     float sd;

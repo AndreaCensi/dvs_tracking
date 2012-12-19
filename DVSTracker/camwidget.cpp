@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #define DVS_RES 128
+#define SCALE_F 4
 
 CamWidget::CamWidget(RingBuffer<Event> *buffer,QWidget *parent) : QWidget(parent)
 {
@@ -15,7 +16,10 @@ CamWidget::CamWidget(RingBuffer<Event> *buffer,QWidget *parent) : QWidget(parent
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     timer->start(20);
     setWindowTitle(tr("DVS128"));
-    resize(512,512);
+    int size = SCALE_F*DVS_RES;
+    resize(size,size);
+
+    weights = 0;
 }
 
 CamWidget::~CamWidget(){
@@ -69,22 +73,50 @@ void CamWidget::updateImage(int x, int y, int greyValue){
 }
 
 void CamWidget::paintEvent(QPaintEvent *){
+    reset(); //reset image first
+
     QPainter painter(this);
     QRect rect(0,0,512,512);
     painter.drawImage(rect,*img);
 
-    //reset image
-    QColor color = Qt::black;
-    for(int x = 0; x < 128; x++){
-        for(int y = 0; y < 128; y++){
-            QRgb *pixel = (QRgb*)img->scanLine(y);
-            pixel = &pixel[x];
-            *pixel = color.rgb();
+    //draw ellipse according to weight
+    if(weights != 0){
+        for(int i = 0; i < 4;i++){
+            for(int j = 0; j < weights[i]->maxima->size(); j++){
+                int x = (127 - weights[i]->maxima->get(j)->x)*SCALE_F;
+                int y = (127 - weights[i]->maxima->get(j)->y)*SCALE_F;
+                int w = weights[i]->maxima->get(j)->weight;
+
+                QColor color;
+                switch (i){
+                case 0:
+                    color = Qt::red;
+                    break;
+                case 1:
+                    color = Qt::blue;
+                    break;
+                case 2:
+                    color = Qt::green;
+                    break;
+                case 3:
+                    color = Qt::yellow;
+                    break;
+                }
+
+                color.setAlpha(150);
+
+                painter.setPen(color);
+                painter.setBrush(color);
+
+                int r = w/100;
+                QPoint center(x,y);
+                painter.drawEllipse(center,r,r);
+            }
         }
     }
 }
 
-void CamWidget::setMaxima(int x, int y, int i){
+void CamWidget::updateImage(int x, int y,int w, int i){
     x = 127-x;
     y = 127-y;
 
@@ -107,4 +139,20 @@ void CamWidget::setMaxima(int x, int y, int i){
     QRgb *pixel = (QRgb*)img->scanLine(y);
     pixel = &pixel[x];
     *pixel = color.rgb();
+}
+
+void CamWidget::setWeightBuffers(FrequencyAccumulator **weightBuffers){
+    weights = weightBuffers;
+}
+
+// reset image
+void CamWidget::reset(){
+    QColor color = Qt::black;
+    for(int x = 0; x < 128; x++){
+        for(int y = 0; y < 128; y++){
+            QRgb *pixel = (QRgb*)img->scanLine(y);
+            pixel = &pixel[x];
+            *pixel = color.rgb();
+        }
+    }
 }

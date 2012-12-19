@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "event.h"
 #include "ringbuffer.h"
+#include "frequencyaccumulator.h"
 
 class CamWidget : public QWidget
 {
@@ -12,20 +13,24 @@ class CamWidget : public QWidget
 public:
     CamWidget(RingBuffer<Event> *buffer = 0,QWidget *parent = 0);
     ~CamWidget();
+    void setWeightBuffers(FrequencyAccumulator **weightBuffers);
 
 protected:
     void paintEvent(QPaintEvent *);
 
 private:
+    void reset();
+
     QImage *img;
     RingBuffer<Event> *eventBuffer;
     int bufSize;
+    FrequencyAccumulator **weights;
 
 public slots:
     void updateImage(Event *e);
     void updateImage(int from, int size);
     void updateImage(int x, int y, int greyValue);
-    void setMaxima(int x, int y, int i);
+    void updateImage(int x, int y,int w, int i);
 };
 
 #endif // CAMWIDGET_H

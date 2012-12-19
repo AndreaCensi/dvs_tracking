@@ -33,6 +33,9 @@ Tracker::Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObjec
         weightBuffers[i] = new FrequencyAccumulator(
                     targetFrequencies[i],SIGMA_W,FILTER_SIZE,SIGMA_FILTER,MIN_DIST,NUM_MAXIMA,DVS_RES,DVS_RES);
     }
+
+    logger = new HypothesisLogger("C:/Users/giselher/Documents/uzh/hypo_log.txt");
+    lastEventTs = 0;
 }
 
 Tracker::~Tracker(){
@@ -44,6 +47,8 @@ Tracker::~Tracker(){
         delete weightBuffers[i];
     }
     delete [] weightBuffers;
+
+    delete logger;
 }
 
 void Tracker::processEvent(Event e){
@@ -71,12 +76,23 @@ void Tracker::processEvent(Event e){
         if(buf->hasExpired()){
             maxima = buf->findMaxima();
             // process maxima HERE
-
+//            if(!logger->done()){
+//                if(lastEventTs < dt.timeStamp){
+//                    for(int j = 0; j < maxima->size();j++)
+//                        logger->log(e.timeStamp,targetFrequencies[i],maxima->size(),
+//                                    j,maxima->get(j)->x,maxima->get(j)->y,maxima->get(j)->weight);
+//                }
+//                else{
+//                    printf("lastEventTs: %f\n",lastEventTs);
+//                    printf("delta: %f\n",(e.timeStamp - lastEventTs));
+//                    logger->stop();
+//                }
+//            }
             updateWeightWidget(i,buf,maxima);
             buf->reset();
         }
     }
-
+    lastEventTs = e.timeStamp;
 }
 
 Transition Tracker::getTransition(Event e){
@@ -145,19 +161,22 @@ void Tracker::updateWeightWidget(int bufID, FrequencyAccumulator *buf, Maxima *m
     for(int y = 0; y < DVS_RES;y++){
         for(int x = 0; x < DVS_RES;x++){
             float value = buf->weightMap->get(x,y);
-            int grey = int(value/4.0);
-            if(grey > 255)
-                grey = 255;
-            if(grey > 0){
-                widget->updateImage(x,y,grey);
+            if(value > 0){
+                int grey = int(value/4.0);
+                if(grey > 255)
+                    grey = 255;
+                if(grey > 0){
+                    widget->updateImage(x,y,grey);
+                }
             }
         }
     }
-    for(int i = 0; i < m->size();i++){
-        if(m->get(i)->weight == 0)
-            continue;
-        int x = m->get(i)->x;
-        int y = m->get(i)->y;
-        widget->setMaxima(x,y,bufID);
-    }
+//    for(int i = 0; i < m->size();i++){
+//        if(m->get(i)->weight == 0)
+//            continue;
+//        int x = m->get(i)->x;
+//        int y = m->get(i)->y;
+//        int w = m->get(i)->weight;
+//        widget->updateImage(x,y,w,bufID);
+//    }
 }

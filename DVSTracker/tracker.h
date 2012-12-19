@@ -10,6 +10,7 @@
 #include "map.h"
 #include "frequencyaccumulator.h"
 #include "camwidget.h"
+#include "hypothesislogger.h"
 #include <vector>
 
 
@@ -23,6 +24,8 @@ public:
     void setWidget(CamWidget *camWidget);
     void run();
     void stop();
+
+    FrequencyAccumulator **weightBuffers;
 
 private:
     Transition getTransition(Event e);
@@ -38,12 +41,13 @@ private:
     Map<Transition> *npTransitions;
 
     std::vector<int> targetFrequencies;
-    FrequencyAccumulator **weightBuffers;
 
     bool exit;
 
     void updateCamWidget(Event *e);
     void updateWeightWidget(int bufID, FrequencyAccumulator *buf, Maxima *m);
+    HypothesisLogger *logger;
+    double lastEventTs;
 
 signals:
     void updateCamWidget(int,int);
