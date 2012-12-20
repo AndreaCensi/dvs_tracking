@@ -3,13 +3,16 @@
 #define EVENT_FRAME_LENGTH 6
 
 UDPInterface::UDPInterface(QObject *parent) : QObject(parent){
-    eventBuffer = new RingBuffer<Event>(8192);
+    eventBuffer = new RingBuffer<Event>(20000);
     mileStone = 0;
 
     socket = new QUdpSocket(this);
     socket->bind(QHostAddress::LocalHost, 8991);
 
     connect(socket, SIGNAL(readyRead()),this, SLOT(readPendingDatagrams()));
+    counter = 0;
+    lastEventTime = 0;
+    currentEventTime = 0;
 }
 
 UDPInterface::~UDPInterface(){
@@ -44,13 +47,26 @@ void UDPInterface::readEvents(QByteArray data){
         }
         else{
             event.timeStamp = ((data[i+5] & 0xff | ((data[i+4] & 0xff) << 8) |
-                               ((data[i+3] & 0xff) << 16) | ((data[i+2] & 0xff) << 24)))/1000000.0;
+                                ((data[i+3] & 0xff) << 16) | ((data[i+2] & 0xff) << 24)))/1000000.0;
             event.x = (rawAddr >> 1) & 0x7f;
             event.y = (rawAddr >> 8) & 0x7f;
             event.type = 1 - rawAddr & 1;
         }
         //        printf("ts: %d\n",event.timeStamp);
         eventBuffer->add(event);
+
+        //debugging
+        currentEventTime = event.timeStamp;
+
+        if(lastEventTime > currentEventTime){
+            printf("#Events(udp): %d\n",counter);
+            counter = 0;
+        }
+        else
+            counter++;
+
+        lastEventTime = currentEventTime;
+
     }
 }
 

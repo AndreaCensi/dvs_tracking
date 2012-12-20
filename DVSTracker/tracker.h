@@ -48,6 +48,7 @@ private:
     void updateWeightWidget(int bufID, FrequencyAccumulator *buf, Maxima *m);
     HypothesisLogger *logger;
     double lastEventTs;
+    int eventCount;
 
 signals:
     void updateCamWidget(int,int);

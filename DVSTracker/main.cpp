@@ -17,9 +17,13 @@ int main(int argc, char **argv){
 
     //tracking
     UDPInterface udpIf;
-    //    DVS128Interface dvs();
-    CamWidget widget(udpIf.getEventBuffer());
-    Tracker t(udpIf.getEventBuffer(),frequencies);
+//    DVS128Interface dvs;
+
+    RingBuffer<Event> *buf = udpIf.getEventBuffer();
+//    RingBuffer<Event> *buf = dvs.getReaderInstance()->getEventBuffer();
+
+    CamWidget widget(buf);
+    Tracker t(buf,frequencies);
     widget.setWeightBuffers(t.weightBuffers);
     t.setWidget(&widget);
 

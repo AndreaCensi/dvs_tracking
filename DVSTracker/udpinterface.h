@@ -24,6 +24,10 @@ private:
     RingBuffer<Event> *eventBuffer;
     QUdpSocket *socket;
     unsigned int mileStone;
+
+    //debugging
+    int counter;
+    double lastEventTime, currentEventTime;
 };
 
 #endif // UDPINTERFACE_H
