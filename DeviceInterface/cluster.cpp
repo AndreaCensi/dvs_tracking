@@ -331,6 +331,8 @@ void Cluster::predictRelativePosition(){
             angle = 2*PI - angle;
         Vector2D forward = estimatedVelocity.rotate(angle);
 
+        float delta = 1.0;
+
         float m = forward.norm() + acceleration.m * delta;
         float a = acceleration.a * delta;
 

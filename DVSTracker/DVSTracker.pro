@@ -2,7 +2,8 @@ TEMPLATE = app
 CONFIG += console
 
 QT       += core \
-    network
+    network \
+    opengl
 
 INCLUDEPATH += \
     inc \

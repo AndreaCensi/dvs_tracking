@@ -28,7 +28,6 @@ int main(int argc, char **argv){
     //connect signals/slots
 //    QObject::connect(&t,SIGNAL(updateCamWidget(int,int)),
 //                     &widget,SLOT(updateImage(int,int)),Qt::QueuedConnection);
-
     widget.show();
     t.start();
 //    dvs.startReading();

@@ -3,27 +3,53 @@
 #include <QTimer>
 #include <QColor>
 #include <stdio.h>
+#include <qgl.h>
 
 #define DVS_RES 128
 #define SCALE_F 4
 
-CamWidget::CamWidget(RingBuffer<Event> *buffer,QWidget *parent) : QWidget(parent)
+CamWidget::CamWidget(RingBuffer<Event> *buffer,QWidget *parent) : QGLWidget(parent)
 {
     eventBuffer = buffer;
     img = new QImage(DVS_RES,DVS_RES,QImage::Format_RGB32);
+    weights = 0;
+
+    setWindowTitle(tr("DVS128"));
+    int size = SCALE_F*DVS_RES;
+//    resize(size,size);
+//    initializeGL();
+//    resizeGL(size,size);
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     timer->start(40);
-    setWindowTitle(tr("DVS128"));
-    int size = SCALE_F*DVS_RES;
-    resize(size,size);
-
-    weights = 0;
 }
 
 CamWidget::~CamWidget(){
     delete img;
+}
+
+void CamWidget::initializeGL(){
+    int size = SCALE_F*DVS_RES;
+    glViewport(0, 0, size,  size);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0.0, 1.0, 0.0, 1.0, 1.0, -1.0f);
+    glMatrixMode(GL_MODELVIEW);
+}
+
+void CamWidget::paintGL(){
+    glImg = QGLWidget::convertToGLFormat(*img);
+    glDrawPixels(glImg.width(),glImg.height(),GL_RGBA,GL_UNSIGNED_BYTE,glImg.bits());
+}
+
+void CamWidget::resizeGL(int w, int h){
+    int side = qMin(w, h);
+    glViewport((w - side) / 2, (h - side) / 2, side, side);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0.0, 1.0, 0.0, 1.0, 1.0, -1.0f);
+    glMatrixMode(GL_MODELVIEW);
 }
 
 void CamWidget::updateImage(Event *e){
@@ -73,11 +99,11 @@ void CamWidget::updateImage(int x, int y, int greyValue){
 }
 
 void CamWidget::paintEvent(QPaintEvent *){
-    reset(); //reset image first
-
     QPainter painter(this);
-    QRect rect(0,0,512,512);
-    painter.drawImage(rect,*img);
+    //    QRect rect(0,0,512,512);
+    //    painter.drawImage(rect,*img);
+
+    paintGL();
 
     //draw ellipse according to weight
     if(weights != 0){
@@ -114,6 +140,7 @@ void CamWidget::paintEvent(QPaintEvent *){
             }
         }
     }
+    reset(); //reset image
 }
 
 void CamWidget::updateImage(int x, int y,int w, int i){
