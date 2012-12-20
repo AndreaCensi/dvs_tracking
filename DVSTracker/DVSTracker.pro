@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     filter.cpp \
     maxima.cpp \
     localmaximum.cpp \
-    hypothesislogger.cpp
+    hypothesislogger.cpp \
+    glcamwidget.cpp
 
 HEADERS += \
     usbreader.h \
@@ -42,7 +43,8 @@ HEADERS += \
     filter.h \
     maxima.h \
     localmaximum.h \
-    hypothesislogger.h
+    hypothesislogger.h \
+    glcamwidget.h
 
 
 

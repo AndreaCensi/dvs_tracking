@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'camwidget.h'
 **
-** Created: Thu 20. Dec 12:26:50 2012
+** Created: Thu 20. Dec 12:42:37 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -66,7 +66,7 @@ const QMetaObjectExtraData CamWidget::staticMetaObjectExtraData = {
 };
 
 const QMetaObject CamWidget::staticMetaObject = {
-    { &QGLWidget::staticMetaObject, qt_meta_stringdata_CamWidget,
+    { &QWidget::staticMetaObject, qt_meta_stringdata_CamWidget,
       qt_meta_data_CamWidget, &staticMetaObjectExtraData }
 };
 
@@ -84,12 +84,12 @@ void *CamWidget::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_CamWidget))
         return static_cast<void*>(const_cast< CamWidget*>(this));
-    return QGLWidget::qt_metacast(_clname);
+    return QWidget::qt_metacast(_clname);
 }
 
 int CamWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QGLWidget::qt_metacall(_c, _id, _a);
+    _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

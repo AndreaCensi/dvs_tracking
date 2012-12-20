@@ -5,7 +5,7 @@
 
 USBReader::USBReader()
 {
-    eventBuffer = new RingBuffer<Event>(50000);
+    eventBuffer = new RingBuffer<Event>(8192);
     mileStone = 0;
     //logger = new Logger();
 }

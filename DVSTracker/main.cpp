@@ -17,23 +17,18 @@ int main(int argc, char **argv){
 
     //tracking
     UDPInterface udpIf;
-//    DVS128Interface dvs;
-//    RingBuffer<Event> *buf = dvs.getReaderInstance()->getEventBuffer();
-    RingBuffer<Event> *buf = udpIf.getEventBuffer();
-    CamWidget widget(buf);
-    Tracker t(buf,frequencies);
-    //widget.setWeightBuffers(t.weightBuffers);
+    //    DVS128Interface dvs();
+    CamWidget widget(udpIf.getEventBuffer());
+    Tracker t(udpIf.getEventBuffer(),frequencies);
+    widget.setWeightBuffers(t.weightBuffers);
     t.setWidget(&widget);
 
-    //connect signals/slots
-//    QObject::connect(&t,SIGNAL(updateCamWidget(int,int)),
-//                     &widget,SLOT(updateImage(int,int)),Qt::QueuedConnection);
     widget.show();
     t.start();
-//    dvs.startReading();
+    //    dvs.startReading();
 
     int ret = app.exec();
-//    dvs.stopReading();
+    //    dvs.stopReading();
     t.stop();
     return ret;
 }

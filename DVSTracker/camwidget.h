@@ -1,13 +1,12 @@
 #ifndef CAMWIDGET_H
 #define CAMWIDGET_H
 
-#include <QGLWidget>
 #include <QWidget>
 #include "event.h"
 #include "ringbuffer.h"
 #include "frequencyaccumulator.h"
 
-class CamWidget : public QGLWidget
+class CamWidget : public QWidget
 {
     Q_OBJECT
 
@@ -18,14 +17,11 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *);
-    void paintGL();
-    void resizeGL(int w, int h);
-    void initializeGL();
 
 private:
     void reset();
 
-    QImage *img, glImg;
+    QImage *img;
     RingBuffer<Event> *eventBuffer;
     int bufSize;
     FrequencyAccumulator **weights;
