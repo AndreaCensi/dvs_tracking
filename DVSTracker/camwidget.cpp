@@ -14,7 +14,7 @@ CamWidget::CamWidget(RingBuffer<Event> *buffer,QWidget *parent) : QWidget(parent
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-    timer->start(20);
+    timer->start(40);
     setWindowTitle(tr("DVS128"));
     int size = SCALE_F*DVS_RES;
     resize(size,size);
@@ -103,7 +103,7 @@ void CamWidget::paintEvent(QPaintEvent *){
                     break;
                 }
 
-                color.setAlpha(150);
+                color.setAlpha(100);
 
                 painter.setPen(color);
                 painter.setBrush(color);
