@@ -5,7 +5,7 @@ Maxima::Maxima(int numberOfMaxima, float minimumDistance)
 {
     numMaxima = numberOfMaxima;
     maxima = new LocalMaximum[numMaxima];
-    minDistance = minimumDistance;
+    minSquaredDistance = minimumDistance*minimumDistance;
 }
 
 Maxima::~Maxima(){
@@ -17,11 +17,11 @@ void Maxima::update(int x, int y, int weight){
         return;
     int smallest = 0;
     for(int i = 0; i < numMaxima;i++){
-        if(squaredDistance(&maxima[i],x,y) < minDistance && maxima[i].weight > weight){
+        if(squaredDistance(&maxima[i],x,y) < minSquaredDistance && maxima[i].weight > weight){
             smallest = -1;
             break;
         }
-        else if(squaredDistance(&maxima[i],x,y) < minDistance && maxima[i].weight < weight){
+        else if(squaredDistance(&maxima[i],x,y) < minSquaredDistance && maxima[i].weight < weight){
             maxima[i].set(x,y,weight);
             smallest = -1;
             break;

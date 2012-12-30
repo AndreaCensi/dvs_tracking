@@ -18,7 +18,7 @@ private:
 
     LocalMaximum *maxima;
     int numMaxima;
-    float minDistance;
+    float minSquaredDistance;
 };
 
 #endif // MAXIMA_H

@@ -10,7 +10,7 @@
 #define SIGMA_W 0.0002f
 #define FILTER_SIZE 3
 #define SIGMA_FILTER 0.75f
-#define MIN_DIST 16.0f
+#define MIN_DIST 4.0f
 #define NUM_MAXIMA 3
 
 Tracker::Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
@@ -82,12 +82,14 @@ void Tracker::processEvent(Event e){
         Maxima *maxima = 0;
         if(buf->hasExpired()){
             maxima = buf->findMaxima();
-            //             process maxima HERE
-            if(!logger->done()){
-                for(int j = 0; j < maxima->size();j++)
-                    logger->log(e.timeStamp,targetFrequencies[i],maxima->size(),
-                                j,maxima->get(j)->x,maxima->get(j)->y,maxima->get(j)->weight);
-            }
+            //process maxima HERE
+
+
+//            if(!logger->done()){
+//                for(int j = 0; j < maxima->size();j++)
+//                    logger->log(e.timeStamp,targetFrequencies[i],maxima->size(),
+//                                j,maxima->get(j)->x,maxima->get(j)->y,maxima->get(j)->weight);
+//            }
 
             updateWeightWidget(i,buf,maxima);
             buf->reset();

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'camwidget.h'
 **
-** Created: Thu 20. Dec 12:42:37 2012
+** Created: Sun 30. Dec 17:57:16 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

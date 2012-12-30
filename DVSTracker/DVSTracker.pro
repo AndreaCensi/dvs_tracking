@@ -24,7 +24,9 @@ SOURCES += main.cpp \
     maxima.cpp \
     localmaximum.cpp \
     hypothesislogger.cpp \
-    glcamwidget.cpp
+    glcamwidget.cpp \
+    particle.cpp \
+    particlefilter.cpp
 
 HEADERS += \
     usbreader.h \
@@ -44,7 +46,9 @@ HEADERS += \
     maxima.h \
     localmaximum.h \
     hypothesislogger.h \
-    glcamwidget.h
+    glcamwidget.h \
+    particle.h \
+    particlefilter.h
 
 
 

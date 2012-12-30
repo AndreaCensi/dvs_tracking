@@ -5,36 +5,69 @@
 #include "camwidget.h"
 #include "udpinterface.h"
 
+#include "particlefilter.h"
+
+//int main(int argc, char **argv){
+//    QApplication app(argc,argv);
+
+//    //init frequencies
+//    std::vector<int> frequencies;
+//    frequencies.push_back(900);
+//    frequencies.push_back(1070);
+//    frequencies.push_back(1240);
+//    frequencies.push_back(1410);
+
+//    //tracking
+//    UDPInterface udpIf;
+//    RingBuffer<Event> *buf = udpIf.getEventBuffer();
+
+//    //    DVS128Interface dvs;
+//    //    RingBuffer<Event> *buf = dvs.getReaderInstance()->getEventBuffer();
+
+//    CamWidget widget(buf);
+//    Tracker t(buf,frequencies);
+//    widget.setWeightBuffers(t.weightBuffers);
+//    t.setWidget(&widget);
+
+//    widget.show();
+//    t.start();
+
+//    //    dvs.startReading();
+
+//    int ret = app.exec();
+//    //    dvs.stopReading();
+//    t.stop();
+//    return ret;
+//}
+
+//particle filter test
 int main(int argc, char **argv){
-    QApplication app(argc,argv);
+    ParticleFilter pf(2,2.0f,10.0f,16.0f);
 
-    //init frequencies
-    std::vector<int> frequencies;
-    frequencies.push_back(900);
-    frequencies.push_back(1070);
-    frequencies.push_back(1240);
-    frequencies.push_back(1410);
+    Particle c1(5,5,4.0,500,0.1);
+    pf.updateParticles(&c1);
 
-    //tracking
-    UDPInterface udpIf;
-//    DVS128Interface dvs;
+    //add a particle
+    Particle *p;
+    for(int i = 0; i < pf.size;i++){
+        p = &pf.particles[i];
+        printf("\n---\ni: %d\n---\nx: %f\ny: %f\nsigma: %f\nw: %f\nts: %f\n",i,p->x,p->y,p->uncertainty,p->weight,p->timeStamp);
+    }
+    printf("\n");
 
-    RingBuffer<Event> *buf = udpIf.getEventBuffer();
-//    RingBuffer<Event> *buf = dvs.getReaderInstance()->getEventBuffer();
+    //print current state
 
-    CamWidget widget(buf);
-    Tracker t(buf,frequencies);
-    widget.setWeightBuffers(t.weightBuffers);
-    t.setWidget(&widget);
+    Particle c2(100,100,2.0,700,1.101);
+    pf.updateParticles(&c2);
 
-    widget.show();
-    t.start();
-    //    dvs.startReading();
+    //print current state
+    for(int i = 0; i < pf.size;i++){
+        p = &pf.particles[i];
+                printf("\n---\ni: %d\n---\nx: %f\ny: %f\nsigma: %f\nw: %f\nts: %f\n",i,p->x,p->y,p->uncertainty,p->weight,p->timeStamp);
+    }
+    printf("\n");
 
-    int ret = app.exec();
-    //    dvs.stopReading();
-    t.stop();
-    return ret;
+    return 0;
 }
 
 //interval test

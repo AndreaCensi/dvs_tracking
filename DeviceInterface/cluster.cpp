@@ -11,7 +11,7 @@
 // Activity measurements
 #define NUM_TIMESLOTS 100
 #define TIME_WINDOW 1000 //usec
-#define MIN_SUM 50  // preventing noise from staying a cluster
+#define MIN_SUM 70  // preventing noise from staying a cluster
 
 // Transition history sampling
 #define TRANSITION_WINDOW 200 //usec
