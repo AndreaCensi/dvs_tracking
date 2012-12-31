@@ -41,6 +41,10 @@ Particle* ParticleFilter::get(int i){
     return &particles[i];
 }
 
+Particle* ParticleFilter::getMaxWeightParticle(){
+    return currentMaxWeight;
+}
+
 int ParticleFilter::size(){
     return length;
 }
@@ -49,6 +53,7 @@ void ParticleFilter::updateParticles(Particle *c){
     Particle *p = 0;
     bool merged = false;
     Particle *oldest = &particles[0];
+    currentMaxWeight = &particles[0];
 
     for(int i = 0; i < length; i++){
         p = &particles[i];
@@ -65,6 +70,10 @@ void ParticleFilter::updateParticles(Particle *c){
             merge(p,c);
             merged = true;
         }
+
+        //Search for the particle with the maximum weight
+        if(currentMaxWeight->weight < p->weight)
+            currentMaxWeight = p;
     }
     // create new particle if unmergable
     if(!merged){

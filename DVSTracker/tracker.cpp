@@ -4,16 +4,21 @@
 #include "localmaximum.h"
 #include <math.h>
 
+// Resolution of DVS
 #define DVS_RES 128
 
-//parameteres
-#define SIGMA_W 0.0002f
-#define FILTER_SIZE 3
-#define SIGMA_FILTER 0.75f
-#define MIN_DIST 4.0f
-#define NUM_MAXIMA 1
+// Parameteres
+#define SIGMA_W 0.0001f // sigma for perdiod weighting
 
-//particle filter parameters
+// Guassian smoothing filter
+#define FILTER_SIZE 3   // kernel size
+#define SIGMA_FILTER 0.75f
+
+// Maximum detection
+#define MIN_DIST 4.0f   // min distance between maxima
+#define NUM_MAXIMA 3
+
+// Particle filter parameters
 #define PF_NUM_PARTICLES 8
 #define PF_DEFAULT_SIGMA 2.0f
 #define PF_MAX_SIGMA 16.0f
@@ -100,6 +105,7 @@ void Tracker::processEvent(Event e){
             maxima = buf->findMaxima();
             //process maxima HERE
             pf->update(maxima,e.timeStamp);
+            Particle *maxW = pf->getMaxWeightParticle();
 
 //            if(!logger->done()){
 //                for(int j = 0; j < maxima->size();j++)

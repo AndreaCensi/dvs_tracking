@@ -11,6 +11,7 @@ public:
     ~ParticleFilter();
     void update(Maxima *maxima, double ts);
     Particle* get(int i);
+    Particle* getMaxWeightParticle();
     int size();
 
 private:
@@ -21,6 +22,8 @@ private:
     void merge(Particle *p, Particle *c);
 
     Particle *particles;
+    Particle *currentMaxWeight;
+
     float sigma_0;
     float vMax;
     float maxUncertainty;
