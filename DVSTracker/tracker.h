@@ -11,6 +11,7 @@
 #include "frequencyaccumulator.h"
 #include "camwidget.h"
 #include "hypothesislogger.h"
+#include "particlefilter.h"
 #include <vector>
 
 
@@ -26,6 +27,7 @@ public:
     void stop();
 
     FrequencyAccumulator **weightBuffers;
+    ParticleFilter **particleFilters;
 
 private:
     Transition getTransition(Event e);
@@ -44,8 +46,11 @@ private:
 
     bool exit;
 
+    //graphical output
     void updateCamWidget(Event *e);
     void updateWeightWidget(int bufID, FrequencyAccumulator *buf, Maxima *m);
+    void updateParticleWidget(int bufID, ParticleFilter *pf);
+
     HypothesisLogger *logger;
     double lastEventTs;
     int eventCount;

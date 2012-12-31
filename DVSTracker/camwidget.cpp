@@ -11,7 +11,9 @@ CamWidget::CamWidget(RingBuffer<Event> *buffer,QWidget *parent) : QWidget(parent
 {
     eventBuffer = buffer;
     img = new QImage(DVS_RES,DVS_RES,QImage::Format_RGB32);
+
     weights = 0;
+    particleFilters = 0;
 
     setWindowTitle(tr("DVS128"));
     int size = SCALE_F*DVS_RES;
@@ -112,6 +114,45 @@ void CamWidget::paintEvent(QPaintEvent *){
             }
         }
     }
+
+    if(particleFilters != 0){
+        for(int i = 0; i < 4;i++){
+            ParticleFilter *pf = particleFilters[i];
+            for(int j = 0; j < pf->size(); j++){
+                if(pf->get(j)->timeStamp == 0 || pf->get(j)->x == 0)
+                    continue;
+                int x = int((127 - pf->get(j)->x)*SCALE_F);
+                int y = int((127 - pf->get(j)->y)*SCALE_F);
+                float sigma = pf->get(j)->uncertainty;
+
+                QColor color;
+                switch (i){
+                case 0:
+                    color = Qt::red;
+                    break;
+                case 1:
+                    color = Qt::blue;
+                    break;
+                case 2:
+                    color = Qt::green;
+                    break;
+                case 3:
+                    color = Qt::yellow;
+                    break;
+                }
+
+                color.setAlpha(150);
+
+                painter.setPen(color);
+                painter.setBrush(color);
+
+                int r = int(sigma*SCALE_F);
+                QPoint center(x,y);
+                painter.drawEllipse(center,r,r);
+            }
+        }
+    }
+
     reset(); //reset image
 }
 
@@ -142,6 +183,10 @@ void CamWidget::updateImage(int x, int y,int w, int i){
 
 void CamWidget::setWeightBuffers(FrequencyAccumulator **weightBuffers){
     weights = weightBuffers;
+}
+
+void CamWidget::setParticleFilters(ParticleFilter **pfs){
+    particleFilters = pfs;
 }
 
 // reset image

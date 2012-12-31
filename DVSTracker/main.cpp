@@ -7,68 +7,83 @@
 
 #include "particlefilter.h"
 
+int main(int argc, char **argv){
+    QApplication app(argc,argv);
+
+    //init frequencies
+    std::vector<int> frequencies;
+    frequencies.push_back(900);
+    frequencies.push_back(1070);
+    frequencies.push_back(1240);
+    frequencies.push_back(1410);
+
+    //tracking
+    UDPInterface udpIf;
+    RingBuffer<Event> *buf = udpIf.getEventBuffer();
+
+    //    DVS128Interface dvs;
+    //    RingBuffer<Event> *buf = dvs.getReaderInstance()->getEventBuffer();
+
+    CamWidget widget(buf);
+    Tracker t(buf,frequencies);
+    //widget.setWeightBuffers(t.weightBuffers);
+    widget.setParticleFilters(t.particleFilters);
+    t.setWidget(&widget);
+
+    widget.show();
+    t.start();
+
+    //    dvs.startReading();
+
+    int ret = app.exec();
+    //    dvs.stopReading();
+    t.stop();
+    return ret;
+}
+
 //int main(int argc, char **argv){
-//    QApplication app(argc,argv);
+//    ParticleFilter pf(1,2.0f,16.0f,8.0f);
+//    Particle p(5,5,4.0,500,0.1);
 
-//    //init frequencies
-//    std::vector<int> frequencies;
-//    frequencies.push_back(900);
-//    frequencies.push_back(1070);
-//    frequencies.push_back(1240);
-//    frequencies.push_back(1410);
+//    float ts = 0.1;
 
-//    //tracking
-//    UDPInterface udpIf;
-//    RingBuffer<Event> *buf = udpIf.getEventBuffer();
-
-//    //    DVS128Interface dvs;
-//    //    RingBuffer<Event> *buf = dvs.getReaderInstance()->getEventBuffer();
-
-//    CamWidget widget(buf);
-//    Tracker t(buf,frequencies);
-//    widget.setWeightBuffers(t.weightBuffers);
-//    t.setWidget(&widget);
-
-//    widget.show();
-//    t.start();
-
-//    //    dvs.startReading();
-
-//    int ret = app.exec();
-//    //    dvs.stopReading();
-//    t.stop();
-//    return ret;
+//    for(int i = 0; i < 10; i++){
+//        pf.updateUncertainty(&p,ts);
+//        printf("uncert: %f\n",p.uncertainty);
+//        ts += 0.1;
+//    }
+//    return 0;
 //}
 
 //particle filter test
-int main(int argc, char **argv){
-    ParticleFilter pf(2,2.0f,10.0f,16.0f);
+//int main(int argc, char **argv){
+//    ParticleFilter pf(2,2.0f,20.0f,10.0f);
 
-    Particle c1(5,5,4.0,500,0.1);
-    pf.updateParticles(&c1);
+//    Particle c1(5,5,4.0,500,0.1);
+//    pf.updateParticles(&c1);
 
-    //add a particle
-    Particle *p;
-    for(int i = 0; i < pf.size;i++){
-        p = &pf.particles[i];
-        printf("\n---\ni: %d\n---\nx: %f\ny: %f\nsigma: %f\nw: %f\nts: %f\n",i,p->x,p->y,p->uncertainty,p->weight,p->timeStamp);
-    }
-    printf("\n");
+//    //add a particle
+//    Particle *p;
+//    for(int i = 0; i < pf.size();i++){
+//        p = &pf.particles[i];
+//        printf("\n---\ni: %d\n---\nx: %f\ny: %f\nsigma: %f\nw: %f\nts: %f\n",i,p->x,p->y,p->uncertainty,p->weight,p->timeStamp);
+//    }
+//    printf("\n");
 
-    //print current state
+//    //print current state
 
-    Particle c2(100,100,2.0,700,1.101);
-    pf.updateParticles(&c2);
+//    Particle c2(100,100,2.0,700,1.1);
+//    pf.updateParticles(&c2);
 
-    //print current state
-    for(int i = 0; i < pf.size;i++){
-        p = &pf.particles[i];
-                printf("\n---\ni: %d\n---\nx: %f\ny: %f\nsigma: %f\nw: %f\nts: %f\n",i,p->x,p->y,p->uncertainty,p->weight,p->timeStamp);
-    }
-    printf("\n");
+//    //print current state
+//    for(int i = 0; i < pf.size();i++){
+//        p = &pf.particles[i];
+//                printf("\n---\ni: %d\n---\nx: %f\ny: %f\nsigma: %f\nw: %f\nts: %f\n",i,p->x,p->y,p->uncertainty,p->weight,p->timeStamp);
+//    }
+//    printf("\n");
 
-    return 0;
-}
+//    return 0;
+//}
 
 //interval test
 //int main(int argc, char **argv){

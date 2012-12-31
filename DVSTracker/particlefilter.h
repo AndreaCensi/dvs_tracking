@@ -9,9 +9,11 @@ class ParticleFilter
 public:
     ParticleFilter(int numParticles, float defaultSigma, float maxSigma, float maxVelocity);
     ~ParticleFilter();
-    void update(Maxima *maxima, int ts);
+    void update(Maxima *maxima, double ts);
+    Particle* get(int i);
+    int size();
 
-//private:
+private:
     void updateParticles(Particle *c);
     void updateUncertainty(Particle *p, double ts);
     bool hasExpired(Particle *p);
@@ -19,10 +21,10 @@ public:
     void merge(Particle *p, Particle *c);
 
     Particle *particles;
-    int size;
     float sigma_0;
     float vMax;
     float maxUncertainty;
+    int length;
 };
 
 #endif // PARTICLEFILTER_H

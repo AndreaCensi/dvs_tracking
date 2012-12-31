@@ -11,7 +11,13 @@
 #define FILTER_SIZE 3
 #define SIGMA_FILTER 0.75f
 #define MIN_DIST 4.0f
-#define NUM_MAXIMA 3
+#define NUM_MAXIMA 1
+
+//particle filter parameters
+#define PF_NUM_PARTICLES 8
+#define PF_DEFAULT_SIGMA 2.0f
+#define PF_MAX_SIGMA 16.0f
+#define PF_V_MAX 16.0f
 
 Tracker::Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
     //Members
@@ -28,10 +34,14 @@ Tracker::Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObjec
     pnTransitions = new Map<Transition>(DVS_RES,DVS_RES);
 
     weightBuffers = new FrequencyAccumulator*[targetFrequencies.size()];
-
     for(unsigned int i = 0; i < targetFrequencies.size();i++){
         weightBuffers[i] = new FrequencyAccumulator(
                     targetFrequencies[i],SIGMA_W,FILTER_SIZE,SIGMA_FILTER,MIN_DIST,NUM_MAXIMA,DVS_RES,DVS_RES);
+    }
+
+    particleFilters = new ParticleFilter*[targetFrequencies.size()];
+    for(unsigned int i = 0; i < targetFrequencies.size();i++){
+        particleFilters[i] = new ParticleFilter(PF_NUM_PARTICLES,PF_DEFAULT_SIGMA,PF_MAX_SIGMA,PF_V_MAX);
     }
 
     logger = new HypothesisLogger("C:/Users/giselher/Documents/uzh/hypo_log.txt");
@@ -48,6 +58,11 @@ Tracker::~Tracker(){
         delete weightBuffers[i];
     }
     delete [] weightBuffers;
+
+    for(unsigned int i = 0; i < targetFrequencies.size();i++){
+        delete particleFilters[i];
+    }
+    delete [] particleFilters;
 
     delete logger;
 }
@@ -78,12 +93,13 @@ void Tracker::processEvent(Event e){
     //Calculate importance of interval for each frequency
     for(unsigned int i = 0; i < targetFrequencies.size(); i++){
         FrequencyAccumulator *buf = weightBuffers[i];
+        ParticleFilter *pf = particleFilters[i];
         buf->update(dt);
         Maxima *maxima = 0;
         if(buf->hasExpired()){
             maxima = buf->findMaxima();
             //process maxima HERE
-
+            pf->update(maxima,e.timeStamp);
 
 //            if(!logger->done()){
 //                for(int j = 0; j < maxima->size();j++)
@@ -160,6 +176,10 @@ void Tracker::updateWeightWidget(int bufID, FrequencyAccumulator *buf, Maxima *m
     //        int w = m->get(i)->weight;
     //        widget->updateImage(x,y,w,bufID);
     //    }
+}
+
+void Tracker::updateParticleWidget(int bufID, ParticleFilter *pf){
+
 }
 
 void Tracker::run(){

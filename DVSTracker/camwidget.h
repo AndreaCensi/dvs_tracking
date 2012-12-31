@@ -5,6 +5,7 @@
 #include "event.h"
 #include "ringbuffer.h"
 #include "frequencyaccumulator.h"
+#include "particlefilter.h"
 
 class CamWidget : public QWidget
 {
@@ -14,6 +15,7 @@ public:
     CamWidget(RingBuffer<Event> *buffer = 0,QWidget *parent = 0);
     ~CamWidget();
     void setWeightBuffers(FrequencyAccumulator **weightBuffers);
+    void setParticleFilters(ParticleFilter **pfs);
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -25,6 +27,7 @@ private:
     RingBuffer<Event> *eventBuffer;
     int bufSize;
     FrequencyAccumulator **weights;
+    ParticleFilter **particleFilters;
 
 public slots:
     void updateImage(Event *e);
