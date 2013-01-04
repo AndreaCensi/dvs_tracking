@@ -15,7 +15,7 @@ public:
     Particle* getMaxWeightParticle();
     int size();
 
-private:
+//private:
     void updateParticles(Particle *c);
     void updateUncertainty(Particle *p, double ts);
     bool hasExpired(Particle *p);

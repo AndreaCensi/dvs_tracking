@@ -47,8 +47,24 @@ int main(){
     const int size = 3;
     ParticleFilter* pfs[size];
     for(int i = 0; i < size; i++){
-        pfs[i] = new ParticleFilter(2,1.0,16.0,16.0);
+        pfs[i] = new ParticleFilter(3,1.0,16.0,16.0);
+        for(int j = 0; j < pfs[i]->size();j++){
+            pfs[i]->particles[j]->x = rand()%128;
+            pfs[i]->particles[j]->y = rand()%128;
+        }
     }
+
+    pfs[0]->particles[0]->x = pfs[1]->get(1)->x+1;
+    pfs[0]->particles[0]->y = pfs[1]->get(1)->y+1;
+
+    for(int i = 0; i < size; i++){
+        for(int j = 0; j < pfs[i]->size();j++){
+            printf("#filter: %d, #p: %d, x: %d, y: %d\n",i,j,
+                   (int)pfs[i]->particles[j]->x,(int)pfs[i]->particles[j]->y);
+        }
+        printf("\n");
+    }
+    printf("\n\n");
 
     CombinationAnalyzer ca(size,4.0);
     CombinationChoice choice(size);
