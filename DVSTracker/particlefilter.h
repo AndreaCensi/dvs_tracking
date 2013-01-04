@@ -11,6 +11,7 @@ public:
     ~ParticleFilter();
     void update(Maxima *maxima, double ts);
     Particle* get(int i);
+    Particle** getSortedParticles();
     Particle* getMaxWeightParticle();
     int size();
 
@@ -20,8 +21,11 @@ private:
     bool hasExpired(Particle *p);
     bool insideCovariance(Particle *p, Particle *c);
     void merge(Particle *p, Particle *c);
+    void quicksort(Particle **p, int first, int last);
 
-    Particle *particles;
+    Particle *pivot;    //quicksort pivot
+
+    Particle **particles;
     Particle *currentMaxWeight;
 
     float sigma_0;

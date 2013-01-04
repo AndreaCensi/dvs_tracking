@@ -94,7 +94,6 @@ void Tracker::processEvent(Event e){
     else
         eventCount++;
 
-
     //Calculate importance of interval for each frequency
     for(unsigned int i = 0; i < targetFrequencies.size(); i++){
         FrequencyAccumulator *buf = weightBuffers[i];
@@ -105,14 +104,13 @@ void Tracker::processEvent(Event e){
             maxima = buf->findMaxima();
             //process maxima HERE
             pf->update(maxima,e.timeStamp);
-            Particle *maxW = pf->getMaxWeightParticle();
+            Particle **sortedP = pf->getSortedParticles();
 
 //            if(!logger->done()){
 //                for(int j = 0; j < maxima->size();j++)
 //                    logger->log(e.timeStamp,targetFrequencies[i],maxima->size(),
 //                                j,maxima->get(j)->x,maxima->get(j)->y,maxima->get(j)->weight);
 //            }
-
             updateWeightWidget(i,buf,maxima);
             buf->reset();
         }
@@ -174,18 +172,6 @@ void Tracker::updateWeightWidget(int bufID, FrequencyAccumulator *buf, Maxima *m
             }
         }
     }
-    //    for(int i = 0; i < m->size();i++){
-    //        if(m->get(i)->weight == 0)
-    //            continue;
-    //        int x = m->get(i)->x;
-    //        int y = m->get(i)->y;
-    //        int w = m->get(i)->weight;
-    //        widget->updateImage(x,y,w,bufID);
-    //    }
-}
-
-void Tracker::updateParticleWidget(int bufID, ParticleFilter *pf){
-
 }
 
 void Tracker::run(){

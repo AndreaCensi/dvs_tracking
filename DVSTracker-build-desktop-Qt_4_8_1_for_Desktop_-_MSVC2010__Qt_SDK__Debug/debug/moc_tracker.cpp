@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'tracker.h'
 **
-** Created: Mon 31. Dec 12:42:56 2012
+** Created: Fri 4. Jan 13:45:51 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

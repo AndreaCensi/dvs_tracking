@@ -49,7 +49,6 @@ private:
     //graphical output
     void updateCamWidget(Event *e);
     void updateWeightWidget(int bufID, FrequencyAccumulator *buf, Maxima *m);
-    void updateParticleWidget(int bufID, ParticleFilter *pf);
 
     HypothesisLogger *logger;
     double lastEventTs;

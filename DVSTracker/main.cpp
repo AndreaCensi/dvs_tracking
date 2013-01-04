@@ -6,40 +6,85 @@
 #include "udpinterface.h"
 
 #include "particlefilter.h"
+#include "combinationanalyzer.h"
 
-int main(int argc, char **argv){
-    QApplication app(argc,argv);
+//int main(int argc, char **argv){
+//    QApplication app(argc,argv);
 
-    //init frequencies
-    std::vector<int> frequencies;
-    frequencies.push_back(900);
-    frequencies.push_back(1070);
-    frequencies.push_back(1240);
-    frequencies.push_back(1410);
+//    //init frequencies
+//    std::vector<int> frequencies;
+//    frequencies.push_back(900);
+//    frequencies.push_back(1070);
+//    frequencies.push_back(1240);
+//    frequencies.push_back(1410);
 
-    //tracking
-    UDPInterface udpIf;
-    RingBuffer<Event> *buf = udpIf.getEventBuffer();
+//    //tracking
+//    UDPInterface udpIf;
+//    RingBuffer<Event> *buf = udpIf.getEventBuffer();
 
-    //    DVS128Interface dvs;
-    //    RingBuffer<Event> *buf = dvs.getReaderInstance()->getEventBuffer();
+//    //    DVS128Interface dvs;
+//    //    RingBuffer<Event> *buf = dvs.getReaderInstance()->getEventBuffer();
 
-    CamWidget widget(buf);
-    Tracker t(buf,frequencies);
-    //widget.setWeightBuffers(t.weightBuffers);
-    widget.setParticleFilters(t.particleFilters);
-    t.setWidget(&widget);
+//    CamWidget widget(buf);
+//    Tracker t(buf,frequencies);
+//    //widget.setWeightBuffers(t.weightBuffers);
+//    //widget.setParticleFilters(t.particleFilters);
+//    t.setWidget(&widget);
 
-    widget.show();
-    t.start();
+//    widget.show();
+//    t.start();
 
-    //    dvs.startReading();
+//    //    dvs.startReading();
 
-    int ret = app.exec();
-    //    dvs.stopReading();
-    t.stop();
-    return ret;
+//    int ret = app.exec();
+//    //    dvs.stopReading();
+//    t.stop();
+//    return ret;
+//}
+
+//CombinationAnalyzer test
+int main(){
+    const int size = 3;
+    ParticleFilter* pfs[size];
+    for(int i = 0; i < size; i++){
+        pfs[i] = new ParticleFilter(2,1.0,16.0,16.0);
+    }
+
+    CombinationAnalyzer ca(size,4.0);
+    CombinationChoice choice(size);
+    ca.analyze(choice,0,pfs);
+
+    for(int i = 0; i < size; i++){
+        delete pfs[i];
+    }
+
+    return 0;
 }
+
+//quicksort test
+//int main(){
+//    int size = 10;
+//    ParticleFilter pf(size,2.0f,16.0f,8.0f);
+//    for(int i = 0; i < pf.size();i++){
+//        int w = rand()%100;
+//        pf.particles[i]->set(0,0,0,w,0.1);
+//    }
+//    printf("unsorted:\n");
+//    for(int i = 0; i < pf.size();i++){
+//        printf("%d ",pf.particles[i]->weight);
+//    }
+
+//    pf.quicksort(pf.particles,0,pf.size()-1);
+
+//    printf("\nsorted:\n");
+
+//    for(int i = 0; i < pf.size();i++){
+//        printf("%d ",pf.particles[i]->weight);
+//    }
+//    printf("\n");
+
+//    return 0;
+//}
 
 //int main(int argc, char **argv){
 //    ParticleFilter pf(1,2.0f,16.0f,8.0f);

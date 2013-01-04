@@ -14,6 +14,7 @@ CamWidget::CamWidget(RingBuffer<Event> *buffer,QWidget *parent) : QWidget(parent
 
     weights = 0;
     particleFilters = 0;
+    maxWeightParticles = new Particle[4];
 
     setWindowTitle(tr("DVS128"));
     int size = SCALE_F*DVS_RES;
@@ -26,6 +27,7 @@ CamWidget::CamWidget(RingBuffer<Event> *buffer,QWidget *parent) : QWidget(parent
 
 CamWidget::~CamWidget(){
     delete img;
+    delete maxWeightParticles;
 }
 
 void CamWidget::updateImage(Event *e){
@@ -87,21 +89,7 @@ void CamWidget::paintEvent(QPaintEvent *){
                 int y = (127 - weights[i]->maxima->get(j)->y)*SCALE_F;
                 int w = weights[i]->maxima->get(j)->weight;
 
-                QColor color;
-                switch (i){
-                case 0:
-                    color = Qt::red;
-                    break;
-                case 1:
-                    color = Qt::blue;
-                    break;
-                case 2:
-                    color = Qt::green;
-                    break;
-                case 3:
-                    color = Qt::yellow;
-                    break;
-                }
+                QColor color = getColor(i);
 
                 color.setAlpha(150);
 
@@ -115,6 +103,7 @@ void CamWidget::paintEvent(QPaintEvent *){
         }
     }
 
+    // draw particles
     if(particleFilters != 0){
         for(int i = 0; i < 4;i++){
             ParticleFilter *pf = particleFilters[i];
@@ -125,21 +114,7 @@ void CamWidget::paintEvent(QPaintEvent *){
                 int y = int((127 - pf->get(j)->y)*SCALE_F);
                 float sigma = pf->get(j)->uncertainty;
 
-                QColor color;
-                switch (i){
-                case 0:
-                    color = Qt::red;
-                    break;
-                case 1:
-                    color = Qt::blue;
-                    break;
-                case 2:
-                    color = Qt::green;
-                    break;
-                case 3:
-                    color = Qt::yellow;
-                    break;
-                }
+                QColor color = getColor(i);
 
                 color.setAlpha(150);
 
@@ -153,6 +128,29 @@ void CamWidget::paintEvent(QPaintEvent *){
         }
     }
 
+    // draw particle with maximum weight
+    for(int i = 0; i < 4;i++){
+        Particle *p = &maxWeightParticles[i];
+
+        if(p->timeStamp == 0)
+            continue;
+
+        int x = int((127 - p->x)*SCALE_F);
+        int y = int((127 - p->y)*SCALE_F);
+        float sigma = p->uncertainty;
+
+        QColor color = getColor(i);
+
+        color.setAlpha(150);
+
+        painter.setPen(color);
+        painter.setBrush(color);
+
+        int r = int(sigma*SCALE_F);
+        QPoint center(x,y);
+        painter.drawEllipse(center,r,r);
+    }
+
     reset(); //reset image
 }
 
@@ -160,6 +158,26 @@ void CamWidget::updateImage(int x, int y,int w, int i){
     x = 127-x;
     y = 127-y;
 
+    QColor color = getColor(i);
+
+    QRgb *pixel = (QRgb*)img->scanLine(y);
+    pixel = &pixel[x];
+    *pixel = color.rgb();
+}
+
+void CamWidget::updateMaxWeightParticle(int i, Particle *p){
+    maxWeightParticles[i] = *p;
+}
+
+void CamWidget::setWeightBuffers(FrequencyAccumulator **weightBuffers){
+    weights = weightBuffers;
+}
+
+void CamWidget::setParticleFilters(ParticleFilter **pfs){
+    particleFilters = pfs;
+}
+
+QColor CamWidget::getColor(int i){
     QColor color;
     switch (i){
     case 0:
@@ -175,18 +193,7 @@ void CamWidget::updateImage(int x, int y,int w, int i){
         color = Qt::yellow;
         break;
     }
-
-    QRgb *pixel = (QRgb*)img->scanLine(y);
-    pixel = &pixel[x];
-    *pixel = color.rgb();
-}
-
-void CamWidget::setWeightBuffers(FrequencyAccumulator **weightBuffers){
-    weights = weightBuffers;
-}
-
-void CamWidget::setParticleFilters(ParticleFilter **pfs){
-    particleFilters = pfs;
+    return color;
 }
 
 // reset image

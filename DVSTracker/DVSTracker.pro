@@ -26,7 +26,9 @@ SOURCES += main.cpp \
     hypothesislogger.cpp \
     glcamwidget.cpp \
     particle.cpp \
-    particlefilter.cpp
+    particlefilter.cpp \
+    combinationanalyzer.cpp \
+    combinationchoice.cpp
 
 HEADERS += \
     usbreader.h \
@@ -48,7 +50,9 @@ HEADERS += \
     hypothesislogger.h \
     glcamwidget.h \
     particle.h \
-    particlefilter.h
+    particlefilter.h \
+    combinationanalyzer.h \
+    combinationchoice.h
 
 
 
