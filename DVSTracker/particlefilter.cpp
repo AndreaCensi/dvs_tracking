@@ -48,7 +48,7 @@ Particle* ParticleFilter::get(int i){
 }
 
 Particle** ParticleFilter::getSortedParticles(){
-    quicksort(particles,0,length);
+    quicksort(particles,0,length-1);
     return particles;
 }
 

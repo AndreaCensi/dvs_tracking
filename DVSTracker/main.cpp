@@ -51,6 +51,7 @@ int main(){
         for(int j = 0; j < pfs[i]->size();j++){
             pfs[i]->particles[j]->x = rand()%128;
             pfs[i]->particles[j]->y = rand()%128;
+            pfs[i]->particles[j]->weight = rand()%100+1;
         }
     }
 
@@ -59,16 +60,26 @@ int main(){
 
     for(int i = 0; i < size; i++){
         for(int j = 0; j < pfs[i]->size();j++){
-            printf("#filter: %d, #p: %d, x: %d, y: %d\n",i,j,
-                   (int)pfs[i]->particles[j]->x,(int)pfs[i]->particles[j]->y);
+            Particle **p = pfs[i]->getSortedParticles();
+            printf("#filter: %d, #p: %d, x: %d, y: %d, w: %d\n",i,j,
+                   (int)p[j]->x,(int)p[j]->y,p[j]->weight);
         }
         printf("\n");
     }
     printf("\n\n");
 
-    CombinationAnalyzer ca(size,4.0);
+    CombinationAnalyzer ca(size,4.0,10);
     CombinationChoice choice(size);
     ca.analyze(choice,0,pfs);
+    Combinations *c = ca.getHypotheses();
+
+    printf("\nFound:\n");
+    for(int i = 0; i < c->size();i++){
+        for(int j = 0; j < c->get(i)->size();j++){
+            printf("%d ",c->get(i)->get(j));
+        }
+        printf(", w: %f\n",c->get(i)->score);
+    }
 
     for(int i = 0; i < size; i++){
         delete pfs[i];
@@ -77,7 +88,7 @@ int main(){
     return 0;
 }
 
-//quicksort test
+////quicksort test
 //int main(){
 //    int size = 10;
 //    ParticleFilter pf(size,2.0f,16.0f,8.0f);

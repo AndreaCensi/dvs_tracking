@@ -6,15 +6,16 @@
 class CombinationChoice
 {
 public:
-    CombinationChoice(int n);
+    CombinationChoice(int numTracks);
     int size();
     int get(int i);
     void set(int i, int p);
+    void assign(CombinationChoice *c);
     void reset();
+    float score;
 
 private:
     int length;
-    float score;
     int *choice;
 };
 
