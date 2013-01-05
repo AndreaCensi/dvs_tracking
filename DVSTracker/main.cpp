@@ -60,20 +60,21 @@ int main(){
 
     for(int i = 0; i < size; i++){
         for(int j = 0; j < pfs[i]->size();j++){
-            Particle **p = pfs[i]->getSortedParticles();
+            pfs[i]->sortParticles();
+            Particle **p = pfs[i]->particles;
+
             printf("#filter: %d, #p: %d, x: %d, y: %d, w: %d\n",i,j,
                    (int)p[j]->x,(int)p[j]->y,p[j]->weight);
         }
         printf("\n");
     }
-    printf("\n\n");
+    printf("\n");
 
-    CombinationAnalyzer ca(size,4.0,10);
-    CombinationChoice choice(size);
-    ca.analyze(choice,0,pfs);
+    CombinationAnalyzer ca(pfs,size,4.0,10);
+    ca.evaluate();
     Combinations *c = ca.getHypotheses();
 
-    printf("\nFound:\n");
+    printf("Found:\n");
     for(int i = 0; i < c->size();i++){
         for(int j = 0; j < c->get(i)->size();j++){
             printf("%d ",c->get(i)->get(j));

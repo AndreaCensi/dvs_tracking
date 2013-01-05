@@ -19,10 +19,14 @@
 #define NUM_MAXIMA 3
 
 // Particle filter parameters
-#define PF_NUM_PARTICLES 8
+#define PF_NUM_PARTICLES 32
 #define PF_DEFAULT_SIGMA 2.0f
 #define PF_MAX_SIGMA 16.0f
 #define PF_V_MAX 16.0f
+
+// Combination analysis
+#define CA_MIN_DIST 2.0f
+#define CA_NUM_HYPOTHESIS 10
 
 Tracker::Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
     //Members
@@ -52,6 +56,8 @@ Tracker::Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObjec
     logger = new HypothesisLogger("C:/Users/giselher/Documents/uzh/hypo_log.txt");
     lastEventTs = 0;
     eventCount = 0;
+
+    combinationAnalyzer = new CombinationAnalyzer(particleFilters,targetFrequencies.size(),CA_MIN_DIST,CA_NUM_HYPOTHESIS);
 }
 
 Tracker::~Tracker(){
@@ -104,7 +110,6 @@ void Tracker::processEvent(Event e){
             maxima = buf->findMaxima();
             //process maxima HERE
             pf->update(maxima,e.timeStamp);
-            Particle **sortedP = pf->getSortedParticles();
 
 //            if(!logger->done()){
 //                for(int j = 0; j < maxima->size();j++)
@@ -115,6 +120,12 @@ void Tracker::processEvent(Event e){
             buf->reset();
         }
     }
+    combinationAnalyzer->evaluate();
+    Combinations *hypotheses = combinationAnalyzer->getHypotheses();
+
+    //Do some computation
+
+    combinationAnalyzer->reset();
     lastEventTs = e.timeStamp;
 }
 

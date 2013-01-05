@@ -3,6 +3,7 @@
 
 #include "maxima.h"
 #include "particle.h"
+#include <vector>
 
 class ParticleFilter
 {
@@ -11,7 +12,7 @@ public:
     ~ParticleFilter();
     void update(Maxima *maxima, double ts);
     Particle* get(int i);
-    Particle** getSortedParticles();
+    void sortParticles();
     Particle* getMaxWeightParticle();
     int size();
 

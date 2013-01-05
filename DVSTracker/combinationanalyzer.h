@@ -9,16 +9,17 @@
 class CombinationAnalyzer
 {
 public:
-    CombinationAnalyzer(int numLEDs, float minimumDistance, int numOfHypothesis);
-    void add(int id, Particle **particles); // add particle filter
-    bool isReady(); // are all sorted particle filters gathered?
-    bool containsNeighbour(int depth, CombinationChoice *c, ParticleFilter **pFilters);
-    float getLikelihood(ParticleFilter **pFilters, CombinationChoice *c);
-    void analyze(CombinationChoice choice, int depth, ParticleFilter **pFilters);
+    CombinationAnalyzer(ParticleFilter **pFilters,int numLEDs, float minimumDistance, int numOfHypothesis);
+    void evaluate();
     Combinations* getHypotheses();
     void reset();
 
 private:
+    bool containsNeighbour(int depth, CombinationChoice *c);
+    float getLikelihood(CombinationChoice *c);
+    void analyze(CombinationChoice choice, int depth);
+
+    ParticleFilter **particleFilters;
     Combinations *found;
     int numTracks;
     float threshold;

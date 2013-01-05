@@ -5,13 +5,13 @@
 ParticleFilter::ParticleFilter(int numParticles, float defaultSigma, float maxSigma, float maxVelocity)
 {
     length = numParticles;
-    particles = new Particle*[length];
-    for(int i = 0; i < length; i++)
-        particles[i] = new Particle();
-
     sigma_0 = defaultSigma; //default sigma for particles
     vMax = maxVelocity; // for motion model
     maxUncertainty = maxSigma;
+
+    particles = new Particle*[length];
+    for(int i = 0; i < length; i++)
+        particles[i] = new Particle();
 }
 
 ParticleFilter::~ParticleFilter(){
@@ -47,9 +47,8 @@ Particle* ParticleFilter::get(int i){
     return particles[i];
 }
 
-Particle** ParticleFilter::getSortedParticles(){
+void ParticleFilter::sortParticles(){
     quicksort(particles,0,length-1);
-    return particles;
 }
 
 Particle* ParticleFilter::getMaxWeightParticle(){

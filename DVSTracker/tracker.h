@@ -12,6 +12,7 @@
 #include "camwidget.h"
 #include "hypothesislogger.h"
 #include "particlefilter.h"
+#include "combinationanalyzer.h"
 #include <vector>
 
 
@@ -53,6 +54,9 @@ private:
     HypothesisLogger *logger;
     double lastEventTs;
     int eventCount;
+
+    //evaluation
+    CombinationAnalyzer *combinationAnalyzer;
 
 signals:
     void updateCamWidget(int,int);
