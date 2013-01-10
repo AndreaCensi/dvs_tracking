@@ -42,12 +42,12 @@ int main(int argc, char **argv){
     return ret;
 }
 
-//CombinationAnalyzer test
+////CombinationAnalyzer test
 //int main(){
-//    const int size = 3; //number of tracks
+//    const int size = 4; //number of tracks
 //    ParticleFilter* pfs[size];
 //    for(int i = 0; i < size; i++){
-//        pfs[i] = new ParticleFilter(2,1.0,16.0,16.0);
+//        pfs[i] = new ParticleFilter(8,1.0,16.0,16.0);
 //        for(int j = 0; j < pfs[i]->size();j++){
 //            pfs[i]->particles[j]->x = rand()%128;
 //            pfs[i]->particles[j]->y = rand()%128;

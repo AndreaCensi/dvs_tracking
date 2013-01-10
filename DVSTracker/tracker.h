@@ -23,7 +23,6 @@ class Tracker : public QThread
 public:
     Tracker(PacketBuffer *buffer, std::vector<int> frequencies, QObject *parent = 0);
     ~Tracker();
-    void processEvent(Event e);
     void setWidget(CamWidget *camWidget);
     void run();
     void stop();
@@ -34,8 +33,10 @@ public:
 private:
     Transition getTransition(Event e);
     Interval getInterval(Transition t);
+    void processEvent(Event e);
+    void processPacket();
 
-//    RingBuffer<Event> *eventBuffer;
+    //    RingBuffer<Event> *eventBuffer;
     PacketBuffer *packetBuffer;
 
     CamWidget *widget;

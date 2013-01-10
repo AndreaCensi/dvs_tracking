@@ -26,7 +26,7 @@
 
 // Combination analysis
 #define CA_MIN_DIST 2.0f
-#define CA_NUM_HYPOTHESIS 5
+#define CA_NUM_HYPOTHESIS 16
 
 Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
     //Members
@@ -120,13 +120,16 @@ void Tracker::processEvent(Event e){
             buf->reset();
         }
     }
-    //    combinationAnalyzer->evaluate();
-    //    Combinations *hypotheses = combinationAnalyzer->getHypotheses();
+    lastEventTs = e.timeStamp;
+}
 
-    //Do some computation
+// per packet related processing
+void Tracker::processPacket(){
+    //find possible combinations of LED positions
+    combinationAnalyzer->evaluate();
+    Combinations *hypotheses = combinationAnalyzer->getHypotheses();
 
     combinationAnalyzer->reset();
-    lastEventTs = e.timeStamp;
 }
 
 Transition Tracker::getTransition(Event e){
@@ -200,7 +203,7 @@ void Tracker::run(){
                     //updateCamWidget(e);
                     processEvent(*e);
                 }
-                //process packet
+                //processPacket();
             }
         }
         else
