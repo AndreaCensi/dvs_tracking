@@ -29,7 +29,9 @@ SOURCES += main.cpp \
     particlefilter.cpp \
     combinationanalyzer.cpp \
     combinationchoice.cpp \
-    combinations.cpp
+    combinations.cpp \
+    eventpacket.cpp \
+    packetbuffer.cpp
 
 HEADERS += \
     usbreader.h \
@@ -54,7 +56,10 @@ HEADERS += \
     particlefilter.h \
     combinationanalyzer.h \
     combinationchoice.h \
-    combinations.h
+    combinations.h \
+    buffer.h \
+    eventpacket.h \
+    packetbuffer.h
 
 
 

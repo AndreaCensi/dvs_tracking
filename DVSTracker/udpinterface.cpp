@@ -1,9 +1,11 @@
 #include "udpinterface.h"
 
 #define EVENT_FRAME_LENGTH 6
+#define NUM_PACKET_BUFS 2
 
 UDPInterface::UDPInterface(QObject *parent) : QObject(parent){
-    eventBuffer = new RingBuffer<Event>(20000);
+    //eventBuffer = new RingBuffer<Event>(20000);
+    packetBuffer = new PacketBuffer(NUM_PACKET_BUFS,65535/EVENT_FRAME_LENGTH);
     mileStone = 0;
 
     socket = new QUdpSocket(this);
@@ -16,7 +18,8 @@ UDPInterface::UDPInterface(QObject *parent) : QObject(parent){
 }
 
 UDPInterface::~UDPInterface(){
-    delete eventBuffer;
+    delete packetBuffer;
+    //delete eventBuffer;
     delete socket;
 }
 
@@ -39,6 +42,10 @@ void UDPInterface::readEvents(QByteArray data){
         printf("Incorrect data size: %d bytes\n",numBytes);
         return;
     }
+
+    EventPacket *packet = packetBuffer->getNextWritable();
+    packet->reset();
+
     for(int i = 0; i < numBytes; i+=EVENT_FRAME_LENGTH){
         Event event;
         unsigned int rawAddr  = ((data[i+1] & 0xff) | ((data[i] & 0xff) << 8));
@@ -53,7 +60,7 @@ void UDPInterface::readEvents(QByteArray data){
             event.type = 1 - rawAddr & 1;
         }
         //        printf("ts: %d\n",event.timeStamp);
-        eventBuffer->add(event);
+        packet->add(event);
 
         //debugging
         currentEventTime = event.timeStamp;
@@ -72,4 +79,8 @@ void UDPInterface::readEvents(QByteArray data){
 
 RingBuffer<Event>* UDPInterface::getEventBuffer(){
     return eventBuffer;
+}
+
+PacketBuffer* UDPInterface::getPacketBuffer(){
+    return packetBuffer;
 }

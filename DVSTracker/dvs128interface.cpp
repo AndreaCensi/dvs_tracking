@@ -25,7 +25,7 @@ HDEVINFO devList;
 DVS128Interface::DVS128Interface(){
     devList = NULL;
     devIndex = -1;
-    reader = new USBReader();
+    reader = new USBReader(ENDPOINT_FIFO_SIZE);
 }
 
 DVS128Interface::~DVS128Interface(){

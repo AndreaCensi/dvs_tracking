@@ -2,16 +2,19 @@
 #include "event.h"
 
 #define DVS128_FRAME_LENGTH 4
+#define NUM_PACKET_BUFS 5
 
-USBReader::USBReader()
+USBReader::USBReader(int usbFifoSize)
 {
-    eventBuffer = new RingBuffer<Event>(20000);
+//    eventBuffer = new RingBuffer<Event>(20000);
+    packetBuffer = new PacketBuffer(NUM_PACKET_BUFS,usbFifoSize/DVS128_FRAME_LENGTH);
     mileStone = 0;
     //logger = new Logger();
 }
 
 USBReader::~USBReader(){
-    delete eventBuffer;
+    delete packetBuffer;
+//    delete eventBuffer;
     //delete logger;
 }
 
@@ -32,6 +35,11 @@ void USBReader::readDVS128Event(const char *data, int numBytes){
         return;
     }
 
+    //
+    EventPacket *packet = packetBuffer->getNextWritable();
+    packet->reset();    //reset before writing into it!
+
+    //fill packet
     for(int i = 0; i < numBytes; i+=DVS128_FRAME_LENGTH){
         if((data[i+3] & 0x80) == 0x80){
             mileStone += 0x4000L;
@@ -56,11 +64,15 @@ void USBReader::readDVS128Event(const char *data, int numBytes){
                 //                        logger->log(&event);
             }
             //processEvent
-            eventBuffer->add(event);
+            packet->add(event);
         }
     }
 }
 
 RingBuffer<Event>* USBReader::getEventBuffer(){
     return eventBuffer;
+}
+
+PacketBuffer* USBReader::getPacketBuffer(){
+    return packetBuffer;
 }

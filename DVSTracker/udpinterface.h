@@ -5,6 +5,7 @@
 #include <QUdpSocket>
 #include "event.h"
 #include "ringbuffer.h"
+#include "packetbuffer.h"
 
 class UDPInterface : public QObject
 {
@@ -13,6 +14,7 @@ public:
     explicit UDPInterface(QObject *parent = 0);
     ~UDPInterface();
     RingBuffer<Event>* getEventBuffer();
+        PacketBuffer* getPacketBuffer();
     void run();
     
 public slots:
@@ -21,7 +23,9 @@ public slots:
 private:
     void readEvents(QByteArray data);
 
+    PacketBuffer *packetBuffer;
     RingBuffer<Event> *eventBuffer;
+
     QUdpSocket *socket;
     unsigned int mileStone;
 

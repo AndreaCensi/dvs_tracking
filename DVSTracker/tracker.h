@@ -13,6 +13,7 @@
 #include "hypothesislogger.h"
 #include "particlefilter.h"
 #include "combinationanalyzer.h"
+#include "packetbuffer.h"
 #include <vector>
 
 
@@ -20,7 +21,7 @@ class Tracker : public QThread
 {
     Q_OBJECT
 public:
-    Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObject *parent = 0);
+    Tracker(PacketBuffer *buffer, std::vector<int> frequencies, QObject *parent = 0);
     ~Tracker();
     void processEvent(Event e);
     void setWidget(CamWidget *camWidget);
@@ -34,7 +35,8 @@ private:
     Transition getTransition(Event e);
     Interval getInterval(Transition t);
 
-    RingBuffer<Event> *eventBuffer;
+//    RingBuffer<Event> *eventBuffer;
+    PacketBuffer *packetBuffer;
 
     CamWidget *widget;
 

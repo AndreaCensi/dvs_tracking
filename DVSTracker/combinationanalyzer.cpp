@@ -10,11 +10,13 @@ CombinationAnalyzer::CombinationAnalyzer(ParticleFilter **pFilters, int numLEDs,
     numHypothesis = numOfHypothesis;
     found = new Combinations(numHypothesis*2, numTracks);
     reset();
+
+    counter = 0;
 }
 
 void CombinationAnalyzer::evaluate(){
-    for(int i = 0; i < numTracks; i++)
-        particleFilters[i]->sortParticles();
+    //    for(int i = 0; i < numTracks; i++)
+    //        particleFilters[i]->sortParticles();
     CombinationChoice c(numTracks);
     analyze(c,0);
 }
@@ -51,8 +53,8 @@ float CombinationAnalyzer::getLikelihood(CombinationChoice *c){
 }
 
 void CombinationAnalyzer::analyze(CombinationChoice choice, int depth){
-    //if all branches have been traversed return
     if(depth >= numTracks){
+        counter++;
         found->add(&choice);
         return;
     }

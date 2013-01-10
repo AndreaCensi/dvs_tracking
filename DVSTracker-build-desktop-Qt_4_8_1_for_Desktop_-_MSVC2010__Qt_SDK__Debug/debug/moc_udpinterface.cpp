@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'udpinterface.h'
 **
-** Created: Mon 31. Dec 12:42:56 2012
+** Created: Thu 10. Jan 14:01:31 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

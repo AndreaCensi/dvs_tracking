@@ -15,7 +15,7 @@ public:
     ~FrequencyAccumulator();
     void update(Interval interval);
     bool hasExpired();
-    Maxima* findMaxima();
+    Maxima* getMaxima();
     Map<int> *weightMap;
     void reset();
 

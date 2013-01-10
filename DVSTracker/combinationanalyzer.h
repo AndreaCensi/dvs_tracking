@@ -13,6 +13,7 @@ public:
     void evaluate();
     Combinations* getHypotheses();
     void reset();
+    int counter;
 
 private:
     bool containsNeighbour(int depth, CombinationChoice *c);

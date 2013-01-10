@@ -19,18 +19,18 @@
 #define NUM_MAXIMA 3
 
 // Particle filter parameters
-#define PF_NUM_PARTICLES 32
+#define PF_NUM_PARTICLES 8
 #define PF_DEFAULT_SIGMA 2.0f
 #define PF_MAX_SIGMA 16.0f
 #define PF_V_MAX 16.0f
 
 // Combination analysis
 #define CA_MIN_DIST 2.0f
-#define CA_NUM_HYPOTHESIS 10
+#define CA_NUM_HYPOTHESIS 5
 
-Tracker::Tracker(RingBuffer<Event> *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
+Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
     //Members
-    eventBuffer = buffer;
+    packetBuffer = buffer;
     targetFrequencies = frequencies;
 
     widget = 0;
@@ -105,23 +105,23 @@ void Tracker::processEvent(Event e){
         FrequencyAccumulator *buf = weightBuffers[i];
         ParticleFilter *pf = particleFilters[i];
         buf->update(dt);
-        Maxima *maxima = 0;
         if(buf->hasExpired()){
-            maxima = buf->findMaxima();
+            Maxima *maxima = buf->getMaxima();
             //process maxima HERE
             pf->update(maxima,e.timeStamp);
 
-//            if(!logger->done()){
-//                for(int j = 0; j < maxima->size();j++)
-//                    logger->log(e.timeStamp,targetFrequencies[i],maxima->size(),
-//                                j,maxima->get(j)->x,maxima->get(j)->y,maxima->get(j)->weight);
-//            }
+            //            if(!logger->done()){
+            //                for(int j = 0; j < maxima->size();j++)
+            //                    logger->log(e.timeStamp,targetFrequencies[i],maxima->size(),
+            //                                j,maxima->get(j)->x,maxima->get(j)->y,maxima->get(j)->weight);
+            //            }
+
             updateWeightWidget(i,buf,maxima);
             buf->reset();
         }
     }
-    combinationAnalyzer->evaluate();
-    Combinations *hypotheses = combinationAnalyzer->getHypotheses();
+    //    combinationAnalyzer->evaluate();
+    //    Combinations *hypotheses = combinationAnalyzer->getHypotheses();
 
     //Do some computation
 
@@ -187,17 +187,20 @@ void Tracker::updateWeightWidget(int bufID, FrequencyAccumulator *buf, Maxima *m
 
 void Tracker::run(){
     while(!exit){
-        if((eventBuffer->available()) > 0){
-            //updateCamWidget(eventBuffer->latestIndex(),eventBuffer->available());
-            Event *e;
-            while((e = eventBuffer->getNext()) != 0){
-                // do not process if special event
-                if(e->isSpecial())
-                    return;
+        if(packetBuffer->hasNewData()){
+            EventPacket *packet = 0;
+            while((packet = packetBuffer->getNextReadable()) != 0){
+                for(int i = 0; i < packet->size(); i++){
+                    // do not process if special event
+                    Event *e = packet->get(i);
+                    if(e->isSpecial())
+                        return;
 
-                //process events here
-                //updateCamWidget(e);
-                processEvent(*e);
+                    //process events here
+                    //updateCamWidget(e);
+                    processEvent(*e);
+                }
+                //process packet
             }
         }
         else

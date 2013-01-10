@@ -44,6 +44,8 @@ void FrequencyAccumulator::update(Interval interval){
 //    printf("dt: %f, w: %f\n",interval.deltaT,weight);
 
     weightMap->insert(x,y,weight);
+    //udpate maxima
+    maxima->update(x,y,weight);
 }
 
 int FrequencyAccumulator::getWeight(double interval, int frequency, float sd){
@@ -68,13 +70,6 @@ void FrequencyAccumulator::reset(){
     lastReset = lastUpdate;
 }
 
-Maxima* FrequencyAccumulator::findMaxima(){
-    // search for maxima in the map, use minDistance!
-    for(int h = 0; h < weightMap->height; h++){
-        for(int w = 0; w < weightMap->width; w++){
-            int weight = weightMap->get(w,h);
-            maxima->update(w,h,weight);
-        }
-    }
+Maxima* FrequencyAccumulator::getMaxima(){
     return maxima;
 }
