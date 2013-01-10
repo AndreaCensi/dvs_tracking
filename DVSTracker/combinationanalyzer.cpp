@@ -15,8 +15,8 @@ CombinationAnalyzer::CombinationAnalyzer(ParticleFilter **pFilters, int numLEDs,
 }
 
 void CombinationAnalyzer::evaluate(){
-    //    for(int i = 0; i < numTracks; i++)
-    //        particleFilters[i]->sortParticles();
+    for(int i = 0; i < numTracks; i++)
+        particleFilters[i]->sortParticles();
     CombinationChoice c(numTracks);
     analyze(c,0);
 }
