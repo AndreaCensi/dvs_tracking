@@ -16,9 +16,9 @@ public:
     int counter;
 
 private:
-    bool containsNeighbour(int depth, CombinationChoice *c);
+    bool containsNeighbour(CombinationChoice *c, int branch);
     float getLikelihood(CombinationChoice *c);
-    void analyze(CombinationChoice choice, int depth);
+    void analyze(CombinationChoice choice, int branch, int level, int depthLimit);
 
     ParticleFilter **particleFilters;
     Combinations *found;
