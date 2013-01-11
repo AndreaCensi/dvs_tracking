@@ -7,6 +7,7 @@
 #include "frequencyaccumulator.h"
 #include "particlefilter.h"
 #include "particle.h"
+#include "combinations.h"
 
 class CamWidget : public QWidget
 {
@@ -17,6 +18,7 @@ public:
     ~CamWidget();
     void setWeightBuffers(FrequencyAccumulator **weightBuffers);
     void setParticleFilters(ParticleFilter **pfs);
+    void setCombinations(Combinations *c);
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -29,6 +31,7 @@ private:
     int bufSize;
     FrequencyAccumulator **weights;
     ParticleFilter **particleFilters;
+    Combinations *combinations;
     Particle *maxWeightParticles;
 
 public slots:

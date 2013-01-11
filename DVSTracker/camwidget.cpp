@@ -13,6 +13,7 @@ CamWidget::CamWidget(QWidget *parent) : QWidget(parent)
 
     weights = 0;
     particleFilters = 0;
+    combinations = 0;
     maxWeightParticles = new Particle[4];
 
     setWindowTitle(tr("DVS128"));
@@ -80,7 +81,7 @@ void CamWidget::paintEvent(QPaintEvent *){
         }
     }
 
-    // draw particles
+    //draw particles
     if(particleFilters != 0){
         for(int i = 0; i < 4;i++){
             ParticleFilter *pf = particleFilters[i];
@@ -104,6 +105,29 @@ void CamWidget::paintEvent(QPaintEvent *){
             }
         }
     }
+
+    //        if(combinations != 0 && particleFilters != 0){
+    //            for(int i = 0; i < 4;i++){
+    //                CombinationChoice *c = combinations->get(i);
+    //                for(int j = 0; j < c->size(); j++){
+    //                    ParticleFilter *pf = particleFilters[j];
+    //                    int x = int((127 - pf->get(c->get(j))->x)*SCALE_F);
+    //                    int y = int((127 - pf->get(c->get(j))->y)*SCALE_F);
+    //                    float sigma = pf->get(c->get(j))->uncertainty;
+
+    //                    QColor color = getColor(j);
+
+    //                    color.setAlpha(150);
+
+    //                    painter.setPen(color);
+    //                    painter.setBrush(color);
+
+    //                    int r = int(sigma*SCALE_F);
+    //                    QPoint center(x,y);
+    //                    painter.drawEllipse(center,r,r);
+    //                }
+    //            }
+    //        }
 
     // draw particle with maximum weight
     for(int i = 0; i < 4;i++){
@@ -143,7 +167,7 @@ void CamWidget::updateImage(int x, int y,int w, int i){
 }
 
 void CamWidget::updateMaxWeightParticle(int i, Particle *p){
-    maxWeightParticles[i] = *p;
+    maxWeightParticles[i].set(p->x,p->y,p->uncertainty,p->weight,p->timeStamp);
 }
 
 void CamWidget::setWeightBuffers(FrequencyAccumulator **weightBuffers){
@@ -152,6 +176,10 @@ void CamWidget::setWeightBuffers(FrequencyAccumulator **weightBuffers){
 
 void CamWidget::setParticleFilters(ParticleFilter **pfs){
     particleFilters = pfs;
+}
+
+void CamWidget::setCombinations(Combinations *c){
+    combinations = c;
 }
 
 QColor CamWidget::getColor(int i){

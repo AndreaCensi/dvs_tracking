@@ -8,89 +8,100 @@
 #include "particlefilter.h"
 #include "combinationanalyzer.h"
 
-//int main(int argc, char **argv){
-//    QApplication app(argc,argv);
+int main(int argc, char **argv){
+    QApplication app(argc,argv);
 
-//    //init frequencies
-//    std::vector<int> frequencies;
-//    frequencies.push_back(900);
-//    frequencies.push_back(1070);
-//    frequencies.push_back(1240);
-//    frequencies.push_back(1410);
+    //init frequencies
+    std::vector<int> frequencies;
+    frequencies.push_back(900);
+    frequencies.push_back(1070);
+    frequencies.push_back(1240);
+    frequencies.push_back(1410);
 
-//    //tracking
-//    UDPInterface udpIf;
-//    PacketBuffer *buf = udpIf.getPacketBuffer();
+    //tracking
+        UDPInterface udpIf;
+        PacketBuffer *buf = udpIf.getPacketBuffer();
 
-//    //    DVS128Interface dvs;
-//    //    PacketBuffer *buf = dvs.getReaderInstance()->getPacketBuffer();
+//    DVS128Interface dvs;
+//    PacketBuffer *buf = dvs.getReaderInstance()->getPacketBuffer();
 
-//    CamWidget widget;
-//    Tracker t(buf,frequencies);
-//    //widget.setWeightBuffers(t.weightBuffers);
+    CamWidget widget;
+    Tracker t(buf,frequencies);
+    //widget.setWeightBuffers(t.weightBuffers);
 //    widget.setParticleFilters(t.particleFilters);
-//    t.setWidget(&widget);
+//    widget.setCombinations(t.combinationAnalyzer->getHypotheses());
+    t.setWidget(&widget);
 
-//    widget.show();
-//    t.start();
+    widget.show();
+    t.start();
 
-//    //    dvs.startReading();
+//    dvs.startReading();
 
-//    int ret = app.exec();
-//    //    dvs.stopReading();
-//    t.stop();
-//    return ret;
+    int ret = app.exec();
+//    dvs.stopReading();
+    t.stop();
+    return ret;
+}
+
+////max weight test
+//int main(int argc, char **argv){
+//    float sd = 0.0005f;
+//    float fr = 500.0f;
+//    FrequencyAccumulator f(fr,sd,5,1.0,5.0,5,5);
+//    int weight = f.getWeight(1/fr,fr,sd);
+//    printf("weight: %d\n",weight);
+//    return 0;
 //}
 
-//CombinationAnalyzer test
-int main(){
-    const int size = 3; //number of tracks
-    ParticleFilter* pfs[size];
-    srand(0);
-    for(int i = 0; i < size; i++){
-        pfs[i] = new ParticleFilter(5,1.0,16.0,16.0);
-        for(int j = 0; j < pfs[i]->size();j++){
-            pfs[i]->particles[j]->x = rand()%128;
-            pfs[i]->particles[j]->y = rand()%128;
-            pfs[i]->particles[j]->weight = rand()%1000+1;
-        }
-    }
+////CombinationAnalyzer test
+//int main(){
+//    const int size = 3; //number of tracks
+//    ParticleFilter* pfs[size];
+//    srand(0);
+//    for(int i = 0; i < size; i++){
+//        pfs[i] = new ParticleFilter(5,1.0,16.0,16.0);
+//        for(int j = 0; j < pfs[i]->size();j++){
+//            pfs[i]->particles[j]->x = rand()%128;
+//            pfs[i]->particles[j]->y = rand()%128;
+//            pfs[i]->particles[j]->weight = rand()%1000+1;
+//        }
+//    }
 
-//    pfs[0]->particles[0]->x = pfs[1]->get(1)->x+1;
-//    pfs[0]->particles[0]->y = pfs[1]->get(1)->y+1;
+////    pfs[0]->particles[0]->x = pfs[1]->get(1)->x+1;
+////    pfs[0]->particles[0]->y = pfs[1]->get(1)->y+1;
 
-    for(int i = 0; i < size; i++){
-        for(int j = 0; j < pfs[i]->size();j++){
-            pfs[i]->sortParticles();
-            Particle **p = pfs[i]->particles;
+//    for(int i = 0; i < size; i++){
+//        for(int j = 0; j < pfs[i]->size();j++){
+//            pfs[i]->sortParticles();
+//            Particle **p = pfs[i]->particles;
 
-            printf("#filter: %d, #p: %d, x: %d, y: %d, w: %d\n",i,j,
-                   (int)p[j]->x,(int)p[j]->y,p[j]->weight);
-        }
-        printf("\n");
-    }
-    printf("\n");
+//            printf("#filter: %d, #p: %d, x: %d, y: %d, w: %d\n",i,j,
+//                   (int)p[j]->x,(int)p[j]->y,p[j]->weight);
+//        }
+//        printf("\n");
+//    }
+//    printf("\n");
 
-    CombinationAnalyzer ca(pfs,size,4.0,30);
-    ca.evaluate();
-    Combinations *c = ca.getHypotheses();
+//    CombinationAnalyzer ca(pfs,size,4.0,30);
+//    ca.evaluate();
+//    Combinations *c = ca.getHypotheses();
 
-    printf("Found:\n");
-    for(int i = 0; i < c->size();i++){
-        for(int j = 0; j < c->get(i)->size();j++){
-            printf("%d ",c->get(i)->get(j));
-        }
-        printf(", w: %f\n",c->get(i)->score);
-    }
+//    printf("Found:\n");
+//    for(int i = 0; i < c->size();i++){
+//        for(int j = 0; j < c->get(i)->size();j++){
+//            printf("%d ",c->get(i)->get(j));
+//        }
+//        printf(", w: %f\n",c->get(i)->score);
+//    }
 
-    printf("\n#Evals: %d\n",ca.counter);
+//    printf("\n#Evals: %d\n",ca.counter);
 
-    for(int i = 0; i < size; i++){
-        delete pfs[i];
-    }
+//    for(int i = 0; i < size; i++){
+//        delete pfs[i];
+//    }
 
-    return 0;
-}
+//    return 0;
+//}
 
 ////quicksort test
 //int main(){

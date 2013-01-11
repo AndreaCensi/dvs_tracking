@@ -23,7 +23,7 @@ public:
 
     static const float PI;
 
-private:
+//private:
     int getWeight(double interval, int frequency, float sd);
 
     int targetFrequency;

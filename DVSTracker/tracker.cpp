@@ -8,7 +8,7 @@
 #define DVS_RES 128
 
 // Parameteres
-#define SIGMA_W 0.0001f // sigma for perdiod weighting
+#define SIGMA_W 0.000008f // sigma for perdiod weighting
 
 // Guassian smoothing filter
 #define FILTER_SIZE 3   // kernel size
@@ -20,13 +20,13 @@
 
 // Particle filter parameters
 #define PF_NUM_PARTICLES 8
-#define PF_DEFAULT_SIGMA 2.0f
+#define PF_DEFAULT_SIGMA 5.0f
 #define PF_MAX_SIGMA 16.0f
-#define PF_V_MAX 16.0f
+#define PF_V_MAX 25.0f
 
 // Combination analysis
-#define CA_MIN_DIST 2.0f
-#define CA_NUM_HYPOTHESIS 16
+#define CA_MIN_DIST 4.0f
+#define CA_NUM_HYPOTHESIS 8
 
 Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
     //Members
@@ -103,12 +103,15 @@ void Tracker::processEvent(Event e){
     //Calculate importance of interval for each frequency
     for(unsigned int i = 0; i < targetFrequencies.size(); i++){
         FrequencyAccumulator *buf = weightBuffers[i];
-        ParticleFilter *pf = particleFilters[i];
         buf->update(dt);
         if(buf->hasExpired()){
             Maxima *maxima = buf->getMaxima();
-            //process maxima HERE
+            //process maxima here
+            //for(int j = 0; j < targetFrequencies.size();j++){
+            ParticleFilter *pf = particleFilters[i];
             pf->update(maxima,e.timeStamp);
+            widget->updateMaxWeightParticle(i,pf->getMinUncertaintyParticle());
+            //}
 
             //            if(!logger->done()){
             //                for(int j = 0; j < maxima->size();j++)

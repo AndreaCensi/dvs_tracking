@@ -55,6 +55,10 @@ Particle* ParticleFilter::getMaxWeightParticle(){
     return currentMaxWeight;
 }
 
+Particle* ParticleFilter::getMinUncertaintyParticle(){
+    return currentMinUncertainty;
+}
+
 int ParticleFilter::size(){
     return length;
 }
@@ -64,6 +68,7 @@ void ParticleFilter::updateParticles(Particle *c){
     bool merged = false;
     Particle *oldest = particles[0];
     currentMaxWeight = particles[0];
+    currentMinUncertainty = particles[0];
 
     for(int i = 0; i < length; i++){
         p = particles[i];
@@ -84,6 +89,9 @@ void ParticleFilter::updateParticles(Particle *c){
         //Search for the particle with the maximum weight
         if(currentMaxWeight->weight < p->weight)
             currentMaxWeight = p;
+
+        if((currentMinUncertainty->uncertainty > p->uncertainty) && (p->weight > 0))
+            currentMinUncertainty = p;
     }
     // create new particle if unmergable
     if(!merged){
@@ -116,7 +124,7 @@ void ParticleFilter::merge(Particle *p, Particle *c){
     float x,y;
     float sigma;
     int w;
-    float varP,varC,iVarP, iVarC; // variances of particle and candidate
+    float varP,varC,iVarP,iVarC; // variances of particle and candidate
 
     varP = p->uncertainty*p->uncertainty;
     varC = c->uncertainty*c->uncertainty;

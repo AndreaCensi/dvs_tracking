@@ -14,6 +14,7 @@ public:
     Particle* get(int i);
     void sortParticles();
     Particle* getMaxWeightParticle();
+    Particle* getMinUncertaintyParticle();
     int size();
 
 //private:
@@ -28,6 +29,7 @@ public:
 
     Particle **particles;
     Particle *currentMaxWeight;
+    Particle *currentMinUncertainty;
 
     float sigma_0;
     float vMax;

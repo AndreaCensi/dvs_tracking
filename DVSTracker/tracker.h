@@ -29,6 +29,8 @@ public:
 
     FrequencyAccumulator **weightBuffers;
     ParticleFilter **particleFilters;
+    //evaluation
+    CombinationAnalyzer *combinationAnalyzer;
 
 private:
     Transition getTransition(Event e);
@@ -57,9 +59,6 @@ private:
     HypothesisLogger *logger;
     double lastEventTs;
     int eventCount;
-
-    //evaluation
-    CombinationAnalyzer *combinationAnalyzer;
 
 signals:
     void updateCamWidget(int,int);
