@@ -9,6 +9,9 @@ ParticleFilter::ParticleFilter(int numParticles, float defaultSigma, float maxSi
     vMax = maxVelocity; // for motion model
     maxUncertainty = maxSigma;
 
+    currentMaxWeight = 0;
+    currentMinUncertainty = 0;
+
     particles = new Particle*[length];
     for(int i = 0; i < length; i++)
         particles[i] = new Particle();
@@ -32,12 +35,17 @@ void ParticleFilter::update(Maxima *maxima, double ts){
         updateUncertainty(p,ts);
         // has particle expired ( uncertainty grown too much?)
         if(hasExpired(p)){
-            p->timeStamp = 0;
+            p->reset();
         }
+
     }
 
     for(int i = 0; i < maxima->size(); i++){
         LocalMaximum *lm = maxima->get(i);
+        //if local maximum has weight zero continue with next maximum
+        if(lm->weight == 0)
+            continue;
+
         Particle candidate(float(lm->x),float(lm->y),sigma_0,lm->weight,ts);
         updateParticles(&candidate);
     }
@@ -80,6 +88,7 @@ void ParticleFilter::updateParticles(Particle *c){
         //if particle reset ( timestamp == 0) continue with next particle
         if(p->timeStamp == 0)
             continue;
+
         //merge candidate with particle if inside covariance of particle
         if(insideCovariance(p,c)){
             merge(p,c);
@@ -90,8 +99,9 @@ void ParticleFilter::updateParticles(Particle *c){
         if(currentMaxWeight->weight < p->weight)
             currentMaxWeight = p;
 
-        if((currentMinUncertainty->uncertainty > p->uncertainty) && (p->weight > 0))
+        if((currentMinUncertainty->uncertainty > p->uncertainty)){
             currentMinUncertainty = p;
+        }
     }
     // create new particle if unmergable
     if(!merged){

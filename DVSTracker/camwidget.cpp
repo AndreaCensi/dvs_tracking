@@ -167,7 +167,8 @@ void CamWidget::updateImage(int x, int y,int w, int i){
 }
 
 void CamWidget::updateMaxWeightParticle(int i, Particle *p){
-    maxWeightParticles[i].set(p->x,p->y,p->uncertainty,p->weight,p->timeStamp);
+    if(p != 0)
+        maxWeightParticles[i].set(p->x,p->y,p->uncertainty,p->weight,p->timeStamp);
 }
 
 void CamWidget::setWeightBuffers(FrequencyAccumulator **weightBuffers){
