@@ -2,6 +2,8 @@
 #include "math.h"
 #include "stdio.h"
 
+#define MIN_MERGE_DISTANCE 3.0f // used to override mergin threshold if uncertainty lower than this value
+
 ParticleFilter::ParticleFilter(int numParticles, float defaultSigma, float maxSigma, float maxVelocity)
 {
     length = numParticles;
@@ -124,7 +126,7 @@ bool ParticleFilter::hasExpired(Particle *p){
 
 bool ParticleFilter::insideCovariance(Particle *p, Particle *c){
     float distance = sqrt((pow(float(p->x-c->x),2.0f) + pow(float(p->y-c->y),2.0f)));
-    if(distance < p->uncertainty)
+    if(distance < p->uncertainty || distance < MIN_MERGE_DISTANCE)
         return true;
     else
         return false;
@@ -163,8 +165,8 @@ void ParticleFilter::quicksort(Particle **p, int first, int last){
         pivot = p[last];
 
         while(i < j){
-            while(p[i]->weight >= pivot->weight && i < last-1) i++;
-            while(p[j]->weight < pivot->weight && j > i) j--;
+            while(p[i]->uncertainty <= pivot->uncertainty && i < last-1) i++;
+            while(p[j]->uncertainty > pivot->uncertainty && j > i) j--;
 
             if( i < j ){
                 Particle *tmp = p[i];	//swap
@@ -172,7 +174,7 @@ void ParticleFilter::quicksort(Particle **p, int first, int last){
                 p[j] = tmp;
             }
         }
-        if(p[j]->weight < pivot->weight){
+        if(p[j]->uncertainty > pivot->uncertainty){
             Particle *tmp = p[j];	//swap j, last
             p[j] = p[last];
             p[last] = tmp;		//pivot in the middle

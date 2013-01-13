@@ -25,7 +25,7 @@
 #define PF_V_MAX 25.0f
 
 // Combination analysis
-#define CA_MIN_DIST 4.0f
+#define CA_MIN_DIST 8.0f
 #define CA_NUM_HYPOTHESIS 8
 
 Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
@@ -110,7 +110,8 @@ void Tracker::processEvent(Event e){
             //for(int j = 0; j < targetFrequencies.size();j++){
             ParticleFilter *pf = particleFilters[i];
             pf->update(maxima,e.timeStamp);
-            widget->updateMaxWeightParticle(i,pf->getMinUncertaintyParticle());
+
+//            widget->updateMaxWeightParticle(i,pf->getMinUncertaintyParticle());
             //}
 
             //            if(!logger->done()){
@@ -131,6 +132,12 @@ void Tracker::processPacket(){
     //find possible combinations of LED positions
     combinationAnalyzer->evaluate();
     Combinations *hypotheses = combinationAnalyzer->getHypotheses();
+
+    for(unsigned int i = 0; i < targetFrequencies.size();i++){
+        int index = hypotheses->get(0)->get(i);
+        Particle *p = particleFilters[i]->get(index);
+        widget->updateMaxWeightParticle(i,p);
+    }
 
     combinationAnalyzer->reset();
 }
@@ -206,7 +213,7 @@ void Tracker::run(){
                     //updateCamWidget(e);
                     processEvent(*e);
                 }
-                //processPacket();
+                processPacket();
             }
         }
         else

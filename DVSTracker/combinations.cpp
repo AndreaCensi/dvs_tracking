@@ -1,4 +1,5 @@
 #include "combinations.h"
+#include "cfloat"
 
 Combinations::Combinations(int maxNumCombinations, int numTracks)
 {
@@ -19,8 +20,8 @@ void Combinations::add(CombinationChoice *c){
     if(insertIndex < length){
         combinations[insertIndex]->assign(c);
         insertIndex++;
-        if(lowestScore > c->score)
-            lowestScore = c->score;
+        if(worstScore < c->score)
+            worstScore = c->score;
     }
 }
 
@@ -28,8 +29,8 @@ CombinationChoice* Combinations::get(int i){
     return combinations[i];
 }
 
-float Combinations::getLowestScore(){
-    return lowestScore;
+float Combinations::getWorstScore(){
+    return worstScore;
 }
 
 int Combinations::size(){
@@ -38,5 +39,5 @@ int Combinations::size(){
 
 void Combinations::reset(){
     insertIndex = 0;
-    lowestScore = 1000000;
+    worstScore = 0;
 }

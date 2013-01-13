@@ -10,14 +10,14 @@ public:
     ~Combinations();
     void add(CombinationChoice *c);
     CombinationChoice* get(int i);
-    float getLowestScore();
+    float getWorstScore();
     int size();
     void reset();
 
 private:
     CombinationChoice **combinations;
     int length;
-    float lowestScore;
+    float worstScore;
     int insertIndex;
 
 };

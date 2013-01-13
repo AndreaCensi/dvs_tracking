@@ -1,4 +1,5 @@
 #include "particle.h"
+#include <cfloat>
 
 Particle::Particle(float posX, float posY, float uncert, int w, double ts)
 {
@@ -14,5 +15,5 @@ void Particle::set(float posX, float posY, float uncert, int w, double ts){
 }
 
 void Particle::reset(){
-    set(0,0,10000.0f,0,0);
+    set(0,0,FLT_MAX,0,0);
 }

@@ -1,4 +1,5 @@
 #include "combinationanalyzer.h"
+#include <cfloat>
 
 #define MISS_PROB 500.0f
 #define DEPTH_LIMIT 2
@@ -34,23 +35,24 @@ void CombinationAnalyzer::evaluate(){
 }
 
 bool CombinationAnalyzer::containsNeighbour(CombinationChoice *c, int branch){
-    if(branch > 0){
-        int iP1 = c->get(branch);
-        int iP2 = c->get(branch-1);
-        if(iP1 == particleFilters[branch]->size() || iP2 == particleFilters[branch-1]->size())
-            return false;
-        Particle *p1 = particleFilters[branch]->get(iP1);
-        Particle *p2 = particleFilters[branch-1]->get(iP2);
-        float squaredDistance = (pow(float(p1->x-p2->x),2.0f) + pow(float(p1->y-p2->y),2.0f));
-
-        if(squaredDistance > minSquaredDistance)
-            return false;
-        else
-            return true;
-
-    }
-    else
+    if(branch == 0)
         return false;
+
+    int iP1 = c->get(branch);
+    for(int i = 0; i < branch-1;i++){
+        int iP2 = c->get(i);
+
+        if(iP1 == particleFilters[branch]->size() || iP2 == particleFilters[i]->size()) // if index refers to miss probability, do not process!
+            return false;
+
+        Particle *p1 = particleFilters[branch]->get(iP1);
+        Particle *p2 = particleFilters[i]->get(iP2);
+
+        float squaredDistance = (pow(float(p1->x-p2->x),2.0f) + pow(float(p1->y-p2->y),2.0f));
+        if(squaredDistance < minSquaredDistance)
+            return true;
+    }
+    return false;
 }
 
 float CombinationAnalyzer::getLikelihood(CombinationChoice *c){
@@ -59,7 +61,7 @@ float CombinationAnalyzer::getLikelihood(CombinationChoice *c){
         if(c->get(i) == (particleFilters[i]->size()) )
             likelihood *= MISS_PROB;
         else
-            likelihood *= (float)particleFilters[i]->get(c->get(i))->weight;
+            likelihood *= (float)particleFilters[i]->get(c->get(i))->uncertainty;
     }
     return likelihood;
 }
@@ -72,9 +74,9 @@ void CombinationAnalyzer::analyze(CombinationChoice choice, int branch, int leve
     }
 
     if(found->size() > numHypothesis)
-        threshold = found->getLowestScore();
+        threshold = found->getWorstScore();
     else
-        threshold = 0;
+        threshold = FLT_MAX;
 
     ParticleFilter *pf = particleFilters[branch];
 
@@ -83,9 +85,9 @@ void CombinationAnalyzer::analyze(CombinationChoice choice, int branch, int leve
         if(i > pf->size())
             break;
         choice.set(branch,i);
-        if(!containsNeighbour(&choice,branch)){   //only branch if current and previous branch particle are not neighbouring
+        if(!containsNeighbour(&choice,branch)){   //only branch if no particles in branch are neighbouring
             choice.score = getLikelihood(&choice);
-            if(choice.score > threshold){
+            if(choice.score < threshold){
                 analyze(choice,branch+1,level,depthLimit);
             }
         }
@@ -98,5 +100,5 @@ Combinations* CombinationAnalyzer::getHypotheses(){
 
 void CombinationAnalyzer::reset(){
     found->reset();
-    threshold = 0;
+    threshold = FLT_MAX;
 }
