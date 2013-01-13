@@ -2,7 +2,7 @@
 #include "math.h"
 #include "stdio.h"
 
-#define MIN_MERGE_DISTANCE 3.0f // used to override mergin threshold if uncertainty lower than this value
+#define MIN_MERGE_DISTANCE 4.0f // used to override mergin threshold if uncertainty lower than this value
 
 ParticleFilter::ParticleFilter(int numParticles, float defaultSigma, float maxSigma, float maxVelocity)
 {

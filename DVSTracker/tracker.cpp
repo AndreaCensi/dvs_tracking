@@ -111,7 +111,7 @@ void Tracker::processEvent(Event e){
             ParticleFilter *pf = particleFilters[i];
             pf->update(maxima,e.timeStamp);
 
-//            widget->updateMaxWeightParticle(i,pf->getMinUncertaintyParticle());
+            //            widget->updateMaxWeightParticle(i,pf->getMinUncertaintyParticle());
             //}
 
             //            if(!logger->done()){
@@ -134,8 +134,11 @@ void Tracker::processPacket(){
     Combinations *hypotheses = combinationAnalyzer->getHypotheses();
 
     for(unsigned int i = 0; i < targetFrequencies.size();i++){
-        int index = hypotheses->get(0)->get(i);
-        Particle *p = particleFilters[i]->get(index);
+        int index = hypotheses->getBestCombination()->get(i);
+        Particle *p = 0;
+        if(index < particleFilters[i]->size()){
+            p = particleFilters[i]->get(index);
+        }
         widget->updateMaxWeightParticle(i,p);
     }
 

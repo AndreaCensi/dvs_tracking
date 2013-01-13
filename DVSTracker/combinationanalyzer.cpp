@@ -39,7 +39,7 @@ bool CombinationAnalyzer::containsNeighbour(CombinationChoice *c, int branch){
         return false;
 
     int iP1 = c->get(branch);
-    for(int i = 0; i < branch-1;i++){
+    for(int i = 0; i < branch;i++){
         int iP2 = c->get(i);
 
         if(iP1 == particleFilters[branch]->size() || iP2 == particleFilters[i]->size()) // if index refers to miss probability, do not process!
@@ -58,7 +58,7 @@ bool CombinationAnalyzer::containsNeighbour(CombinationChoice *c, int branch){
 float CombinationAnalyzer::getLikelihood(CombinationChoice *c){
     float likelihood = 1;
     for(int i = 0; i < c->size(); i++){
-        if(c->get(i) == (particleFilters[i]->size()) )
+        if(c->get(i) == (particleFilters[i]->size()))
             likelihood *= MISS_PROB;
         else
             likelihood *= (float)particleFilters[i]->get(c->get(i))->uncertainty;
