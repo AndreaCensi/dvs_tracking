@@ -2,7 +2,7 @@
 #include <cfloat>
 
 #define MISS_PROB 500.0f
-#define DEPTH_LIMIT 2
+#define DEPTH_LIMIT 3
 
 CombinationAnalyzer::CombinationAnalyzer(ParticleFilter **pFilters, int numLEDs, float minimumDistance, int numOfHypothesis)
 {

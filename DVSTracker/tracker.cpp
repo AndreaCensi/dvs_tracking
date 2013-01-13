@@ -8,25 +8,28 @@
 #define DVS_RES 128
 
 // Parameteres
-#define SIGMA_W 0.000008f // sigma for perdiod weighting
+#define SIGMA_W 50.0f // sigma for perdiod weighting in Hz
+#define PERIOD_MULTIPLIER 2.0f // multiplies measurement interval to measure signal period
 
 // Guassian smoothing filter
 #define FILTER_SIZE 3   // kernel size
 #define SIGMA_FILTER 0.75f
 
 // Maximum detection
-#define MIN_DIST 4.0f   // min distance between maxima
+#define MIN_DIST 8.0f   // min distance between maxima
 #define NUM_MAXIMA 3
 
 // Particle filter parameters
 #define PF_NUM_PARTICLES 8
-#define PF_DEFAULT_SIGMA 5.0f
-#define PF_MAX_SIGMA 16.0f
-#define PF_V_MAX 25.0f
+#define PF_DEFAULT_SIGMA 2.0f
+#define PF_MIN_MERGE_DISTANCE 2.0f // used to override mergin threshold if uncertainty lower than this value
+#define PF_MAX_SIGMA 8.0f
+#define PF_V_MAX 200.0f  // pixels/s
 
 // Combination analysis
 #define CA_MIN_DIST 8.0f
-#define CA_NUM_HYPOTHESIS 8
+#define CA_NUM_HYPOTHESIS 32
+
 
 Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
     //Members
@@ -45,12 +48,12 @@ Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies, QObject *pa
     weightBuffers = new FrequencyAccumulator*[targetFrequencies.size()];
     for(unsigned int i = 0; i < targetFrequencies.size();i++){
         weightBuffers[i] = new FrequencyAccumulator(
-                    targetFrequencies[i],SIGMA_W,FILTER_SIZE,SIGMA_FILTER,MIN_DIST,NUM_MAXIMA,DVS_RES,DVS_RES);
+                    targetFrequencies[i],PERIOD_MULTIPLIER,SIGMA_W,FILTER_SIZE,SIGMA_FILTER,MIN_DIST,NUM_MAXIMA,DVS_RES,DVS_RES);
     }
 
     particleFilters = new ParticleFilter*[targetFrequencies.size()];
     for(unsigned int i = 0; i < targetFrequencies.size();i++){
-        particleFilters[i] = new ParticleFilter(PF_NUM_PARTICLES,PF_DEFAULT_SIGMA,PF_MAX_SIGMA,PF_V_MAX);
+        particleFilters[i] = new ParticleFilter(PF_NUM_PARTICLES,PF_DEFAULT_SIGMA,PF_MAX_SIGMA,PF_MIN_MERGE_DISTANCE,PF_V_MAX);
     }
 
     logger = new HypothesisLogger("C:/Users/giselher/Documents/uzh/hypo_log.txt");
@@ -120,7 +123,7 @@ void Tracker::processEvent(Event e){
             //                                j,maxima->get(j)->x,maxima->get(j)->y,maxima->get(j)->weight);
             //            }
 
-            updateWeightWidget(i,buf,maxima);
+            //updateWeightWidget(i,buf,maxima);
             buf->reset();
         }
     }
@@ -190,7 +193,7 @@ void Tracker::updateWeightWidget(int bufID, FrequencyAccumulator *buf, Maxima *m
         for(int x = 0; x < DVS_RES;x++){
             float value = buf->weightMap->get(x,y);
             if(value > 0){
-                int grey = int(value/4.0);
+                int grey = int(value*4.0);
                 if(grey > 255)
                     grey = 255;
                 if(grey > 0){

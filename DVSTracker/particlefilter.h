@@ -8,7 +8,7 @@
 class ParticleFilter
 {
 public:
-    ParticleFilter(int numParticles, float defaultSigma, float maxSigma, float maxVelocity);
+    ParticleFilter(int numParticles, float defaultSigma, float maxSigma, float minimumMergeDistance, float maxVelocity);
     ~ParticleFilter();
     void update(Maxima *maxima, double ts);
     Particle* get(int i);
@@ -34,6 +34,7 @@ public:
     float sigma_0;
     float vMax;
     float maxUncertainty;
+    float minMergeDistance;
     int length;
 };
 

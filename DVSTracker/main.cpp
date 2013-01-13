@@ -279,7 +279,7 @@ int main(int argc, char **argv){
 //            //print map
 //            for(int y = 0; y < size; y++){
 //                for(int x = 0; x < size; x++){
-//                    printf("%f ",f.weightMap->get(x,y));
+//                    printf("%d ",f.weightMap->get(x,y));
 //                }
 //                printf("\n");
 //            }

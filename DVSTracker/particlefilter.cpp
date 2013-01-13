@@ -2,12 +2,11 @@
 #include "math.h"
 #include "stdio.h"
 
-#define MIN_MERGE_DISTANCE 4.0f // used to override mergin threshold if uncertainty lower than this value
-
-ParticleFilter::ParticleFilter(int numParticles, float defaultSigma, float maxSigma, float maxVelocity)
+ParticleFilter::ParticleFilter(int numParticles, float defaultSigma, float maxSigma, float minimumMergeDistance, float maxVelocity)
 {
     length = numParticles;
     sigma_0 = defaultSigma; //default sigma for particles
+    minMergeDistance = minimumMergeDistance;  // used to override mergin threshold if uncertainty lower than this value
     vMax = maxVelocity; // for motion model
     maxUncertainty = maxSigma;
 
@@ -126,7 +125,7 @@ bool ParticleFilter::hasExpired(Particle *p){
 
 bool ParticleFilter::insideCovariance(Particle *p, Particle *c){
     float distance = sqrt((pow(float(p->x-c->x),2.0f) + pow(float(p->y-c->y),2.0f)));
-    if(distance < p->uncertainty || distance < MIN_MERGE_DISTANCE)
+    if(distance < p->uncertainty || distance < minMergeDistance)
         return true;
     else
         return false;

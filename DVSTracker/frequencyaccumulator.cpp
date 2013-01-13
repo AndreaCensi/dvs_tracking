@@ -3,10 +3,11 @@
 const float FrequencyAccumulator::PI = 3.14159265f;
 
 #define N_GUESSES 16
+#define WEIGHT_MULTIPLIER 100000
 
-FrequencyAccumulator::FrequencyAccumulator(
-        int frequency, float sigma, int filterSize,
-        float filterSigma, float minDist, int numMaxima, int w, int h)
+FrequencyAccumulator::FrequencyAccumulator(int frequency, float periodMultiplier,
+                                           float sigma, int filterSize, float filterSigma,
+                                           float minDist, int numMaxima, int w, int h)
 {
     // Weights
     weightMap = new Map<int>(w,h);
@@ -16,6 +17,7 @@ FrequencyAccumulator::FrequencyAccumulator(
     maxima = new Maxima(numMaxima,minDist);
 
     targetFrequency = frequency;
+    multiplier = periodMultiplier;
     sd = sigma;
     lastReset = 0;
     lastUpdate = 0;
@@ -49,14 +51,14 @@ void FrequencyAccumulator::update(Interval interval){
 }
 
 int FrequencyAccumulator::getWeight(double interval, int frequency, float sd){
-    double targetInterval = 1.0/frequency;
-    double tDiff = targetInterval - interval;
-    int weight = int(1.0/(sd*sqrt(2*PI)) * exp(-pow(tDiff/sd,2.0))/2.0);
-    return weight;
+    float measuredFrequency = 1.0/interval;
+    float diff = measuredFrequency - float(frequency);
+    float weight = 1.0f/(sd*sqrt(2*PI)) * exp(-pow(diff/sd,2.0f))/2.0f;
+    return int(WEIGHT_MULTIPLIER*weight);
 }
 
 bool FrequencyAccumulator::hasExpired(){
-    if( (lastUpdate - lastReset) > (1.0/targetFrequency) )
+    if( (lastUpdate - lastReset) > (multiplier/targetFrequency) )
         return true;
     else
         return false;

@@ -10,7 +10,7 @@
 class FrequencyAccumulator
 {
 public:
-    FrequencyAccumulator(int frequency = 0, float sigma = 1.0, int filterSize = 5, float filterSigma = 1.0,
+    FrequencyAccumulator(int frequency = 0, float periodMultiplier = 2.0f, float sigma = 1.0, int filterSize = 5, float filterSigma = 1.0,
                          float minDist = 0, int numMaxima = 0, int w = 128, int h = 128);
     ~FrequencyAccumulator();
     void update(Interval interval);
@@ -27,6 +27,7 @@ public:
     int getWeight(double interval, int frequency, float sd);
 
     int targetFrequency;
+    float multiplier;
     float sd;
     float minDistance;
     int nMaxima;
