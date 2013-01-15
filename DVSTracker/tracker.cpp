@@ -9,7 +9,7 @@
 
 // Parameteres
 #define SIGMA_W 50.0f // sigma for perdiod weighting in Hz
-#define PERIOD_MULTIPLIER 2.0f // multiplies measurement interval to measure signal period
+#define PERIOD_MULTIPLIER 3.0f // multiplies measurement interval to measure signal period
 
 // Guassian smoothing filter
 #define FILTER_SIZE 3   // kernel size
@@ -22,7 +22,7 @@
 // Particle filter parameters
 #define PF_NUM_PARTICLES 8
 #define PF_DEFAULT_SIGMA 2.0f
-#define PF_MIN_MERGE_DISTANCE 2.0f // used to override mergin threshold if uncertainty lower than this value
+#define PF_MIN_MERGE_DISTANCE 2.0f // used to override merging threshold if uncertainty lower than this value
 #define PF_MAX_SIGMA 8.0f
 #define PF_V_MAX 200.0f  // pixels/s
 

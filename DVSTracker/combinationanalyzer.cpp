@@ -1,5 +1,4 @@
 #include "combinationanalyzer.h"
-#include <cfloat>
 
 #define MISS_PROB 500.0f
 #define DEPTH_LIMIT 3
@@ -61,7 +60,7 @@ float CombinationAnalyzer::getLikelihood(CombinationChoice *c){
         if(c->get(i) == (particleFilters[i]->size()))
             likelihood *= MISS_PROB;
         else
-            likelihood *= (float)particleFilters[i]->get(c->get(i))->uncertainty;
+            likelihood *= (float)particleFilters[i]->get(c->get(i))->weight;
     }
     return likelihood;
 }
@@ -76,7 +75,7 @@ void CombinationAnalyzer::analyze(CombinationChoice choice, int branch, int leve
     if(found->size() > numHypothesis)
         threshold = found->getWorstScore();
     else
-        threshold = FLT_MAX;
+        threshold = 0;
 
     ParticleFilter *pf = particleFilters[branch];
 
@@ -87,7 +86,7 @@ void CombinationAnalyzer::analyze(CombinationChoice choice, int branch, int leve
         choice.set(branch,i);
         if(!containsNeighbour(&choice,branch)){   //only branch if no particles in branch are neighbouring
             choice.score = getLikelihood(&choice);
-            if(choice.score < threshold){
+            if(choice.score > threshold){
                 analyze(choice,branch+1,level,depthLimit);
             }
         }
@@ -100,5 +99,5 @@ Combinations* CombinationAnalyzer::getHypotheses(){
 
 void CombinationAnalyzer::reset(){
     found->reset();
-    threshold = FLT_MAX;
+    threshold = 0;
 }

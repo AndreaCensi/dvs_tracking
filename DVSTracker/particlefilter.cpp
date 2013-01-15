@@ -96,10 +96,11 @@ void ParticleFilter::updateParticles(Particle *c){
             merged = true;
         }
 
-        //Search for the particle with the maximum weight
+        // Remember particle with hightest weight
         if(currentMaxWeight->weight < p->weight)
             currentMaxWeight = p;
 
+        // Remember particle with lowest uncertainty
         if((currentMinUncertainty->uncertainty > p->uncertainty)){
             currentMinUncertainty = p;
         }
@@ -164,8 +165,8 @@ void ParticleFilter::quicksort(Particle **p, int first, int last){
         pivot = p[last];
 
         while(i < j){
-            while(p[i]->uncertainty <= pivot->uncertainty && i < last-1) i++;
-            while(p[j]->uncertainty > pivot->uncertainty && j > i) j--;
+            while(p[i]->weight >= pivot->weight && i < last-1) i++;
+            while(p[j]->weight < pivot->weight && j > i) j--;
 
             if( i < j ){
                 Particle *tmp = p[i];	//swap
@@ -173,7 +174,7 @@ void ParticleFilter::quicksort(Particle **p, int first, int last){
                 p[j] = tmp;
             }
         }
-        if(p[j]->uncertainty > pivot->uncertainty){
+        if(p[j]->weight < pivot->weight){
             Particle *tmp = p[j];	//swap j, last
             p[j] = p[last];
             p[last] = tmp;		//pivot in the middle

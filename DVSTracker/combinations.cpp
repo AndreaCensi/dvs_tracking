@@ -19,9 +19,9 @@ Combinations::~Combinations(){
 void Combinations::add(CombinationChoice *c){
     if(insertIndex < length){
         combinations[insertIndex]->assign(c);
-        if(worstScore < c->score)   //set worst score
+        if(worstScore > c->score)   //set worst score
             worstScore = c->score;
-        if(best->score > c->score)  //set best scoring combination
+        if(best->score < c->score)  //set best scoring combination
             best = combinations[insertIndex];
         insertIndex++;
     }
