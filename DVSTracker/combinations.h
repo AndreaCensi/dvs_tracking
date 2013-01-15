@@ -18,9 +18,9 @@ public:
 private:
     CombinationChoice **combinations;
     CombinationChoice *best;
+    CombinationChoice *worst;
 
     int length;
-    float worstScore;
     int insertIndex;
 
 };

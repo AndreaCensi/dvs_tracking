@@ -28,7 +28,7 @@
 
 // Combination analysis
 #define CA_MIN_DIST 8.0f
-#define CA_NUM_HYPOTHESIS 32
+#define CA_NUM_HYPOTHESIS 4
 
 
 Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){

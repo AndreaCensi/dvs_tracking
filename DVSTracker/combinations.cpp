@@ -17,13 +17,27 @@ Combinations::~Combinations(){
 }
 
 void Combinations::add(CombinationChoice *c){
+    // if not full insert and update worst and best score
     if(insertIndex < length){
         combinations[insertIndex]->assign(c);
-        if(worstScore > c->score)   //set worst score
-            worstScore = c->score;
+        if(worst->score > c->score)   //set worst score
+            worst = combinations[insertIndex];
         if(best->score < c->score)  //set best scoring combination
             best = combinations[insertIndex];
         insertIndex++;
+    }
+    else{   //assign to worst score
+        if(c->score > worst->score)
+            worst->assign(c);
+        // update best score
+        if(best->score < worst->score)  //set best scoring combination
+            best = worst;
+
+        //search for new worst score after insertion
+        for(int i = 0; i < length;i++){
+            if(worst->score > combinations[i]->score)   //set worst score
+                worst = combinations[i];
+        }
     }
 }
 
@@ -32,7 +46,7 @@ CombinationChoice* Combinations::get(int i){
 }
 
 float Combinations::getWorstScore(){
-    return worstScore;
+    return worst->score;
 }
 
 CombinationChoice* Combinations::getBestCombination(){
@@ -45,6 +59,6 @@ int Combinations::size(){
 
 void Combinations::reset(){
     insertIndex = 0;
-    worstScore = 0;
+    worst = combinations[0];
     best = combinations[0];
 }

@@ -30,4 +30,5 @@ void CombinationChoice::assign(CombinationChoice *c){
 void CombinationChoice::reset(){
     for(int i = 0; i < length;i++)
         choice[i] = 0;
+    score = 0;
 }

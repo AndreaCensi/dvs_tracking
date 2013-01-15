@@ -9,7 +9,7 @@ CombinationAnalyzer::CombinationAnalyzer(ParticleFilter **pFilters, int numLEDs,
     numTracks = numLEDs;
     minSquaredDistance = minimumDistance*minimumDistance;
     numHypothesis = numOfHypothesis;
-    found = new Combinations(numHypothesis*2, numTracks);
+    found = new Combinations(numHypothesis, numTracks);
     reset();
 
     counter = 0;
