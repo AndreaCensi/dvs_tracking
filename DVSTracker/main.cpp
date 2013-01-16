@@ -19,26 +19,26 @@ int main(int argc, char **argv){
     frequencies.push_back(1410);
 
     //tracking
-        UDPInterface udpIf;
-        PacketBuffer *buf = udpIf.getPacketBuffer();
+    UDPInterface udpIf;
+    PacketBuffer *buf = udpIf.getPacketBuffer();
 
-//    DVS128Interface dvs;
-//    PacketBuffer *buf = dvs.getReaderInstance()->getPacketBuffer();
+    //    DVS128Interface dvs;
+    //    PacketBuffer *buf = dvs.getReaderInstance()->getPacketBuffer();
 
     CamWidget widget;
     Tracker t(buf,frequencies);
     //widget.setWeightBuffers(t.weightBuffers);
-//    widget.setParticleFilters(t.particleFilters);
-//    widget.setCombinations(t.combinationAnalyzer->getHypotheses());
+    //    widget.setParticleFilters(t.particleFilters);
+    //    widget.setCombinations(t.combinationAnalyzer->getHypotheses());
     t.setWidget(&widget);
 
     widget.show();
     t.start();
 
-//    dvs.startReading();
+    //    dvs.startReading();
 
     int ret = app.exec();
-//    dvs.stopReading();
+    //    dvs.stopReading();
     t.stop();
     return ret;
 }
@@ -59,11 +59,11 @@ int main(int argc, char **argv){
 //    ParticleFilter* pfs[size];
 //    srand(0);
 //    for(int i = 0; i < size; i++){
-//        pfs[i] = new ParticleFilter(3,1.0,16.0,16.0);
+//        pfs[i] = new ParticleFilter(8,1.0,16.0,1.0,200.0);
 //        for(int j = 0; j < pfs[i]->size();j++){
 //            pfs[i]->particles[j]->x = rand()%128;
 //            pfs[i]->particles[j]->y = rand()%128;
-//            pfs[i]->particles[j]->uncertainty = float(rand()%100+1);
+//            pfs[i]->particles[j]->weight = rand()%100+1;
 //        }
 //    }
 
@@ -71,21 +71,21 @@ int main(int argc, char **argv){
 //        pfs[i]->sortParticles();
 //    }
 
-//    pfs[2]->particles[2]->x = pfs[3]->get(1)->x+1;
-//    pfs[2]->particles[2]->y = pfs[3]->get(1)->y+1;
+//    pfs[3]->particles[2]->x = pfs[1]->get(0)->x+1;
+//    pfs[3]->particles[2]->y = pfs[1]->get(0)->y+1;
 
 //    for(int i = 0; i < size; i++){
 //        for(int j = 0; j < pfs[i]->size();j++){
 //            Particle **p = pfs[i]->particles;
 
-//            printf("#[filter particle]: %d %d, x: %d, y: %d, u: %f\n",i,j,
-//                   (int)p[j]->x,(int)p[j]->y,p[j]->uncertainty);
+//            printf("#[filter particle]: %d %d, x: %d, y: %d, w: %d\n",i,j,
+//                   (int)p[j]->x,(int)p[j]->y,p[j]->weight);
 //        }
 //        printf("\n");
 //    }
 //    printf("\n");
 
-//    CombinationAnalyzer ca(pfs,size,6.0,30);
+//    CombinationAnalyzer ca(pfs,size,8.0,20);
 //    ca.evaluate();
 //    Combinations *c = ca.getHypotheses();
 

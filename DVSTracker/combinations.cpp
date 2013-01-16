@@ -26,11 +26,12 @@ void Combinations::add(CombinationChoice *c){
             best = combinations[insertIndex];
         insertIndex++;
     }
-    else{   //assign to worst score
+    //replace worst score
+    else{
         if(c->score > worst->score)
             worst->assign(c);
         // update best score
-        if(best->score < worst->score)  //set best scoring combination
+        if(best->score < c->score)  //set best scoring combination
             best = worst;
 
         //search for new worst score after insertion
@@ -50,7 +51,10 @@ float Combinations::getWorstScore(){
 }
 
 CombinationChoice* Combinations::getBestCombination(){
-    return best;
+    if (insertIndex > 0)
+        return best;
+    else
+        return 0;
 }
 
 int Combinations::size(){

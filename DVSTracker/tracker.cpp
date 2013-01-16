@@ -9,7 +9,7 @@
 
 // Parameteres
 #define SIGMA_W 50.0f // sigma for perdiod weighting in Hz
-#define PERIOD_MULTIPLIER 3.0f // multiplies measurement interval to measure signal period
+#define PERIOD_MULTIPLIER 20.0f // multiplies measurement interval to measure signal period
 
 // Guassian smoothing filter
 #define FILTER_SIZE 3   // kernel size
@@ -22,7 +22,7 @@
 // Particle filter parameters
 #define PF_NUM_PARTICLES 8
 #define PF_DEFAULT_SIGMA 2.0f
-#define PF_MIN_MERGE_DISTANCE 2.0f // used to override merging threshold if uncertainty lower than this value
+#define PF_MIN_MERGE_DISTANCE 3.0f // used to override merging threshold if uncertainty lower than this value
 #define PF_MAX_SIGMA 8.0f
 #define PF_V_MAX 200.0f  // pixels/s
 
@@ -94,11 +94,12 @@ void Tracker::processEvent(Event e){
         return;
     }
 
-    //stop logger
+    //stop logger/saving image output
     if(lastEventTs > e.timeStamp && !logger->done()){
         printf("#Events(tra): %d\n",eventCount);
         eventCount = 0;
         //logger->stop();
+        //widget->stopSaving();
     }
     else
         eventCount++;
@@ -134,17 +135,15 @@ void Tracker::processEvent(Event e){
 void Tracker::processPacket(){
     //find possible combinations of LED positions
     combinationAnalyzer->evaluate();
-    Combinations *hypotheses = combinationAnalyzer->getHypotheses();
+    CombinationChoice *best = combinationAnalyzer->getHypotheses()->getBestCombination();
 
-    for(unsigned int i = 0; i < targetFrequencies.size();i++){
-        int index = hypotheses->getBestCombination()->get(i);
-        Particle *p = 0;
-        if(index < particleFilters[i]->size()){
-            p = particleFilters[i]->get(index);
+    //udpate widget with best score
+    if(best != 0){
+        for(unsigned int i = 0; i < best->size();i++){
+            Particle *p = particleFilters[i]->get(best->get(i));
+            widget->updateMaxWeightParticle(i,p);
         }
-        widget->updateMaxWeightParticle(i,p);
     }
-
     combinationAnalyzer->reset();
 }
 

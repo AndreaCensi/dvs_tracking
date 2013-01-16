@@ -1,10 +1,12 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
+#include <cfloat>
+
 class Particle
 {
 public:
-    Particle(float posX = 0, float posY = 0, float uncert = 10000.0f, int w = 0, double ts = 0);
+    Particle(float posX = 0, float posY = 0, float uncert = FLT_MAX, int w = 0, double ts = 0);
     void set(float posX, float posY, float uncert, int w, double ts);
     void reset();
 

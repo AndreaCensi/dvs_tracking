@@ -1,5 +1,4 @@
 #include "particle.h"
-#include <cfloat>
 
 Particle::Particle(float posX, float posY, float uncert, int w, double ts)
 {

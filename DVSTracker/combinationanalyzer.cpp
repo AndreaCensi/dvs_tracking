@@ -1,6 +1,5 @@
 #include "combinationanalyzer.h"
 
-#define MISS_PROB 500.0f
 #define DEPTH_LIMIT 3
 
 CombinationAnalyzer::CombinationAnalyzer(ParticleFilter **pFilters, int numLEDs, float minimumDistance, int numOfHypothesis)
@@ -34,18 +33,9 @@ void CombinationAnalyzer::evaluate(){
 }
 
 bool CombinationAnalyzer::containsNeighbour(CombinationChoice *c, int branch){
-    if(branch == 0)
-        return false;
-
-    int iP1 = c->get(branch);
+    Particle *p1 = particleFilters[branch]->get(c->get(branch));
     for(int i = 0; i < branch;i++){
-        int iP2 = c->get(i);
-
-        if(iP1 == particleFilters[branch]->size() || iP2 == particleFilters[i]->size()) // if index refers to miss probability, do not process!
-            return false;
-
-        Particle *p1 = particleFilters[branch]->get(iP1);
-        Particle *p2 = particleFilters[i]->get(iP2);
+        Particle *p2 = particleFilters[i]->get(c->get(i));
 
         float squaredDistance = (pow(float(p1->x-p2->x),2.0f) + pow(float(p1->y-p2->y),2.0f));
         if(squaredDistance < minSquaredDistance)
@@ -57,14 +47,12 @@ bool CombinationAnalyzer::containsNeighbour(CombinationChoice *c, int branch){
 float CombinationAnalyzer::getLikelihood(CombinationChoice *c){
     float likelihood = 1;
     for(int i = 0; i < c->size(); i++){
-        if(c->get(i) == (particleFilters[i]->size()))
-            likelihood *= MISS_PROB;
-        else
-            likelihood *= (float)particleFilters[i]->get(c->get(i))->weight;
+        likelihood *= (float)particleFilters[i]->get(c->get(i))->weight;
     }
     return likelihood;
 }
 
+// recursive function to traverse the different combinations
 void CombinationAnalyzer::analyze(CombinationChoice choice, int branch, int level, int depthLimit){
     if(branch >= numTracks){
         counter++;
@@ -81,8 +69,8 @@ void CombinationAnalyzer::analyze(CombinationChoice choice, int branch, int leve
 
     // branch
     for(int i = level; i < level+depthLimit;i++){
-        if(i > pf->size())
-            break;
+        if(i >= pf->size())
+            return;
         choice.set(branch,i);
         if(!containsNeighbour(&choice,branch)){   //only branch if no particles in branch are neighbouring
             choice.score = getLikelihood(&choice);

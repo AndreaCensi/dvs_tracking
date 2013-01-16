@@ -19,6 +19,7 @@ public:
     void setWeightBuffers(FrequencyAccumulator **weightBuffers);
     void setParticleFilters(ParticleFilter **pfs);
     void setCombinations(Combinations *c);
+    void stopSaving();
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -26,6 +27,7 @@ protected:
 private:
     void reset();
     QColor getColor(int i);
+    void saveImage();
 
     QImage *img;
     int bufSize;
@@ -33,6 +35,8 @@ private:
     ParticleFilter **particleFilters;
     Combinations *combinations;
     Particle *maxWeightParticles;
+    int outputImageIndex;
+    bool save;
 
 public slots:
     void updateImage(Event *e);

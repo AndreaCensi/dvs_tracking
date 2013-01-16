@@ -16,13 +16,17 @@ CamWidget::CamWidget(QWidget *parent) : QWidget(parent)
     combinations = 0;
     maxWeightParticles = new Particle[4];
 
+    //Image output
+    outputImageIndex = 0;
+    save = true;
+
     setWindowTitle(tr("DVS128"));
     int size = SCALE_F*DVS_RES;
     resize(size,size);
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-    timer->start(20);
+    timer->start(40);
 }
 
 CamWidget::~CamWidget(){
@@ -152,6 +156,9 @@ void CamWidget::paintEvent(QPaintEvent *){
         painter.drawEllipse(center,r,r);
     }
 
+//    if(save)
+//        saveImage();
+
     reset(); //reset image
 }
 
@@ -185,6 +192,10 @@ void CamWidget::setCombinations(Combinations *c){
     combinations = c;
 }
 
+void CamWidget::stopSaving(){
+    save = false;
+}
+
 QColor CamWidget::getColor(int i){
     QColor color;
     switch (i){
@@ -202,6 +213,15 @@ QColor CamWidget::getColor(int i){
         break;
     }
     return color;
+}
+
+void CamWidget::saveImage(){
+    QString filename = "checkerboard_";
+    QString path = "C:/Users/giselher/Documents/uzh/calibration_images";
+    QString fileExtension = ".jpg";
+    QString fullpath = path + "/" + filename + QString::number(outputImageIndex) + fileExtension;
+    img->save(fullpath,"jpg",100);
+    outputImageIndex++;
 }
 
 // reset image
