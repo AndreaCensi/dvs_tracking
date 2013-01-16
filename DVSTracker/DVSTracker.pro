@@ -7,7 +7,9 @@ QT       += core \
 
 INCLUDEPATH += \
     inc \
-    inc/usbiolib
+    inc/usb/usbiolib \
+    $$PWD/../../../../../../Downloads/opencv \
+    $$PWD/../../../../../../Downloads/opencv/build/include
 
 SOURCES += main.cpp \
     usbreader.cpp \
@@ -31,7 +33,8 @@ SOURCES += main.cpp \
     combinationchoice.cpp \
     combinations.cpp \
     eventpacket.cpp \
-    packetbuffer.cpp
+    packetbuffer.cpp \
+    poseestimation.cpp
 
 HEADERS += \
     usbreader.h \
@@ -59,13 +62,26 @@ HEADERS += \
     combinations.h \
     buffer.h \
     eventpacket.h \
-    packetbuffer.h
+    packetbuffer.h \
+    poseestimation.h
 
 
 
-win32: LIBS += -L$$PWD/inc/usbiolib/Debug/Win32/ -lusbiolib
+win32: LIBS += -L$$PWD/inc/usb/usbiolib/Debug/Win32/ -lusbiolib
 
-INCLUDEPATH += $$PWD/inc/usbiolib/Debug/Win32
-DEPENDPATH += $$PWD/inc/usbiolib/Debug/Win32
+INCLUDEPATH += $$PWD/inc/usb//usbiolib/Debug/Win32
+DEPENDPATH += $$PWD/inc/usb/usbiolib/Debug/Win32
 
-win32: PRE_TARGETDEPS += $$PWD/inc/usbiolib/Debug/Win32/usbiolib.lib
+win32: PRE_TARGETDEPS += $$PWD/inc/usb/usbiolib/Debug/Win32/usbiolib.lib
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../../Downloads/opencv/build/x86/vc10/lib/ -lopencv_core243
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../../Downloads/opencv/build/x86/vc10/lib/ -lopencv_core243d
+
+INCLUDEPATH += $$PWD/../../../../../../Downloads/opencv/build/x86/vc10
+DEPENDPATH += $$PWD/../../../../../../Downloads/opencv/build/x86/vc10
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../../Downloads/opencv/build/x86/vc10/lib/ -lopencv_calib3d243
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../../Downloads/opencv/build/x86/vc10/lib/ -lopencv_calib3d243d
+
+INCLUDEPATH += $$PWD/../../../../../../Downloads/opencv/build/x86/vc10
+DEPENDPATH += $$PWD/../../../../../../Downloads/opencv/build/x86/vc10

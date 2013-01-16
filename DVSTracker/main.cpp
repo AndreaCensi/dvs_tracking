@@ -29,7 +29,6 @@ int main(int argc, char **argv){
     Tracker t(buf,frequencies);
     //widget.setWeightBuffers(t.weightBuffers);
     //    widget.setParticleFilters(t.particleFilters);
-    //    widget.setCombinations(t.combinationAnalyzer->getHypotheses());
     t.setWidget(&widget);
 
     widget.show();
@@ -39,6 +38,7 @@ int main(int argc, char **argv){
 
     int ret = app.exec();
     //    dvs.stopReading();
+
     t.stop();
     return ret;
 }

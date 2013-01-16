@@ -12,6 +12,7 @@ public:
     CombinationAnalyzer(ParticleFilter **pFilters,int numLEDs, float minimumDistance, int numOfHypothesis);
     void evaluate();
     Combinations* getHypotheses();
+    CombinationChoice *getBestHypothesis();
     void reset();
     int counter;
 

@@ -9,7 +9,7 @@
 
 // Parameteres
 #define SIGMA_W 50.0f // sigma for perdiod weighting in Hz
-#define PERIOD_MULTIPLIER 20.0f // multiplies measurement interval to measure signal period
+#define PERIOD_MULTIPLIER 10.0f // multiplies measurement interval to measure signal period
 
 // Guassian smoothing filter
 #define FILTER_SIZE 3   // kernel size
@@ -20,7 +20,7 @@
 #define NUM_MAXIMA 3
 
 // Particle filter parameters
-#define PF_NUM_PARTICLES 8
+#define PF_NUM_PARTICLES 16
 #define PF_DEFAULT_SIGMA 2.0f
 #define PF_MIN_MERGE_DISTANCE 3.0f // used to override merging threshold if uncertainty lower than this value
 #define PF_MAX_SIGMA 8.0f
@@ -135,13 +135,18 @@ void Tracker::processEvent(Event e){
 void Tracker::processPacket(){
     //find possible combinations of LED positions
     combinationAnalyzer->evaluate();
-    CombinationChoice *best = combinationAnalyzer->getHypotheses()->getBestCombination();
+    CombinationChoice *best = combinationAnalyzer->getBestHypothesis();
 
     //udpate widget with best score
     if(best != 0){
         for(unsigned int i = 0; i < best->size();i++){
             Particle *p = particleFilters[i]->get(best->get(i));
             widget->updateMaxWeightParticle(i,p);
+        }
+    }
+    else{
+        for(unsigned int i = 0; i < targetFrequencies.size();i++){
+            widget->updateMaxWeightParticle(i,0);
         }
     }
     combinationAnalyzer->reset();

@@ -85,6 +85,10 @@ Combinations* CombinationAnalyzer::getHypotheses(){
     return found;
 }
 
+CombinationChoice* CombinationAnalyzer::getBestHypothesis(){
+    return found->getBestCombination();
+}
+
 void CombinationAnalyzer::reset(){
     found->reset();
     threshold = 0;
