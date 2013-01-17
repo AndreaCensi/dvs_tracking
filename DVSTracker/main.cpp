@@ -5,9 +5,6 @@
 #include "camwidget.h"
 #include "udpinterface.h"
 
-#include "particlefilter.h"
-#include "combinationanalyzer.h"
-
 int main(int argc, char **argv){
     QApplication app(argc,argv);
 
@@ -18,30 +15,104 @@ int main(int argc, char **argv){
     frequencies.push_back(1240);
     frequencies.push_back(1410);
 
-    //tracking
+    //init camera and object data
+    std::vector<cv::Point3f> modelPts;
+    modelPts.push_back(cv::Point3f(0,0,0));
+    modelPts.push_back(cv::Point3f(0,20,0));
+    modelPts.push_back(cv::Point3f(20,0,0));
+    modelPts.push_back(cv::Point3f(20,20,0));
+    cv::Mat objectPoints(modelPts);
+    objectPoints = objectPoints.reshape(1);
+
+    cv::Mat cameraMatrix(3,3,CV_32F, cv::Scalar(0));
+    cameraMatrix.at<float>(0,0) = 64;
+    cameraMatrix.at<float>(1,1) = 64;
+    cameraMatrix.at<float>(2,2) = 1;
+    cameraMatrix.at<float>(0,2) = 32;
+    cameraMatrix.at<float>(1,2) = 32;
+
+    cv::Mat distortionCoeffs(5,1,CV_32F, cv::Scalar(0));
+
+
+    // EventPacket buffering
     UDPInterface udpIf;
     PacketBuffer *buf = udpIf.getPacketBuffer();
 
     //    DVS128Interface dvs;
     //    PacketBuffer *buf = dvs.getReaderInstance()->getPacketBuffer();
 
+    // Tracking
+    Tracker t(buf,frequencies,objectPoints,cameraMatrix,distortionCoeffs);
+
+    // Output widget
     CamWidget widget;
-    Tracker t(buf,frequencies);
+    t.setWidget(&widget);
     //widget.setWeightBuffers(t.weightBuffers);
     //    widget.setParticleFilters(t.particleFilters);
-    t.setWidget(&widget);
 
+    // Start the show
     widget.show();
     t.start();
-
     //    dvs.startReading();
-
     int ret = app.exec();
     //    dvs.stopReading();
-
     t.stop();
     return ret;
 }
+
+////matrix test
+//void printMatrix(cv::Mat m){
+//    int w = m.cols;
+//    int h = m.rows;
+//    for(int i = 0; i < h; i++){
+//        for(int j = 0; j < w; j++){
+//            printf("%f ",m.at<float>(i,j));
+//        }
+//        printf("\n");
+//    }
+//    printf("rows: %d, colums: %d, channels: %d\n\n",m.rows,m.cols,m.channels());
+//}
+
+//int main(){
+//    //init camera and object data
+//    std::vector<cv::Point3f> modelPts;
+//    modelPts.push_back(cv::Point3f(0,0,0));
+//    modelPts.push_back(cv::Point3f(0,20,0));
+//    modelPts.push_back(cv::Point3f(20,0,0));
+//    modelPts.push_back(cv::Point3f(20,20,0));
+//    cv::Mat objectPoints(modelPts);
+//    objectPoints = objectPoints.reshape(1);
+
+//    cv::Mat cameraMatrix(3,3,CV_32F, cv::Scalar(0));
+//    cameraMatrix.at<float>(0,0) = 64;
+//    cameraMatrix.at<float>(1,1) = 64;
+//    cameraMatrix.at<float>(2,2) = 1;
+//    cameraMatrix.at<float>(0,2) = 32;
+//    cameraMatrix.at<float>(1,2) = 32;
+
+//    cv::Mat imagePoints(4,2,CV_32F);
+//    for( int i = 0; i < 4;i++){
+//        imagePoints.at<float>(i,0) = i;
+//        imagePoints.at<float>(i,1) = i;
+//    }
+
+//    printMatrix(objectPoints);
+//    printMatrix(cameraMatrix);
+//    printMatrix(imagePoints);
+
+//    int npoints = std::max(objectPoints.checkVector(3, CV_32F), objectPoints.checkVector(3, CV_64F));
+//    CV_Assert( npoints >= 0 && npoints == std::max(imagePoints.checkVector(2, CV_32F), imagePoints.checkVector(2, CV_64F)) );
+
+//    return 0;
+//}
+
+////pose estimation test
+//int main(){
+//    cv::Mat m;
+//    PoseEstimation pe(m,m,m);
+//    pe.test();
+//    return 0;
+//}
 
 ////max weight test
 //int main(int argc, char **argv){

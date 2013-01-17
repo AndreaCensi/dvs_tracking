@@ -6,7 +6,7 @@ QT       += core \
     opengl
 
 INCLUDEPATH += \
-    inc \
+    inc/usb \
     inc/usb/usbiolib \
     $$PWD/../../../../../../Downloads/opencv \
     $$PWD/../../../../../../Downloads/opencv/build/include
@@ -82,6 +82,18 @@ DEPENDPATH += $$PWD/../../../../../../Downloads/opencv/build/x86/vc10
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../../Downloads/opencv/build/x86/vc10/lib/ -lopencv_calib3d243
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../../Downloads/opencv/build/x86/vc10/lib/ -lopencv_calib3d243d
+
+INCLUDEPATH += $$PWD/../../../../../../Downloads/opencv/build/x86/vc10
+DEPENDPATH += $$PWD/../../../../../../Downloads/opencv/build/x86/vc10
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../../Downloads/opencv/build/x86/vc10/lib/ -lopencv_features2d243
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../../Downloads/opencv/build/x86/vc10/lib/ -lopencv_features2d243d
+
+INCLUDEPATH += $$PWD/../../../../../../Downloads/opencv/build/x86/vc10
+DEPENDPATH += $$PWD/../../../../../../Downloads/opencv/build/x86/vc10
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../../Downloads/opencv/build/x86/vc10/lib/ -lopencv_imgproc243
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../../Downloads/opencv/build/x86/vc10/lib/ -lopencv_imgproc243d
 
 INCLUDEPATH += $$PWD/../../../../../../Downloads/opencv/build/x86/vc10
 DEPENDPATH += $$PWD/../../../../../../Downloads/opencv/build/x86/vc10

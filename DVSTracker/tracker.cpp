@@ -2,6 +2,7 @@
 #include "stdio.h"
 #include "maxima.h"
 #include "localmaximum.h"
+#include "include/opencv2/opencv.hpp"
 #include <math.h>
 
 // Resolution of DVS
@@ -31,7 +32,9 @@
 #define CA_NUM_HYPOTHESIS 4
 
 
-Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies, QObject *parent) : QThread(parent){
+Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies,
+                 cv::Mat objectPoints, cv::Mat cameraMatrix,
+                 cv::Mat distortionCoefficients, QObject *parent) : QThread(parent){
     //Members
     packetBuffer = buffer;
     targetFrequencies = frequencies;
@@ -61,6 +64,7 @@ Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies, QObject *pa
     eventCount = 0;
 
     combinationAnalyzer = new CombinationAnalyzer(particleFilters,targetFrequencies.size(),CA_MIN_DIST,CA_NUM_HYPOTHESIS);
+    poseEstimator = new PoseEstimation(objectPoints,cameraMatrix,distortionCoefficients);
 }
 
 Tracker::~Tracker(){
@@ -77,6 +81,7 @@ Tracker::~Tracker(){
         delete particleFilters[i];
     }
     delete [] particleFilters;
+    delete poseEstimator;
 
     delete logger;
 }
@@ -139,7 +144,7 @@ void Tracker::processPacket(){
 
     //udpate widget with best score
     if(best != 0){
-        for(unsigned int i = 0; i < best->size();i++){
+        for(int i = 0; i < best->size();i++){
             Particle *p = particleFilters[i]->get(best->get(i));
             widget->updateMaxWeightParticle(i,p);
         }
@@ -149,6 +154,21 @@ void Tracker::processPacket(){
             widget->updateMaxWeightParticle(i,0);
         }
     }
+
+    // Get pose estimation
+    if(best != 0){
+        cv::Mat imagePoints(best->size(),2,CV_32F);
+        for( int i = 0; i < best->size();i++){
+            Particle *p = particleFilters[i]->get(best->get(i));
+            imagePoints.at<float>(i,0) = p->x;
+            imagePoints.at<float>(i,1) = p->y;
+        }
+        imagePoints = imagePoints.reshape(2);
+        poseEstimator->estimatePose(imagePoints);
+        cv::Mat rvec = poseEstimator->getRotationVector();
+        cv::Mat tvec = poseEstimator->getTranslationVector();
+    }
+
     combinationAnalyzer->reset();
 }
 

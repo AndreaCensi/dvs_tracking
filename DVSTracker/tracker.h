@@ -14,6 +14,7 @@
 #include "particlefilter.h"
 #include "combinationanalyzer.h"
 #include "packetbuffer.h"
+#include "poseestimation.h"
 #include <vector>
 
 
@@ -21,7 +22,9 @@ class Tracker : public QThread
 {
     Q_OBJECT
 public:
-    Tracker(PacketBuffer *buffer, std::vector<int> frequencies, QObject *parent = 0);
+    Tracker(PacketBuffer *buffer, std::vector<int> frequencies,
+            cv::Mat objectPoints, cv::Mat cameraMatrix,
+            cv::Mat distortionCoefficients, QObject *parent = 0);
     ~Tracker();
     void setWidget(CamWidget *camWidget);
     void run();
@@ -31,6 +34,7 @@ public:
     ParticleFilter **particleFilters;
     //evaluation
     CombinationAnalyzer *combinationAnalyzer;
+    PoseEstimation *poseEstimator;
 
 private:
     Transition getTransition(Event e);
