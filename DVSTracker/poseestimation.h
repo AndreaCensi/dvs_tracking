@@ -8,7 +8,6 @@ class PoseEstimation
 public:
     PoseEstimation(cv::Mat objPoints, cv::Mat camMatrix, cv::Mat distCoeffs);
     void estimatePose(cv::Mat imagePoints);
-    void test();
     cv::Mat getRotationVector();
     cv::Mat getTranslationVector();
 

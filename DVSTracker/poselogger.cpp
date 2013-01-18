@@ -27,7 +27,7 @@ void PoseLogger::log(double x, double y, double z,
         return;
 
     if(numPoses > limit){
-        finished = true;
+        stop();
         return;
     }
 
