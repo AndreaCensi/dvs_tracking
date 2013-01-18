@@ -2,8 +2,7 @@
 
 const float FrequencyAccumulator::PI = 3.14159265f;
 
-#define N_GUESSES 16
-#define WEIGHT_MULTIPLIER 100000
+#define WEIGHT_MULTIPLIER 10000
 
 FrequencyAccumulator::FrequencyAccumulator(int frequency, float periodMultiplier,
                                            float sigma, int filterSize, float filterSigma,

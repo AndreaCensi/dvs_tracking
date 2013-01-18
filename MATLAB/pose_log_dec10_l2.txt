@@ -1,0 +1,964 @@
+#Track lost
+#Track lost
+30.8547	12.9824	42.7667	-0.285342	3.0448	0.0781754
+31.1368	13.1657	43.3258	0.265112	-3.18404	-0.130819
+31.0392	13.3998	43.6277	-0.263355	3.05339	0.105596
+31.4829	13.5939	44.1171	-0.297854	3.0383	0.0591905
+30.9984	12.9299	42.2697	-0.28006	3.05032	0.139458
+31.2084	13.068	42.5936	-0.280745	3.06404	0.129237
+30.7482	12.8538	41.9695	0.268882	-3.15436	-0.154448
+29.5858	12.9416	42.4204	-0.169754	3.18864	0.126322
+29.5858	12.9416	42.4204	-0.169754	3.18864	0.126322
+31.8894	14.2995	44.387	-0.302335	3.1157	0.0720516
+32.0861	13.9826	44.6126	-0.378191	3.0351	-0.0156402
+31.8135	13.1754	42.3822	-0.402112	2.97121	0.0455759
+32.2778	13.5436	43.0072	-0.393844	2.95947	0.0658376
+32.8497	14.1748	45.0652	-0.409754	2.96398	-0.0251273
+31.0269	13.6853	43.1139	0.224329	-3.10462	-0.123694
+30.1151	13.1348	41.7787	0.162458	-3.11497	-0.199989
+29.7727	12.7253	41.3117	0.211786	-3.1071	-0.115996
+29.6726	12.6728	40.9417	0.229881	-3.09554	-0.087355
+29.5945	12.2354	40.8764	0.22432	-3.08019	-0.0451345
+29.5761	13.0316	40.0986	-0.251601	3.22704	0.130606
+30.7069	13.8516	42.3939	-0.247624	3.0983	0.0949566
+31.3192	14.253	43.2705	-0.239014	3.11615	0.080102
+31.0912	13.9856	42.8002	-0.2329	3.08697	0.0900963
+31.0386	13.7007	42.7354	0.238835	-3.17669	-0.0631602
+30.9816	13.6534	42.6548	0.238897	-3.18372	-0.0644376
+30.9333	14.0487	43.2383	0.213224	-3.1758	-0.0853606
+31.4324	14.4514	43.8646	0.226544	-3.16284	-0.0834407
+31.1878	13.4806	42.5077	-0.278295	3.07628	0.049045
+31.1878	13.4806	42.5077	-0.278295	3.07628	0.049045
+32.1804	14.7857	44.2703	-0.362867	2.98806	-0.0427491
+32.2945	15.5166	43.1393	0.360535	-3.17579	-0.047011
+31.0027	14.2715	41.2635	-0.237638	3.09816	0.178259
+31.0521	14.1169	40.9864	-0.230998	3.10283	0.19444
+31.0766	13.9395	41.0542	-0.254012	3.10983	0.139676
+30.9222	13.916	40.5991	-0.242211	3.12521	0.17001
+30.8602	13.927	40.6027	-0.249838	3.10148	0.195854
+30.9085	14.0234	40.8699	-0.249442	3.1035	0.184851
+30.5317	13.9966	40.9959	-0.271563	3.16029	0.111944
+30.8049	14.0155	41.3149	-0.245405	3.07004	0.159647
+31.4282	14.3551	40.2632	-0.333633	3.02223	0.232448
+30.8251	14.2048	39.6135	0.266704	-3.11306	-0.203142
+30.0407	13.0774	38.4726	0.260386	-3.16954	-0.215921
+30.8059	13.4723	40.5743	-0.345888	3.00302	0.0685132
+30.4513	13.8728	40.6223	-0.269456	3.1467	0.0470907
+30.4513	13.8728	40.6223	-0.269456	3.1467	0.0470907
+30.2805	13.6914	40.3599	-0.263522	3.12876	0.0912205
+29.8678	13.2622	39.1099	-0.260099	3.10979	0.141786
+29.9349	14.4299	41.2414	0.16063	-3.07674	-0.0938311
+29.9349	14.4299	41.2414	0.16063	-3.07674	-0.0938311
+29.2556	12.5623	37.7043	0.238016	-3.12983	-0.142707
+29.2556	12.5623	37.7043	0.238016	-3.12983	-0.142707
+30.88	13.4204	40.2243	-0.362038	3.01606	0.0319019
+30.88	13.4204	40.2243	-0.362038	3.01606	0.0319019
+30.1332	13.1888	39.4289	-0.2369	3.1055	0.129671
+31.2513	14.4512	41.7386	-0.264327	3.08273	0.084159
+31.1568	14.6538	41.7675	0.282575	-3.15484	-0.0458869
+29.5881	12.9735	37.6427	-0.264525	3.04171	0.238289
+28.4025	12.4229	36.319	0.192289	-3.13744	-0.291997
+29.0551	13.3918	36.778	0.18756	-3.07483	-0.314953
+29.0551	13.3918	36.778	0.18756	-3.07483	-0.314953
+29.96	13.6731	37.8378	-0.256565	3.12282	0.259516
+29.2905	13.221	36.8144	-0.265119	3.08755	0.277308
+30.3007	14.256	40.0017	-0.319098	3.06185	0.116999
+#Track lost
+#Track lost
+29.6577	13.7973	38.9757	-0.280724	3.08987	0.150487
+29.6577	13.7973	38.9757	-0.280724	3.08987	0.150487
+30.3781	15.0251	41.7337	-0.302944	3.08972	0.032871
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+28.782	12.7056	37.3402	-0.244796	3.13719	0.102281
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+29.2094	13.204	38.1427	-0.276711	3.09799	0.103781
+29.2094	13.204	38.1427	-0.276711	3.09799	0.103781
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+29.02	13.504	38.5437	-0.27123	3.05521	0.102656
+29.7804	13.8937	39.4603	-0.307188	2.98509	0.0953578
+29.7804	13.8937	39.4603	-0.307188	2.98509	0.0953578
+29.7012	14.1972	39.2234	-0.32346	2.99372	0.112216
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+30.0014	14.0579	39.2517	-0.0603527	-0.129987	1.80167
+29.8942	13.9819	37.6394	0.00900666	-0.157098	1.80212
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+30.6574	11.2346	37.7093	0.199828	-3.12363	-0.12575
+30.3327	11.1776	37.3445	0.16952	-3.10488	-0.152751
+30.8226	12.1496	38.3802	0.184374	-3.07776	-0.128087
+31.6237	12.2388	39.3069	-0.270949	3.12793	0.0457176
+31.7099	11.5681	38.3926	-0.297667	3.0614	0.0809467
+31.4857	11.229	38.1057	-0.275459	3.02995	0.162844
+31.4268	11.068	38.3562	-0.270219	3.02151	0.142643
+32.0274	11.4004	39.192	-0.271672	3.05114	0.100207
+31.5884	11.1336	38.7903	0.251762	-3.16419	-0.104385
+30.9448	10.3714	38.0595	-0.189229	3.1211	0.142701
+32.438	12.2951	39.3083	0.270111	-3.14414	-0.167893
+32.438	12.2951	39.3083	0.270111	-3.14414	-0.167893
+32.6985	12.1052	40.2422	0.302151	-3.1879	-0.0973001
+32.6985	12.1052	40.2422	0.302151	-3.1879	-0.0973001
+32.7202	11.8396	40.1359	0.271251	-3.17991	-0.113384
+#Track lost
+30.9911	9.1265	37.2231	-0.24415	3.09262	0.0805104
+31.2239	9.3194	37.5566	-0.253251	3.10467	0.054121
+31.4794	9.71308	38.2272	-0.264761	3.10793	0.0259519
+32.1477	10.5217	38.0079	-0.257416	3.13734	0.159809
+32.4805	10.4394	38.3141	-0.280109	3.12373	0.119449
+32.7199	10.861	38.706	-0.291251	3.13445	0.112106
+32.6115	10.6161	38.6186	-0.307223	3.12767	0.082046
+32.7059	10.1372	38.1903	-0.326212	3.06957	0.0923921
+32.7484	10.1077	38.2065	-0.322084	3.07691	0.0852506
+31.0897	8.59041	36.4079	-0.210029	3.13154	0.160059
+31.0897	8.59041	36.4079	-0.210029	3.13154	0.160059
+32.0328	9.17955	37.4752	0.221248	-3.15789	-0.166059
+32.3551	9.76779	38.7653	0.210813	-3.17176	-0.147158
+32.3551	9.76779	38.7653	0.210813	-3.17176	-0.147158
+33.127	9.49218	39.7507	-0.27765	3.06111	0.0419994
+33.7251	10.164	39.3578	-0.313309	3.05119	0.106128
+33.6398	11.1469	40.1069	-0.216271	3.14315	0.195148
+32.7076	9.72944	39.272	-0.27439	3.1455	0.0550229
+33.072	9.55185	39.5876	-0.256086	3.13966	0.0465607
+32.5576	9.02767	38.715	-0.232851	3.12519	0.0755208
+33.6624	9.86453	39.9239	0.233818	-3.15087	-0.0768955
+33.59	9.82128	38.9468	0.230589	-3.10953	-0.139731
+33.9954	10.1894	39.3173	0.233982	-3.12654	-0.164562
+34.9833	11.0278	41.2466	0.23268	-3.11054	-0.123034
+34.7828	10.1694	40.9779	-0.366666	3.04475	-0.0207707
+34.0478	9.36813	39.3749	-0.336689	3.03219	0.0474242
+33.8668	10.0181	39.3617	0.255824	-3.16845	-0.182799
+34.3081	9.82719	39.775	-0.305435	3.09401	0.0327499
+33.987	9.48552	39.5512	0.308181	-3.16367	-0.0290047
+34.0715	9.47581	40.0737	-0.324894	3.04175	0.0236108
+34.0292	9.26414	39.9856	-0.31044	3.03333	0.0578264
+34.1075	9.44699	39.6061	-0.315819	3.0468	0.0884344
+33.698	8.91158	39.2835	-0.342095	3.03528	0.0291716
+34.0961	9.07177	39.4451	-0.396247	2.97307	0.0158612
+#Track lost
+#Track lost
+34.5195	9.07492	40.228	-0.355247	3.02921	-0.00664302
+34.8475	9.08662	40.4807	-0.374216	2.99711	-0.00730409
+34.2736	8.75231	39.9824	-0.285711	3.08668	0.0611693
+34.1873	8.56015	39.7992	-0.248636	3.15582	0.0141
+34.0692	8.71118	39.5665	-0.271175	3.1247	0.0476895
+34.1362	8.88919	39.6231	-0.277715	3.13034	0.0495626
+34.4781	9.32485	39.881	-0.249513	3.11447	0.138735
+35.4379	9.93024	41.0943	0.267925	-3.1251	-0.138465
+35.251	9.72825	40.9077	-0.297959	3.10452	0.0615748
+34.8697	9.63795	40.3639	-0.300749	3.10022	0.0804415
+34.1167	9.34292	39.6133	-0.238339	3.17637	0.109831
+34.5977	8.71623	40.3258	-0.366524	3.04978	-0.0647057
+34.3559	8.16792	39.4296	-0.315273	3.0703	0.00775605
+34.4674	8.38093	39.6269	-0.305265	3.09467	-0.00949861
+34.708	8.69397	40.2683	-0.317219	3.0928	-0.0415863
+34.5906	8.62385	40.1615	-0.310367	3.0781	0.00531481
+34.1481	8.94418	39.6362	-0.204657	3.1728	0.127005
+34.1481	8.94418	39.6362	-0.204657	3.1728	0.127005
+33.0788	8.16171	38.6012	-0.179479	3.21552	0.113582
+#Track lost
+#Track lost
+33.5277	8.02773	38.3746	0.14813	-3.04929	-0.167592
+33.7339	7.39652	38.7893	-0.303462	3.10555	-0.00556839
+34.9465	9.00613	40.1221	0.248711	-3.10685	-0.100066
+34.8783	9.07669	40.0477	0.259745	-3.105	-0.087828
+34.3328	8.1572	39.2674	0.256015	-3.14024	-0.0868635
+35.3677	9.22673	41.5094	-0.258552	3.14647	0.0248746
+35.5163	9.41173	41.8029	0.283506	-3.11094	0.0148865
+35.4579	9.40168	40.7225	0.271239	-3.09852	-0.0637708
+34.1028	7.81737	39.0746	-0.272859	3.12188	0.0693169
+33.9576	7.52583	38.9263	-0.276616	3.12682	0.0348319
+33.9869	7.52886	39.1414	-0.277791	3.1219	0.0202021
+35.4497	8.622	39.9756	0.301047	-3.11276	-0.024877
+34.5864	8.2142	40.4636	-0.400935	3.01909	-0.166797
+34.7798	7.74783	40.534	-0.353186	3.04526	-0.126363
+34.5131	7.36198	40.0294	-0.33796	3.0446	-0.104296
+35.1051	8.07161	40.5097	-0.291373	3.06052	0.0345173
+35.7881	8.56248	40.3397	-0.32929	3.03646	0.0589023
+35.7881	8.56248	40.3397	-0.32929	3.03646	0.0589023
+36.6198	8.83613	41.3292	-0.350337	3.01965	0.0508973
+34.9125	8.11882	40.1419	-0.302393	3.0732	0.016921
+34.9125	8.11882	40.1419	-0.302393	3.0732	0.016921
+35.7108	8.06265	40.7729	-0.365657	3.0329	-0.0455987
+35.7108	8.06265	40.7729	-0.365657	3.0329	-0.0455987
+35.9096	8.0466	41.04	-0.357557	3.03268	-0.0450024
+34.9064	7.66152	39.2251	0.240391	-3.08806	-0.0720716
+35.2255	7.59858	39.5894	-0.30671	3.11318	0.00868644
+35.0619	7.67209	39.4798	-0.314945	3.11595	0.00861431
+35.262	7.61532	39.6266	-0.310153	3.09464	0.0399647
+34.6895	7.28258	39.5622	-0.263378	3.07397	0.0458382
+34.7584	7.35519	39.1429	-0.249655	3.14554	0.0748494
+34.62	7.52525	39.103	0.186165	-3.04034	-0.0693694
+34.4483	7.62033	38.7829	0.192124	-3.0319	-0.0853625
+35.1913	7.51478	39.4617	-0.344654	3.03488	-0.00345383
+35.1913	7.51478	39.4617	-0.344654	3.03488	-0.00345383
+35.7304	7.90437	40.142	-0.392871	3.00174	-0.0193431
+35.7265	7.28947	39.2404	-0.372842	3.01289	-0.0176838
+34.5787	6.74177	38.3826	-0.32496	3.11372	-0.0633619
+34.2176	6.74608	37.3233	0.271684	-3.07822	-0.00452137
+33.7782	6.40879	36.8561	0.24871	-3.13108	-0.0907914
+34.9624	6.81598	38.4305	-0.363807	2.99102	0.0107326
+35.3101	6.81541	38.8666	-0.30569	3.03561	0.0666415
+35.5925	7.19433	39.2373	-0.319952	3.04295	0.0566753
+35.3867	7.07854	39.0784	-0.307786	3.06119	0.0555495
+35.7223	7.30109	39.2086	-0.32799	3.04604	0.0610913
+35.7689	7.31193	39.2409	-0.32891	3.05169	0.0478636
+35.3008	6.91997	39.0234	-0.321017	3.06382	0.0164229
+35.3008	6.91997	39.0234	-0.321017	3.06382	0.0164229
+35.2518	7.07949	39.2283	-0.294161	3.10204	0.0230135
+35.3351	7.0204	39.3118	-0.322294	3.06945	-0.00247678
+35.3351	7.0204	39.3118	-0.322294	3.06945	-0.00247678
+#Track lost
+#Track lost
+#Track lost
+35.195	6.61665	38.8863	-0.355658	3.08664	-0.169615
+34.0773	5.75071	37.5859	-0.311672	3.05466	-0.0835689
+34.456	6.10974	37.8498	-0.334555	2.99206	-0.00547762
+35.4354	6.55359	38.5025	-0.359514	3.04085	-0.0130868
+35.2898	6.1828	38.2995	-0.320747	3.03049	0.0367582
+35.5945	6.45105	38.5254	-0.314389	3.029	0.0627069
+34.954	6.34205	37.8136	-0.295339	3.0761	0.0826558
+35.4332	6.9116	38.3811	-0.325624	3.06021	0.0254406
+34.7929	6.25554	37.4035	-0.298297	3.04548	0.0614721
+34.5202	5.97016	37.1975	-0.315046	3.01045	0.0722389
+34.3643	6.29448	36.6624	-0.280912	3.04428	0.14569
+34.3643	6.29448	36.6624	-0.280912	3.04428	0.14569
+34.3643	6.29448	36.6624	-0.280912	3.04428	0.14569
+34.3643	6.29448	36.6624	-0.280912	3.04428	0.14569
+34.0631	5.66369	36.325	-0.322963	2.99349	0.0923856
+34.2411	5.77394	36.4442	-0.332363	2.97861	0.0969216
+34.2411	5.77394	36.4442	-0.332363	2.97861	0.0969216
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+35.0013	6.39182	37.2354	-0.256672	3.11688	0.0484367
+34.9985	6.38803	37.2324	-0.256536	3.11678	0.0484919
+34.6969	5.86559	37.0126	-0.319676	3.05789	-0.0314288
+34.128	5.48605	36.5657	-0.291614	3.07844	-0.00249454
+34.128	5.48605	36.5657	-0.291614	3.07844	-0.00249454
+34.1966	5.56517	37.193	-0.297394	3.06816	-0.046224
+34.1966	5.56517	37.193	-0.297394	3.06816	-0.046224
+#Track lost
+#Track lost
+#Track lost
+35.1422	5.88192	37.2739	-0.340326	3.09186	-0.0766582
+34.9974	5.66095	37.1294	-0.384726	3.03236	-0.113968
+34.3113	5.11437	36.6281	-0.365352	2.99713	-0.0611864
+34.4137	5.25646	36.7318	-0.339329	3.02973	-0.0391834
+34.7984	5.81006	36.6684	-0.359683	3.05323	-0.0163459
+34.5452	5.55945	36.4737	-0.375827	3.03502	-0.043092
+34.6595	5.34111	36.5277	-0.354113	3.04686	-0.0315736
+34.6595	5.34111	36.5277	-0.354113	3.04686	-0.0315736
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+40.5612	6.95541	41.4845	-0.135093	0.0472731	1.79655
+40.275	6.56149	40.4504	-0.0842743	0.0300838	1.7817
+39.8577	6.26909	40.1424	-0.144782	0.0140874	1.80942
+39.7326	6.10956	39.931	-0.139185	0.00876631	1.80468
+39.7326	6.10956	39.931	-0.139185	0.00876631	1.80468
+39.571	5.90659	39.6621	-0.132313	0.00195975	1.79864
+39.571	5.90659	39.6621	-0.132313	0.00195975	1.79864
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost
+#Track lost

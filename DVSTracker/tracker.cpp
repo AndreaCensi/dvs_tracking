@@ -10,18 +10,18 @@
 
 // Parameteres
 #define SIGMA_W 50.0f // sigma for perdiod weighting in Hz
-#define PERIOD_MULTIPLIER 10.0f // multiplies measurement interval to measure signal period
+#define PERIOD_MULTIPLIER 2.0f // multiplies measurement interval to measure signal period
 
 // Guassian smoothing filter
 #define FILTER_SIZE 3   // kernel size
 #define SIGMA_FILTER 0.75f
 
 // Maximum detection
-#define MIN_DIST 8.0f   // min distance between maxima
+#define MAX_MIN_DIST 8.0f   // min distance between maxima
 #define NUM_MAXIMA 3
 
 // Particle filter parameters
-#define PF_NUM_PARTICLES 16
+#define PF_NUM_PARTICLES 8
 #define PF_DEFAULT_SIGMA 2.0f
 #define PF_MIN_MERGE_DISTANCE 3.0f // used to override merging threshold if uncertainty lower than this value
 #define PF_MAX_SIGMA 8.0f
@@ -51,7 +51,7 @@ Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies,
     weightBuffers = new FrequencyAccumulator*[targetFrequencies.size()];
     for(unsigned int i = 0; i < targetFrequencies.size();i++){
         weightBuffers[i] = new FrequencyAccumulator(
-                    targetFrequencies[i],PERIOD_MULTIPLIER,SIGMA_W,FILTER_SIZE,SIGMA_FILTER,MIN_DIST,NUM_MAXIMA,DVS_RES,DVS_RES);
+                    targetFrequencies[i],PERIOD_MULTIPLIER,SIGMA_W,FILTER_SIZE,SIGMA_FILTER,MAX_MIN_DIST,NUM_MAXIMA,DVS_RES,DVS_RES);
     }
 
     particleFilters = new ParticleFilter*[targetFrequencies.size()];
@@ -60,6 +60,7 @@ Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies,
     }
 
     logger = new HypothesisLogger("C:/Users/giselher/Documents/uzh/hypo_log.txt");
+    poseLogger = new PoseLogger("C:/Users/giselher/Documents/uzh/pose_log.txt");
     lastEventTs = 0;
     eventCount = 0;
 
@@ -84,6 +85,7 @@ Tracker::~Tracker(){
     delete poseEstimator;
 
     delete logger;
+    delete poseLogger;
 }
 
 void Tracker::processEvent(Event e){
@@ -99,11 +101,12 @@ void Tracker::processEvent(Event e){
         return;
     }
 
-    //stop logger/saving image output
-    if(lastEventTs > e.timeStamp && !logger->done()){
+    //stop logger/saving image output (for udp interface, since jAER loops the videos)
+    if(lastEventTs > e.timeStamp && !poseLogger->done()){
         printf("#Events(tra): %d\n",eventCount);
         eventCount = 0;
         //logger->stop();
+        poseLogger->stop();
         //widget->stopSaving();
     }
     else
@@ -167,6 +170,21 @@ void Tracker::processPacket(){
         poseEstimator->estimatePose(imagePoints);
         cv::Mat rvec = poseEstimator->getRotationVector();
         cv::Mat tvec = poseEstimator->getTranslationVector();
+
+        double x,y,z,rx,ry,rz;
+
+        x = tvec.at<double>(0,0);
+        y = tvec.at<double>(1,0);
+        z = tvec.at<double>(2,0);
+
+        rx = rvec.at<double>(0,0);
+        ry = rvec.at<double>(1,0);
+        rz = rvec.at<double>(2,0);
+
+        poseLogger->log(x,y,z,rx,ry,rz);
+    }
+    else{
+        //poseLogger->logTrackLost();
     }
 
     combinationAnalyzer->reset();

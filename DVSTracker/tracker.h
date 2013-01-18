@@ -15,6 +15,7 @@
 #include "combinationanalyzer.h"
 #include "packetbuffer.h"
 #include "poseestimation.h"
+#include "poselogger.h"
 #include <vector>
 
 
@@ -61,6 +62,7 @@ private:
     void updateWeightWidget(int bufID, FrequencyAccumulator *buf, Maxima *m);
 
     HypothesisLogger *logger;
+    PoseLogger *poseLogger;
     double lastEventTs;
     int eventCount;
 

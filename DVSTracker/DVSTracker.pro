@@ -34,7 +34,8 @@ SOURCES += main.cpp \
     combinations.cpp \
     eventpacket.cpp \
     packetbuffer.cpp \
-    poseestimation.cpp
+    poseestimation.cpp \
+    poselogger.cpp
 
 HEADERS += \
     usbreader.h \
@@ -63,7 +64,8 @@ HEADERS += \
     buffer.h \
     eventpacket.h \
     packetbuffer.h \
-    poseestimation.h
+    poseestimation.h \
+    poselogger.h
 
 
 
