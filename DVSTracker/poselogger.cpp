@@ -7,7 +7,7 @@ PoseLogger::PoseLogger(QString filename)
     outputFile = filename;
     finished = false;
     numPoses = 0;
-    limit = 1000;
+    limit = 2000;
 }
 
 void PoseLogger::saveToFile(QString filename){
@@ -22,7 +22,7 @@ void PoseLogger::saveToFile(QString filename){
 }
 
 void PoseLogger::log(double x, double y, double z,
-                     double rx, double ry, double rz){
+                     double rx, double ry, double rz, double ts){
     if(finished)
         return;
 
@@ -37,9 +37,10 @@ void PoseLogger::log(double x, double y, double z,
     QString srx = QString::number(rx);
     QString sry = QString::number(ry);
     QString srz = QString::number(rz);
+    QString t = QString::number(ts);
 
     output += sx + "\t" + sy +  "\t" + sz
-               + "\t" + srx + "\t" + sry + "\t" + srz + "\n";
+            + "\t" + srx + "\t" + sry + "\t" + srz + "\t" + t + "\n";
 
     numPoses++;
 }

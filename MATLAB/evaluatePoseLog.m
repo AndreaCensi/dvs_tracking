@@ -3,6 +3,7 @@ function ret = evaluatePoseLog(filename)
 P = importdata(filename);
 T = P(:,1:3)./100;
 V_r = P(:,4:6);
+time = P(:,7);
 
 V_r = radtodeg(V_r);
 
@@ -17,20 +18,20 @@ ylabel('y');
 zlabel('z');
 axis equal;
 
-subplot(2,2,2); plot(yaw);
+subplot(2,2,2); plot(time,yaw);
 title('Yaw');
-xlabel('Eventpacket');
+xlabel('Time [s]');
 ylabel('Degree');
-ylim([-190 190]);
+ylim([-200 200]);
 
-subplot(2,2,3); plot(pitch);
+subplot(2,2,3); plot(time,pitch);
 title('Pitch');
-xlabel('Eventpacket');
+xlabel('Time [s]');
 ylabel('Degree');
-ylim([-190 190]);
+ylim([-200 200]);
 
-subplot(2,2,4); plot(roll);
+subplot(2,2,4); plot(time,roll);
 title('Roll');
-xlabel('Eventpacket');
+xlabel('Time [s]');
 ylabel('Degree');
-ylim([-190 190]);
+ylim([-200 200]);

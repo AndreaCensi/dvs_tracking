@@ -184,7 +184,7 @@ void Tracker::processPacket(){
         ry = rvec.at<double>(1,0);
         rz = rvec.at<double>(2,0);
 
-        poseLogger->log(x,y,z,rx,ry,rz);
+        poseLogger->log(x,y,z,rx,ry,rz,lastEventTs);
     }
     else{
         //poseLogger->logTrackLost();

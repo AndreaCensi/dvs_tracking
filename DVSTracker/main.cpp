@@ -25,11 +25,11 @@ int main(int argc, char **argv){
     objectPoints = objectPoints.reshape(1);
 
     cv::Mat cameraMatrix(3,3,CV_32F, cv::Scalar(0));
-    cameraMatrix.at<float>(0,0) = 64;
-    cameraMatrix.at<float>(1,1) = 64;
+    cameraMatrix.at<float>(0,0) = 100;
+    cameraMatrix.at<float>(1,1) = 100;
     cameraMatrix.at<float>(2,2) = 1;
-    cameraMatrix.at<float>(0,2) = 32;
-    cameraMatrix.at<float>(1,2) = 32;
+    cameraMatrix.at<float>(0,2) = 64;
+    cameraMatrix.at<float>(1,2) = 64;
 
     cv::Mat distortionCoeffs(5,1,CV_32F, cv::Scalar(0));
 
