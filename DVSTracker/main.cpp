@@ -17,10 +17,10 @@ int main(int argc, char **argv){
 
     //init camera and object data
     std::vector<cv::Point3f> modelPts;
-    modelPts.push_back(cv::Point3f(0,0,0));
-    modelPts.push_back(cv::Point3f(0,20,0));
-    modelPts.push_back(cv::Point3f(20,0,0));
-    modelPts.push_back(cv::Point3f(20,20,0));
+    modelPts.push_back(cv::Point3f(-0.1f,-0.1f,0.0f));
+    modelPts.push_back(cv::Point3f(-0.1f,0.1f,0.0f));
+    modelPts.push_back(cv::Point3f(0.1f,-0.1f,0.0f));
+    modelPts.push_back(cv::Point3f(0.1f,0.1f,0.0f));
     cv::Mat objectPoints(modelPts);
     objectPoints = objectPoints.reshape(1);
 

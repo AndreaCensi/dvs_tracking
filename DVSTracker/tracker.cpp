@@ -106,7 +106,7 @@ void Tracker::processEvent(Event e){
         printf("#Events(tra): %d\n",eventCount);
         eventCount = 0;
         //logger->stop();
-        poseLogger->stop();
+        //poseLogger->stop();
         //widget->stopSaving();
     }
     else
@@ -184,7 +184,7 @@ void Tracker::processPacket(){
         ry = rvec.at<double>(1,0);
         rz = rvec.at<double>(2,0);
 
-        poseLogger->log(x,y,z,rx,ry,rz,lastEventTs);
+        //poseLogger->log(x,y,z,rx,ry,rz,lastEventTs);
     }
     else{
         //poseLogger->logTrackLost();
@@ -238,7 +238,7 @@ void Tracker::updateWeightWidget(int bufID, FrequencyAccumulator *buf, Maxima *m
         for(int x = 0; x < DVS_RES;x++){
             float value = buf->weightMap->get(x,y);
             if(value > 0){
-                int grey = int(value*4.0);
+                int grey = int(value*100000);
                 if(grey > 255)
                     grey = 255;
                 if(grey > 0){

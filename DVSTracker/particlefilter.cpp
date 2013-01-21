@@ -135,7 +135,7 @@ bool ParticleFilter::insideCovariance(Particle *p, Particle *c){
 void ParticleFilter::merge(Particle *p, Particle *c){
     float x,y;
     float sigma;
-    int w;
+    float w;
     float varP,varC,iVarP,iVarC; // variances of particle and candidate
 
     varP = p->uncertainty*p->uncertainty;
@@ -152,7 +152,7 @@ void ParticleFilter::merge(Particle *p, Particle *c){
     //    w = int(p->weight*(1-u/d) + c->weight*(u/d));
 
     //let the weight grow, the more updates come in
-    w = int( (sigma_0/p->uncertainty)*p->weight + c->weight );
+    w = (sigma_0/p->uncertainty)*p->weight + c->weight;
 
     //set updated particle values
     p->set(x,y,sigma,w,c->timeStamp);

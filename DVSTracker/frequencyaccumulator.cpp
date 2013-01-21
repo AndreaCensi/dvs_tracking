@@ -9,7 +9,7 @@ FrequencyAccumulator::FrequencyAccumulator(int frequency, float periodMultiplier
                                            float minDist, int numMaxima, int w, int h)
 {
     // Weights
-    weightMap = new Map<int>(w,h);
+    weightMap = new Map<float>(w,h);
     for(int i = 0; i < weightMap->size();i++)
         weightMap->set(i,0);
 
@@ -39,8 +39,8 @@ void FrequencyAccumulator::update(Interval interval){
     lastUpdate = interval.timeStamp;
     int x = interval.x;
     int y = interval.y;
-    int prevWeight = weightMap->get(x,y);
-    int weight = getWeight(interval.deltaT,targetFrequency,sd) + prevWeight;
+    float prevWeight = weightMap->get(x,y);
+    float weight = getWeight(interval.deltaT,targetFrequency,sd) + prevWeight;
 
 //    printf("dt: %f, w: %f\n",interval.deltaT,weight);
 
@@ -49,11 +49,11 @@ void FrequencyAccumulator::update(Interval interval){
     maxima->update(x,y,weight);
 }
 
-int FrequencyAccumulator::getWeight(double interval, int frequency, float sd){
+float FrequencyAccumulator::getWeight(double interval, int frequency, float sd){
     float measuredFrequency = 1.0/interval;
     float diff = measuredFrequency - float(frequency);
     float weight = 1.0f/(sd*sqrt(2*PI)) * exp(-pow(diff/sd,2.0f))/2.0f;
-    return int(WEIGHT_MULTIPLIER*weight);
+    return weight;
 }
 
 bool FrequencyAccumulator::hasExpired(){

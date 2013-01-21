@@ -12,7 +12,7 @@ Maxima::~Maxima(){
     delete [] maxima;
 }
 
-void Maxima::update(int x, int y, int weight){
+void Maxima::update(int x, int y, float weight){
     if (weight == 0)
         return;
     int smallest = 0;

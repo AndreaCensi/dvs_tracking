@@ -8,7 +8,7 @@ class Maxima
 public:
     Maxima(int numberOfMaxima, float minimumDistance);
     ~Maxima();
-    void update(int x, int y, int weight);
+    void update(int x, int y, float weight);
     LocalMaximum* get(int i);
     void reset();
     int size();

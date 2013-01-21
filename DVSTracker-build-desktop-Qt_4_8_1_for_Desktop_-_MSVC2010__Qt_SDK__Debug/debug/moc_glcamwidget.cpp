@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'glcamwidget.h'
 **
-** Created: Thu 17. Jan 11:23:24 2013
+** Created: Mon 21. Jan 15:42:35 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

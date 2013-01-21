@@ -1,6 +1,6 @@
 #include "combinationanalyzer.h"
 
-#define DEPTH_LIMIT 3
+#define DEPTH_LIMIT 8
 
 CombinationAnalyzer::CombinationAnalyzer(ParticleFilter **pFilters, int numLEDs, float minimumDistance, int numOfHypothesis)
 {

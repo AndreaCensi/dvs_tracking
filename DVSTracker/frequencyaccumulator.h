@@ -16,7 +16,7 @@ public:
     void update(Interval interval);
     bool hasExpired();
     Maxima* getMaxima();
-    Map<int> *weightMap;
+    Map<float> *weightMap;
     void reset();
 
     Maxima *maxima;
@@ -24,7 +24,7 @@ public:
     static const float PI;
 
 //private:
-    int getWeight(double interval, int frequency, float sd);
+    float getWeight(double interval, int frequency, float sd);
 
     int targetFrequency;
     float multiplier;
