@@ -1,7 +1,7 @@
 function ret = evaluatePoseLog(filename)
 
 P = importdata(filename);
-T = P(:,1:3)./100;
+T = P(:,1:3);
 V_r = P(:,4:6);
 time = P(:,7);
 

@@ -23,11 +23,6 @@ private:
     PacketBuffer *packetBuffer;
     RingBuffer<Event> *eventBuffer;
     unsigned int mileStone;
-
-    //Logger *logger;
-
-    //packetBuffer
-
 };
 
 #endif // USBREADER_H

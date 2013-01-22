@@ -23,7 +23,7 @@ void CombinationAnalyzer::evaluate(){
     CombinationChoice c(numTracks);
     //analyze(c,0,0,particleFilters[0]->size()+1);
 
-    // expand tree with depth limiation
+    // expand tree with depth limitation
     while(level < particleFilters[0]->size()){
         for(int i = 0; i < c.size(); i++)
             c.set(i,level);

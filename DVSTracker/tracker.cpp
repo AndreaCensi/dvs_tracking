@@ -23,7 +23,7 @@
 // Particle filter parameters
 #define PF_NUM_PARTICLES 8
 #define PF_DEFAULT_SIGMA 2.0f
-#define PF_MIN_MERGE_DISTANCE 3.0f // used to override merging threshold if uncertainty lower than this value
+#define PF_MIN_MERGE_DISTANCE 4.0f // used to override merging threshold if uncertainty lower than this value
 #define PF_MAX_SIGMA 8.0f
 #define PF_V_MAX 200.0f  // pixels/s
 
@@ -31,6 +31,7 @@
 #define CA_MIN_DIST 8.0f
 #define CA_NUM_HYPOTHESIS 4
 
+const float PI = 3.14159265f;
 
 Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies,
                  cv::Mat objectPoints, cv::Mat cameraMatrix,
@@ -60,7 +61,7 @@ Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies,
     }
 
     logger = new HypothesisLogger("C:/Users/giselher/Documents/uzh/hypo_log.txt");
-    poseLogger = new PoseLogger("C:/Users/giselher/Documents/uzh/pose_log.txt");
+    poseLogger = new PoseLogger("C:/Users/giselher/Documents/uzh/Master\ Projekt/code/dvs_tracking/MATLAB/pose_log.txt");
     lastEventTs = 0;
     eventCount = 0;
 
@@ -106,7 +107,7 @@ void Tracker::processEvent(Event e){
         printf("#Events(tra): %d\n",eventCount);
         eventCount = 0;
         //logger->stop();
-        //poseLogger->stop();
+        poseLogger->stop();
         //widget->stopSaving();
     }
     else
@@ -184,7 +185,9 @@ void Tracker::processPacket(){
         ry = rvec.at<double>(1,0);
         rz = rvec.at<double>(2,0);
 
-        //poseLogger->log(x,y,z,rx,ry,rz,lastEventTs);
+        printf("[x y z (cm)]: %3.0f %3.0f %3.0f\t [Y P R (deg)]: %3.1f %3.1f %3.1f     \r",x*100,y*100,z*100,rx*180/PI,ry*180/PI,rz*180/PI);
+
+        poseLogger->log(x,y,z,rx,ry,rz,lastEventTs);
     }
     else{
         //poseLogger->logTrackLost();

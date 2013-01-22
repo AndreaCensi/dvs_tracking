@@ -2,7 +2,7 @@
 
 const float FrequencyAccumulator::PI = 3.14159265f;
 
-#define WEIGHT_MULTIPLIER 10000
+#define WEIGHT_MULTIPLIER 1000
 
 FrequencyAccumulator::FrequencyAccumulator(int frequency, float periodMultiplier,
                                            float sigma, int filterSize, float filterSigma,
@@ -42,6 +42,9 @@ void FrequencyAccumulator::update(Interval interval){
     float prevWeight = weightMap->get(x,y);
     float weight = getWeight(interval.deltaT,targetFrequency,sd) + prevWeight;
 
+//    if(weight < 0.1)
+//        weight = 0;
+
 //    printf("dt: %f, w: %f\n",interval.deltaT,weight);
 
     weightMap->insert(x,y,weight);
@@ -53,11 +56,11 @@ float FrequencyAccumulator::getWeight(double interval, int frequency, float sd){
     float measuredFrequency = 1.0/interval;
     float diff = measuredFrequency - float(frequency);
     float weight = 1.0f/(sd*sqrt(2*PI)) * exp(-pow(diff/sd,2.0f))/2.0f;
-    return weight;
+    return weight*WEIGHT_MULTIPLIER;
 }
 
 bool FrequencyAccumulator::hasExpired(){
-    if( (lastUpdate - lastReset) > (multiplier/targetFrequency) )
+    if( (lastUpdate - lastReset) > /*(multiplier/targetFrequency)*/ 0.002)
         return true;
     else
         return false;

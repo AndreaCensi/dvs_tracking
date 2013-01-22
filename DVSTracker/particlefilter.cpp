@@ -145,6 +145,7 @@ void ParticleFilter::merge(Particle *p, Particle *c){
 
     x = (p->x*iVarP + c->x*iVarC)/(iVarP+iVarC);
     y = (p->y*iVarP + c->y*iVarC)/(iVarP+iVarC);
+
     sigma = sqrt( (varP*varC)/(varP+varC) );
 
     //    float d = fabs(p->x - c->x);
