@@ -8,7 +8,10 @@ class PoseLogger
 {
 public:
     PoseLogger(QString filename);
-    void log(double x, double y, double z, double rx, double ry, double rz, double ts);
+    void log(double x, double y, double z,
+             double rx, double ry, double rz,
+             float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3,
+             double ts);
     void logTrackLost();
     void saveToFile(QString filename);
     bool done();

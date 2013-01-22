@@ -10,7 +10,7 @@
 
 // Parameteres
 #define SIGMA_W 50.0f // sigma for perdiod weighting in Hz
-#define PERIOD_MULTIPLIER 2.0f // multiplies measurement interval to measure signal period
+#define PERIOD_MULTIPLIER 10.0f // multiplies measurement interval to measure signal period // !!!! Currently not active, set to 10ms for all !!!!
 
 // Guassian smoothing filter
 #define FILTER_SIZE 3   // kernel size
@@ -29,7 +29,7 @@
 
 // Combination analysis
 #define CA_MIN_DIST 8.0f
-#define CA_NUM_HYPOTHESIS 4
+#define CA_NUM_HYPOTHESIS 1
 
 const float PI = 3.14159265f;
 
@@ -185,9 +185,14 @@ void Tracker::processPacket(){
         ry = rvec.at<double>(1,0);
         rz = rvec.at<double>(2,0);
 
-        printf("[x y z (cm)]: %3.0f %3.0f %3.0f\t [Y P R (deg)]: %3.1f %3.1f %3.1f     \r",x*100,y*100,z*100,rx*180/PI,ry*180/PI,rz*180/PI);
+        printf("[x y z (cm)]: %3.0f %3.0f %3.0f\t [P Y R (deg)]: %3.1f %3.1f %3.1f     \r",x*100,y*100,z*100,rx*180/PI,ry*180/PI,rz*180/PI);
 
-        poseLogger->log(x,y,z,rx,ry,rz,lastEventTs);
+        poseLogger->log(x,y,z,rx,ry,rz,
+                        imagePoints.at<float>(0,0), imagePoints.at<float>(0,1),
+                        imagePoints.at<float>(1,0), imagePoints.at<float>(1,1),
+                        imagePoints.at<float>(2,0), imagePoints.at<float>(2,1),
+                        imagePoints.at<float>(3,0), imagePoints.at<float>(3,1),
+                        lastEventTs);
     }
     else{
         //poseLogger->logTrackLost();

@@ -10,7 +10,7 @@ V_r = P(:,4:6);
 led0 = P(:,7:8);
 led1 = P(:,9:10);
 led2 = P(:,11:12);
-led3 = P(:,13:14);
+led4 = P(:,13:14);
 
 time = P(:,15);
 
@@ -48,50 +48,31 @@ ylim([-200 200]);
 
 figure;
 
-plot(led0(:,1),led0(:,2),led1(:,1),led1(:,2),led2(:,1),led2(:,2),led3(:,1),led3(:,2));
+subplot(2,2,1); plot(led0(:1),);
 title('LED 0');
 xlabel('x');
 ylabel('y');
 xlim([0 127]);
 ylim([0 127]);
-axis square;
-set(gca,'XDir','reverse');
 
-figure;
-
-subplot(2,2,1); plot(led0(:,1),led0(:,2));
-title('LED Tracks');
-xlabel('x');
-ylabel('y');
-xlim([0 127]);
-ylim([0 127]);
-axis square;
-set(gca,'XDir','reverse');
-
-subplot(2,2,2); plot(led1(:,1),led1(:,2));
+subplot(2,2,2); plot(x1,y1);
 title('LED 1');
 xlabel('x');
 ylabel('y');
 xlim([0 127]);
 ylim([0 127]);
-axis square;
-set(gca,'XDir','reverse');
 
-subplot(2,2,3); plot(led2(:,1),led2(:,2));
+subplot(2,2,3); plot(x2,y2);
 title('LED 2');
 xlabel('x');
 ylabel('y');
 xlim([0 127]);
 ylim([0 127]);
-axis square;
-set(gca,'XDir','reverse');
 
-subplot(2,2,4); plot(led3(:,1),led3(:,2));
+subplot(2,2,4); plot(x3,y3);
 title('LED 3');
 xlabel('x');
 ylabel('y');
 xlim([0 127]);
 ylim([0 127]);
-axis square;
-set(gca,'XDir','reverse');
 

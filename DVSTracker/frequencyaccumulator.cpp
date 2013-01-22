@@ -42,9 +42,6 @@ void FrequencyAccumulator::update(Interval interval){
     float prevWeight = weightMap->get(x,y);
     float weight = getWeight(interval.deltaT,targetFrequency,sd) + prevWeight;
 
-//    if(weight < 0.1)
-//        weight = 0;
-
 //    printf("dt: %f, w: %f\n",interval.deltaT,weight);
 
     weightMap->insert(x,y,weight);
@@ -60,7 +57,7 @@ float FrequencyAccumulator::getWeight(double interval, int frequency, float sd){
 }
 
 bool FrequencyAccumulator::hasExpired(){
-    if( (lastUpdate - lastReset) > /*(multiplier/targetFrequency)*/ 0.002)
+    if( (lastUpdate - lastReset) > /*(multiplier/targetFrequency)*/ 0.01)
         return true;
     else
         return false;
