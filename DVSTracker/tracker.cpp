@@ -31,8 +31,6 @@
 #define CA_MIN_DIST 8.0f
 #define CA_NUM_HYPOTHESIS 1
 
-const float PI = 3.14159265f;
-
 Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies,
                  cv::Mat objectPoints, cv::Mat cameraMatrix,
                  cv::Mat distortionCoefficients, QObject *parent) : QThread(parent){
@@ -185,7 +183,7 @@ void Tracker::processPacket(){
         ry = rvec.at<double>(1,0);
         rz = rvec.at<double>(2,0);
 
-        printf("[x y z (cm)]: %3.0f %3.0f %3.0f\t [P Y R (deg)]: %3.1f %3.1f %3.1f     \r",x*100,y*100,z*100,rx*180/PI,ry*180/PI,rz*180/PI);
+        printf("[x y z (cm)]: %3.0f %3.0f %3.0f\t [rx ry rz]: %3.1f %3.1f %3.1f     \r",x*100,y*100,z*100,rx,ry,rz);
 
         poseLogger->log(x,y,z,rx,ry,rz,
                         imagePoints.at<float>(0,0), imagePoints.at<float>(0,1),

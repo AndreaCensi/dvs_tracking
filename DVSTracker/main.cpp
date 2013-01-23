@@ -5,6 +5,60 @@
 #include "camwidget.h"
 #include "udpinterface.h"
 
+//// DVS IF
+//int main(int argc, char **argv){
+//    QApplication app(argc,argv);
+
+//    //init frequencies
+//    std::vector<int> frequencies;
+//    frequencies.push_back(900);
+//    frequencies.push_back(1070);
+//    frequencies.push_back(1240);
+//    frequencies.push_back(1410);
+
+//    //init camera and object data
+//    std::vector<cv::Point3f> modelPts;
+//    modelPts.push_back(cv::Point3f(-0.1f,0.1f,0.0f));
+//    modelPts.push_back(cv::Point3f(0.1f,0.1f,0.0f));
+//    modelPts.push_back(cv::Point3f(-0.1f,-0.1f,0.0f));
+//    modelPts.push_back(cv::Point3f(0.1f,-0.1f,0.0f));
+//    cv::Mat objectPoints(modelPts);
+//    objectPoints = objectPoints.reshape(1);
+
+//    cv::Mat cameraMatrix(3,3,CV_32F, cv::Scalar(0));
+//    cameraMatrix.at<float>(0,0) = 100;
+//    cameraMatrix.at<float>(1,1) = 100;
+//    cameraMatrix.at<float>(2,2) = 1;
+//    cameraMatrix.at<float>(0,2) = 64;
+//    cameraMatrix.at<float>(1,2) = 64;
+
+//    cv::Mat distortionCoeffs(5,1,CV_32F, cv::Scalar(0));
+
+
+//    // EventPacket buffering
+//    DVS128Interface dvs;
+//    PacketBuffer *buf = dvs.getReaderInstance()->getPacketBuffer();
+
+//    // Tracking
+//    Tracker t(buf,frequencies,objectPoints,cameraMatrix,distortionCoeffs);
+
+//    // Output widget
+//    CamWidget widget;
+//    t.setWidget(&widget);
+//    //widget.setWeightBuffers(t.weightBuffers);
+//    //    widget.setParticleFilters(t.particleFilters);
+
+//    // Start the show
+//    widget.show();
+//    t.start();
+//    dvs.startReading();
+//    int ret = app.exec();
+//    dvs.stopReading();
+//    t.stop();
+//    return ret;
+//}
+
+//UDP IF
 int main(int argc, char **argv){
     QApplication app(argc,argv);
 
@@ -17,10 +71,10 @@ int main(int argc, char **argv){
 
     //init camera and object data
     std::vector<cv::Point3f> modelPts;
-    modelPts.push_back(cv::Point3f(-0.1f,-0.1f,0.0f));
     modelPts.push_back(cv::Point3f(-0.1f,0.1f,0.0f));
-    modelPts.push_back(cv::Point3f(0.1f,-0.1f,0.0f));
     modelPts.push_back(cv::Point3f(0.1f,0.1f,0.0f));
+    modelPts.push_back(cv::Point3f(-0.1f,-0.1f,0.0f));
+    modelPts.push_back(cv::Point3f(0.1f,-0.1f,0.0f));
     cv::Mat objectPoints(modelPts);
     objectPoints = objectPoints.reshape(1);
 
@@ -33,13 +87,9 @@ int main(int argc, char **argv){
 
     cv::Mat distortionCoeffs(5,1,CV_32F, cv::Scalar(0));
 
-
     // EventPacket buffering
     UDPInterface udpIf;
     PacketBuffer *buf = udpIf.getPacketBuffer();
-
-    //    DVS128Interface dvs;
-    //    PacketBuffer *buf = dvs.getReaderInstance()->getPacketBuffer();
 
     // Tracking
     Tracker t(buf,frequencies,objectPoints,cameraMatrix,distortionCoeffs);
@@ -47,18 +97,118 @@ int main(int argc, char **argv){
     // Output widget
     CamWidget widget;
     t.setWidget(&widget);
-    //widget.setWeightBuffers(t.weightBuffers);
-    //    widget.setParticleFilters(t.particleFilters);
 
     // Start the show
     widget.show();
     t.start();
-    //    dvs.startReading();
     int ret = app.exec();
-    //    dvs.stopReading();
     t.stop();
     return ret;
 }
+
+//Rodrigues test
+//int main(){
+//    cv::Mat in(3,1,CV_32F);
+//    in.at<float>(0,0) = 1;
+//    in.at<float>(1,0) = 2;
+//    in.at<float>(2,0) = 3;
+
+//    cv::Mat out;
+//    cv::Rodrigues(in,out);
+
+//    for(int i = 0; i < out.rows;i++){
+//        for(int j = 0; j < out.cols;j++){
+//            printf("%f ",out.at<float>(i,j));
+//        }
+//        printf("\n");
+//    }
+
+
+//    return 0;
+//}
+
+//solvepnp test
+//int main(){
+//    const float PI = 3.14159265f;
+
+//    //init camera and object data
+//    std::vector<cv::Point3f> modelPts;
+//    modelPts.push_back(cv::Point3f(-0.1f,-0.1f,0.0f));
+//    modelPts.push_back(cv::Point3f(-0.1f,0.1f,0.0f));
+//    modelPts.push_back(cv::Point3f(0.1f,-0.1f,0.0f));
+//    modelPts.push_back(cv::Point3f(0.1f,0.1f,0.0f));
+//    cv::Mat objectPoints(modelPts);
+//    objectPoints = objectPoints.reshape(1);
+
+//    cv::Mat cameraMatrix(3,3,CV_32F, cv::Scalar(0));
+//    cameraMatrix.at<float>(0,0) = 100;
+//    cameraMatrix.at<float>(1,1) = 100;
+//    cameraMatrix.at<float>(2,2) = 1;
+//    cameraMatrix.at<float>(0,2) = 64;
+//    cameraMatrix.at<float>(1,2) = 64;
+
+//    cv::Mat distortionCoeffs(5,1,CV_32F, cv::Scalar(0));
+
+//    PoseEstimation pe(objectPoints,cameraMatrix,distortionCoeffs);
+
+//    cv::Mat imagePoints(4,2,CV_32F);
+//    int m = 63;
+//    imagePoints.at<float>(0,0) = m-10;
+//    imagePoints.at<float>(0,1) = m-10;
+
+//    imagePoints.at<float>(1,0) = m-10;
+//    imagePoints.at<float>(1,1) = m+10;
+
+//    imagePoints.at<float>(2,0) = m+10;
+//    imagePoints.at<float>(2,1) = m-10;
+
+//    imagePoints.at<float>(3,0) = m+10;
+//    imagePoints.at<float>(3,1) = m+10;
+
+//    pe.estimatePose(imagePoints);
+//    cv::Mat rvec = pe.getRotationVector();
+//    cv::Mat tvec = pe.getTranslationVector();
+
+//    double x,y,z,rx,ry,rz;
+
+//    x = tvec.at<double>(0,0);
+//    y = tvec.at<double>(1,0);
+//    z = tvec.at<double>(2,0);
+
+//    rx = rvec.at<double>(0,0);
+//    ry = rvec.at<double>(1,0);
+//    rz = rvec.at<double>(2,0);
+
+//    printf("[x y z (cm)]: %3.0f %3.0f %3.0f\t [Y P R (deg)]: %3.1f %3.1f %3.1f     \n",x*100,y*100,z*100,rx*180/PI,ry*180/PI,rz*180/PI);
+
+//    imagePoints.at<float>(0,0) = m+10;
+//    imagePoints.at<float>(0,1) = m+10;
+
+//    imagePoints.at<float>(1,0) = m-10;
+//    imagePoints.at<float>(1,1) = m-10;
+
+//    imagePoints.at<float>(2,0) = m-10;
+//    imagePoints.at<float>(2,1) = m+10;
+
+//    imagePoints.at<float>(3,0) = m+10;
+//    imagePoints.at<float>(3,1) = m-10;
+
+//    pe.estimatePose(imagePoints);
+//    rvec = pe.getRotationVector();
+//    tvec = pe.getTranslationVector();
+
+//    x = tvec.at<double>(0,0);
+//    y = tvec.at<double>(1,0);
+//    z = tvec.at<double>(2,0);
+
+//    rx = rvec.at<double>(0,0);
+//    ry = rvec.at<double>(1,0);
+//    rz = rvec.at<double>(2,0);
+
+//    printf("[x y z (cm)]: %3.0f %3.0f %3.0f\t [Y P R (deg)]: %3.1f %3.1f %3.1f     \n",x*100,y*100,z*100,rx*180/PI,ry*180/PI,rz*180/PI);
+
+//    return 0;
+//}
 
 ////matrix test
 //void printMatrix(cv::Mat m){
