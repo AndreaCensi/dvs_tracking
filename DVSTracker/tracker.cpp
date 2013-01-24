@@ -9,15 +9,15 @@
 #define DVS_RES 128
 
 // Parameteres
-#define SIGMA_W 50.0f // sigma for perdiod weighting in Hz
-#define PERIOD_MULTIPLIER 10.0f // multiplies measurement interval to measure signal period // !!!! Currently not active, set to 10ms for all !!!!
+#define SIGMA_W 30.0f // sigma for perdiod weighting in Hz
+#define MEASURING_PERIOD 0.01f // measurement interval to measure signal period in seconds
 
 // Guassian smoothing filter
 #define FILTER_SIZE 3   // kernel size
 #define SIGMA_FILTER 0.75f
 
 // Maximum detection
-#define MAX_MIN_DIST 8.0f   // min distance between maxima
+#define MAX_MIN_DIST 15.0f   // min distance between maxima
 #define NUM_MAXIMA 3
 
 // Particle filter parameters
@@ -29,7 +29,7 @@
 
 // Combination analysis
 #define CA_MIN_DIST 8.0f
-#define CA_NUM_HYPOTHESIS 1
+#define CA_NUM_HYPOTHESIS 4
 
 Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies,
                  cv::Mat objectPoints, cv::Mat cameraMatrix,
@@ -50,7 +50,7 @@ Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies,
     weightBuffers = new FrequencyAccumulator*[targetFrequencies.size()];
     for(unsigned int i = 0; i < targetFrequencies.size();i++){
         weightBuffers[i] = new FrequencyAccumulator(
-                    targetFrequencies[i],PERIOD_MULTIPLIER,SIGMA_W,FILTER_SIZE,SIGMA_FILTER,MAX_MIN_DIST,NUM_MAXIMA,DVS_RES,DVS_RES);
+                    targetFrequencies[i],MEASURING_PERIOD,SIGMA_W,FILTER_SIZE,SIGMA_FILTER,MAX_MIN_DIST,NUM_MAXIMA,DVS_RES,DVS_RES);
     }
 
     particleFilters = new ParticleFilter*[targetFrequencies.size()];
