@@ -40,19 +40,19 @@ set(gca,'XDir','reverse');
 subplot(2,2,2); plot(time,rx);
 title('Roll');
 xlabel('Time [s]');
-ylabel('Degree');
+ylabel('Degrees');
 ylim([-200 200]);
 
 subplot(2,2,3); plot(time,ry);
 title('Pitch');
 xlabel('Time [s]');
-ylabel('Degree');
+ylabel('Degrees');
 ylim([-200 200]);
 
 subplot(2,2,4); plot(time,rz);
 title('Yaw');
 xlabel('Time [s]');
-ylabel('Degree');
+ylabel('Degrees');
 ylim([-200 200]);
 
 h = gcf;
@@ -79,6 +79,7 @@ subplot(2,2,1); plot3(led0(:,1),led0(:,2),time);
 title('LED 0');
 xlabel('x');
 ylabel('y');
+zlabel('Time [s]');
 xlim([0 127]);
 ylim([0 127]);
 axis square;

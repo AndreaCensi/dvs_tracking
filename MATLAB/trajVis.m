@@ -41,7 +41,7 @@ for i = 1:length(time)
     %clf();
 end;
 
-title('Trajectory');
+title('Trajectory [m]');
 xlim([-1 1]);
 ylim([-1 1]);
 zlim([0 2]);

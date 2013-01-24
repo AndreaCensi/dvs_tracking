@@ -11,20 +11,15 @@
 
 //    //init frequencies
 //    std::vector<int> frequencies;
-////        frequencies.push_back(900);
-////        frequencies.push_back(1070);
-////        frequencies.push_back(1240);
-////        frequencies.push_back(1410);
+////    frequencies.push_back(900);
+////    frequencies.push_back(1070);
+////    frequencies.push_back(1240);
+////    frequencies.push_back(1410);
 
-//    //    frequencies.push_back(850);
-//    //    frequencies.push_back(1080);
-//    //    frequencies.push_back(1310);
-//    //    frequencies.push_back(1540);
-
-//    frequencies.push_back(740);
-//    frequencies.push_back(1030);
-//    frequencies.push_back(1320);
-//    frequencies.push_back(1610);
+//        frequencies.push_back(740);
+//        frequencies.push_back(1030);
+//        frequencies.push_back(1320);
+//        frequencies.push_back(1610);
 
 //    //init camera and object data
 //    std::vector<cv::Point3f> modelPts;
@@ -74,20 +69,16 @@ int main(int argc, char **argv){
 
     //init frequencies
     std::vector<int> frequencies;
-    frequencies.push_back(900);
-    frequencies.push_back(1070);
-    frequencies.push_back(1240);
-    frequencies.push_back(1410);
 
-    //    frequencies.push_back(850);
-    //    frequencies.push_back(1080);
-    //    frequencies.push_back(1310);
-    //    frequencies.push_back(1540);
+    //    frequencies.push_back(900);
+    //    frequencies.push_back(1070);
+    //    frequencies.push_back(1240);
+    //    frequencies.push_back(1410);
 
-    //        frequencies.push_back(740);
-    //        frequencies.push_back(1030);
-    //        frequencies.push_back(1320);
-    //        frequencies.push_back(1610);
+    frequencies.push_back(740);
+    frequencies.push_back(1030);
+    frequencies.push_back(1320);
+    frequencies.push_back(1610);
 
     //init camera and object data
     std::vector<cv::Point3f> modelPts;
