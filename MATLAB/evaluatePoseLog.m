@@ -38,13 +38,13 @@ axis equal;
 set(gca,'XDir','reverse');
 
 subplot(2,2,2); plot(time,rx);
-title('Roll');
+title('Pitch');
 xlabel('Time [s]');
 ylabel('Degrees');
 ylim([-200 200]);
 
 subplot(2,2,3); plot(time,ry);
-title('Pitch');
+title('Roll');
 xlabel('Time [s]');
 ylabel('Degrees');
 ylim([-200 200]);

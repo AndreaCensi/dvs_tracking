@@ -5,28 +5,30 @@
 #include "camwidget.h"
 #include "udpinterface.h"
 
-//// DVS IF
+// DVS IF
 //int main(int argc, char **argv){
 //    QApplication app(argc,argv);
 
 //    //init frequencies
 //    std::vector<int> frequencies;
-////    frequencies.push_back(900);
-////    frequencies.push_back(1070);
-////    frequencies.push_back(1240);
-////    frequencies.push_back(1410);
+//    //    frequencies.push_back(900);
+//    //    frequencies.push_back(1070);
+//    //    frequencies.push_back(1240);
+//    //    frequencies.push_back(1410);
 
-//        frequencies.push_back(740);
-//        frequencies.push_back(1030);
-//        frequencies.push_back(1320);
-//        frequencies.push_back(1610);
+//    frequencies.push_back(740);
+//    frequencies.push_back(1030);
+//    frequencies.push_back(1320);
+//    frequencies.push_back(1610);
 
 //    //init camera and object data
 //    std::vector<cv::Point3f> modelPts;
-//    modelPts.push_back(cv::Point3f(-0.1f,0.1f,0.0f));
 //    modelPts.push_back(cv::Point3f(0.1f,0.1f,0.0f));
-//    modelPts.push_back(cv::Point3f(-0.1f,-0.1f,0.0f));
+//    modelPts.push_back(cv::Point3f(-0.1f,0.1f,0.0f));
 //    modelPts.push_back(cv::Point3f(0.1f,-0.1f,0.0f));
+//    modelPts.push_back(cv::Point3f(-0.1f,-0.1f,0.0f));
+
+
 //    cv::Mat objectPoints(modelPts);
 //    objectPoints = objectPoints.reshape(1);
 
@@ -82,10 +84,10 @@ int main(int argc, char **argv){
 
     //init camera and object data
     std::vector<cv::Point3f> modelPts;
-    modelPts.push_back(cv::Point3f(-0.1f,0.1f,0.0f));
     modelPts.push_back(cv::Point3f(0.1f,0.1f,0.0f));
-    modelPts.push_back(cv::Point3f(-0.1f,-0.1f,0.0f));
+    modelPts.push_back(cv::Point3f(-0.1f,0.1f,0.0f));
     modelPts.push_back(cv::Point3f(0.1f,-0.1f,0.0f));
+    modelPts.push_back(cv::Point3f(-0.1f,-0.1f,0.0f));
     cv::Mat objectPoints(modelPts);
     objectPoints = objectPoints.reshape(1);
 

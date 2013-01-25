@@ -170,9 +170,6 @@ void Tracker::processPacket(){
         cv::Mat rvec = poseEstimator->getRotationVector();
         cv::Mat tvec = poseEstimator->getTranslationVector();
 
-//        cv::Mat rotMatrix;
-//        cv::Rodrigues(rvec,rotMatrix); //gets rotation matrix from rotation vector
-
         double x,y,z,rx,ry,rz;
 
         x = tvec.at<double>(0,0);
