@@ -1,6 +1,7 @@
 #include "hypothesislogger.h"
 #include <QFile>
 
+
 HypothesisLogger::HypothesisLogger(QString filename)
 {
     outputFile = filename;

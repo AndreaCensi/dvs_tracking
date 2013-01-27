@@ -139,6 +139,12 @@ void DVS128Interface::startReaderThread(int devIndex){
     sendVendorRequest(START_READ);
 }
 
+//! Send a vendor request to the USB device.
+/*!
+    \param req Request number
+    \param buf Buffer for additional request data
+    \param bufSize Size of the buffer.
+*/
 void DVS128Interface::sendVendorRequest(UCHAR req, const char *buf, DWORD bufSize){
     CUsbIo dev;
     DWORD status;

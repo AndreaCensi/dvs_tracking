@@ -1,5 +1,10 @@
 #include "packetbuffer.h"
 
+//! Constructor
+/*!
+    \param bufferLength The length of the packet buffer.
+    \param packetSize The maximum size of a packet. Must be able to hold the amount of events in one data chunk from the USBReader.
+*/
 PacketBuffer::PacketBuffer(int bufferLength, int packetSize)
 {
     packetBuffer = new EventPacket*[bufferLength];
@@ -17,6 +22,10 @@ PacketBuffer::~PacketBuffer(){
     delete [] packetBuffer;
 }
 
+//! Getter method
+/*!
+    \return Next readable packet.
+*/
 EventPacket* PacketBuffer::getNextReadable(){
     if(start != end){
         EventPacket *next = packetBuffer[start];
@@ -28,6 +37,10 @@ EventPacket* PacketBuffer::getNextReadable(){
     else return 0;
 }
 
+//! Getter method
+/*!
+    \return Next writable packet.
+*/
 EventPacket* PacketBuffer::getNextWritable(){
     EventPacket *next = packetBuffer[end];
     end++;

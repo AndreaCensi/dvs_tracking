@@ -6,6 +6,11 @@
 #include "ringbuffer.h"
 #include "frequencyaccumulator.h"
 
+//! Legacy widget class.
+/*!
+    Moves the CamWidget class to OpenGL. Not finished due to Window scaling issues.
+    \author Jonas Strubel
+*/
 class GLCamWidget : public QGLWidget
 {
     Q_OBJECT

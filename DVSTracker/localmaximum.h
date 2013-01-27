@@ -1,6 +1,10 @@
 #ifndef LOCALMAXIMUM_H
 #define LOCALMAXIMUM_H
 
+//! A container class to store a local weight maximum
+/*!
+    \author Jonas Strubel
+*/
 class LocalMaximum
 {
 public:

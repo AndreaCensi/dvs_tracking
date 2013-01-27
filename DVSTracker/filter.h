@@ -3,6 +3,11 @@
 
 #include "map.h"
 
+//! Legacy class of an image smoothing filter with gaussian kernel
+/*!
+    Initially supposed to smooth the weighted intervals, it has not been included due to performance reasons.
+    \author Jonas Strubel
+*/
 class Filter
 {
 public:

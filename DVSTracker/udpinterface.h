@@ -7,6 +7,13 @@
 #include "ringbuffer.h"
 #include "packetbuffer.h"
 
+
+//! UDP interface class
+/*!
+    Used to stream event data from jAER, e.g. for replaying recordings.
+    \details For UDP remote output in jAER set the following properties: addressFirstEnabled, includeTimestamps, deselect all others.
+    \author Jonas Strubel
+*/
 class UDPInterface : public QObject
 {
     Q_OBJECT

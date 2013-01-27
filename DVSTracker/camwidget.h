@@ -9,6 +9,12 @@
 #include "particle.h"
 #include "combinations.h"
 
+
+//! A Qt widget to display various tracking outputs
+/*!
+    This includes raw camera output, weighted period samples and tracked LED positions.
+    \author Jonas Strubel
+*/
 class CamWidget : public QWidget
 {
     Q_OBJECT

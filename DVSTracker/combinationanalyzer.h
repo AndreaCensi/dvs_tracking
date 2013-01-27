@@ -6,10 +6,16 @@
 #include "combinations.h"
 #include <vector>
 
+//! A class for evaluating possible tracks
+/*!
+    Evaluates possible combinations of particles for valid LED tracks.
+    \author Jonas Strubel
+*/
 class CombinationAnalyzer
 {
 public:
     CombinationAnalyzer(ParticleFilter **pFilters,int numLEDs, float minimumDistance, int numOfHypothesis);
+    ~CombinationAnalyzer();
     void evaluate();
     Combinations* getHypotheses();
     CombinationChoice *getBestHypothesis();

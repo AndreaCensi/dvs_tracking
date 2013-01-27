@@ -4,6 +4,18 @@ const float FrequencyAccumulator::PI = 3.14159265f;
 
 #define WEIGHT_MULTIPLIER 1
 
+//! Constructor
+/*!
+    \param frequency Target frequency to be measured.
+    \param measurePeriod Interval in which to measure interspike intervals.
+    \param sigma The standard deviation for the weighting
+    \param filterSize Size of smoothing filter - NOT IN USE.
+    \param filterSigma Standard deviation of smoothing filter - NOT IN USE.
+    \param minDist Minimum distance between local maxima in the weight map.
+    \param numMaxima Number of local maxima to gather from the weight map.
+    \param w Width of the weight map ( The same as the camera image width).
+    \param h Height of the weight map ( The same as the camera image height).
+*/
 FrequencyAccumulator::FrequencyAccumulator(int frequency, float measurePeriod,
                                            float sigma, int filterSize, float filterSigma,
                                            float minDist, int numMaxima, int w, int h)

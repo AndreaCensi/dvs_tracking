@@ -18,7 +18,11 @@
 #include "poselogger.h"
 #include <vector>
 
-
+//! The LED tracking class
+/*!
+    This is the main class where the tracking and poseestimation take place.
+    \author Jonas Strubel
+*/
 class Tracker : public QThread
 {
     Q_OBJECT

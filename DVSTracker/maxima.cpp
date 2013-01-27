@@ -1,6 +1,11 @@
 #include "maxima.h"
 #include "math.h"
 
+//! Constructor
+/*!
+    \param numberOfMaxima The number of local maxima to gather.
+    \param minimumDistance The minimum Distance between local maxima.
+*/
 Maxima::Maxima(int numberOfMaxima, float minimumDistance)
 {
     numMaxima = numberOfMaxima;

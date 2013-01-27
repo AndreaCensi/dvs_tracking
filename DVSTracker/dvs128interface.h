@@ -4,6 +4,10 @@
 #include "stdafx.h"
 #include "usbreader.h"
 
+//! The interface class to the DVS128 camera
+/*!
+    \author Jonas Strubel
+*/
 class DVS128Interface
 {
 public:

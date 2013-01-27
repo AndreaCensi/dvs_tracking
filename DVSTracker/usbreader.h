@@ -7,6 +7,11 @@
 #include "ringbuffer.h"
 #include "packetbuffer.h"
 
+//! The USB reader thread for the DVS128 camera
+/*!
+    Inherits from the usb reader thread of Thesycons usbiolib
+    \author Jonas Strubel
+*/
 class USBReader : public CUsbIoReader
 {
 public:

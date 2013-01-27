@@ -3,6 +3,11 @@
 
 #include "particle.h"
 
+//! A container class for combination choices
+/*!
+    A possible combination of LED combinations are stored here. The class only stores indices which point to particles in the particle filters.
+    \author Jonas Strubel
+*/
 class CombinationChoice
 {
 public:

@@ -31,6 +31,15 @@
 #define CA_MIN_DIST 8.0f
 #define CA_NUM_HYPOTHESIS 4
 
+
+//! Constructor
+/*!
+    \param buffer Instance of PacketBuffer
+    \param frequencies The target frequencies to search for. Duty cycle must be 50%.
+    \param objectPoints The feature points of the object to track.
+    \param cameraMatrix The intrinsic camera parameters.
+    \param distortionCoefficients Distortion coefficients for the camera.
+*/
 Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies,
                  cv::Mat objectPoints, cv::Mat cameraMatrix,
                  cv::Mat distortionCoefficients, QObject *parent) : QThread(parent){
@@ -87,6 +96,12 @@ Tracker::~Tracker(){
     delete poseLogger;
 }
 
+//! Processes all incoming events from the DVS.
+/*!
+    This method is responsible for all the event related processing. It measures the interspike intervals per pixel,
+weights them according to their closeness to the targetfrequency and applies a particle filter on the most likely frequency detections.
+    \param e DVS event.
+*/
 void Tracker::processEvent(Event e){
     // Record, if there is a transition
     Transition t = getTransition(e);
@@ -138,7 +153,10 @@ void Tracker::processEvent(Event e){
     lastEventTs = e.timeStamp;
 }
 
-// per packet related processing
+//! Processing related to the whole packet.
+/*!
+    As some of the more costly processing is not needed per event, it is done per packet.
+*/
 void Tracker::processPacket(){
     //find possible combinations of LED positions
     combinationAnalyzer->evaluate();
@@ -196,6 +214,12 @@ void Tracker::processPacket(){
     combinationAnalyzer->reset();
 }
 
+//! Returns a Transition
+/*!
+    Whenver a consecutive event with different polarity happens on the same pixel a transition is generated.
+    \param e DVS event.
+    \return Transition, denoting the time, place and kind of polarity change.
+*/
 Transition Tracker::getTransition(Event e){
     //Get last event at same position and overwrite with new event.
     Event last = latestEvents->get(e.x,e.y);
@@ -209,6 +233,12 @@ Transition Tracker::getTransition(Event e){
         return Transition(0);
 }
 
+//! Returns a per pixel time interval per pixel
+/*!
+    The signal period is measured as the time interval between two consecutive transitions of the same type per pixel.
+    \param t Transition
+    \return Interval
+*/
 Interval Tracker::getInterval(Transition t){
     Map<Transition> *transitions = (t.type == 1) ? npTransitions : pnTransitions;
     Transition last = transitions->get(t.x,t.y);
@@ -222,20 +252,24 @@ Interval Tracker::getInterval(Transition t){
     }
 }
 
+//! Stop the thread.
 void Tracker::stop(){
     exit = true;
 }
 
+//! Set a reference to CamWidget for graphical output.
 void Tracker::setWidget(CamWidget *camWidget){
     widget = camWidget;
 }
 
+//! Update the image with an event
 void Tracker::updateCamWidget(Event *e){
     if(widget == 0)
         return;
     widget->updateImage(e);
 }
 
+//! Update weight display on the widget
 void Tracker::updateWeightWidget(int bufID, FrequencyAccumulator *buf, Maxima *m){
     for(int y = 0; y < DVS_RES;y++){
         for(int x = 0; x < DVS_RES;x++){

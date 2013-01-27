@@ -3,6 +3,12 @@
 
 #include "event.h"
 
+//! A container class events
+/*!
+    Events arrive in chunks of several. Some of the processing is not needed on a per event basis and would be too costly.
+    Thus it is done on per packet basis.
+    \author Jonas Strubel
+*/
 class EventPacket
 {
 public:

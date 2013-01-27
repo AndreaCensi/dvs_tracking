@@ -3,6 +3,10 @@
 
 #include <cfloat>
 
+//! A container for a particle used in ParticleFilter
+/*!
+    \author Jonas Strubel
+*/
 class Particle
 {
 public:

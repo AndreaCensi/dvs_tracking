@@ -3,6 +3,10 @@
 
 #include "combinationchoice.h"
 
+//! A container for combination choices CombinationChoice
+/*!
+    \author Jonas Strubel
+*/
 class Combinations
 {
 public:

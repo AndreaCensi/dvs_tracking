@@ -1,6 +1,10 @@
 #ifndef INTERVAL_H
 #define INTERVAL_H
 
+//! A container for a per-pixel interspike interval
+/*!
+    \author Jonas Strubel
+*/
 class Interval
 {
 public:

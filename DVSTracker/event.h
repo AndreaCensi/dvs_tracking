@@ -1,8 +1,10 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-class Cluster;  //forward declaration of cluster
-
+//! A container class for event data from the DVS
+/*!
+    \author Jonas Strubel
+*/
 class Event
 {
 public:

@@ -3,6 +3,10 @@
 
 #include "localmaximum.h"
 
+//! A container for local maxima
+/*!
+    \author Jonas Strubel
+*/
 class Maxima
 {
 public:

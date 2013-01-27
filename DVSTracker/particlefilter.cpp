@@ -2,6 +2,15 @@
 #include "math.h"
 #include "stdio.h"
 
+//! Constructor
+/*!
+    \param numParticles Number of particles to maintain in the filter.
+    \param defaultSigma Default uncertainty for the new creation of a particle.
+    \param maxSigma Maximum allowed uncertainty before Particle is eliminated.
+    \param minimumMergeDistance Merging is done upon uncertainty (pixel radius). This denotes the minimal distance a particle must allow to be merged with.
+    This is for the case that the uncertainty gets very small, such that an update from a neihbouring pixel has very low probability.
+    \param maxVelocity The maximum velocity with which an LEDs may travel. Used to update the uncertainty of the particles.
+*/
 ParticleFilter::ParticleFilter(int numParticles, float defaultSigma, float maxSigma, float minimumMergeDistance, float maxVelocity)
 {
     length = numParticles;
@@ -159,6 +168,7 @@ void ParticleFilter::merge(Particle *p, Particle *c){
     p->set(x,y,sigma,w,c->timeStamp);
 }
 
+//! Sort the particles in the filter, beginning with the most likely one (highest weight).
 void ParticleFilter::quicksort(Particle **p, int first, int last){
     if(first < last){
         int i = first;

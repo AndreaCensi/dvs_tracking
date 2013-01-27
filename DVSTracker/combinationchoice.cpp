@@ -1,5 +1,6 @@
 #include "combinationchoice.h"
 
+
 CombinationChoice::CombinationChoice(int numTracks)
 {
     length = numTracks;

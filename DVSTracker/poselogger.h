@@ -4,6 +4,11 @@
 #include <QString>
 #include <QTextStream>
 
+//! A Logger for pose estimation data
+/*!
+    Stores translation, rotation, LED positions on the camera image as well as their timestamps to a text file.
+    \author Jonas Strubel
+*/
 class PoseLogger
 {
 public:

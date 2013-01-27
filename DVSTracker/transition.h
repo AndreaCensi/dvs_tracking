@@ -1,6 +1,11 @@
 #ifndef TRANSITION_H
 #define TRANSITION_H
 
+//! A container for a pixel transition
+/*!
+    Whenever a pixel changes polarity a transition is generated.
+    \author Jonas Strubel
+*/
 class Transition
 {
 public:

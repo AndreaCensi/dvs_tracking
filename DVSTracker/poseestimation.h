@@ -3,6 +3,10 @@
 
 #include "include/opencv2/opencv.hpp"
 
+//! A wrapper class for the pose estimation function from openCV
+/*!
+    \author Jonas Strubel
+*/
 class PoseEstimation
 {
 public:

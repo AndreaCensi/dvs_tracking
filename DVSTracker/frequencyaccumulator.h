@@ -7,6 +7,12 @@
 #include "vector"
 #include "maxima.h"
 
+//! A class for gathering and evaluating per-pixel interspike intervals
+/*!
+    Interspike intervals are gathered and weighted in terms of there distance to a certain frequency one wants to measure. Weights are saved on a pixelmap
+    during a certain period of time before being evaluated.
+    \author Jonas Strubel
+*/
 class FrequencyAccumulator
 {
 public:

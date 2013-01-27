@@ -3,6 +3,10 @@
 
 #include <stdio.h>
 
+//! A template class for a 2D-array
+/*!
+    \author Jonas Strubel
+*/
 template <typename T>
 class Map{
 public:

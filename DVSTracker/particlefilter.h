@@ -5,6 +5,11 @@
 #include "particle.h"
 #include <vector>
 
+//! A particle filter class
+/*!
+    Stores a number of partcles for each frequency. Is updated with the maxima of weighted intervals.
+    \author Jonas Strubel
+*/
 class ParticleFilter
 {
 public:

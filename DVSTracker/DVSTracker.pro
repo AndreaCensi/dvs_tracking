@@ -61,7 +61,6 @@ HEADERS += \
     combinationanalyzer.h \
     combinationchoice.h \
     combinations.h \
-    buffer.h \
     eventpacket.h \
     packetbuffer.h \
     poseestimation.h \

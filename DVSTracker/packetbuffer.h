@@ -3,6 +3,11 @@
 
 #include "eventpacket.h"
 
+
+//! A buffer class for event packets
+/*!
+    \author Jonas Strubel
+*/
 class PacketBuffer
 {
 public:

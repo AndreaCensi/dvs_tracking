@@ -4,6 +4,11 @@
 #include <QString>
 #include <QTextStream>
 
+//! Logger class
+/*!
+    Stores the highest weighst found in a FrequencyAccumulator to a text file.
+    \author Jonas Strubel
+*/
 class HypothesisLogger
 {
 public:

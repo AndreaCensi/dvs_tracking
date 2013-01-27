@@ -1,6 +1,11 @@
 #include "combinations.h"
 #include "cfloat"
 
+//! Constructor
+/*!
+    \param maxNumCombinations Maximum number of hypothesis to gather.
+    \param numTracks Number of LEDs to track.
+*/
 Combinations::Combinations(int maxNumCombinations, int numTracks)
 {
     length = maxNumCombinations;
