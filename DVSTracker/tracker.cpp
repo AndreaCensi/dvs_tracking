@@ -299,6 +299,7 @@ void Tracker::run(){
 
                     //process events here
                     //updateCamWidget(e);
+//                    e->timeStamp += 1000;
                     processEvent(*e);
                 }
                 processPacket();

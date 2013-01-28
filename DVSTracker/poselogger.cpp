@@ -7,7 +7,7 @@ PoseLogger::PoseLogger(QString filename)
     outputFile = filename;
     finished = false;
     numPoses = 0;
-    limit = 2000;
+    limit = 10000;
 }
 
 void PoseLogger::saveToFile(QString filename){
@@ -28,10 +28,10 @@ void PoseLogger::log(double x, double y, double z,
     if(finished)
         return;
 
-    if(numPoses > limit){
-        stop();
-        return;
-    }
+//    if(numPoses > limit){
+//        stop();
+//        return;
+//    }
 
     QString sx = QString::number(x);
     QString sy = QString::number(y);
