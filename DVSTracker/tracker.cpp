@@ -4,6 +4,7 @@
 #include "localmaximum.h"
 #include "include/opencv2/opencv.hpp"
 #include <math.h>
+#include <cfloat>
 
 // Resolution of DVS
 #define DVS_RES 128
@@ -69,7 +70,7 @@ Tracker::Tracker(PacketBuffer *buffer, std::vector<int> frequencies,
 
     logger = new HypothesisLogger("C:/Users/giselher/Documents/uzh/hypo_log.txt");
     poseLogger = new PoseLogger("C:/Users/giselher/Documents/uzh/Master\ Projekt/code/dvs_tracking/MATLAB/pose_log.txt");
-    lastEventTs = 0;
+    lastEventTs = DBL_MIN;
     eventCount = 0;
 
     combinationAnalyzer = new CombinationAnalyzer(particleFilters,targetFrequencies.size(),CA_MIN_DIST,CA_NUM_HYPOTHESIS);
@@ -299,7 +300,7 @@ void Tracker::run(){
 
                     //process events here
                     //updateCamWidget(e);
-//                    e->timeStamp += 1000;
+                    e->timeStamp += 2000;
                     processEvent(*e);
                 }
                 processPacket();
