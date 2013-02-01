@@ -33,6 +33,7 @@
 #define CA_NUM_HYPOTHESIS 4
 
 
+
 //! Constructor
 /*!
     \param buffer Instance of PacketBuffer
@@ -306,7 +307,11 @@ void Tracker::run(){
                 processPacket();
             }
         }
-        else
-            msleep(1);
+        else{
+//            usleep(1);
+            mutex.lock();
+            newData.wait(&mutex);
+            mutex.unlock();
+        }
     }
 }
