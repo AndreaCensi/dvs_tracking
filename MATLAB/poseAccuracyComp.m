@@ -1,4 +1,4 @@
-function poseAccuracyComp(dvsData,optitrackData,timeOffsetOpti)
+function poseAccuracyComp(dvsData,optitrackData,timeOffsetOpti,outputPrefixName)
 
 Pd_raw = importdata(dvsData);
 Po = importdata(optitrackData);
@@ -95,6 +95,8 @@ boxplot(norm);
 title('DVS pose estimation error');
 ylabel('Distance [m]','Rotation',90);
 
+h = gcf;
+saveas(h,[outputPrefixName '_pose_error_box'],'fig');
 
 %determine rotation error
 figure;
@@ -106,6 +108,9 @@ roll_err = abs(rollO - rollD);
 boxplot([yaw_err pitch_err roll_err],'labels',{'Yaw ','Pitch ' ,'Roll'});
 title('DVS rotation error');
 ylabel('Degree','Rotation',90);
+
+h = gcf;
+saveas(h,[outputPrefixName '_rot_error_box'],'fig');
 
 % translation plot
 figure;
@@ -127,6 +132,9 @@ title('Translation z [m]');
 xlabel('Time [s]');
 ylabel('x');
 
+h = gcf;
+saveas(h,[outputPrefixName '_translation'],'fig');
+
 % rotation plot
 figure;
 
@@ -144,3 +152,6 @@ subplot(2,2,3); plot(timeD,rollD,style,timeD,rollO,style);
 title('Roll');
 xlabel('Time [s]');
 ylabel('Degree');
+
+h = gcf;
+saveas(h,[outputPrefixName '_rotation'],'fig');
