@@ -10,5 +10,5 @@ I_ptam = ptam(:,2) - ptam(:,1);
 I_flip = flip(:,2) - flip(:,1);
 
 boxplot([I_dvs I_ptam I_flip],'labels',{'Tracking lost DVS ','Tracking lost PTAM ' ,'Flip time'});
-title('Tracking downtime','FontSize',12,'FontWeight','bold');
+title('Tracking downtime');
 ylabel('Time [s]','Rotation',90);

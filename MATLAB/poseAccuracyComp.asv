@@ -31,7 +31,7 @@ yawD = RPY(:,3);
 To = Po(:,[2 1 3]);
 To(:,2) = -To(:,2);
 
-Qo = Po(:,4:7);
+Qo = Po(:,[7 4 5 6]);   %format of quat input is [x y z w]
 
 timeO = Po(:,8);
 timeO = timeO - timeO(1) + timeOffsetOpti;
@@ -45,7 +45,11 @@ i_interval = timeD > startO & timeD < endO;
 Td = Td(i_interval,:);
 timeD = timeD(i_interval);
 
-% interpolate optitrack data
+rollD = rollD(i_interval);
+pitchD = pitchD(i_interval);
+yawD = yawD(i_interval);
+
+% interpolate optitrack translation data
 To_i(:,1) = interp1(timeO,To(:,1),timeD);
 To_i(:,2) = interp1(timeO,To(:,2),timeD);
 To_i(:,3) = interp1(timeO,To(:,3),timeD);
@@ -66,15 +70,22 @@ t = x(5:7,1);
 [m n] = size(To_i);
 To_i = quatrotate(Q,To_i) + repmat(t',m,1);
 
-Qo_aligned = quatmultiply();
+Qo_aligned = quatmultiply(Q,Qo);
 
 [yawO,pitchO,rollO] = quat2angle(Qo_aligned);
 
-rollO = radtodeg(pitchO);
-pitchO = radtodeg(yawO);
-yawO = radtodeg(rollO);
+rollO = radtodeg(rollO);
+pitchO = radtodeg(pitchO);
+yawO = radtodeg(yawO);
 
-%determine error
+%interpolate optitrack rotation data
+rollO = interp1(timeO,rollO,timeD);
+pitchO = interp1(timeO,pitchO,timeD);
+yawO = interp1(timeO,yawO,timeD);
+
+%% Plotting
+
+%determine translation error
 distance_V = (Td - To_i)';
 norm = sqrt(sum(distance_V.^2));
 
@@ -82,9 +93,16 @@ boxplot(norm);
 title('DVS pose estimation error');
 ylabel('Distance [m]','Rotation',90);
 
+
+%determine rotation error
 figure;
 
-%plotting
+
+
+
+
+figure;
+
 style = '-o';
 
 subplot(2,2,1); plot(timeD,Td(:,1),style,timeD,To_i(:,1),style);
@@ -102,19 +120,19 @@ title('Translation z [m]');
 xlabel('Time [s]');
 ylabel('x');
 
-% figure;
-% 
-% subplot(2,2,1); plot(timeD,yawD,style,timeO,yawO,style);
-% title('Yaw');
-% xlabel('Time [s]');
-% ylabel('Degree');
-% 
-% subplot(2,2,2); plot(timeD,pitchD,style,timeO,pitchO,style);
-% title('Yaw');
-% xlabel('Time [s]');
-% ylabel('Degree');
-% 
-% subplot(2,2,3); plot(timeD,rollD,style,timeO,rollO,style);
-% title('Yaw');
-% xlabel('Time [s]');
-% ylabel('Degree');
+figure;
+
+subplot(2,2,1); plot(timeD,yawD,style,timeD,yawO,style);
+title('Yaw');
+xlabel('Time [s]');
+ylabel('Degree');
+
+subplot(2,2,2); plot(timeD,pitchD,style,timeD,pitchO,style);
+title('Pitch');
+xlabel('Time [s]');
+ylabel('Degree');
+
+subplot(2,2,3); plot(timeD,rollD,style,timeD,rollO,style);
+title('Roll');
+xlabel('Time [s]');
+ylabel('Degree');
