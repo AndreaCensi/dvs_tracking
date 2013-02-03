@@ -1,5 +1,4 @@
 #include "udpinterface.h"
-#include "mutex.h"
 
 #define EVENT_FRAME_LENGTH 6
 #define NUM_PACKET_BUFS 10
@@ -74,9 +73,7 @@ void UDPInterface::readEvents(QByteArray data){
             counter++;
 
         lastEventTime = currentEventTime;
-
     }
-    newData.wakeAll();
 }
 
 RingBuffer<Event>* UDPInterface::getEventBuffer(){

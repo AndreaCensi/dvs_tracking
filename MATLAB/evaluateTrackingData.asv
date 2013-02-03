@@ -1,0 +1,19 @@
+function res = evaluateTrackingData()
+
+flip_nr = [3 4 5 7 8];
+flip_t_offsets = [0.61 0.33 -0.32 -0.74 0.62];
+
+pose_err = [];
+roll_err = [];
+pitch_err = [];
+yaw_err = [];
+
+for i = 1:length(flip_r)
+    s_num = num2str(flip_nr(i));
+    dvsData = ['pose_log_flip_' s_num '.txt'];
+    optiTrackData = ['optitrack_ptam_data_flip' s_num '_drone.txt'];
+    offset = flip_t_offsets(i);
+    outputPrefix = ['flip_' s_num];
+    
+    [p_err,ro_err,pi_err,ya_err] = poseAccuracyComp(dvsData,optiTrackData,offset,outputPrefix);
+    pose_err = [pose_err p_]

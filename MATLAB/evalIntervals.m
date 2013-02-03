@@ -17,12 +17,11 @@ mean_ptam_I = mean(I_ptam);
 mean_flip_I = mean(I_flip);
 
 %plot
-subplot(2,1,1);
 boxplot([I_dvs I_ptam I_flip],'labels',{'Tracking lost DVS ','Tracking lost PTAM ' ,'Flip time'});
 title('Tracking downtime');
 ylabel('Time [s]','Rotation',90);
 
-subplot(2,1,2);
+figure;
 
 time_data = [0 mean_flip_I;
     mean_ptam_start mean_ptam_I;

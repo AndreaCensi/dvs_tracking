@@ -64,8 +64,7 @@ HEADERS += \
     eventpacket.h \
     packetbuffer.h \
     poseestimation.h \
-    poselogger.h \
-    mutex.h
+    poselogger.h
 
 
 

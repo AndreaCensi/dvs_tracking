@@ -117,17 +117,6 @@ void Tracker::processEvent(Event e){
         return;
     }
 
-    //stop logger/saving image output (for udp interface, since jAER loops the videos)
-    if(lastEventTs > e.timeStamp && !poseLogger->done()){
-        printf("#Events(tra): %d\n",eventCount);
-        eventCount = 0;
-        //logger->stop();
-        poseLogger->stop();
-        //widget->stopSaving();
-    }
-    else
-        eventCount++;
-
     //Calculate importance of interval for each frequency
     for(unsigned int i = 0; i < targetFrequencies.size(); i++){
         FrequencyAccumulator *buf = weightBuffers[i];
@@ -296,22 +285,31 @@ void Tracker::run(){
                 for(int i = 0; i < packet->size(); i++){
                     // do not process if special event
                     Event *e = packet->get(i);
+
+                    //stop logger/saving image output (for udp interface, since jAER loops the videos)
+                    if(lastEventTs > e->timeStamp && !poseLogger->done()){
+                        printf("#Events(tra): %d\n",eventCount);
+                        eventCount = 0;
+                        //logger->stop();
+                        poseLogger->stop();
+                        //widget->stopSaving();
+                    }
+                    else
+                        eventCount++;
+
                     if(e->isSpecial())
                         return;
 
                     //process events here
                     //updateCamWidget(e);
-                    e->timeStamp += 2000;
+                    //e->timeStamp += 2000;
                     processEvent(*e);
                 }
                 processPacket();
             }
         }
         else{
-//            usleep(1);
-            mutex.lock();
-            newData.wait(&mutex);
-            mutex.unlock();
+            usleep(1);
         }
     }
 }

@@ -1,17 +1,18 @@
-function poseAccuracyComp(dvsData,optitrackData,timeOffsetOpti,outputPrefixName)
+function [pose_err,roll_err,pitch_err,yaw_err] = poseAccuracyComp(dvsData,optitrackData,timeOffsetOpti,outputPrefixName)
 
 Pd_raw = importdata(dvsData);
 Po = importdata(optitrackData);
 
 %% Data extraction
-%eliminate duplicates in dvs data
-Pd = unique(Pd_raw,'rows','stable');
+%eliminate transformation duplicates in dvs data (ignore timestamp)
+[Pd,ia,ic] = unique(Pd_raw(:,1:6),'rows','stable');
+Pd = [Pd Pd_raw(ia,15)];
 
 %dvs data
 Td = Pd(:,1:3);
 V_r = Pd(:,4:6);
 
-timeD = Pd(:,15);
+timeD = Pd(:,7);
 timeD = timeD - timeD(1);
 
 RPY = zeros(size(V_r));
@@ -70,7 +71,10 @@ t = x(5:7,1);
 
 % align optitrack to dvs referece frame
 [m n] = size(To_i);
-To_i = quatrotate(Q,To_i) + repmat(t',m,1);
+To_i = quatrotate(Q,To_i) + repmat(t',m,1); %interpolated data
+
+[m n] = size(To);
+To = quatrotate(Q,To) + repmat(t',m,1);   %raw optitrack data
 
 Qo_aligned = quatmultiply(Q,Qo);
 
@@ -81,39 +85,36 @@ pitchO = radtodeg(pitchO);
 yawO = radtodeg(yawO);
 
 %interpolate optitrack rotation data
-rollO = interp1(timeO,rollO,timeD);
-pitchO = interp1(timeO,pitchO,timeD);
-yawO = interp1(timeO,yawO,timeD);
+rollO_i = interp1(timeO,rollO,timeD);
+pitchO_i = interp1(timeO,pitchO,timeD);
+yawO_i = interp1(timeO,yawO,timeD);
+
+% Align axis rotations
+x0 = 0;
+shift = findRotationShift(x0,rollD,rollO_i);
+rollO_i = rollO_i + shift;
+
+shift = findRotationShift(x0,pitchD,pitchO_i);
+pitchO_i = pitchO_i + shift;
+
+shift = findRotationShift(x0,yawD,yawO_i);
+yawO_i = yawO_i + shift;
 
 %% Plotting
 
 %determine translation error
 distance_V = (Td - To_i)';
-norm = sqrt(sum(distance_V.^2));
+pose_err = (sqrt(sum(distance_V.^2)))';
 
-boxplot(norm);
-title('DVS pose estimation error');
-ylabel('Distance [m]','Rotation',90);
-
-h = gcf;
-saveas(h,[outputPrefixName '_pose_error_box'],'fig');
+m = mean(pose_err)
 
 %determine rotation error
-figure;
-
-yaw_err = abs(yawO - yawD);
-pitch_err = abs(pitchO - pitchD);
-roll_err = abs(rollO - rollD);
-
-boxplot([yaw_err pitch_err roll_err],'labels',{'Yaw ','Pitch ' ,'Roll'});
-title('DVS rotation error');
-ylabel('Degree','Rotation',90);
-
-h = gcf;
-saveas(h,[outputPrefixName '_rot_error_box'],'fig');
+yaw_err = (abs(yawO_i - yawD));
+pitch_err = (abs(pitchO_i - pitchD));
+roll_err = (abs(rollO_i - rollD));
 
 % translation plot
-figure;
+%figure;
 
 style = '-o';
 
@@ -136,22 +137,25 @@ h = gcf;
 saveas(h,[outputPrefixName '_translation'],'fig');
 
 % rotation plot
-figure;
+%figure;
 
-subplot(2,2,1); plot(timeD,yawD,style,timeD,yawO,style);
+subplot(2,2,1); plot(timeD,yawD,style,timeD,yawO_i,style);
 title('Yaw');
 xlabel('Time [s]');
 ylabel('Degree');
+ylim([-200 200]);
 
-subplot(2,2,2); plot(timeD,pitchD,style,timeD,pitchO,style);
+subplot(2,2,2); plot(timeD,pitchD,style,timeD,pitchO_i,style);
 title('Pitch');
 xlabel('Time [s]');
 ylabel('Degree');
+ylim([-200 200]);
 
-subplot(2,2,3); plot(timeD,rollD,style,timeD,rollO,style);
+subplot(2,2,3); plot(timeD,rollD,style,timeD,rollO_i,style);
 title('Roll');
 xlabel('Time [s]');
 ylabel('Degree');
+ylim([-200 200]);
 
 h = gcf;
 saveas(h,[outputPrefixName '_rotation'],'fig');

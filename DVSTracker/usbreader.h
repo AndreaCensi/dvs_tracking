@@ -6,6 +6,7 @@
 #include "logger.h"
 #include "ringbuffer.h"
 #include "packetbuffer.h"
+#include <QObject>
 
 //! The USB reader thread for the DVS128 camera
 /*!

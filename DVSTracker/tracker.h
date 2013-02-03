@@ -17,10 +17,6 @@
 #include "poseestimation.h"
 #include "poselogger.h"
 #include <vector>
-#include "mutex.h"
-
-QMutex mutex;
-QWaitCondition newData;
 
 //! The LED tracking class
 /*!
