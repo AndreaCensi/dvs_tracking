@@ -1,0 +1,7 @@
+mydata=rand(20,2)
+
+index = ones(20,2);
+
+bar_h=barh(mydata);
+bar_child=get(bar_h(1),'Children');
+set(bar_child, 'CData',index);

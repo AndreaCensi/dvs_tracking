@@ -1,7 +1,7 @@
 function res = evaluateTrackingData()
 
-flip_nr = [3 4 5 7 8];
-flip_t_offsets = [0.61 0.33 -0.32 -0.74 0.62];
+flip_nr = [3 4 5 7];
+flip_t_offsets = [0.61 0.33 -0.32 -0.74];
 
 pose_err = [];
 roll_err = [];
@@ -21,6 +21,9 @@ for i = 1:length(flip_nr)
     pitch_err = [pitch_err;  pi_err];
     yaw_err = [yaw_err;  ya_err];
 end;
+
+rel_i = pose_err < 1000; % eliminate weird outlier for better boxplot display.
+pose_err = pose_err(rel_i);
 
 mean_pose_err = mean(pose_err);
 sd_pose_err = std(pose_err);
@@ -43,7 +46,7 @@ res = [mean_pose_err sd_pose_err;
 figure;
 
 boxplot(pose_err);
-title('DVS pose estimation error');
+title('DVS pose estimation error','FontSize',12,'FontWeight','bold');
 ylabel('Distance [m]','Rotation',90);
 
 h = gcf;
@@ -53,7 +56,7 @@ saveas(h,'pose_error_box','fig');
 figure;
 
 boxplot([yaw_err pitch_err roll_err],'labels',{'Yaw ','Pitch ' ,'Roll'});
-title('DVS rotation error');
+title('DVS rotation error','FontSize',12,'FontWeight','bold');
 ylabel('Degree','Rotation',90);
 
 h = gcf;

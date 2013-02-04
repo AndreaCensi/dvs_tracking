@@ -84,10 +84,6 @@ rollO = radtodeg(rollO);
 pitchO = radtodeg(pitchO);
 yawO = radtodeg(yawO);
 
-%determine translation error
-distance_V = (Td - To_i)';
-pose_err = (sqrt(sum(distance_V.^2)))';
-
 %interpolate optitrack rotation data
 rollO_i = interp1(timeO,rollO,timeD);
 pitchO_i = interp1(timeO,pitchO,timeD);
@@ -116,24 +112,24 @@ roll_err = (abs(rollO_i - rollD));
 % translation plot
 %figure;
 
-style = '-';
+style = '-o';
 
 subplot(2,2,1); plot(timeD,Td(:,1),style,timeO,To_r(:,1),style);
-title('Translation x-axis','FontSize',12,'FontWeight','bold');
+title('Translation x [m]','FontSize',12,'FontWeight','bold');
 xlabel('Time [s]');
-ylabel('Distance [m]');
+ylabel('x');
 legend('DVS','OptiTrack');
 
 subplot(2,2,2); plot(timeD,Td(:,2),style,timeO,To_r(:,2),style);
-title('Translation y-axis','FontSize',12,'FontWeight','bold');
+title('Translation y [m]','FontSize',12,'FontWeight','bold');
 xlabel('Time [s]');
-ylabel('Distance [m]');
+ylabel('x');
 legend('DVS','OptiTrack');
 
 subplot(2,2,3); plot(timeD,Td(:,3),style,timeO,To_r(:,3),style);
-title('Translation z-axis','FontSize',12,'FontWeight','bold');
+title('Translation z [m]','FontSize',12,'FontWeight','bold');
 xlabel('Time [s]');
-ylabel('Distance [m]');
+ylabel('x');
 legend('DVS','OptiTrack');
 
 h = gcf;
