@@ -8,6 +8,10 @@ Po = importdata(optitrackData);
 [Pd,ia,ic] = unique(Pd_raw(:,1:6),'rows','stable');
 Pd = [Pd Pd_raw(ia,15)];
 
+% fix of data glitch in flip_8 log
+non_f = Pd(:,1) < 1000;
+Pd = Pd(non_f,:);
+
 %dvs data
 Td = Pd(:,1:3);
 V_r = Pd(:,4:6);

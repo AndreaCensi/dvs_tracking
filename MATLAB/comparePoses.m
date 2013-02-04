@@ -1,14 +1,21 @@
 function ret = comparePoses(dvsData,ptamData,optitrackData,offsetPtam,offsetOpti)
 
-Pd = importdata(dvsData);
+Pd_raw = importdata(dvsData);
 Pp = importdata(ptamData);
 Po = importdata(optitrackData);
+
+%eliminate transformation duplicates in dvs data (ignore timestamp)
+[Pd,ia,ic] = unique(Pd_raw(:,1:6),'rows','stable');
+Pd = [Pd Pd_raw(ia,15)];
+
+non_f = Pd(:,1) < 1000;
+Pd = Pd(non_f,:);
 
 %dvs data
 Td = Pd(:,1:3);
 V_r = Pd(:,4:6);
 
-timeD = Pd(:,15);
+timeD = Pd(:,7);
 timeD = timeD - timeD(1);
 
 RPY = zeros(size(V_r));
@@ -52,7 +59,7 @@ pitchO = radtodeg(rollO);
 yawO = radtodeg(yawO);
 
 %plotting
-style = '-o';
+style = '-';
 
 subplot(2,2,1); plot(timeP,Tp(:,1),style,timeD,Td(:,1),style,timeO,To(:,2),style);
 title('Translation x [m]');
