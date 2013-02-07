@@ -1,0 +1,29 @@
+\contentsline {chapter}{Abstract}{ii}{chapter*.2}
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Related Work}{2}{section.1.1}
+\contentsline {chapter}{\numberline {2}Approach}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Considerations and Challenges}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}Preparation}{3}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}C++ interface to the DVS}{3}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}LED markers}{4}{subsection.2.2.2}
+\contentsline {section}{\numberline {2.3}The tracking algorithm}{4}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Frequency filter}{4}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Frequency period estimation}{5}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Frequency accumulation}{6}{subsection.2.3.3}
+\contentsline {section}{\numberline {2.4}LED position estimation}{6}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Particle filter}{6}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Extracting LED positions}{7}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}Pose estimation}{7}{subsection.2.4.3}
+\contentsline {subsection}{\numberline {2.4.4}Discussion}{8}{subsection.2.4.4}
+\contentsline {chapter}{\numberline {3}Results}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}Experiments}{9}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Setup}{9}{subsection.3.1.1}
+\contentsline {subsubsection}{Tracking speed comparison}{9}{section*.3}
+\contentsline {subsubsection}{Pose estimation accuracy}{10}{section*.4}
+\contentsline {subsubsection}{Data recording}{10}{section*.5}
+\contentsline {subsubsection}{Difficulties}{10}{section*.6}
+\contentsline {section}{\numberline {3.2}Evaluation}{10}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Tracking speed}{11}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Pose estimation}{11}{subsection.3.2.2}
+\contentsline {chapter}{\numberline {4}Conclusion}{16}{chapter.4}
+\contentsline {chapter}{\numberline {A}Something}{19}{appendix.A}

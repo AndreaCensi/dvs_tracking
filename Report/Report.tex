@@ -1,0 +1,55 @@
+\documentclass[10pt,twoside,a4paper,fleqn]{report}
+\usepackage[english,st]{rpg} % select type {semester}/bachelor/master thesis: {st}/bt/mt
+% Page header (don't change)____________________________________________________
+\setlength{\parindent}{0em}                 % Disable parindent
+\rhead[\nouppercase{\rightmark}]{\thepage}  % Special headings
+\lhead[\thepage]{\nouppercase{\leftmark}}   % Special headings
+\cfoot{}                                    % Special headings
+
+% Title page (please fill in)___________________________________________________
+\title{Quadcopter pose estimation using the dynamic vision sensor}
+
+\studentA{Jonas Strubel}
+\ethidA{07-916-901}
+\emailA{jonas.strubel@uzh.ch}
+
+% \studentB{Second Student}
+% \ethidB{12-345-678}
+% \semesterB{9}
+% \emailB{second@student.ethz.ch}
+
+\supervision{Davide Scaramuzza\\ Christian Br\"andli\\ Andrea Censi}
+\date{February 2013}
+
+\infopage
+\declaration
+
+% Begin document________________________________________________________________
+\begin{document}
+\maketitle 							      % Create title page
+
+% Preamble______________________________________________________________________
+\pagenumbering{roman} 				% Begin roman page numbering (i,ii,...)
+\input{chapters/0_preamble}
+
+% Chapters______________________________________________________________________
+\pagestyle{fancy}             % Fancy headings
+\pagenumbering{arabic}				% Begin arabic page numbering (1,2,...)
+
+\input{chapters/1_introduction}
+\input{chapters/2_approach}
+\input{chapters/3_results}
+\input{chapters/4_discussion}
+
+\cleardoublepage
+
+% Appendix______________________________________________________________________
+\appendix
+\input{chapters/10_appendix}
+
+% Bibliography__________________________________________________________________
+
+\bibliographystyle{plain}
+\bibliography{bibtex/references.bib}
+
+\end{document}
