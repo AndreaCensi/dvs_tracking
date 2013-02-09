@@ -28,7 +28,10 @@ boxplot([I_dvs I_ptam I_flip],'labels',{'Tracking lost DVS ','Tracking lost PTAM
 title('Tracking downtime','FontSize',12,'FontWeight','bold');
 ylabel('Time [s]','Rotation',90);
 
-figure;
+h = gcf;
+saveas(h,'flip_times','eps');
+
+figure('position',[0 0 500 200]);
 
 time_data = [0 mean_flip_I;
     mean_ptam_start mean_ptam_I;
@@ -46,4 +49,5 @@ colormap(mycolor);
 set(h(1), 'facecolor', 'none', 'EdgeColor', 'none'); % disable the color of the first column (init time)
 set(gca, 'YTickLabel', {'Flip duration', 'PTAM', 'DVS'}); % change the y axis tick to your name of the process
 
-
+h = gcf;
+saveas(h,'mean_flip_times','eps');

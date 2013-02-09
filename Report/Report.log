@@ -1,18 +1,15 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.2.7)  7 FEB 2013 19:27
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.2.7)  9 FEB 2013 18:39
 entering extended mode
 **Report.tex
-("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\Report.tex"
+("C:\Users\giselher\Documents\uzh\Master Projekt\Report\Report.tex"
 LaTeX2e <2011/06/27>
-Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
-abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
-croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
-lician, german, german-x-2012-05-30, greek, gujarati, hindi, hungarian, iceland
-ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
- lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
-german-x-2012-05-30, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
-ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
-an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
-ishmax, welsh, loaded.
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, arabic, armenian, assamese, basque, bengali
+, bokmal, bulgarian, catalan, coptic, croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, galic
+ian, german, german-x-2012-05-30, greek, gujarati, hindi, hungarian, icelandic, indonesian, interlingua, irish, italian,
+ kannada, kurmanji, latin, latvian, lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, ngerman
+-x-2012-05-30, nynorsk, oriya, panjabi, pinyin, polish, portuguese, romanian, russian, sanskrit, serbian, slovak, sloven
+ian, spanish, swedish, swissgerman, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usenglishmax, w
+elsh, loaded.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\report.cls"
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\fleqn.clo"
@@ -35,7 +32,7 @@ File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen103
 )
-("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\rpg.sty"
+("C:\Users\giselher\Documents\uzh\Master Projekt\Report\rpg.sty"
 Package: rpg 2009/29/05, v. 1.1
 
 providing new style definitions and commands ---
@@ -190,7 +187,6 @@ Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty"
 Package: hobsub-hyperref 2012/04/25 v1.12 Bundle oberdiek, subset hyperref (HO)
 
-
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\hobsub-generic.sty"
 Package: hobsub-generic 2012/04/25 v1.12 Bundle oberdiek, subset generic (HO)
 Package: hobsub 2012/04/25 v1.12 Construct package bundles (HO)
@@ -210,15 +206,13 @@ Package etexcmds Info: Could not find \expanded.
 (etexcmds)             In the latter case, load this package earlier.
 Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
 Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
-Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
-)
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO)
 Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 Package: pdfescape 2011/11/25 v1.13 Implements pdfTeX's escape features (HO)
-Package: bigintcalc 2012/04/08 v1.3 Expandable calculations on big integers (HO
-)
+Package: bigintcalc 2012/04/08 v1.3 Expandable calculations on big integers (HO)
 Package: bitset 2011/01/30 v1.1 Handle bit-vector datatype (HO)
 Package: uniquecounter 2011/01/30 v1.2 Provide unlimited unique counter (HO)
 )
@@ -294,8 +288,7 @@ File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty"
 Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
-82.
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 282.
 )
 \Hy@SectionHShift=\skip58
 )
@@ -315,8 +308,7 @@ Package: xkeyval 2012/10/14 v2.6b package option processing (HA)
 \XKV@depth=\count112
 File: xkeyval.tex 2012/10/14 v2.6b key=value parser (HA)
 )))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\pstricks\base\pst-fp.tex"
-`pst-fp' v0.05, 2010/01/17 (hv)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\pstricks\base\pst-fp.tex" `pst-fp' v0.05, 2010/01/17 (hv)
 \pstFP@xs=\count113
 \pstFP@xia=\count114
 \pstFP@xib=\count115
@@ -327,16 +319,14 @@ File: xkeyval.tex 2012/10/14 v2.6b key=value parser (HA)
 \pstFP@regs=\count120
 \pstFP@times=\count121
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\pgf\utilities\pgfutil-common.te
-x"
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\pgf\utilities\pgfutil-common.tex"
 \pgfutil@everybye=\toks32
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\pgf\utilities\pgfkeys.code.tex"
 \pgfkeys@pathtoks=\toks33
 \pgfkeys@temptoks=\toks34
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\pgf\utilities\pgfkeysfiltered.c
-ode.tex"
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\pgf\utilities\pgfkeysfiltered.code.tex"
 \pgfkeys@tmptoks=\toks35
 ))
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\pgf\utilities\pgffor.code.tex"
@@ -346,6 +336,7 @@ ode.tex"
 \pgffor@toks=\toks37
 )
 \psLoopIndex=\count122
+
 `PSTricks' v2.35  <2012/12/21> (tvz)
 \pst@dima=\dimen123
 \pst@dimb=\dimen124
@@ -422,9 +413,7 @@ Package: pst-xkey 2005/11/25 v1.6 package wrapper for pst-xkey.tex (HA)
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\multido\multido.sty"
 Package: multido 2004/05/17 package wrapper for PSTricks `multido.tex', (HV/RN)
 
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\multido\multido.tex"
- v1.42, 2010/05/14 <tvz>
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\multido\multido.tex"  v1.42, 2010/05/14 <tvz>
 \multido@count=\count135
 \multidocount=\count136
 \multido@stuff=\toks41
@@ -433,8 +422,7 @@ File: multido.tex 2010/05/14 v1.42 `multido' (tvz,hv)
 )
 Package: pst-plot 2011/04/13 package wrapper for pst-plot.tex (hv)
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\pst-plot\pst-plot.tex"
- v1.44, 2013/01/03 (tvz,hv)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\pst-plot\pst-plot.tex"  v1.44, 2013/01/03 (tvz,hv)
 \pstRadUnit=\dimen146
 \pstRadUnitInv=\dimen147
 \pst@linecnt=\count137
@@ -478,7 +466,7 @@ Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 \rot@float@box=\box34
 \rot@mess@toks=\toks42
 )
-("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\mcode.sty"
+("C:\Users\giselher\Documents\uzh\Master Projekt\Report\mcode.sty"
 -- Package: `mcode' 2.0 <2011/03/15> --
 Package: mcode 2011/03/15 2.0
  - settings optimized for display (colour formating)
@@ -550,7 +538,6 @@ Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 301.
 Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 302.
 Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 303.
 Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 304.
-
 Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 305.
 Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 306.
 Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 307.
@@ -617,28 +604,41 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \@lastruleclass=\count153
 \@thisrulewidth=\dimen180
 ))
-("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\Report.aux")
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 28.
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\epstopdf.sty"
+Package: epstopdf 2010/02/09 v2.5 Conversion with epstopdf on the fly (HO)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty"
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+)
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+))
+("C:\Users\giselher\Documents\uzh\Master Projekt\Report\Report.aux")
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 24.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 24.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    ... okay on input line 24.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -655,7 +655,7 @@ LaTeX Font Info:    ... okay on input line 28.
 \everyMPtoPDFconversion=\toks45
 )
 \AtBeginShipoutBox=\box38
-Package hyperref Info: Link coloring OFF on input line 28.
+Package hyperref Info: Link coloring OFF on input line 24.
  ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
@@ -664,39 +664,37 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count160
 )
-LaTeX Info: Redefining \ref on input line 28.
-LaTeX Info: Redefining \pageref on input line 28.
-LaTeX Info: Redefining \nameref on input line 28.
+LaTeX Info: Redefining \ref on input line 24.
+LaTeX Info: Redefining \pageref on input line 24.
+LaTeX Info: Redefining \nameref on input line 24.
 
-("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\Report.out")
-("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\Report.out")
+("C:\Users\giselher\Documents\uzh\Master Projekt\Report\Report.out")
+("C:\Users\giselher\Documents\uzh\Master Projekt\Report\Report.out")
 \@outlinefile=\write4
 \c@lstlisting=\count161
 
-<logos/logo_inf.pdf, id=103, 282.05376pt x 63.23625pt>
+<logos/logo_inf.pdf, id=99, 282.05376pt x 63.23625pt>
 File: logos/logo_inf.pdf Graphic file (type pdf)
-
-<use logos/logo_inf.pdf>
-Package pdftex.def Info: logos/logo_inf.pdf used on input line 29.
+ <use logos/logo_inf.pdf>
+Package pdftex.def Info: logos/logo_inf.pdf used on input line 25.
 (pdftex.def)             Requested size: 190.36514pt x 42.67912pt.
-LaTeX Font Info:    Try loading font information for U+msa on input line 29.
+LaTeX Font Info:    Try loading font information for U+msa on input line 25.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 29.
+LaTeX Font Info:    Try loading font information for U+msb on input line 25.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-<logos/rpg-logo-black.pdf, id=104, 219.13669pt x 74.45447pt>
+<logos/rpg-logo-black.pdf, id=100, 219.13669pt x 74.45447pt>
 File: logos/rpg-logo-black.pdf Graphic file (type pdf)
-
-<use logos/rpg-logo-black.pdf>
-Package pdftex.def Info: logos/rpg-logo-black.pdf used on input line 29.
+ <use logos/rpg-logo-black.pdf>
+Package pdftex.def Info: logos/rpg-logo-black.pdf used on input line 25.
 (pdftex.def)             Requested size: 133.99083pt x 45.52458pt.
 
-Overfull \hbox (72.54567pt too wide) in paragraph at lines 29--29
+Overfull \hbox (72.54567pt too wide) in paragraph at lines 25--25
  |  []
  []
 
@@ -712,438 +710,821 @@ Non-PDF special ignored!
 
 
 Non-PDF special ignored!
-Non-PDF special ignored!{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C
-:/Users/giselher/Documents/uzh/Master Projekt/Report_Tex/logos/logo_inf.pdf> <C
-:/Users/giselher/Documents/uzh/Master Projekt/Report_Tex/logos/rpg-logo-black.p
-df>] [2
+Non-PDF special ignored!{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/giselher/Documents/uzh/Master Pro
+jekt/Report/logos/logo_inf.pdf> <C:/Users/giselher/Documents/uzh/Master Projekt/Report/logos/rpg-logo-black.pdf>]
+[2
 
-]
-("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\chapters/0_preamble
-.tex" ("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\Report.toc")
+] ("C:\Users\giselher\Documents\uzh\Master Projekt\Report\chapters/0_preamble.tex"
+("C:\Users\giselher\Documents\uzh\Master Projekt\Report\Report.toc")
 \tf@toc=\write5
-
-[1
+ [1
 
 ] [2
 
 
 ])
-("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\chapters/1_introduc
-tion.tex"
+("C:\Users\giselher\Documents\uzh\Master Projekt\Report\chapters/1_introduction.tex"
 Chapter 1.
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3 ... but also comes at a lower price as today‚Ä
-                                                  ôs high speed cameras.
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3 ...but also comes at a lower price as today‚Äô
-                                                  s high speed cameras.
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
-been already used, duplicate ignored
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 7.
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 7.
+)
+("C:\Users\giselher\Documents\uzh\Master Projekt\Report\chapters/2_approach.tex"pdfTeX warning (ext4): destination with 
+the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.6 
-     [1
+l.1 \chapter
+            {Approach}\label{sec:approach} [1
 
 
-])
-("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\chapters/2_approach
-.tex"pdfTeX warning (ext4): destination with the same identifier (name{page.2})
- has been already used, duplicate ignored
+]pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.1 \chapter
             {Approach}\label{sec:approach} [2]
 Chapter 2.
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.16 ...tly and furthermore if single events don‚Ä
-                                                  ôt provide enough relevant...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.16 ...ly and furthermore if single events don‚Äô
-                                                  t provide enough relevant ...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
 [3
 
-]
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.38 Having static LEDs in the camera‚Ä
-                                       ôs ‚Äúimage‚Äù the straight-forward a...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.38 Having static LEDs in the camera‚Äô
-                                        s ‚Äúimage‚Äù the straight-forward a...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.38 Having static LEDs in the camera‚Äôs ‚Ä
-                                            úimage‚Äù the straight-forward a...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.38 Having static LEDs in the camera‚Äôs ‚Äú
-                                             image‚Äù the straight-forward a...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.38 ...g static LEDs in the camera‚Äôs ‚Äúimage‚Ä
-                                                  ù the straight-forward app...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.38 ... static LEDs in the camera‚Äôs ‚Äúimage‚Äù
-                                                   the straight-forward appr...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-[4] [5] [6])
-("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\chapters/3_results.
-tex" [7] [8]
-Chapter 3.
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.5 ...VS has a much lower resolution than today‚Ä
-                                                  ôs standard CMOS cameras, ...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.5 ...S has a much lower resolution than today‚Äô
-                                                  s standard CMOS cameras, t...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-[9
-
-]
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.24 ..., the image data and pose from the drone‚Ä
-                                                  ôs onboard camera, as well...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.24 ... the image data and pose from the drone‚Äô
-                                                  s onboard camera, as well ...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.31 ... to control remotely. Although the drone‚Ä
-                                                  ôs motors are powerful eno...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.31 ...to control remotely. Although the drone‚Äô
-                                                  s motors are powerful enou...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.31 ...ition of the localization with the drone‚Ä
-                                                  ôs internal camera was mos...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `latin1'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.31 ...tion of the localization with the drone‚Äô
-                                                  s internal camera was most...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-[10] <img/flip_times.png, id=215, 422.32782pt x 316.18124pt>
-File: img/flip_times.png Graphic file (type png)
-
-<use img/flip_times.png>
-Package pdftex.def Info: img/flip_times.png used on input line 46.
-(pdftex.def)             Requested size: 345.0pt x 258.29573pt.
+] <img/process_diag.pdf, id=192, 722.7pt x 542.025pt>
+File: img/process_diag.pdf Graphic file (type pdf)
+ <use img/process_diag.pdf>
+Package pdftex.def Info: img/process_diag.pdf used on input line 32.
+(pdftex.def)             Requested size: 345.0pt x 258.74649pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<img/mean_downtime.png, id=216, 479.54156pt x 175.40532pt>
-File: img/mean_downtime.png Graphic file (type png)
-
-<use img/mean_downtime.png>
-Package pdftex.def Info: img/mean_downtime.png used on input line 53.
-(pdftex.def)             Requested size: 345.0pt x 126.19536pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: Reference `img:dvs_pose_error_plot' on page 11 undefined on inpu
-t line 60.
-
-[11] <img/dvs_trans_error_box.png, id=224, 422.32782pt x 316.18124pt>
-File: img/dvs_trans_error_box.png Graphic file (type png)
-
-<use img/dvs_trans_error_box.png>
-Package pdftex.def Info: img/dvs_trans_error_box.png used on input line 64.
-(pdftex.def)             Requested size: 345.0pt x 258.29573pt.
+[4] [5 <C:/Users/giselher/Documents/uzh/Master Projekt/Report/img/process_diag.pdf>]
+<img/hist_motion.png, id=357, 950.80219pt x 350.05782pt>
+File: img/hist_motion.png Graphic file (type png)
+ <use img/hist_motion.png>
+Package pdftex.def Info: img/hist_motion.png used on input line 51.
+(pdftex.def)             Requested size: 345.0pt x 127.01956pt.
+ [6 <C:/Users/giselher/Documents/uzh/Master Projekt/Report/img/hist_motion.png>]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.73 	\item Time interval \{\delta
+                                   t\}
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+! LaTeX Error: Command \end{itemize} invalid in math mode.
 
-<img/dvs_rot_error_box.png, id=225, 422.32782pt x 316.18124pt>
-File: img/dvs_rot_error_box.png Graphic file (type png)
-
-<use img/dvs_rot_error_box.png>
-Package pdftex.def Info: img/dvs_rot_error_box.png used on input line 71.
-(pdftex.def)             Requested size: 345.0pt x 258.29573pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<img/ptam_trans_error_box.png, id=226, 422.32782pt x 316.18124pt>
-File: img/ptam_trans_error_box.png Graphic file (type png)
-
-<use img/ptam_trans_error_box.png>
-Package pdftex.def Info: img/ptam_trans_error_box.png used on input line 78.
-(pdftex.def)             Requested size: 345.0pt x 258.29573pt.
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 \end{itemize}
+                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+! LaTeX Error: Something's wrong--perhaps a missing \item.
 
-<img/ptam_rot_error_box.png, id=227, 422.32782pt x 316.18124pt>
-File: img/ptam_rot_error_box.png Graphic file (type png)
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 \end{itemize}
+                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
-<use img/ptam_rot_error_box.png>
-Package pdftex.def Info: img/ptam_rot_error_box.png used on input line 85.
-(pdftex.def)             Requested size: 345.0pt x 258.29573pt.
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 \end{itemize}
+                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.74 \end{itemize}
+                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+<img/dvs_weights.png, id=365, 621.82312pt x 315.42844pt>
+File: img/dvs_weights.png Graphic file (type png)
+ <use img/dvs_weights.png>
+Package pdftex.def Info: img/dvs_weights.png used on input line 83.
+(pdftex.def)             Requested size: 345.0pt x 175.0071pt.
+ [7 <C:/Users/giselher/Documents/uzh/Master Projekt/Report/img/dvs_weights.png>]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.100 	\item Uncertainty \{\sigma
+                                  \}
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+! LaTeX Error: Command \item invalid in math mode.
 
-)
-("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\chapters/4_discussi
-on.tex" [12 <C:/Users/giselher/Documents/uzh/Master Projekt/Report_Tex/img/flip
-_times.png (PNG copy)>] [13 <C:/Users/giselher/Documents/uzh/Master Projekt/Rep
-ort_Tex/img/mean_downtime.png (PNG copy)> <C:/Users/giselher/Documents/uzh/Mast
-er Projekt/Report_Tex/img/dvs_trans_error_box.png (PNG copy)>] [14 <C:/Users/gi
-selher/Documents/uzh/Master Projekt/Report_Tex/img/dvs_rot_error_box.png (PNG c
-opy)> <C:/Users/giselher/Documents/uzh/Master Projekt/Report_Tex/img/ptam_trans
-_error_box.png (PNG copy)>] [15 <C:/Users/giselher/Documents/uzh/Master Projekt
-/Report_Tex/img/ptam_rot_error_box.png (PNG copy)>]
-Chapter 4.
-) [16
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.101 	\item
+             Weight	\{w\}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
-] [17] [18
 
-]
-("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\chapters/10_appendi
-x.tex"
-Appendix A.
-[19
+! LaTeX Error: Something's wrong--perhaps a missing \item.
 
-] [20
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.101 	\item W
+              eight	\{w\}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
-])
-No file Report.bbl.
-File: logos/rpg-logo-black.pdf Graphic file (type pdf)
-<use logos/rpg-logo-black.pdf>
-Package pdftex.def Info: logos/rpg-logo-black.pdf used on input line 55.
-(pdftex.def)             Requested size: 167.48854pt x 56.9055pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 55--55
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.101 	\item W
+              eight	\{w\}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Command \end{itemize} invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.102 \end{itemize}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.102 \end{itemize}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.102 \end{itemize}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.102 \end{itemize}
+                   
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 104--105
 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 55.
-[21
+[8]) ("C:\Users\giselher\Documents\uzh\Master Projekt\Report\chapters/3_results.tex" [9]
+Chapter 3.
+! Undefined control sequence.
+l.5 ...the drone execute a flip, i.e. a 360\degree
+                                                   roll. We decided to use t...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+<img/marked_quadrotor.jpg, id=386, 1578.64781pt x 1142.01656pt>
+File: img/marked_quadrotor.jpg Graphic file (type jpg)
+ <use img/marked_quadrotor.jpg>
+Package pdftex.def Info: img/marked_quadrotor.jpg used on input line 10.
+(pdftex.def)             Requested size: 238.44904pt x 172.5pt.
+ [10
+
+ <C:/Users/giselher/Documents/uzh/Master Projekt/Report/img/marked_quadrotor.jpg>]
+<img/quadcopter_belly.jpg, id=396, 1446.15282pt x 1443.14156pt>
+File: img/quadcopter_belly.jpg Graphic file (type jpg)
+ <use img/quadcopter_belly.jpg>
+Package pdftex.def Info: img/quadcopter_belly.jpg used on input line 21.
+(pdftex.def)             Requested size: 172.84679pt x 172.5pt.
+
+<img/dvs_ground.jpg, id=397, 1551.54657pt x 1327.20844pt>
+File: img/dvs_ground.jpg Graphic file (type jpg)
+ <use img/dvs_ground.jpg>
+Package pdftex.def Info: img/dvs_ground.jpg used on input line 28.
+(pdftex.def)             Requested size: 201.63712pt x 172.5pt.
+
+Underfull \vbox (badness 5637) has occurred while \output is active []
+
+ [11 <C:/Users/giselher/Documents/uzh/Master Projekt/Report/img/quadcopter_belly.jpg> <C:/Users/giselher/Documents/uzh/M
+aster Projekt/Report/img/dvs_ground.jpg>] [12]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.70         ~    & \overline{x}
+                                \ [s]   &    \sigma\ [s]     \\ \hline
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.70         ~    & \overline{x}\ [s]   &
+                                             \sigma\ [s]     \\ \hline
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.70         ~    & \overline{x}\ [s]   &
+                                             \sigma\ [s]     \\ \hline
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.70         ~    & \overline{x}\ [s]   &
+                                             \sigma\ [s]     \\ \hline
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.70 ...    ~    & \overline{x}\ [s]   &    \sigma
+                                                  \ [s]     \\ \hline
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.70 ...e{x}\ [s]   &    \sigma\ [s]     \\ \hline
+                                                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.70 ...e{x}\ [s]   &    \sigma\ [s]     \\ \hline
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.70 ...e{x}\ [s]   &    \sigma\ [s]     \\ \hline
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Package epstopdf Info: Source file: <img/flip_times.eps>
+(epstopdf)                    date: 2013-02-08 10:53:46
+(epstopdf)                    size: 9755 bytes
+(epstopdf)             Output file: <img/flip_times-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-02-09 17:59:25
+(epstopdf)                    size: 3934 bytes
+(epstopdf)             Command: <epstopdf --outfile=img/flip_times-eps-converted-to.pdf img/flip_times.eps>
+(epstopdf)             \includegraphics on input line 81.
+Package epstopdf Info: Output file is already uptodate.
+<img/flip_times-eps-converted-to.pdf, id=421, 421.575pt x 317.185pt>
+File: img/flip_times-eps-converted-to.pdf Graphic file (type pdf)
+ <use img/flip_times-eps-converted-to.pdf>
+Package pdftex.def Info: img/flip_times-eps-converted-to.pdf used on input line 81.
+(pdftex.def)             Requested size: 345.0pt x 259.5755pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package epstopdf Info: Source file: <img/mean_flip_times.eps>
+(epstopdf)                    date: 2013-02-08 11:36:57
+(epstopdf)                    size: 9157 bytes
+(epstopdf)             Output file: <img/mean_flip_times-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-02-09 17:59:25
+(epstopdf)                    size: 3613 bytes
+(epstopdf)             Command: <epstopdf --outfile=img/mean_flip_times-eps-converted-to.pdf img/mean_flip_times.eps>
+(epstopdf)             \includegraphics on input line 88.
+Package epstopdf Info: Output file is already uptodate.
+<img/mean_flip_times-eps-converted-to.pdf, id=422, 516.93124pt x 407.5225pt>
+File: img/mean_flip_times-eps-converted-to.pdf Graphic file (type pdf)
+
+<use img/mean_flip_times-eps-converted-to.pdf>
+Package pdftex.def Info: img/mean_flip_times-eps-converted-to.pdf used on input line 88.
+(pdftex.def)             Requested size: 218.81339pt x 172.5pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [13]
+! Missing } inserted.
+<inserted text> 
+                }
+l.99 ...))^2\ \text{with}\ S,T \in \mathbb{R}^3.\\
+                                                  
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+[14 <C:/Users/giselher/Documents/uzh/Master Projekt/Report/img/flip_times-eps-converted-to.pdf>]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.109         ~    & \overline{x}
+                                 \ [cm]   &    \sigma\ [cm]     \\ \hline
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.109         ~    & \overline{x}\ [cm]   &
+                                               \sigma\ [cm]     \\ \hline
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.109         ~    & \overline{x}\ [cm]   &
+                                               \sigma\ [cm]     \\ \hline
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.109         ~    & \overline{x}\ [cm]   &
+                                               \sigma\ [cm]     \\ \hline
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.109 ...  ~    & \overline{x}\ [cm]   &    \sigma
+                                                  \ [cm]     \\ \hline
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.109 ...}\ [cm]   &    \sigma\ [cm]     \\ \hline
+                                                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.109 ...}\ [cm]   &    \sigma\ [cm]     \\ \hline
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.109 ...}\ [cm]   &    \sigma\ [cm]     \\ \hline
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.121         ~    & \overline{x}
+                                 \ [^{\circ}]   &    \sigma\ [^{\circ}]     ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.121         ~    & \overline{x}\ [^{\circ}]   &
+                                                     \sigma\ [^{\circ}]     ...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.121         ~    & \overline{x}\ [^{\circ}]   &
+                                                     \sigma\ [^{\circ}]     ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.121         ~    & \overline{x}\ [^{\circ}]   &
+                                                     \sigma\ [^{\circ}]     ...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.121 ... & \overline{x}\ [^{\circ}]   &    \sigma
+                                                  \ [^{\circ}]     \\ \hline
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.121 ...]   &    \sigma\ [^{\circ}]     \\ \hline
+                                                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.121 ...]   &    \sigma\ [^{\circ}]     \\ \hline
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.121 ...]   &    \sigma\ [^{\circ}]     \\ \hline
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.133         ~    & \overline{x}
+                                 \ [^{\circ}]   &    \sigma\ [^{\circ}]     ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.133         ~    & \overline{x}\ [^{\circ}]   &
+                                                     \sigma\ [^{\circ}]     ...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.133         ~    & \overline{x}\ [^{\circ}]   &
+                                                     \sigma\ [^{\circ}]     ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.133         ~    & \overline{x}\ [^{\circ}]   &
+                                                     \sigma\ [^{\circ}]     ...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.133 ... & \overline{x}\ [^{\circ}]   &    \sigma
+                                                  \ [^{\circ}]     \\ \hline
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.133 ...]   &    \sigma\ [^{\circ}]     \\ \hline
+                                                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.133 ...]   &    \sigma\ [^{\circ}]     \\ \hline
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.133 ...]   &    \sigma\ [^{\circ}]     \\ \hline
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.145         ~    & \overline{x}
+                                 \ [^{\circ}]   &    \sigma\ [^{\circ}]     ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.145         ~    & \overline{x}\ [^{\circ}]   &
+                                                     \sigma\ [^{\circ}]     ...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.145         ~    & \overline{x}\ [^{\circ}]   &
+                                                     \sigma\ [^{\circ}]     ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.145         ~    & \overline{x}\ [^{\circ}]   &
+                                                     \sigma\ [^{\circ}]     ...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.145 ... & \overline{x}\ [^{\circ}]   &    \sigma
+                                                  \ [^{\circ}]     \\ \hline
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \hskip -.5\arrayrulewidth \vrule...
+l.145 ...]   &    \sigma\ [^{\circ}]     \\ \hline
+                                                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.145 ...]   &    \sigma\ [^{\circ}]     \\ \hline
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.145 ...]   &    \sigma\ [^{\circ}]     \\ \hline
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Package epstopdf Info: Source file: <img/trans_error_box.eps>
+(epstopdf)                    date: 2013-02-08 11:35:42
+(epstopdf)                    size: 34435 bytes
+(epstopdf)             Output file: <img/trans_error_box-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-02-09 17:59:26
+(epstopdf)                    size: 9464 bytes
+(epstopdf)             Command: <epstopdf --outfile=img/trans_error_box-eps-converted-to.pdf img/trans_error_box.eps>
+(epstopdf)             \includegraphics on input line 155.
+Package epstopdf Info: Output file is already uptodate.
+<img/trans_error_box-eps-converted-to.pdf, id=452, 486.81876pt x 381.425pt>
+File: img/trans_error_box-eps-converted-to.pdf Graphic file (type pdf)
+
+<use img/trans_error_box-eps-converted-to.pdf>
+Package pdftex.def Info: img/trans_error_box-eps-converted-to.pdf used on input line 155.
+(pdftex.def)             Requested size: 345.0pt x 270.30728pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package epstopdf Info: Source file: <img/roll_error_box.eps>
+(epstopdf)                    date: 2013-02-08 11:35:43
+(epstopdf)                    size: 56786 bytes
+(epstopdf)             Output file: <img/roll_error_box-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-02-09 17:59:27
+(epstopdf)                    size: 14555 bytes
+(epstopdf)             Command: <epstopdf --outfile=img/roll_error_box-eps-converted-to.pdf img/roll_error_box.eps>
+(epstopdf)             \includegraphics on input line 162.
+Package epstopdf Info: Output file is already uptodate.
+<img/roll_error_box-eps-converted-to.pdf, id=453, 489.83pt x 381.425pt>
+File: img/roll_error_box-eps-converted-to.pdf Graphic file (type pdf)
+ <use img/roll_error_box-eps-converted-to.pdf>
+Package pdftex.def Info: img/roll_error_box-eps-converted-to.pdf used on input line 162.
+(pdftex.def)             Requested size: 345.0pt x 268.65439pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package epstopdf Info: Source file: <img/pitch_error_box.eps>
+(epstopdf)                    date: 2013-02-08 11:35:44
+(epstopdf)                    size: 52883 bytes
+(epstopdf)             Output file: <img/pitch_error_box-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-02-09 17:59:28
+(epstopdf)                    size: 13656 bytes
+(epstopdf)             Command: <epstopdf --outfile=img/pitch_error_box-eps-converted-to.pdf img/pitch_error_box.eps>
+(epstopdf)             \includegraphics on input line 169.
+Package epstopdf Info: Output file is already uptodate.
+<img/pitch_error_box-eps-converted-to.pdf, id=454, 489.83pt x 381.425pt>
+File: img/pitch_error_box-eps-converted-to.pdf Graphic file (type pdf)
+ <use img/pitch_error_box-eps-converted-to.pdf>
+Package pdftex.def Info: img/pitch_error_box-eps-converted-to.pdf used on input line 169.
+(pdftex.def)             Requested size: 345.0pt x 268.65439pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package epstopdf Info: Source file: <img/yaw_error_box.eps>
+(epstopdf)                    date: 2013-02-08 11:35:45
+(epstopdf)                    size: 50525 bytes
+(epstopdf)             Output file: <img/yaw_error_box-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-02-09 17:59:29
+(epstopdf)                    size: 13194 bytes
+(epstopdf)             Command: <epstopdf --outfile=img/yaw_error_box-eps-converted-to.pdf img/yaw_error_box.eps>
+(epstopdf)             \includegraphics on input line 176.
+Package epstopdf Info: Output file is already uptodate.
+<img/yaw_error_box-eps-converted-to.pdf, id=455, 489.83pt x 381.425pt>
+File: img/yaw_error_box-eps-converted-to.pdf Graphic file (type pdf)
+ <use img/yaw_error_box-eps-converted-to.pdf>
+Package pdftex.def Info: img/yaw_error_box-eps-converted-to.pdf used on input line 176.
+(pdftex.def)             Requested size: 345.0pt x 268.65439pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) ("C:\Users\giselher\Documents\uzh\Master Projekt\Report\chapters/4_discussion.tex"
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [15 <C:/Users/giselher/Documents/uzh/Master Projekt/Report/img/mean_flip_times-eps-converted-to.pdf>] [16] [17 <C:/User
+s/giselher/Documents/uzh/Master Projekt/Report/img/trans_error_box-eps-converted-to.pdf>] [18 <C:/Users/giselher/Documen
+ts/uzh/Master Projekt/Report/img/roll_error_box-eps-converted-to.pdf>] [19 <C:/Users/giselher/Documents/uzh/Master Proje
+kt/Report/img/pitch_error_box-eps-converted-to.pdf>] [20 <C:/Users/giselher/Documents/uzh/Master Projekt/Report/img/yaw_
+error_box-eps-converted-to.pdf>]
+Chapter 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--7
+
+ []
+
+) [21
+
+] [22] ("C:\Users\giselher\Documents\uzh\Master Projekt\Report\Report.bbl") [23
+
+
+] [24
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 55.
- ("C:\Users\giselher\Documents\uzh\Master Projekt\Report_Tex\Report.aux")
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 55.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 55.
+File: logos/rpg-logo-black.pdf Graphic file (type pdf)
+
+<use logos/rpg-logo-black.pdf>
+Package pdftex.def Info: logos/rpg-logo-black.pdf used on input line 51.
+(pdftex.def)             Requested size: 167.48854pt x 56.9055pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 51--51
+
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 51.
+[25]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 51.
+ ("C:\Users\giselher\Documents\uzh\Master Projekt\Report\Report.aux")
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 51.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 51.
 Package rerunfilecheck Info: File `Report.out' has not changed.
-(rerunfilecheck)             Checksum: 4F2407880829FC96859A3039496F62F5;1581.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 55.
+(rerunfilecheck)             Checksum: 0AFDD8238B0DF55ED9A9505810EBE721;1529.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 51.
  ) 
 Here is how much of TeX's memory you used:
- 11677 strings out of 493921
- 175667 string characters out of 3144868
- 299257 words of memory out of 3000000
- 14700 multiletter control sequences out of 15000+200000
- 8871 words of font info for 34 fonts, out of 3000000 for 9000
+ 11906 strings out of 493921
+ 179756 string characters out of 3144868
+ 303754 words of memory out of 3000000
+ 14872 multiletter control sequences out of 15000+200000
+ 12317 words of font info for 47 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 49i,11n,76p,2716b,433s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\giselher\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi6
-00\tcrm1000.pk><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmbx10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-r10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12
-.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pf
-b><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+ 49i,12n,76p,2020b,433s stack positions out of 5000i,500n,10000p,200000b,50000s
+ <C:\Users\giselher\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1000.pk><C:/Program Files (x86)/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
+x12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files (x86)/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C
+:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmr12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Fi
+les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmr7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files (x86)/MiKTe
+X 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.
+pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
 
-Output written on Report.pdf (25 pages, 215148 bytes).
+Output written on Report.pdf (29 pages, 2959500 bytes).
 PDF statistics:
- 316 PDF objects out of 1000 (max. 8388607)
- 60 named destinations out of 1000 (max. 500000)
- 241 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 614 PDF objects out of 1000 (max. 8388607)
+ 89 named destinations out of 1000 (max. 500000)
+ 263 words of extra memory for PDF output out of 10000 (max. 10000000)
 

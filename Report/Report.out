@@ -1,25 +1,24 @@
 \BOOKMARK [0][-]{chapter*.2}{Abstract}{}% 1
 \BOOKMARK [0][-]{chapter.1}{Introduction}{}% 2
-\BOOKMARK [1][-]{section.1.1}{Related Work}{chapter.1}% 3
-\BOOKMARK [0][-]{chapter.2}{Approach}{}% 4
-\BOOKMARK [1][-]{section.2.1}{Considerations and Challenges}{chapter.2}% 5
-\BOOKMARK [1][-]{section.2.2}{Preparation}{chapter.2}% 6
-\BOOKMARK [2][-]{subsection.2.2.1}{C++ interface to the DVS}{section.2.2}% 7
-\BOOKMARK [2][-]{subsection.2.2.2}{LED markers}{section.2.2}% 8
-\BOOKMARK [1][-]{section.2.3}{The tracking algorithm}{chapter.2}% 9
-\BOOKMARK [2][-]{subsection.2.3.1}{Frequency filter}{section.2.3}% 10
-\BOOKMARK [2][-]{subsection.2.3.2}{Frequency period estimation}{section.2.3}% 11
-\BOOKMARK [2][-]{subsection.2.3.3}{Frequency accumulation}{section.2.3}% 12
-\BOOKMARK [1][-]{section.2.4}{LED position estimation}{chapter.2}% 13
-\BOOKMARK [2][-]{subsection.2.4.1}{Particle filter}{section.2.4}% 14
-\BOOKMARK [2][-]{subsection.2.4.2}{Extracting LED positions}{section.2.4}% 15
-\BOOKMARK [2][-]{subsection.2.4.3}{Pose estimation}{section.2.4}% 16
-\BOOKMARK [2][-]{subsection.2.4.4}{Discussion}{section.2.4}% 17
-\BOOKMARK [0][-]{chapter.3}{Results}{}% 18
-\BOOKMARK [1][-]{section.3.1}{Experiments}{chapter.3}% 19
-\BOOKMARK [2][-]{subsection.3.1.1}{Setup}{section.3.1}% 20
-\BOOKMARK [1][-]{section.3.2}{Evaluation}{chapter.3}% 21
-\BOOKMARK [2][-]{subsection.3.2.1}{Tracking speed}{section.3.2}% 22
-\BOOKMARK [2][-]{subsection.3.2.2}{Pose estimation}{section.3.2}% 23
+\BOOKMARK [0][-]{chapter.2}{Approach}{}% 3
+\BOOKMARK [1][-]{section.2.1}{Considerations and Challenges}{chapter.2}% 4
+\BOOKMARK [1][-]{section.2.2}{Preparation}{chapter.2}% 5
+\BOOKMARK [2][-]{subsection.2.2.1}{C++ interface to the DVS}{section.2.2}% 6
+\BOOKMARK [2][-]{subsection.2.2.2}{LED markers}{section.2.2}% 7
+\BOOKMARK [1][-]{section.2.3}{The tracking algorithm}{chapter.2}% 8
+\BOOKMARK [2][-]{subsection.2.3.1}{Frequency filter}{section.2.3}% 9
+\BOOKMARK [2][-]{subsection.2.3.2}{Frequency period estimation}{section.2.3}% 10
+\BOOKMARK [2][-]{subsection.2.3.3}{Period accumulation}{section.2.3}% 11
+\BOOKMARK [1][-]{section.2.4}{LED position estimation}{chapter.2}% 12
+\BOOKMARK [2][-]{subsection.2.4.1}{Particle filter}{section.2.4}% 13
+\BOOKMARK [2][-]{subsection.2.4.2}{Extracting LED positions}{section.2.4}% 14
+\BOOKMARK [2][-]{subsection.2.4.3}{Pose estimation}{section.2.4}% 15
+\BOOKMARK [2][-]{subsection.2.4.4}{Discussion}{section.2.4}% 16
+\BOOKMARK [0][-]{chapter.3}{Results}{}% 17
+\BOOKMARK [1][-]{section.3.1}{Experiments}{chapter.3}% 18
+\BOOKMARK [2][-]{subsection.3.1.1}{Setup}{section.3.1}% 19
+\BOOKMARK [1][-]{section.3.2}{Evaluation}{chapter.3}% 20
+\BOOKMARK [2][-]{subsection.3.2.1}{Tracking speed}{section.3.2}% 21
+\BOOKMARK [2][-]{subsection.3.2.2}{Pose estimation}{section.3.2}% 22
+\BOOKMARK [1][-]{section.3.3}{Discussion}{chapter.3}% 23
 \BOOKMARK [0][-]{chapter.4}{Conclusion}{}% 24
-\BOOKMARK [0][-]{appendix.A}{Something}{}% 25

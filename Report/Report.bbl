@@ -1,0 +1,40 @@
+\begin{thebibliography}{1}
+
+\bibitem{LineTracking}
+R.~Deriche and O.~Faugeras.
+\newblock {Tracking line segments}.
+\newblock {\em Image and Vision Computing}, 8(4):261 -- 270, November 1990.
+
+\bibitem{Matthias}
+M.~Hofstetter.
+\newblock Temporal pattern-based active marker identification and tracking
+  using a dynamic vision sensor.
+\newblock Master thesis, Institue of Neuroinformatics, ETH Zurich, January
+  2012.
+
+\bibitem{PTAM}
+Georg Klein and David Murray.
+\newblock {Parallel Tracking and Mapping for Small AR Workspaces}.
+\newblock {\em IEEE and ACM International Symposium on Mixed and Augmented
+  Reality}, November 2007.
+
+\bibitem{DVS}
+P.~Lichtsteiner, C.~Posch, and T.~Delbruck.
+\newblock {A 128 x 128 120 dB 15 us Latency Asynchronous Temporal Contrast
+  Vision Sensor}.
+\newblock {\em IEEE Journal of Solid-State Circuits}, 43(2):566 -- 576,
+  February 2008.
+
+\bibitem{SIFT}
+D.G. Lowe.
+\newblock {Object recognition from local scale-invariant features}.
+\newblock {\em The Proceedings of the Seventh IEEE International Conference on
+  Computer Vision}, 2(2):1150 -- 1157, 1999.
+
+\bibitem{Saner}
+C.~Saner.
+\newblock Autonomous map building with a low-cost quadcopter.
+\newblock Semester thesis, Artificial Intelligence Lab, University of Zurich,
+  December 2012.
+
+\end{thebibliography}

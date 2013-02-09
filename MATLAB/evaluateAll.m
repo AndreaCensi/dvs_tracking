@@ -86,6 +86,7 @@ ylabel('Distance [m]','Rotation',90);
 
 h = gcf;
 saveas(h,'trans_error_box','fig');
+saveas(h,'trans_error_box','eps');
 
 %plot rotation errors
 figure('position',[0 0 300 500]);
@@ -96,6 +97,7 @@ ylabel('Degree','Rotation',90);
 
 h = gcf;
 saveas(h,'roll_error_box','fig');
+saveas(h,'roll_error_box','eps');
 
 %plot rotation errors
 figure('position',[0 0 300 500]);
@@ -106,6 +108,7 @@ ylabel('Degree','Rotation',90);
 
 h = gcf;
 saveas(h,'pitch_error_box','fig');
+saveas(h,'pitch_error_box','eps');
 
 %plot rotation errors
 figure('position',[0 0 300 500]);
@@ -116,3 +119,4 @@ ylabel('Degree','Rotation',90);
 
 h = gcf;
 saveas(h,'yaw_error_box','fig');
+saveas(h,'yaw_error_box','eps');
