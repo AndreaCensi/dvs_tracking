@@ -1,0 +1,64 @@
+\IEEEoverridecommandlockouts
+\overrideIEEEmargins
+\usepackage{fixltx2e}
+
+% add [table] to allow \rowcolor
+\usepackage[table]{xcolor} 
+
+\input{tex/thanks.tex}
+ 
+ % on page \pageref{#1}} 10 \newrefformat{fig}{Figure \ref{#1} on page \pageref{#1}}
+
+
+%%% Biblatex
+\usepackage[style=numeric-comp,sorting=none,firstinits=true, maxnames=10, bibstyle=numeric,abbreviate=true,defernums=true,eprint=false,backend=bibtex]{biblatex}
+% \usepackage[style=numeric-comp,sorting=none,firstinits=true, maxnames=10, bibstyle=numeric,abbreviate=true,defernums=true,eprint=false,backend=bibtex]{biblatex}
+\renewcommand{\bibfont}{\footnotesize}
+% Warning for bibliography
+\newcommand{\notpresent}[1]{{\color{red}No #1} }
+\renewcommand{\notpresent}[1]{}
+\bibliography{commons/bib/strings_short}
+% \bibliography{commons/bib/strings_medium}
+% \bibliography{commons/bib/strings_long}
+\bibliography{commons/bib/all_only_one}
+%\graphicspath{{commons/icons/}}
+\input{commons/tex/macros/bib_pdf_icons}
+\input{commons/tex/macros/prettyref_format}
+\renewcommand{\weburl}[1]{\href{#1}{(url)}}
+%%% /Biblattex
+
+% \input{tex/preamble_algo.tex}
+
+% \usepackage{cite} % incompatible if using biblatex
+ 
+% % \input{./commons/tex/preamble_report.tex}
+% \input{./commons/tex/preamble_ieeeconf.tex}
+% % \input{./commons/tex/macros/large_margin_right.tex}
+% \input{./commons/tex/macros/fancy_table_colors.tex}
+ \input{./commons/tex/macros/fancy_bib.tex}
+% \newcommand{\href}[1]{#1}
+\input{./commons/tex/macros/stylish_hyperref_colors.tex}
+% \input{./commons/tex/macros/pagebreak_at_section.tex}
+% % \input{./commons/tex/macros/draft_figures.tex}
+% \input{./commons/tex/macros/last_resort.tex}
+\renewcommand{\baselinestretch}{0.955}
+\renewcommand{\baselinestretch}{0.94}
+% % \input{./commons/tex/macros/loose_layout.tex}
+
+\usepackage{xspace}
+%% Math
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[mathscr]{eucal}
+%% Graphics
+
+\usepackage[caption=false,font=footnotesize]{subfig}
+\captionsetup[subtable]{font={rm,md,sc,footnotesize},position=top}
+
+
+\newcommand{\ALMs}{ALMs}
+\newcommand{\ALM}{ALM}
+
+\usepackage{graphicx}
+
+\input{./commons/tex/live_symbols.tex}
