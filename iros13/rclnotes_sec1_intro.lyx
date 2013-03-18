@@ -109,38 +109,523 @@ Introduction
 \end_layout
 
 \begin_layout Itemize
-We need fast sensors for fast robots
+
+\emph on
+Current agile robots use alternative tracking systems.
 \end_layout
 
+\begin_deeper
 \begin_layout Itemize
-In an architecture we can distinguish between latency and time-discretization.
+
+\series bold
+DS: one-two paragraphs dissing Raff D'Andrea
+\series default
+ 
 \end_layout
 
-\begin_layout Itemize
-In this paper we consider the lowest-latency sensor available called DVS
- camera and how it can be incorporated in a robotic system.
+\end_deeper
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+rule{8.6cm}{3cm}
 \end_layout
 
-\begin_layout Itemize
-We create a tracking system with high-speed blinking LEDs mounted on the
- robot
+\end_inset
+
+
 \end_layout
 
-\begin_layout Itemize
-We could use this for relative localization between robots
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Discretization-and-latency"
+
+\end_inset
+
+Discretization and latency
 \end_layout
 
-\begin_layout Itemize
-At this point the prototype of a DVS sensor is too big to be mounted on
- a robot
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsection
-DVS camera
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-low latency
+Currently, the agility of a mobile robot is limited by the speed of the
+ sensing pipeline.
+ More precisely, 
+\begin_inset Quotes eld
+\end_inset
+
+speed
+\begin_inset Quotes erd
+\end_inset
+
+ can be quantified in 
+\emph on
+observations frequency
+\emph default
+ and 
+\emph on
+latency
+\emph default
+ (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:Discretization-and-latency"
+
+\end_inset
+
+).
+ In current state-of-the art autonomous navigation applications (
+\series bold
+DS: add citations) 
+\series default
+cameras give observations with frequency of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+xxx
+\end_layout
+
+\end_inset
+
+ and the total latency, from acquiring the images to processing them, is
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+xxx
+\end_layout
+
+\end_inset
+
+ ms.
+ To obtain more agile systems, we need to use faster sensors and low-latency
+ processing.
+\end_layout
+
+\begin_layout Standard
+In this paper, we consider the lowest-latency sensor available, called Dynamic
+ Vision Sensor (DVS) and how it can be incorporated in a robotic system
+ for the application of pose tracking.
+ The main difference of a DVS with respect to a normal CMOS camera is that
+ the data is transmitted as a series of 
+\emph on
+events
+\emph default
+ (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:DVS-camera"
+
+\end_inset
+
+).
+ Intuitively, the events generated can be interpreted as the sign of the
+ derivative of the luminance, but this is just an idealization (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:The-DVS-camera"
+
+\end_inset
+
+ describes the principles behind the device).
+ These events are fired not unlike spikes in a biological visual system,
+ as they respond to 
+\emph on
+change
+\emph default
+ in the perceived luminance in fact, 
+\begin_inset Quotes eld
+\end_inset
+
+silicon retina
+\begin_inset Quotes erd
+\end_inset
+
+ is a nickname for the DVS.
+ But the DVS circuits are much faster than a slow neuron: events are generated
+ with a latency of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+xxx
+\end_layout
+
+\end_inset
+
+ µs.
+ Therefore, potentially we could obtain sensing pipelines with a negligible
+ latency compared to dynamics of the platform.
+ Moreover, compared to normal high speed cameras, the data output and thus
+ the processing is reduced, as only change is advertised by the camera.
+\end_layout
+
+\begin_layout Standard
+We are a few years to the goal, however.
+ The DVS camera, though currently available commercially, has a few limitations,
+ such as the limited resolution (
+\begin_inset Formula $128\times128$
+\end_inset
+
+ pixels), and it is too heavy to be attached on current agile drones.
+ These problems will be solved shortly; here we turn our attention on how
+ we could use the data from a DVS for autonomous navigation of flying drones.
+\end_layout
+
+\begin_layout Standard
+The application that we show here is localization based on tracking of Active
+ LED Markers (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALMs
+\end_layout
+
+\end_inset
+
+).
+ These are blinking LEDs at high frequency (
+\begin_inset Formula $>1\,\mbox{kHz}$
+\end_inset
+
+).
+ The DVS is fast enough to be able to estimate the blinking frequency.
+ Therefore, we can detect not only the position, but, assuming that each
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALM
+\end_layout
+
+\end_inset
+
+ is given a slightly different blinking frequency, also the identity of
+ the markers, thus simplifying data association.
+ We envision that this system could be used for inter-robot localization
+ for high-speed acrobatic maneuvers, or that, in applications such as rescue
+ robotics these markers could be left in the environment to facilitate cooperati
+ve mapping.
+\end_layout
+
+\begin_layout Standard
+It is clear that the way we do computer vision must be completely rethought.
+ It is possible to integrate the events of a DVS camera to simulate a regular
+ CMOS frame, on which to do standard image processing, however, that is
+ not what you would want to do, because accumulating.
+ Ideally, to have the lowest latency for the sensing pipeline, one would
+ want each single event to be be reflected in a small but instantaneous
+ change in the commands given to the actuators.
+ Therefore, we really want to consider approaches that possibly use the
+ information contained in each single event.
+\end_layout
+
+\begin_layout Standard
+We have found two main approaches to handling event data.
+ So far the DVS events are processed using features (such as lines) that
+ are tracked through time (
+\series bold
+CB: add citations/expand)
+\series default
+.
+ This approach works well when the camera is static, because the output
+ is very sparse, and the input contains the features that are able to be
+ tracked.
+ In this paper we use a somewhat different approach.
+ We found out that mounting a DVS camera on a flying robot creates a new
+ set of challenges.
+ Because of the apparent motion of the environment, the input is not sparse
+ anymore.
+ Moreover, while in controlled conditions the DVS camera parameters can
+ be tuned to obtain the best performance, a robot must be able to work in
+ a wider range of environmental conditions and be robust to interferences.
+ To achieve 
+\end_layout
+
+\begin_layout Standard
+The approach presented in this paper is tunable such that  a bit of latency
+ can be sacrificed to obtain a more robust 
+\end_layout
+
+\begin_layout Standard
+In the end, we sacrified some latency to be robust to noise.
+ In obtain latencies of 
+\end_layout
+
+\begin_layout Standard
+In the end 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+As this utilization of asynchronous vision is a rather novel approach in
+ robotics it would be interesting to use this camera in other navigational
+ tasks in future projects, for example for visual SLAM on autonomous ground
+ vehicles.
+ While small image features as used in SIFT 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SIFT"
+
+\end_inset
+
+ might be difficult to use due to resolution line feature extraction, as
+ describe in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "LineTracking"
+
+\end_inset
+
+, could be a feasible approach.
+ Additionally, as edges are the natural source for DVS events it would have
+ an advantage in terms of processing compared to normal cameras.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Software and datasets are available at the website 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+xxx
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+The DVS camera
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:The-DVS-camera"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+CB/TB: could you write a short description (~1.5 columns) of the DVS camera
+ that could be understandable to a computer scientist? Also feel free to
+ write more, I will edit it down to space constraints.
+ I wrote down a few points that I'd like to make regarding future improvements
+ that are relevant to robotics.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+color[rgb]{0.7,0.7,0.7}
+\backslash
+rule{2.6cm}{3cm}}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+DVS camera 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+color[rgb]{0.7,0.7,0.7}
+\backslash
+rule{2.6cm}{3cm}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Response to circular stimulus
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+color[rgb]{0.7,0.7,0.7}
+\backslash
+rule{2.6cm}{3cm}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Drone rotor
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:DVS-camera"
+
+\end_inset
+
+DVS camera and its output
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -175,95 +660,31 @@ key "oster08quantification"
 \end_layout
 
 \begin_layout Itemize
-The main disadvantages are:
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-prototype status
-\end_layout
-
-\begin_layout Itemize
-heavy
-\end_layout
-
-\begin_layout Itemize
-low-resolution
-\end_layout
-
-\begin_layout Itemize
-buffer, too many events
-\end_layout
-
-\begin_layout Itemize
-complicated to tune
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
 Future improvements:
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-more resolution
-\end_layout
-
-\begin_layout Itemize
-inclusion of a 
-\begin_inset Quotes eld
-\end_inset
-
-normal
-\begin_inset Quotes erd
-\end_inset
-
- RGB camera
-\end_layout
-
-\begin_layout Itemize
 miniaturization
 \end_layout
 
+\begin_layout Itemize
+higher resolution
+\end_layout
+
+\begin_layout Itemize
+buffer able to handle more events
+\end_layout
+
+\begin_layout Itemize
+inclusion of a normal CMOS camera
+\end_layout
+
+\begin_layout Itemize
+easier to tune
+\end_layout
+
 \end_deeper
-\begin_layout Subsection
-Paper outline 
-\end_layout
-
-\begin_layout Itemize
-Section 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Software and datasets are available at 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 Hardware setup and event data
 \begin_inset CommandInset label

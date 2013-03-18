@@ -90,7 +90,67 @@ name "sec:conclusion"
 
 \begin_layout Standard
 Fast robots need fast sensors.
- A DVS 
+ A dynamical vision sensor (DVS) encodes visual information with a latency
+ in the microsecond resolution, and it is the most promising candidate for
+ enabling highly aggressive maneuvers.
+ However, the sensing pipeline must be completely re-designed to take advantages
+ of the DVS data, and the current prototypes suffer a few limitations, such
+ as a relatively low resolution, and a large weight that cannot be put onboard
+ an agile platform.
+ However, these problems will be resolved in a few years, so that the 
+\end_layout
+
+\begin_layout Standard
+This paper has presented the first pose tracking application using DVS data.
+ We have shown that the use of Active LEDs Markers (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALMs
+\end_layout
+
+\end_inset
+
+) allows to create high-frequency signals that allows to give a unique ID
+ to these feautures, thus avoiding the problem of data association.
+ The algorithm that the we developed uses a Bayesian framework, in which
+ we accumulate evidence of every single event into 
+\begin_inset Quotes eld
+\end_inset
+
+evidence maps
+\begin_inset Quotes erd
+\end_inset
+
+ that are tuned to a particular frequency.
+ The temporal interval can be tuned and it is a tradeoff between latency
+ and precision.
+ In our experiemental conditions it was possibile to have a latency of 1ms.
+ On top of detection using these evidence maps, we use a particle filter
+ to evolve the state of each candidate detection and a stage ensuring coherent
+ conditions.
+\end_layout
+
+\begin_layout Standard
+We have evaluated the use of this technology for tracking the motion of
+ a quadrotor during an aggresive maneuver.
+ Experiments revealed that the DVS is able to reacquire stable tracking
+ after as the quadrotor flips with negligible delay as soon as the LEDs
+ are visible again.
+ In comparison to the PTAM used by the quadrotor, it is more than twice
+ as fast.
+ The DVS thus has a clear advantage in comparison to conventional cameras
+ as it does not suffer from blurring.
+ However, the precision in reconstructing the pose is limited because of
+ the low 
+\begin_inset Formula $128\times128$
+\end_inset
+
+ resolution.
 \end_layout
 
 \begin_layout Subsubsection
@@ -116,14 +176,7 @@ Using the DVS for tracking has some clear advantages as the high sampling
 \end_layout
 
 \begin_layout Standard
-The measurements revealed that the DVS is able to reacquire stable tracking
- after as the quadrotor flips with negligible delay as soon as the LEDs
- are visible again.
- In comparison to the PTAM used by the quadrotor, it is more than twice
- as fast.
- The DVS thus has a clear advantage in comparison to conventional cameras
- as it does not suffer from blurring.
- Nevertheless, we used active markers in our experiment which are easier
+Nevertheless, we used active markers in our experiment which are easier
  to identify than image features.
  Due to the fact that the DVS not only needs motion in order to produce
  input but also has a lower resolution than conventional imaging sensors
@@ -163,28 +216,7 @@ The measurements revealed that the DVS is able to reacquire stable tracking
 Apart from a number of possible improvements, the approach has shown to
  be feasible and has demonstrated the advantages of using and event-driven
  approach for vision based robotics.
- As this utilization of asynchronous vision is a rather novel approach in
- robotics it would be interesting to use this camera in other navigational
- tasks in future projects, for example for visual SLAM on autonomous ground
- vehicles.
- While small image features as used in SIFT 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "SIFT"
-
-\end_inset
-
- might be difficult to use due to resolution line feature extraction, as
- describe in 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "LineTracking"
-
-\end_inset
-
-, could be a feasible approach.
- Additionally, as edges are the natural source for DVS events it would have
- an advantage in terms of processing compared to normal cameras.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -195,6 +227,10 @@ Acknowledgements
 
 \begin_layout Itemize
 Christian Saner
+\end_layout
+
+\begin_layout Itemize
+Matia Pizzoli
 \end_layout
 
 \begin_layout Itemize
