@@ -1,0 +1,348 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass IEEEtran
+\begin_preamble
+
+\input{tex/preamble.tex}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\pdf_title "Bootstrapping bilinear gradient dynamics sensor models"
+\pdf_author "Andrea Censi, Richard M. Murray"
+\pdf_subject "robotics"
+\pdf_keywords "robotics bootstrapping learning "
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref page
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 2
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Hardware setup and event data
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Hardware-setup-and"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+This section describes the basic hardware setup and how the data looks like.
+\end_layout
+
+\begin_layout Subsection
+Active LED Markers (ALMs)
+\end_layout
+
+\begin_layout Itemize
+We have a set of blinking LEDs
+\end_layout
+
+\begin_layout Itemize
+Each LEDs blinks at a different frequency.
+\end_layout
+
+\begin_layout Subsection
+Events
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:events-hist"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Events data in practice
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:events-hist"
+
+\end_inset
+
+ shows how the data looks like.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+In this case, the LEDs are fixed in the environment and a 
+\emph on
+fixed 
+\emph default
+camera is looking at them.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:events-hist"
+
+\end_inset
+
+
+\emph on
+a
+\emph default
+ shows the histogram of events from one pixel
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:events-hist"
+
+\end_inset
+
+
+\emph on
+b
+\emph default
+ shows the sequence of events from one particular pixel.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Note also the halo in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:events-hist"
+
+\end_inset
+
+
+\emph on
+a
+\emph default
+ cannot be explained by the refractive properties of the optics of the camera
+ and is probably due to properties.
+\end_layout
+
+\begin_layout Itemize
+The idea
+\end_layout
+
+\begin_layout Itemize
+Experimentally the interval is actually very repeatable
+\end_layout
+
+\begin_layout Subsection
+Alternate events and motion
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:filtering-switch"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+We go from events to 
+\begin_inset Quotes eld
+\end_inset
+
+alternate events
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+This needs a buffer
+\end_layout
+
+\begin_layout Itemize
+This series now has the polarity
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:switch-hist"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:switch-hist"
+
+\end_inset
+
+
+\emph on
+a
+\emph default
+ shows the histogram
+\end_layout
+
+\begin_layout Itemize
+The frequency peaks are clearly visible in this histogram
+\end_layout
+
+\begin_layout Itemize
+What about motion?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We see that, following motion, in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:switch-hist"
+
+\end_inset
+
+
+\emph on
+b 
+\emph default
+the peaks are clearly visible.
+\end_layout
+
+\begin_layout Itemize
+There is also a 
+\end_layout
+
+\begin_layout Itemize
+Of course all of this depends on the statistics of the image.
+\end_layout
+
+\end_deeper
+\end_body
+\end_document

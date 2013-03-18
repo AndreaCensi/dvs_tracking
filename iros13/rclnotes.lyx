@@ -123,7 +123,63 @@ cleardoublepage
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
-filename "rclnotes_sec2_models.lyx"
+filename "rclnotes_sec3_dvs.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vfill
+\backslash
+cleardoublepage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "rclnotes_sec4_setup.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vfill
+\backslash
+cleardoublepage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "rclnotes_sec5_method.lyx"
 
 \end_inset
 

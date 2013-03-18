@@ -363,16 +363,14 @@ It is clear that the way we do computer vision must be completely rethought.
 
 \begin_layout Standard
 We have found two main approaches to handling event data.
- So far the DVS events are processed using features (such as lines) that
- are tracked through time (
+ So far the DVS events are processed using features (such as lines or points)
+ that are tracked through time (
 \series bold
 CB: add citations/expand)
 \series default
 .
  This approach works well when the camera is static, because the output
- is very sparse, and the input contains the features that are able to be
- tracked.
- In this paper we use a somewhat different approach.
+ is very sparse.
  We found out that mounting a DVS camera on a flying robot creates a new
  set of challenges.
  Because of the apparent motion of the environment, the input is not sparse
@@ -380,21 +378,64 @@ CB: add citations/expand)
  Moreover, while in controlled conditions the DVS camera parameters can
  be tuned to obtain the best performance, a robot must be able to work in
  a wider range of environmental conditions and be robust to interferences.
- To achieve 
+ 
 \end_layout
 
 \begin_layout Standard
-The approach presented in this paper is tunable such that  a bit of latency
- can be sacrificed to obtain a more robust 
+To achieve this robustness we have developed an approach that can sacrifice
+ a bit of latency to be more robust to noise and unmodeled phenomena.
+ We accumulate the events perceived in thin slices of times corresponding
+ to the blinking frequency (
+\begin_inset Formula $1$
+\end_inset
+
+ms slice for 1
+\begin_inset space ~
+\end_inset
+
+kHz data).
+ This allows to do detection of the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALMs
+\end_layout
+
+\end_inset
+
+ position in image space.
+ On top of this, we use a particle filter for tracking the position in image
+ space of each detection, and a resolution stage to obtain coherent hypotheses
+ on the joint position of the markers.
+ Finally we reconstruct the pose using a standard approach to rigid reconstructi
+on.
 \end_layout
 
 \begin_layout Standard
-In the end, we sacrified some latency to be robust to noise.
- In obtain latencies of 
-\end_layout
+We evaluate our method in tracking the pose of a drone during an agile maneuver
+ (a flip).
+ We compare our methods with a traditional CMOS-based approach using PTAM.
+ We verify that our method, with a latency of 
+\begin_inset Formula $1$
+\end_inset
 
-\begin_layout Standard
-In the end 
+
+\begin_inset space ~
+\end_inset
+
+ms, is able to reacquire tracking instantaneously regardless of the fast
+ motion, while the CMOS data is corrupted by motion blur.
+ We evaluate the reconstruction accuracy using an OptiTrack system (however,
+ at 250 Hz resonse, this is way slower).
+ We obtain values that are compatible with the low spatial resolution (128
+\begin_inset Formula $\times$
+\end_inset
+
+128) of the DVS, which proves to be the current limitation.
 \end_layout
 
 \begin_layout Standard
@@ -431,8 +472,9 @@ key "LineTracking"
 
 \end_layout
 
-\begin_layout Itemize
-Software and datasets are available at the website 
+\begin_layout Standard
+Software, datasets, and animations illustrating the method are available
+ at the website 
 \begin_inset ERT
 status open
 
@@ -445,534 +487,6 @@ xxx
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Section
-The DVS camera
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:The-DVS-camera"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-CB/TB: could you write a short description (~1.5 columns) of the DVS camera
- that could be understandable to a computer scientist? Also feel free to
- write more, I will edit it down to space constraints.
- I wrote down a few points that I'd like to make regarding future improvements
- that are relevant to robotics.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-{
-\backslash
-color[rgb]{0.7,0.7,0.7}
-\backslash
-rule{2.6cm}{3cm}}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Caption
-
-\begin_layout Plain Layout
-DVS camera 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-{
-\backslash
-color[rgb]{0.7,0.7,0.7}
-\backslash
-rule{2.6cm}{3cm}}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-Response to circular stimulus
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-{
-\backslash
-color[rgb]{0.7,0.7,0.7}
-\backslash
-rule{2.6cm}{3cm}}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-Drone rotor
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:DVS-camera"
-
-\end_inset
-
-DVS camera and its output
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand cite
-key "boerlin09getting"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "lichtsteiner08asynchronous"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "etienne-cummings99intelligent"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "oster08quantification"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Future improvements:
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-miniaturization
-\end_layout
-
-\begin_layout Itemize
-higher resolution
-\end_layout
-
-\begin_layout Itemize
-buffer able to handle more events
-\end_layout
-
-\begin_layout Itemize
-inclusion of a normal CMOS camera
-\end_layout
-
-\begin_layout Itemize
-easier to tune
-\end_layout
-
-\end_deeper
-\begin_layout Section
-Hardware setup and event data
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:Hardware-setup-and"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-This section describes the basic hardware setup and how the data looks like.
-\end_layout
-
-\begin_layout Subsection
-Active LED Markers (ALMs)
-\end_layout
-
-\begin_layout Itemize
-We have a set of blinking LEDs
-\end_layout
-
-\begin_layout Itemize
-Each LEDs blinks at a different frequency.
-\end_layout
-
-\begin_layout Subsection
-Events
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:events-hist"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Events data in practice
-\end_layout
-
-\begin_layout Itemize
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:events-hist"
-
-\end_inset
-
- shows how the data looks like.
- 
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-In this case, the LEDs are fixed in the environment and a 
-\emph on
-fixed 
-\emph default
-camera is looking at them.
-\end_layout
-
-\begin_layout Itemize
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:events-hist"
-
-\end_inset
-
-
-\emph on
-a
-\emph default
- shows the histogram of events from one pixel
-\end_layout
-
-\begin_layout Itemize
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:events-hist"
-
-\end_inset
-
-
-\emph on
-b
-\emph default
- shows the sequence of events from one particular pixel.
- 
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Note also the halo in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:events-hist"
-
-\end_inset
-
-
-\emph on
-a
-\emph default
- cannot be explained by the refractive properties of the optics of the camera
- and is probably due to properties.
-\end_layout
-
-\begin_layout Itemize
-The idea
-\end_layout
-
-\begin_layout Itemize
-Experimentally the interval is actually very repeatable
-\end_layout
-
-\begin_layout Subsection
-Alternate events and motion
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:filtering-switch"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-We go from events to 
-\begin_inset Quotes eld
-\end_inset
-
-alternate events
-\begin_inset Quotes erd
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-This needs a buffer
-\end_layout
-
-\begin_layout Itemize
-This series now has the polarity
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:switch-hist"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:switch-hist"
-
-\end_inset
-
-
-\emph on
-a
-\emph default
- shows the histogram
-\end_layout
-
-\begin_layout Itemize
-The frequency peaks are clearly visible in this histogram
-\end_layout
-
-\begin_layout Itemize
-What about motion?
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-We see that, following motion, in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:switch-hist"
-
-\end_inset
-
-
-\emph on
-b 
-\emph default
-the peaks are clearly visible.
-\end_layout
-
-\begin_layout Itemize
-There is also a 
-\end_layout
-
-\begin_layout Itemize
-Of course all of this depends on the statistics of the image.
-\end_layout
-
-\end_deeper
-\begin_layout Section
-Tracking algorithm
-\end_layout
-
-\begin_layout Subsection
-From raw events to sequence events
-\end_layout
-
-\begin_layout Subsection
-Particle filters
-\end_layout
-
-\begin_layout Subsection
-Estimation
-\end_layout
-
-\begin_layout Subsection
-3D Reconstruction
-\end_layout
-
-\begin_layout Subsubsection
 
 \end_layout
 
