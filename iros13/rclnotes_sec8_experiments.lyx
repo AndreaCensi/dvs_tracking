@@ -92,16 +92,10 @@ name "sec:experiments"
 The goal of our experimental evaluation is to consider the advantages of
  a DVS-based tracking solution compared with a tracking solution based on
  a traditional CMOS camera.
-\end_layout
-
-\begin_layout Standard
-We compare the DVS+LED-based tracking with vision-based tracking using the
- PTAM algorithm, using the output of an OptiTrack system as the ground truth.
- 
-\end_layout
-
-\begin_layout Standard
-The data show that the DVS+LED-based solution is able to deal with faster
+ We compare the DVS+LED-based tracking with vision-based tracking using
+ the PTAM algorithm, using the output of an OptiTrack system as the ground
+ truth.
+ The data show that the DVS+LED-based solution is able to deal with faster
  motions due to the minimal latency, however, the reconstructed quadrotor
  pose is not as accurate, as it could be expected from the lower resolution.
  
@@ -360,20 +354,11 @@ ALMs
 
 \begin_layout Standard
 The drone has also a front-facing 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
-\end_layout
-
+\begin_inset Formula $720\times980$
 \end_inset
 
- CMOS camera that is used in these experiments.
- The ground-facing camera is not used.
+ CMOS camera that is used in these experiments, while the ground-facing
+ camera is not used.
 \end_layout
 
 \begin_layout Subsubsection
@@ -401,37 +386,9 @@ xxx
 
 \end_inset
 
-, with a FOV of 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
-\end_layout
-
-\end_inset
-
-, giving approximately 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
-\end_layout
-
-\end_inset
-
- degrees per pixels resolution.
-\end_layout
-
-\begin_layout Standard
-For tracking the quadcopter, the DVS was installed on the floor facing upwards.
+, with a FOV of approximately 90 deg, giving a resolution of 0.7 pixels/degree.
+ For tracking the quadcopter, the DVS was installed on the floor facing
+ upwards.
  Note that the relative motion between DVS and quadcopter would be the same
  if the positions were switched (
 \begin_inset ERT
@@ -467,40 +424,6 @@ http://www.naturalpoint.com/optitrack/
 
 , which is a marker-based optical motion tracking system using active infrared
  light and reflective marker balls.
-\end_layout
-
-\begin_layout Standard
-Our lab setup comprised 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
-\end_layout
-
-\end_inset
-
- cameras in an 
-\begin_inset Formula $6\,\mbox{m}\times8\,\mbox{m}$
-\end_inset
-
- area; the cost of this system is approximately 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
-\end_layout
-
-\end_inset
-
-.
  Four markers have been applied to the drone (
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -509,24 +432,62 @@ reference "fig:Infrared-markers-used"
 \end_inset
 
 ).
- We estimate the accuracy of this system in our lab conditions to be 
-approximately 
-\lang english
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
+ 
 \end_layout
 
+\begin_layout Standard
+Our lab setup comprised 10 cameras in an 
+\begin_inset Formula $6\,\mbox{m}\times8\,\mbox{m}$
 \end_inset
 
- mm.
- 
+ area; the cost of this system is approximately 20,000
+\begin_inset space ~
+\end_inset
+
+CHF.
+ The sampling frequency used was 
+\begin_inset Formula $250$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+Hz.
+ The accuracy is stated as 
+\begin_inset Formula $\sim1$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+mm
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ by the manufacturer, but this seems an optimistic estimate based on our
+ experience with the system.
 \end_layout
 
 \begin_layout Standard
@@ -725,10 +686,7 @@ xxx
 \end_inset
 
  seconds.
-\end_layout
-
-\begin_layout Standard
-During the flip the frontal camera images are severely blurred (
+ During the flip the frontal camera images are severely blurred (
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:Flip-inside"

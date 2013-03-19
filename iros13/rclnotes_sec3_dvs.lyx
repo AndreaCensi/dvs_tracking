@@ -100,6 +100,7 @@ CB/TB: could you write a short description (~1.5 columns) of the DVS camera
 
 \begin_layout Standard
 \begin_inset Float figure
+placement b
 wide false
 sideways false
 status collapsed
@@ -257,7 +258,8 @@ DVS camera and its output
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
+Some citations: 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "boerlin09getting"

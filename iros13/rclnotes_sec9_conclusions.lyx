@@ -90,19 +90,20 @@ name "sec:conclusion"
 
 \begin_layout Standard
 Fast robots need fast sensors.
- A dynamical vision sensor (DVS) encodes visual information with a latency
- in the microsecond resolution, and it is the most promising candidate for
- enabling highly aggressive maneuvers.
- However, the sensing pipeline must be completely re-designed to take advantages
- of the DVS data, and the current prototypes suffer a few limitations, such
- as a relatively low resolution, and a large weight that cannot be put onboard
- an agile platform.
- However, these problems will be resolved in a few years, so that the 
+ A dynamical vision sensor (DVS) returns changes in the visual field with
+ a latency in the microsecond resolution.
+ This technology is the most promising candidate for enabling highly aggressive
+ autonomous maneuvers for flying robots.
+ The current prototypes suffer a few limitations, such as a relatively low
+ resolution, and a large weight that cannot be put onboard an agile drone.
+ However, these problems will be resolved in a few years.
+ In the mean time, the sensing pipeline must be completely re-designed to
+ take advantage of the low latency.
 \end_layout
 
 \begin_layout Standard
 This paper has presented the first pose tracking application using DVS data.
- We have shown that the use of Active LEDs Markers (
+ We have shown that the DVS can detect Active LEDs Markers (
 \begin_inset ERT
 status open
 
@@ -115,8 +116,8 @@ ALMs
 
 \end_inset
 
-) allows to create high-frequency signals that allows to give a unique ID
- to these feautures, thus avoiding the problem of data association.
+) and disambiguate their identity if different blinking frequencies are
+ used, thus thus avoiding the complexity of data association.
  The algorithm that the we developed uses a Bayesian framework, in which
  we accumulate evidence of every single event into 
 \begin_inset Quotes eld
@@ -129,29 +130,93 @@ evidence maps
  that are tuned to a particular frequency.
  The temporal interval can be tuned and it is a tradeoff between latency
  and precision.
- In our experiemental conditions it was possibile to have a latency of 1ms.
- On top of detection using these evidence maps, we use a particle filter
+ In our experimental conditions it was possibile to have a latency of only
+ 1
+\begin_inset space ~
+\end_inset
+
+ms.
+ After detecion, we used a particle filter and a multi-hypothesis tracker.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+On top of detection using these evidence maps, we use a particle filter
  to evolve the state of each candidate detection and a stage ensuring coherent
  conditions.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 We have evaluated the use of this technology for tracking the motion of
  a quadrotor during an aggresive maneuver.
- Experiments revealed that the DVS is able to reacquire stable tracking
- after as the quadrotor flips with negligible delay as soon as the LEDs
- are visible again.
- In comparison to the PTAM used by the quadrotor, it is more than twice
- as fast.
- The DVS thus has a clear advantage in comparison to conventional cameras
- as it does not suffer from blurring.
+ Experiments show that the DVS is able to reacquire stable tracking with
+ negligible delay as soon as the LEDs are visible again, without suffering
+ from motion blur, which limits the traditional CMOS-based conventional
+ feature tracking solution.
  However, the precision in reconstructing the pose is limited because of
  the low 
 \begin_inset Formula $128\times128$
 \end_inset
 
  resolution.
+ Future work involving the hardware include improving the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALMs
 \end_layout
+
+\end_inset
+
+ by increasing their power and their angular emittance field, as we have
+ found these to be the main limitations.
+\end_layout
+
+\begin_layout Standard
+In conclusion, DVS-based 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALM
+\end_layout
+
+\end_inset
+
+ tracking promises to be a feasible technology that can be used for fast
+ tracking in robotics.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Future work involving the software includes improving the tracking resolution
+ using the the 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
 
 \begin_layout Subsubsection
 Future work
@@ -165,7 +230,16 @@ other factors that impact performance
 Mounting on another
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Using the DVS for tracking has some clear advantages as the high sampling
  speed enables the tracking of LEDs pulsed with frequencies above a 1000
  Hz.
@@ -175,7 +249,7 @@ Using the DVS for tracking has some clear advantages as the high sampling
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Nevertheless, we used active markers in our experiment which are easier
  to identify than image features.
  Due to the fact that the DVS not only needs motion in order to produce
@@ -212,29 +286,50 @@ Nevertheless, we used active markers in our experiment which are easier
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Apart from a number of possible improvements, the approach has shown to
  be feasible and has demonstrated the advantages of using and event-driven
  approach for vision based robotics.
  
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 
 \series bold
 Acknowledgements
+\series default
+: We gratefully acknoweledge the contribution of Christian Saner for 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+xxx
 \end_layout
 
-\begin_layout Itemize
-Christian Saner
+\end_inset
+
+, of Yves 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+xxx
 \end_layout
 
-\begin_layout Itemize
-Matia Pizzoli
-\end_layout
+\end_inset
 
-\begin_layout Itemize
-Yves
+ as our pilot, and Matia Pizzoli for the CMOS-based tracking experiments.
 \end_layout
 
 \end_body

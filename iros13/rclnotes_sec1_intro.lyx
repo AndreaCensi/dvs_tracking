@@ -93,15 +93,93 @@ figs-within-sections
 \begin_body
 
 \begin_layout Title
-Low-latency localization by Active LEDs Markers tracking
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Large
+\end_layout
+
+\end_inset
+
+ Low-latency localization by Active LED Markers tracking 
+\begin_inset Newline newline
+\end_inset
+
+using a Dynamic Vision Sensor
 \end_layout
 
 \begin_layout Author
-Andrea Censi, Jonas Strubel, Christian Braend, Tobi Delbruck, Davide Scaramuzza
+Andrea Censi
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+mythanks
+\end_layout
+
+\end_inset
+
+, Jonas Strubel, Christian Br
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+"a
+\end_layout
+
+\end_inset
+
+ndli, Tobi Delbr
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+"
+\end_layout
+
+\end_inset
+
+uck, Davide Scaramuzza
 \end_layout
 
 \begin_layout Abstract
-TODO
+At the current state of the art, the agility of an autonomous flying robot
+ is limited by the speed of its sensing pipeline, as the relatively high
+ latency and low sampling frequency limit the aggressiveness of the control
+ strategies that can be implemented.
+ The use of Dynamic Vision Sensors (DVS), which encode changes in the visual
+ field using an address-event representation, not unlike neuronal spikes
+ in biological systems, have a latency that can be measured in the microseconds,
+ thus offering the theoretical possibility of creating a sensing pipeline
+ whose latency is negligible compared to the dynamics of the platform.
+ However, to use this sensor we must rethink the way we interpret visual
+ data.
+ In this paper we present an approach to low-latency pose tracking using
+ a DVS camera and Active Led Markers (ALMs), which are LEDs blinking at
+ very high frequency (>1
+\begin_inset space ~
+\end_inset
+
+KHz).
+ The DVS camera time resolution is able to distinguish different frequencies,
+ thus avoiding the need for data association.
+ We compare the DVS approach to traditional tracking using a CMOS camera,
+ and we show that the DVS performance is not affected by fast motion, unlike
+ the CMOS camera, which suffers from motion blur.
+ 
 \end_layout
 
 \begin_layout Section
@@ -124,51 +202,6 @@ DS: one-two paragraphs dissing Raff D'Andrea
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-rule{8.6cm}{3cm}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Discretization-and-latency"
-
-\end_inset
-
-Discretization and latency
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
 Currently, the agility of a mobile robot is limited by the speed of the
  sensing pipeline.
@@ -227,7 +260,11 @@ xxx
 
 \end_inset
 
- ms.
+ ms (
+\series bold
+DS: give reasonable numbers)
+\series default
+.
  To obtain more agile systems, we need to use faster sensors and low-latency
  processing.
 \end_layout
@@ -303,6 +340,109 @@ We are a few years to the goal, however.
  pixels), and it is too heavy to be attached on current agile drones.
  These problems will be solved shortly; here we turn our attention on how
  we could use the data from a DVS for autonomous navigation of flying drones.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement b
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/slides/latency1.pdf
+	width 7cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Traditional architecture
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/slides/latency2.pdf
+	width 7cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Low latency, event-based architecture
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Discretization-and-latency"
+
+\end_inset
+
+To improve the agility of autonomous flying robots, we need to improve the
+ total latency of the sensing pipeline.
+ Using a device like a Dynamic Vision Sensor (DVS) we can theoretically
+ obtain a sensing pipeline which has microsecond latency.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
