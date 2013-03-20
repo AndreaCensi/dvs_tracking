@@ -1,0 +1,308 @@
+
+\section{Experiments\label{sec:experiments}}
+
+The goal of our experimental evaluation is to consider the advantages
+of a DVS-based tracking solution compared with a tracking solution
+based on a traditional CMOS camera. We compare the DVS+LED-based tracking
+with vision-based tracking using the PTAM algorithm, using the output
+of an OptiTrack system as the ground truth. The data show that the
+DVS+LED-based solution is able to deal with faster motions due to
+the minimal latency, however, the reconstructed quadrotor pose is
+not as accurate, as it could be expected from the lower resolution. 
+
+
+
+\begin{figure}[b]
+\centering{}\hfill{}\subfloat[\label{fig:Infrared-markers-used}Infrared markers]{\includegraphics[height=3cm]{figures/marked_quadrotor}
+
+}\hfill{}\subfloat[\label{fig:quadcopter_belly}\ALMs configuration]{\includegraphics[height=3cm]{figures/quadcopter_belly} }\hfill{}
+\caption{\label{fig:marked_quadrotor}The ARDrone 2.0 equipped with reflecting
+markers for the OptiTrack (shown in \emph{a}) and the LEDs tracked
+by the DVS (shown in \emph{b}). }
+\end{figure}
+
+
+
+\subsection{Setup}
+
+
+\subsubsection{Robot platform}
+
+We used the commercially available ARDrone 2.0, a remarkable platform
+for its low price of \xxx. We attached four custom-built \ALMs (\prettyref{fig:quadcopter_belly}).
+Each LED was fixed facing downwards, one under each of the four rotors,
+so that the four where lying on a plane forming a square of 20cm side
+length. The USB connector available on the drone provided power to
+the microcontroller and \ALMs.
+
+The drone has also a front-facing $720\times980$ CMOS camera that
+is used in these experiments, while the ground-facing camera is not
+used.
+
+
+\subsubsection{DVS }
+
+The DVS128 camera was used for the tests. This model is currently
+commercially available from INI labs. It has a resolution of $128\times128$
+pixels. The lens attached was a \xxx, with a FOV of approximately
+90 deg, giving a resolution of 0.7 pixels/degree. For tracking the
+quadcopter, the DVS was installed on the floor facing upwards. Note
+that the relative motion between DVS and quadcopter would be the same
+if the positions were switched (\ALMs on the floor or another vehicle
+and DVS on the platform).
+
+
+\subsubsection{OptiTrack}
+
+To measure the pose estimation accuracy we used a OptiTrack tracking
+system from NaturalPoint%
+\footnote{http://www.naturalpoint.com/optitrack/%
+}, which is a marker-based optical motion tracking system using active
+infrared light and reflective marker balls. Four markers have been
+applied to the drone (\prettyref{fig:Infrared-markers-used}). 
+
+Our lab setup comprised 10 cameras in an $6\,\mbox{m}\times8\,\mbox{m}$
+area; the cost of this system is approximately 20,000~CHF. The sampling
+frequency used was $250$~Hz. The accuracy is stated as $\sim1$~mm
+by the manufacturer, but this seems an optimistic estimate based on
+our experience with the system.
+
+
+
+\begin{figure*}
+\begin{centering}
+\subfloat[\label{fig:Flip-motion-seen}Flip motion seen from outside]{{\color[rgb]{0.7,0.8,0.8} \rule{4cm}{3cm} \rule{4cm}{3cm} \rule{4cm}{3cm} \rule{4cm}{3cm}}
+
+}
+\par\end{centering}
+
+\begin{centering}
+\subfloat[\label{fig:Flip-inside}Flip motion seen from the frontal camera]{{\color[rgb]{0.7,0.8,0.8} \rule{4cm}{3cm} \rule{4cm}{3cm} \rule{4cm}{3cm} \rule{4cm}{3cm}}
+
+}
+\par\end{centering}
+
+\caption{Flip motion}
+\end{figure*}
+
+
+
+\paragraph{Motion}
+
+The prototypical aggressive maneuver that we use is a ``flip'' of
+the quadcopter, i.e. a $360^{\circ}$ roll (\prettyref{fig:Flip-motion-seen}).
+This happens in approximately \xxx seconds. During the flip the frontal
+camera images are severely blurred (\prettyref{fig:Flip-inside}). 
+
+
+
+
+\paragraph{Interference OptiTrack / DVS}
+
+We encountered an unexpected incompatibility between OptiTrack and
+DVS camera. The OptiTrack uses high-power infrared spotlights. In
+the OptiTrack's standard configuration, the spotlights are pulsed
+at a high frequency. This is of course invisible to normal sensors
+and to the human eye, but it was a spectacular interference for the
+DVS. Like most cameras, the DVS is very sensitive to the infrared
+spectrum and is much faster than the OptiTrack strobing frequency.
+Strong generated a buffer overflow on the DVS as the electronics could
+not handle the large number of events to be processed contemporaneously.
+Eventually we understood how to deactivate the strobing for all the
+cameras prior to recording. Still there was a slight residual interference
+by the infrared illumination from the OptiTrack, but it should have
+relatively little impact to the results of our experiments.
+
+
+\subsection{Methods}
+
+We compare three ways to track the pose of the quadcopter: 1)~The
+output of our method; 2)~The OptiTrack output; 3)~The output of
+a traditional feature-based tracker using the data from the conventional
+CMOS camera mounted front-facing on the drone. The image data was
+streamed to a computer via network interface, were the parallel tracking
+and mapping algorithm (PTAM)\cite{PTAM} was employed for pose estimation.
+
+
+\subsubsection{Data recording, synchronization, and alignment\label{sec:datarecording}}
+
+Using this setup we did several recordings, in which we recorded the
+OptiTrack tracking data, using its native format, the image data using
+a ROS interface, as well as the raw event data from the DVS in the
+native format. All these data, plus other data used for preliminary
+experiments, are available at the website \xxx.
+
+To synchronize the data from different sources we used a motion induced
+cue. We moved manually the drone up and down, generating an approximated
+sinusoid curve in the position data. Matching this trend in the data
+allowed easy synchronization of the various recordings.
+
+After adjusting for the delay, the data sets were brought to the same
+number of samples with a common time stamps. As our algorithm's output
+has a lower sampling rate than the OptiTrack (1KhZ vs \xxx), the
+OptiTrack data was resampled by linear interpolation.
+
+
+
+After time synchronization we put all data in the same frame of reference.
+Given two sequences of points $\boldsymbol{x}_{k},\boldsymbol{y}_{k}\in\mathbb{R}^{3}$,
+the rototranslation $\left\langle \boldsymbol{R},\boldsymbol{t}\right\rangle \in\mathsf{SE}(3)$
+that matches them can be found by solving the optimization problem
+
+\begin{equation}
+\begin{aligned}\min_{\left\langle \boldsymbol{R},\boldsymbol{t}\right\rangle \in\mathsf{SE}(3)}\sum_{k}\|\boldsymbol{x}_{k}-(\boldsymbol{R}\boldsymbol{y}_{k}+\boldsymbol{t})\|^{2},\end{aligned}
+\label{eq:leastsquares}
+\end{equation}
+which can be easily solved using \xxx.
+
+
+
+
+\subsection{Results \label{sec:evaluation}}
+
+We recorded data from 18 flips, of which only 6 were successful. During
+the recordings we met a number of unforeseen difficulties due to our
+modifications to the drone. Having attached the LEDs and microcontroller
+to the drone we found that it had become unstable during flight and
+hard to control due to the additional weight, so while it could hover
+normally, it did not have enough thrust to stabilize itself after
+a flip.
+
+
+
+
+\subsubsection{Tracking downtimes\label{sec:trackingspeed}}
+
+During a flip, both the DVS and PTAM lose tracking: PTAM loses tracking
+while the image is blurred; the DVS loses track when the \ALMs are
+not visible from the ground. The comparison of these ``blackout times''
+gives a direct measurement of the latency of the two systems. 
+
+
+
+The length of a flip was measured by considering the roll data from
+the OptiTrack, taking the interval between the last measurement before
+the flip and the first measurement after the flip when the helicopter
+was in a level orientation to the floor. 
+
+To measure the onset and offset of the blackout for the DVS, we considered
+the last sample before losing track (i.e. where the interval position
+samples were considerably higher than the mean sampling rate) and
+the first sample of reacquiring track (regaining a steady sample rate).
+The equivalent operation was performed on the PTAM data. 
+
+Figure~\ref{img:fliptimes} shows a statistical comparison of the
+blackout time intervals for the two approaches compared to the duration
+of flips. The red bar indicates the median while the blue box marks
+the first and third quartile. The whiskers extend to a range of 1.5
+times the range between the first and third quartiles. All data points
+outside this range are considered outliers and are marked with a red
+plus.
+
+Table \ref{tab:downtime_tab} shows the mean standard deviation of
+the different approaches. Our algorithm lost track during the average
+time of 0.35 seconds. PTAM lost track for a mean of 0.8 seconds, which
+is more than twice the time of the DVS and takes longer than the average
+duration of a flip. One can clearly see that the time where tracking
+is lost is much shorter with our approach in respect to PTAM. As Figure
+\ref{img:mean_downtime} further illustrates, the downtime for the
+DVS stays inside the interval of the flip duration. The results emphasize
+that the DVS is faster in recovering lost tracks than the PTAM approach
+due to the shorter latency. As verified with our recordings, the downtimes
+of the DVS correspond to losing sight of the LED markers because of
+their emission angle. 
+
+We reckon that with a suitable configuration of either more markers
+or dynamic vision sensors, tracking could be maintained during the
+whole flip. PTAM shows to lose track for a longer duration than the
+flip takes. In contrary to the DVS the the camera of the drone loses
+sight of its tracked features due to blurring in the camera image
+and thus takes a longer time to recover.
+
+\begin{table}
+\caption{\label{tab:downtime_tab} Tracking downtime intervals and the flip
+duration.}
+\centering %
+\begin{tabular}{r|l}
+\rule{0pt}{1em}DVS  & $0.35\pm0.10$ s\tabularnewline
+PTAM  & $0.80\pm0.33$ s\tabularnewline
+flip duration & $0.56\pm0.15$ s\tabularnewline
+\end{tabular}
+\end{table}
+
+
+\begin{figure}[h]
+\centering \includegraphics[height=4.5cm]{figures/flip_times} \caption{\label{img:fliptimes}Statistical plot of measure time interval. The
+boxplots show the time interval in which tracking is lost for the
+our algorithm and PTAM compared to the duration of a flip.}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering \includegraphics[height=4.5cm]{figures/mean_flip_times}
+\caption{\label{img:mean_downtime} Comparison of the mean tracking downtime
+intervals. The mean time intervals of both algorithms are compared
+against the mean flip time on a time line.}
+\end{figure}
+
+
+
+\subsubsection{Pose estimation\label{sec:poseestimationeval}}
+
+\prettyref{tab:trans_error_tab} shows the mean and standard error
+for the translation in both approaches. The DVS average error is roughly
+two times lower than PTAM. \prettyref{img:trans_error_box} shows
+the statistical distribution of the pose errors. Although the spread
+of outliers is higher in our approach compared to PTAM, the translation
+errors of the latter technique show a broader distribution around
+their median. Overall this proves that the DVS approach has higher
+accuracy with less spread, if we neglect the extreme tails of the
+distribution.
+
+Figures~\ref{img:roll_error_box}, \ref{img:pitch_error_box} and
+\ref{img:yaw_error_box} show the error distribution for roll, pitch
+and yaw respectively. The DVS performs worse in roll and pitch compared
+to yaw. This was to be expected, because of the position of the \ALMs.
+As roll and pitch play a minor roll in quadrotor pose estimation these
+can be neglected for finding the drone's orientation. Table \ref{tab:yaw_error_tab}
+demonstrates that the DVS performs slightly worse than PTAM with a
+mean error of 6 degrees and a deviation of 15 degrees. This is explained
+by the much lower resolution of the DVS ($128\times128$) compared
+to the PTAM data (\xxx).
+
+\begin{table}
+\caption{\label{tab:Estimation-error}Estimation error of DVS and PTAM compared
+to Optitrack}
+
+
+\centering
+
+\newcommand{\tmean}{mean\xspace}
+\newcommand{\incm}{[cm]}
+\newcommand{\indeg}{[$^\circ$]}
+\newcommand{\tstd}{std.dev.\xspace}
+\footnotesize
+
+\begin{tabular}{r|rl|rl|rl|rl}
+\multicolumn{1}{r}{} & \multicolumn{2}{c}{(a) Translation (cm)} & \multicolumn{2}{c}{(b) Roll } & \multicolumn{2}{c}{(c) Pitch} & \multicolumn{2}{c}{(d) Yaw}\tabularnewline
+\cline{2-9} 
+DVS\rule{0pt}{1em} & 8.9  & $\pm$ 12.6  & 19  & $\pm$ 27\textdegree{} & 17  & $\pm$ 18\textdegree{}  & 6  & $\pm$ 15\textdegree{}\tabularnewline
+PTAM & 19.0 & $\pm$ 12.4  & 7  & $\pm$ 22\textdegree{} & 5  & $\pm$ 11\textdegree{}  & 3  & $\pm$ 10\textdegree{}\tabularnewline
+\end{tabular}
+
+\end{table}
+
+
+\begin{figure*}
+
+
+\begin{centering}
+\includegraphics[width=14cm]{figures/slides/errors}
+\par\end{centering}
+
+\caption{Distributions of the errors of DVS/PTAM in reference to the OptiTrack
+measurements. The data is synthesized in~\prettyref{tab:Estimation-error}.}
+\end{figure*}
+
+
+

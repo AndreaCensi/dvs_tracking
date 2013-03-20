@@ -100,7 +100,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
-bibfiles "commons/bib/strings_long,commons/bib/all_only_one,comment"
+bibfiles "references"
 options "commons/bib/ieeetrurl"
 
 \end_inset

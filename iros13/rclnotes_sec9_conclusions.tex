@@ -1,0 +1,48 @@
+
+\section{Conclusions\label{sec:conclusion}}
+
+Fast robots need fast sensors. A dynamical vision sensor (DVS) returns
+changes in the visual field with a latency in the microsecond resolution.
+This technology is the most promising candidate for enabling highly
+aggressive autonomous maneuvers for flying robots. The current prototypes
+suffer a few limitations, such as a relatively low resolution, and
+a large weight that cannot be put onboard an agile drone. However,
+these problems will be resolved in a few years. In the mean time,
+the sensing pipeline must be completely re-designed to take advantage
+of the low latency.
+
+This paper has presented the first pose tracking application using
+DVS data. We have shown that the DVS can detect Active LEDs Markers
+(\ALMs) and disambiguate their identity if different blinking frequencies
+are used, thus thus avoiding the complexity of data association. The
+algorithm that the we developed uses a Bayesian framework, in which
+we accumulate evidence of every single event into ``evidence maps''
+that are tuned to a particular frequency. The temporal interval can
+be tuned and it is a tradeoff between latency and precision. In our
+experimental conditions it was possible to have a latency of only
+1~ms. After detection, we used a particle filter and a multi-hypothesis
+tracker. 
+
+We have evaluated the use of this technology for tracking the motion
+of a quadrotor during an aggressive maneuver. Experiments show that
+the DVS is able to reacquire stable tracking with negligible delay
+as soon as the LEDs are visible again, without suffering from motion
+blur, which limits the traditional CMOS-based conventional feature
+tracking solution. However, the precision in reconstructing the pose
+is limited because of the low $128\times128$ resolution. Future work
+involving the hardware include improving the \ALMs by increasing
+their power and their angular emittance field, as we have found these
+to be the main limitations.
+
+In conclusion, DVS-based \ALM tracking promises to be a feasible
+technology that can be used for fast tracking in robotics.
+
+
+
+
+
+
+
+\textbf{Acknowledgements}: We gratefully acknowledge the contribution
+of Christian Saner for \xxx, of Yves \xxx as our pilot, and Matia
+Pizzoli for the CMOS-based tracking experiments.

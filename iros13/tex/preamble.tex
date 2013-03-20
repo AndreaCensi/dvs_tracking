@@ -1,6 +1,7 @@
 \IEEEoverridecommandlockouts
 \overrideIEEEmargins
 \usepackage{fixltx2e}
+\usepackage{hyperref}
 
 % add [table] to allow \rowcolor
 \usepackage[table]{xcolor} 
@@ -8,7 +9,12 @@
 \input{tex/thanks.tex}
  
  % on page \pageref{#1}} 10 \newrefformat{fig}{Figure \ref{#1} on page \pageref{#1}}
-
+\newcommand{\lorem}{{\color[rgb]{0.8,0.8,0.8}Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.}}
 
 %%% Biblatex
 \usepackage[style=numeric-comp,sorting=none,firstinits=true, maxnames=10, bibstyle=numeric,abbreviate=true,defernums=true,eprint=false,backend=bibtex]{biblatex}
@@ -17,10 +23,11 @@
 % Warning for bibliography
 \newcommand{\notpresent}[1]{{\color{red}No #1} }
 \renewcommand{\notpresent}[1]{}
-\bibliography{commons/bib/strings_short}
+\bibliography{references}
+% \bibliography{commons/bib/strings_short}
 % \bibliography{commons/bib/strings_medium}
 % \bibliography{commons/bib/strings_long}
-\bibliography{commons/bib/all_only_one}
+% \bibliography{commons/bib/all_only_one}
 %\graphicspath{{commons/icons/}}
 \input{commons/tex/macros/bib_pdf_icons}
 \input{commons/tex/macros/prettyref_format}
@@ -62,3 +69,12 @@
 \usepackage{graphicx}
 
 \input{./commons/tex/live_symbols.tex}
+
+
+\newcommand{\packetimage}[1]{\protect\raisebox{-0.1ex}{\protect\includegraphics[height=1.6ex]{figures/slides/#1}}}
+\newcommand{\pP}{\packetimage{p}\xspace}
+\newcommand{\pN}{\packetimage{n}\xspace}
+\newcommand{\pNP}{\packetimage{pn}\xspace}
+\newcommand{\pPN}{\packetimage{np}\xspace}
+\newcommand{\pPND}{\packetimage{pndpn}\xspace}
+\newcommand{\pNPD}{\packetimage{npdnp}\xspace}

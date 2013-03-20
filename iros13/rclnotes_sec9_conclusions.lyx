@@ -130,13 +130,13 @@ evidence maps
  that are tuned to a particular frequency.
  The temporal interval can be tuned and it is a tradeoff between latency
  and precision.
- In our experimental conditions it was possibile to have a latency of only
+ In our experimental conditions it was possible to have a latency of only
  1
 \begin_inset space ~
 \end_inset
 
 ms.
- After detecion, we used a particle filter and a multi-hypothesis tracker.
+ After detection, we used a particle filter and a multi-hypothesis tracker.
  
 \begin_inset Note Note
 status collapsed
@@ -154,7 +154,7 @@ On top of detection using these evidence maps, we use a particle filter
 
 \begin_layout Standard
 We have evaluated the use of this technology for tracking the motion of
- a quadrotor during an aggresive maneuver.
+ a quadrotor during an aggressive maneuver.
  Experiments show that the DVS is able to reacquire stable tracking with
  negligible delay as soon as the LEDs are visible again, without suffering
  from motion blur, which limits the traditional CMOS-based conventional
@@ -303,7 +303,7 @@ Apart from a number of possible improvements, the approach has shown to
 \series bold
 Acknowledgements
 \series default
-: We gratefully acknoweledge the contribution of Christian Saner for 
+: We gratefully acknowledge the contribution of Christian Saner for 
 \begin_inset ERT
 status open
 

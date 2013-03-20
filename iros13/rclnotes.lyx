@@ -103,24 +103,6 @@ filename "rclnotes_sec1_intro.lyx"
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vfill
-\backslash
-cleardoublepage
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
 filename "rclnotes_sec3_dvs.lyx"
@@ -140,7 +122,7 @@ status open
 \backslash
 vfill
 \backslash
-cleardoublepage
+newpage
 \end_layout
 
 \end_inset
@@ -168,7 +150,7 @@ status open
 \backslash
 vfill
 \backslash
-cleardoublepage
+newpage
 \end_layout
 
 \end_inset
@@ -187,45 +169,9 @@ filename "rclnotes_sec5_method.lyx"
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vfill
-\backslash
-cleardoublepage
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
 filename "rclnotes_sec8_experiments.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vfill
-\backslash
-cleardoublepage
-\end_layout
 
 \end_inset
 
