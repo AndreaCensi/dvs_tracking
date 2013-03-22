@@ -160,16 +160,15 @@ At the current state of the art, the agility of an autonomous flying robot
  is limited by the speed of its sensing pipeline, as the relatively high
  latency and low sampling frequency limit the aggressiveness of the control
  strategies that can be implemented.
- Dynamic Vision Sensors (DVS), which encode changes in the visual field
- using an address-event representation, not unlike neuronal spikes in biological
- systems, have a latency that can be measured in the microseconds, thus
- offering the theoretical possibility of creating a sensing pipeline whose
- latency is negligible compared to the dynamics of the platform.
- However, to use this sensor we must rethink the way we interpret visual
+ Dynamic Vision Sensors (DVS) encode changes in the visual field using an
+ address-event representation.
+ The latency of such sensors can be measured in the microseconds, thus offering
+ the theoretical possibility of creating a sensing pipeline whose latency
+ is negligible compared to the dynamics of the platform.
+ However, to use these sensors we must rethink the way we interpret visual
  data.
- In this paper we present an approach to low-latency pose tracking using
- a DVS and Active Led Markers (ALMs), which are LEDs blinking at very high
- frequency (>1
+ We present an approach to low-latency pose tracking using a DVS and Active
+ Led Markers (ALMs), which are LEDs blinking at very high frequency (>1
 \begin_inset space ~
 \end_inset
 
@@ -186,42 +185,50 @@ KHz).
 Introduction
 \end_layout
 
-\begin_layout Itemize
-
-\series bold
-DS: one-two paragraphs for broad context?
-\end_layout
-
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lorem
-\end_layout
-
+Autonomous micro helicopters will soon play a major role in tasks like search
+ and rescue, environment monitoring, security surveillance, inspection,
+ etc.
+ A key problem in aerial-vehicle navigation is the stabilization and control
+ in six degrees of freedom.
+ Today's systems handle well the attitude control.
+ However, without a position control, they are prone to drift over time.
+ In GPS-denied environments, this can be solved using onboard sensors, such
+ as cameras
+\begin_inset space ~
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lorem
-\end_layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Weiss2011"
 
 \end_inset
 
+ or laser rangefinders
+\begin_inset space ~
+\end_inset
 
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Shen2011"
+
+\end_inset
+
+; however, achievable vehicle's maneuvers are still too slow compared to
+ those attainable with off-board motion-tracking systems (e.g., Vicon)
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lupashin2012"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -251,11 +258,18 @@ reference "fig:Discretization-and-latency"
 \end_inset
 
 ).
- In current state-of-the art autonomous navigation applications (
-\series bold
-DS: add citations) 
-\series default
-cameras give observations with frequency of 15--30
+ In current state-of-the art autonomous navigation applications
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Weiss2011"
+
+\end_inset
+
+ cameras give observations with frequency of 15--30
 \begin_inset space ~
 \end_inset
 
@@ -419,6 +433,10 @@ The algorithm presented in this paper uses a different approach.
  We accumulate the events perceived in thin slices of times corresponding
  to the blinking frequency (
 \begin_inset Formula $1$
+\end_inset
+
+
+\begin_inset space ~
 \end_inset
 
 ms slice for 1

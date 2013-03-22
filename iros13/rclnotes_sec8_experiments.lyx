@@ -155,7 +155,7 @@ We show that ...
 placement b
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -523,10 +523,15 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset Float figure
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float 
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset ERT
@@ -577,10 +582,10 @@ Flip motion seen from outside
 
 \begin_layout Plain Layout
 \align center
-\begin_inset Float figure
+\begin_inset Float 
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset ERT
@@ -629,11 +634,26 @@ Flip motion seen from the frontal camera
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/slides/flip_sequence.pdf
+	width 16cm
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Plain Layout
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Flip motion
+Motion blur induced on CMOS image from flip motion.
 \end_layout
 
 \end_inset
@@ -3004,7 +3024,6 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Float 
-placement h
 wide false
 sideways false
 status collapsed
@@ -3051,7 +3070,6 @@ Translation error
 
 
 \begin_inset Float 
-placement h
 wide false
 sideways false
 status collapsed
@@ -3098,7 +3116,6 @@ name "img:roll_error_box"
 
 
 \begin_inset Float 
-placement h
 wide false
 sideways false
 status collapsed
@@ -3145,7 +3162,6 @@ name "img:pitch_error_box"
 
 
 \begin_inset Float 
-placement h
 wide false
 sideways false
 status collapsed
