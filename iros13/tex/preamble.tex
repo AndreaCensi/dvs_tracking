@@ -2,7 +2,8 @@
 \overrideIEEEmargins
 \usepackage{fixltx2e}
 \usepackage{hyperref}
-
+\let\proof\relax 
+\let\endproof\relax
 % add [table] to allow \rowcolor
 \usepackage[table]{xcolor} 
 
@@ -48,8 +49,8 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.}}
 % \input{./commons/tex/macros/pagebreak_at_section.tex}
 % % \input{./commons/tex/macros/draft_figures.tex}
 % \input{./commons/tex/macros/last_resort.tex}
-\renewcommand{\baselinestretch}{0.955}
-\renewcommand{\baselinestretch}{0.94}
+\renewcommand{\baselinestretch}{0.97}
+% \renewcommand{\baselinestretch}{0.94}
 % % \input{./commons/tex/macros/loose_layout.tex}
 
 \usepackage{xspace}
@@ -78,3 +79,4 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.}}
 \newcommand{\pPN}{\packetimage{np}\xspace}
 \newcommand{\pPND}{\packetimage{pndpn}\xspace}
 \newcommand{\pNPD}{\packetimage{npdnp}\xspace}
+\newcommand{\myurl}{{\footnotesize\url{http://purl.org/censi/2013/dvs}}}

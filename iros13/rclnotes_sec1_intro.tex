@@ -1,122 +1,43 @@
 
-\title{\Large Low-latency localization by Active LED Markers tracking \\
+\title{\LARGE\bf Low-latency localization by Active LED Markers tracking
+\\
 using a Dynamic Vision Sensor}
 
 
-\author{Andrea Censi\mythanks, Jonas Strubel, Christian Br\"andli, Tobi
-Delbr\"uck, Davide Scaramuzza}
+\author{Andrea Censi\mythanks, Jonas Strubel, Christian Brandli, Tobi Delbruck,
+Davide Scaramuzza}
 \maketitle
 \begin{abstract}
 At the current state of the art, the agility of an autonomous flying
 robot is limited by the speed of its sensing pipeline, as the relatively
 high latency and low sampling frequency limit the aggressiveness of
 the control strategies that can be implemented. Dynamic Vision Sensors
-(DVS), which encode changes in the visual field using an address-event
-representation, not unlike neuronal spikes in biological systems,
-have a latency that can be measured in the microseconds, thus offering
-the theoretical possibility of creating a sensing pipeline whose latency
-is negligible compared to the dynamics of the platform. However, to
-use this sensor we must rethink the way we interpret visual data.
-In this paper we present an approach to low-latency pose tracking
-using a DVS and Active Led Markers (ALMs), which are LEDs blinking
-at very high frequency (>1~KHz). The DVS time resolution is able
-to distinguish different frequencies, thus avoiding the need for data
-association. We compare the DVS approach to traditional tracking using
-a CMOS camera, and we show that the DVS performance is not affected
-by fast motion, unlike the CMOS camera, which suffers from motion
-blur. 
+(DVS) encode changes in the visual field using an address-event representation.
+The latency of such sensors can be measured in the microseconds, thus
+offering the theoretical possibility of creating a sensing pipeline
+whose latency is negligible compared to the dynamics of the platform.
+However, to use these sensors we must rethink the way we interpret
+visual data. We present an approach to low-latency pose tracking using
+a DVS and Active Led Markers (ALMs), which are LEDs blinking at very
+high frequency (>1~KHz). The DVS time resolution is able to distinguish
+different frequencies, thus avoiding the need for data association.
+We compare the DVS approach to traditional tracking using a CMOS camera,
+and we show that the DVS performance is not affected by fast motion,
+unlike the CMOS camera, which suffers from motion blur. 
 \end{abstract}
 
 \section{Introduction}
-\begin{itemize}
-\item \textbf{DS: one-two paragraphs for broad context?}
-\end{itemize}
-\lorem
 
-\lorem
-
-Currently, the agility of an autonomous flying robot is limited by
-the speed of the sensing pipeline. More precisely, ``speed'' can
-be quantified in \emph{observations frequency} and \emph{latency}
-(\prettyref{fig:Discretization-and-latency}). In current state-of-the
-art autonomous navigation applications (\textbf{DS: add citations)
-}cameras give observations with frequency of 15--30~Hz and the total
-latency, from acquiring the images to processing them, is in the order
-of 50--250~ms. To obtain more agile systems, we need to use faster
-sensors and low-latency processing.
-
-In this paper we consider the use of a Dynamic Vision Sensor (DVS)
-for pose tracking. The main difference between a DVS and a normal
-CMOS camera is that the DVS output is a sequence of \emph{events}
-(\prettyref{fig:DVS-camera}), which encode \emph{changes} in the
-visual field. This is called an address-event representation (AER);
-each event encodes the location of the change, whether there was a
-positive or negative change in luminance, and a microsecond-resolution
-timestamp.  These events are not unlike spikes in a biological visual
-system; in fact, ``silicon retina'' is a nickname for the DVS. But
-the DVS circuits are much faster than a slow neuron: events are generated
-with a latency of only \xxx \textmu{}s. 
-
-Theoretically using a DVS we could obtain sensing pipelines with a
-negligible latency compared to dynamics of the platform. We are a
-few years to the goal, however. On the hardware side, the DVS camera,
-though currently available commercially, has a few limitations, such
-as the limited resolution ($128\times128$ pixels), and it is too
-heavy to be attached on current agile drones. These problems will
-be solved shortly by the next generation of prototypes currently in
-development. On the software side, to take full advantage of this
-data in robotics we need to rethink completely the way we design sensing
-pipelines. It is possible to integrate the events of a DVS camera
-to simulate a regular CMOS frame, on which to do standard image processing,
-however, that is not what you would want to do, because that would
-lead to the same latency of a regular camera. Ideally, to have the
-lowest latency for the sensing pipeline, one would want each single
-event to be be reflected in a small but instantaneous change in the
-commands given to the actuators. Therefore, we really want to consider
-approaches that possibly use the information contained in each single
-event.
-
-In this paper, we consider the application of pose tracking based
-on Active LED Markers (\ALMs), which are infrared LEDs blinking at
-very high frequency ($>1\,\mbox{kHz}$). The DVS is fast enough to
-be able to distinguish different blinking frequencies, so that we
-can also uniquely assign an observable identity to each marker. We
-envision that this system could be used for inter-robot localization
-for high-speed acrobatic maneuvers, or that, in applications such
-as rescue robotics these markers could be left in the environment
-to facilitate cooperative mapping.
-
-One approach to using the DVS data is to cluster the events in order
-to find spatio-temporal features, like points or lines, that are then
-tracked through time. (\textbf{CB: add citations/expand)}. This approach
-works well when the camera is static, because the output is very sparse. 
-
-The algorithm presented in this paper uses a different approach. We
-found out that mounting a DVS camera on a flying robot creates a new
-set of challenges. Because of the apparent motion of the environment,
-the input is not sparse anymore. Moreover, while in controlled conditions
-the DVS camera parameters can be tuned to obtain the best performance,
-a robot must be able to work in a wider range of environmental conditions
-and be robust to interferences. To achieve this robustness we have
-developed an approach that can sacrifice a bit of latency to be more
-robust to noise and unmodeled phenomena. We accumulate the events
-perceived in thin slices of times corresponding to the blinking frequency
-($1$ms slice for 1~kHz data). This allows to do detection of the
-\ALMs position in image space. On top of this, we use a particle
-filter for tracking the position in image space of each detection,
-and a resolution stage to obtain coherent hypotheses on the joint
-position of the markers. Finally we reconstruct the pose using a standard
-approach to rigid reconstruction.
-
-We evaluate our method in tracking the pose of a drone during an aggressive
-maneuver (a flip). We compare our methods with a traditional approach,
-using a CMOS camera and a feature-based visual odometry method. We
-verify that our method, with a latency of $1$~ms, is able to reacquire
-tracking instantaneously regardless of the fast motion, while the
-CMOS data is corrupted by motion blur. We evaluate the reconstruction
-accuracy using an OptiTrack system and find values that are compatible
-with the low spatial resolution (128$\times$128) of the DVS, which
-proves to be the current limitation of this approach.
+Autonomous micro helicopters will soon play a major role in tasks
+like search and rescue, environment monitoring, security surveillance,
+inspection, etc. A key problem in aerial-vehicle navigation is the
+stabilization and control in six degrees of freedom. Today's systems
+handle well the attitude control. However, without a position control,
+they are prone to drift over time. In GPS-denied environments, this
+can be solved using onboard sensors, such as cameras~\cite{Weiss2011}
+or laser rangefinders~\cite{Shen2011}; however, the achievable vehicle
+maneuvers are still too slow compared to those attainable with off-board
+motion-tracking systems (e.g., Vicon)~\cite{Lupashin2012}.
 
 \begin{figure}[b]
 \begin{centering}
@@ -142,7 +63,86 @@ theoretically obtain a sensing pipeline which has microsecond latency.}
 \end{figure}
 
 
+The agility of an autonomous flying robot is limited by the speed
+of the sensing pipeline. More precisely, ``speed'' can be quantified
+in \emph{observations frequency} and \emph{latency} (\prettyref{fig:Discretization-and-latency}).
+In current state-of-the art autonomous navigation applications~\cite{Weiss2011}
+cameras give observations with frequency of 15--30~Hz and the total
+latency, from acquiring the images to processing them, is in the order
+of 50--250~ms. To obtain more agile systems, we need to use faster
+sensors and low-latency processing.
+
+In this paper, we consider the use of a Dynamic Vision Sensor (DVS)
+for pose tracking. The main difference between a DVS and a normal
+CMOS camera is that the DVS output is a stream of \emph{events} (\prettyref{fig:DVS-camera}),
+which encode \emph{changes} in the visual field. Each event encodes
+the location of the change, whether there was a positive or negative
+change in brightness, and has a 1~$\mu$s timestamp.  These events
+are not unlike spikes in a biological visual system; however, while
+retinal ganglion cells show latencies of around 200~ms, the DVS chip
+has a latency of $15\,\mu s$.
+
+Theoretically, using a DVS we could obtain sensing pipelines with
+a negligible latency compared to dynamics of the platform. We are
+a few years to the goal, however. On the hardware side, the DVS camera,
+though currently available commercially, has a few limitations, such
+as the limited resolution ($128\times128$ pixels), which  will
+be increased in the next generation of prototypes currently in development.
+On the software side, to take full advantage of this data we need
+to rethink completely the way we design robotic sensing pipelines.
+It is possible to integrate the events of a DVS camera to simulate
+a regular CMOS frame, on which to do standard image processing, however,
+that is not desirable, because that would give the same latency of
+a regular camera. Ideally, to have the lowest latency for the sensing
+pipeline, one would want each single event to be be reflected in a
+small but instantaneous change in the commands given to the actuators.
+Therefore, we consider approaches that possibly use the information
+contained in each single event.
+
+In this paper, we consider the application of pose tracking based
+on Active LED Markers (\ALMs), which are infrared LEDs blinking at
+very high frequency ($>1\,\mbox{kHz}$). The DVS is fast enough to
+be able to distinguish different blinking frequencies, so that we
+can also uniquely assign an observable identity to each marker. We
+envision that this system could be used for inter-robot localization
+for high-speed acrobatic maneuvers, or that, in applications such
+as rescue robotics, these markers could be left in the environment
+to facilitate cooperative mapping.
+
+One approach to using the DVS data is to cluster the events in order
+to find spatio-temporal features, like points or lines, that are then
+tracked through time~\cite{delbruck07fast,conradt09pencil}. This
+approach works well when the camera is static, because the output
+is very sparse. 
+
+The algorithm presented in this paper uses a different approach. We
+found out that mounting a DVS camera on a flying robot creates a new
+set of challenges. Because of the apparent motion of the environment,
+the events are not spatiotemporally sparse anymore. Moreover, while
+in controlled conditions the DVS camera parameters can be tuned to
+obtain the best performance, a robot must be able to work in a wider
+range of environmental conditions and be robust to interferences.
+To achieve this robustness we have developed an approach that sacrifices
+some latency to be more robust to noise and unmodeled phenomena. We
+accumulate the events perceived in thin slices of times corresponding
+to the blinking frequency ($1$~ms slice for 1~kHz data). This allows
+to do detection of the \ALMs position in image space. On top of this,
+we use a particle filter for tracking the position in image space
+of each detection, and a disambiguation stage to obtain coherent hypotheses
+on the joint position of the markers. Finally, we reconstruct the
+pose using a standard approach to rigid reconstruction.
+
+We evaluate our method in tracking the pose of a drone during an aggressive
+maneuver (a flip). We compare our methods with a traditional approach,
+using a CMOS camera and a feature-based visual odometry method. We
+verify that our method, with a latency of $1$~ms, is able to reacquire
+tracking instantaneously regardless of the fast motion, while the
+CMOS data is corrupted by motion blur. We evaluate the reconstruction
+accuracy using an OptiTrack system and find values that are compatible
+with the low spatial resolution (128$\times$128) of the DVS, which
+proves to be the current limitation of this approach.
 
 
-Software, datasets, and animations illustrating the method are available
-at the website \xxx
+
+Software, datasets, and videos illustrating the method are available
+at the website \myurl.

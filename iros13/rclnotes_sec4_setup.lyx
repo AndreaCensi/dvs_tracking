@@ -90,11 +90,11 @@ name "sec:Hardware-setup-and"
 
 \begin_layout Standard
 This section describes the hardware setup and gives an intuition of the
- kind of data that we can observe.
+ event data that a DVS produces.
 \end_layout
 
 \begin_layout Subsubsection
-DVS and its interface 
+DVS and its interface
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:interface"
@@ -136,9 +136,6 @@ key "thesycon"
  hundred events; however, each event is independently tagged at the source
  with its proper timestamp.
  
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
 status collapsed
 
@@ -219,8 +216,17 @@ key "bronzeboard"
 
 \end_inset
 
- from INI Labs, which is based on an AVR32.
- The board can drive up to 5 LEDs in pulse-width modulation.
+ from iniLabs, which is based on an AVR32.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The board can drive up to 5 LEDs in pulse-width modulation.
+\end_layout
+
+\end_inset
+
  
 \begin_inset Note Note
 status collapsed
@@ -234,19 +240,10 @@ Although a less powerful microprocessor would have been sufficient, a high
 
 \end_inset
 
- 
-\end_layout
-
-\begin_layout Standard
-We used infrared LEDs (
-\series bold
-CB: part number, specs?
-\series default
-\lang english
-) since the DVS is very sensitive to the infrared spectrum.
+We used infrared LEDs since the DVS is very sensitive in the infrared spectrum.
  
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 An already existing C code example was taken and adapted to our needs.
@@ -281,8 +278,8 @@ We decided to attach four LEDs to our quadrotor which is the minimum number
 In our setup we could easily change the PWM frequency to the LEDs.
  An upper bound on the detectable frequency depends on the power of the
  LEDs and the distance to the camera; a DVS camera is not magic: there must
- be enough photons reaching the photoreceptor in a given interval over the
- baseline level to trigger an event.
+ be a large enough change in the number of photons reaching the photoreceptor
+ to trigger an event.
  In our setup we found 2
 \begin_inset space ~
 \end_inset
@@ -473,7 +470,12 @@ reference "fig:events-hist"
 \end_inset
 
  gives an intuition of how the data looks like.
- (The website 
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(The website 
 \begin_inset ERT
 status open
 
@@ -487,7 +489,12 @@ xxx
 \end_inset
 
  contains video rendering of for these and other experiments as well as
- the raw event data in binary format.) In this scenario both the 
+ the raw event data in binary format.) 
+\end_layout
+
+\end_inset
+
+In this scenario both the 
 \begin_inset ERT
 status open
 

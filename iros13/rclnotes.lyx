@@ -6,6 +6,7 @@
 \begin_preamble
 \input{tex/preamble.tex}
 \end_preamble
+\options conference,10pt
 \use_default_options true
 \begin_modules
 theorems-ams

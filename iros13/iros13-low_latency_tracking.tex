@@ -1,0 +1,60 @@
+%% LyX 2.0.5.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english,letterpaper, 10 pt, conference]{ieeeconf}
+\IEEEoverridecommandlockouts                              % This command is only
+\overrideIEEEmargins
+
+\let\proof\relax 
+\let\endproof\relax
+\usepackage{mathpazo}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{array}
+\usepackage{prettyref}
+\usepackage{float}
+\usepackage{textcomp}
+\usepackage{multirow}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\input{tex/preamble.tex}
+
+\@ifundefined{showcaptionsetup}{}{%
+ \PassOptionsToPackage{caption=false}{subfig}}
+\usepackage{subfig}
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\input{rclnotes_sec1_intro.tex}
+
+\input{rclnotes_sec3_dvs.tex}
+
+\vfill\newpage
+
+\input{rclnotes_sec4_setup.tex}
+
+\vfill\newpage
+
+\input{rclnotes_sec5_method.tex}
+
+\input{rclnotes_sec8_experiments.tex}
+
+\input{rclnotes_sec9_conclusions.tex}
+
+\input{rclnotes_sec90_biblio.tex}
+\end{document}

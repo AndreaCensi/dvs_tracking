@@ -22,8 +22,6 @@ pixel. The output is an estimate of the pose of the quadrotor. We
 describe the algorithm as a sequence of stages that process asynchronous
 events; in principle, several of them could be implemented in hardware.
 
-The webpage \xxx contains the source code of a C++ and a Python implementation.
-
 \begin{figure}[H]
 \includegraphics[width=8.6cm]{figures/slides/stages2}
 
@@ -43,14 +41,14 @@ $\Delta$ is a good robust estimator of the blinking period.}
 \subsection{Raw events}
 
 The input to the algorithm is the sequence of events in the address-event
-representation (\xxx). Each event can be considered as a tuple 
+representation. Each event can be represented by a tuple 
 \[
 \langle t_{k},\: p_{k},\:\langle x_{k},y_{k}\rangle\rangle,
 \]
 where: 
 \begin{itemize}
 \item the scalar $t_{k}$ is the timestamp of the event generated; these
-are not equispaced.
+are not necessarily equispaced in time.
 \item the value $p_{k}\in\{\pP,\pN\}$ is the \emph{polarity}, which is
 either positive~(\pP) or negative~(\pN), according to whether
 the luminance increased or decreased;
@@ -121,17 +119,19 @@ in the following stages.
 
 \subsection{Evidence maps}
 
-We suppose to have been given a set of $n$ frequencies $\{f_{i}\}$,
+We suppose to have been given a set of~$n$ frequencies $\{f_{i}\}$,
 $i\in\{1,n\}$ corresponding to the $n$ \ALMs to track. For each
 frequency separately we construct an ``evidence map'' $I_{i}(\left\langle x,y\right\rangle ,t)$
 over the visual field corresponding to the probability that the \ALM
 is at that pixel. Each hyper-transition contributes to all evidence
 maps, but with a different weight, so that we can integrate all information
-and do not commit to saying that a given event belongs to the 
+and do not commit to saying that a given event belongs to a frequency.
+For non-noisy data, an alternative approach that uses clustering of
+events works just as well~\cite{Matthias}.
 
 A hyper-transition with interval $\Delta_{k}$ contributes to the
-evidence map of frequency $f_{i}$ with a weight that is proportional
-to $p(\Delta_{k}\mid f_{i})$; that is, the likelihood that a marker
+evidence map of frequency~$f_{i}$ with a weight that is proportional
+to~$p(\Delta_{k}\mid f_{i})$; that is, the likelihood that a marker
 \ALM with that frequency produces a hyper-transition of that interval.
 This distribution is found experimentally to be well approximated
 by a Gaussian (see the data in \prettyref{fig:switch-hist}\emph{b},
@@ -140,7 +140,7 @@ which give $\sigma=30\ \mbox{Hz}$):
 p(\Delta_{k}\mid f_{i})=\mathcal{N}\left(\frac{1}{\Delta_{k}}-f_{i},\sigma^{2}\right).\label{eq:lik_delta}
 \end{equation}
 The evidence maps collect events within a time slice corresponding
-to an interval of $1/f_{i}$. Therefore the value of the evidence
+to an interval of $1/f_{i}$. Therefore, the value of the evidence
 map $I_{i}(\left\langle x,y\right\rangle ,t)$ for a pixel $x,y$
 and at time $t$ is given by the sum of the contributions of all events
 at the given pixel and in the interval $\left[t-1/f_{i},t\right]$:
@@ -148,16 +148,15 @@ at the given pixel and in the interval $\left[t-1/f_{i},t\right]$:
 I_{i}(\left\langle x,y\right\rangle ,t)=\sum_{t_{k}\in\left[t-\frac{1}{f_{i}},t\right]\wedge\left\langle x_{k},y_{k}\right\rangle =\left\langle x,y\right\rangle }\mathcal{N}\left(\frac{1}{\Delta_{k}}-f_{i},\sigma^{2}\right).
 \]
 To increase robustness at the expense of latency, it is also possible
-to use multiples of the interval $1/f_{i}$ for the time slice.
+to use multiples of $1/f_{i}$ as the time slice interval.
 
 At the end of the time slice, the evidence map $I_{i}(\left\langle x,y\right\rangle ,t)$
-can be interpreted as the likelihood that the $i$-th \ALM with frequency
-$f_{i}$ is at position $\left\langle x,y\right\rangle $. In our
-experimental setting, this map is multimodal, with a strong peak at
-the true position of the marker, and lower peaks at the positions
-at the other markers, because each event contributes weakly, according
-to~\prettyref{eq:lik_delta}, also to the evidence maps of the other
-frequencies. 
+can be interpreted as the likelihood that the $i$-th \ALM with frequency~$f_{i}$
+is at position $\left\langle x,y\right\rangle $. In our experimental
+setting, this map is multimodal, with a strong peak at the true position
+of the marker, and lower peaks at the positions at the other markers,
+because each event contributes weakly, according to~\prettyref{eq:lik_delta},
+also to the evidence maps of the other frequencies. 
 
 We extract $m$ local maxima, at least $\delta$ pixels from each
 other (in our experiments $m=3$, $\delta=15\,\mbox{px}$). The value
@@ -171,7 +170,7 @@ and the weight $w_{j}^{i}$:
 
 
 
-\subsection{Filtering }
+\subsection{Filtering and reconstruction}
 
 Once we have these detections, the method proceeds in a conventional
 way, as in any tracking problem, to achieve robustness to missed detections
@@ -184,25 +183,14 @@ uncertainty~$r$, which starts at $1\,\mbox{px}$. The uncertainty
 grows using a motion model, which should be chosen according to how
 on how fast things are predicted to move on the visual field. We have
 computed that for the range of motions of a quadrotor, the maximum
-apparent motion is approximately $1$ pixel/ms, which is quite slow
-for the DVS.
+apparent motion is approximately $1$ pixel/ms.
 
 We have a particle filter for each frequency. The particles in each
 filter represent the posterior over the pose of one \ALM. To look
 for a globally consistent solution, we choose the combination of particles
 from all filters with the highest combined weight such that no two
 markers can be too close to each other (in our experiments, $d=15$
-pixels). 
-
-
-
-
-\subsection{Pose reconstruction}
-
-Assuming we have the position of the \ALMs in image space, and we
-know the relative position of the markers in the world, we can reconstruct
-the pose of the object using established techniques.
-\begin{itemize}
-\item \textbf{DS: one paragraph here }
-\end{itemize}
-\lorem
+pixels). Assuming we have the position of the \ALMs in image space,
+and we know the relative position of the markers in the world, we
+can reconstruct the pose of the object using established techniques
+for rigid reconstruction.

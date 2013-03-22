@@ -90,13 +90,15 @@ name "sec:conclusion"
 
 \begin_layout Standard
 Fast robots need fast sensors.
- A dynamical vision sensor (DVS) returns changes in the visual field with
- a latency in the microsecond resolution.
+ A 
+\emph on
+dynamic vision sensor
+\emph default
+ (DVS) returns changes in the visual field with a latency of a few microseconds.
  This technology is the most promising candidate for enabling highly aggressive
  autonomous maneuvers for flying robots.
  The current prototypes suffer a few limitations, such as a relatively low
- resolution, and a large weight that cannot be put onboard an agile drone.
- However, these problems will be resolved in a few years.
+ resolution, which are being worked upon.
  In the mean time, the sensing pipeline must be completely re-designed to
  take advantage of the low latency.
 \end_layout

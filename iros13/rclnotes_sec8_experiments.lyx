@@ -89,16 +89,26 @@ name "sec:experiments"
 \end_layout
 
 \begin_layout Standard
-The goal of our experimental evaluation is to consider the advantages of
- a DVS-based tracking solution compared with a tracking solution based on
- a traditional CMOS camera.
- We compare the DVS+LED-based tracking with vision-based tracking using
- the PTAM algorithm, using the output of an OptiTrack system as the ground
- truth.
- The data show that the DVS+LED-based solution is able to deal with faster
- motions due to the minimal latency, however, the reconstructed quadrotor
- pose is not as accurate, as it could be expected from the lower resolution.
- 
+The experiments consider the advantages of a DVS-based tracking solution
+ with respect to a tracking solution based on a traditional CMOS camera.
+ We compare the DVS-based 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALM
+\end_layout
+
+\end_inset
+
+ tracking with vision-based tracking using the PTAM algorithm, using the
+ output of an OptiTrack system as the ground truth.
+ The data show that the DVS-based tracking is able to deal with faster motions
+ due to the minimal latency, but the precision of the reconstructed pose
+ is limited by the low resolution of the sensor.
 \end_layout
 
 \begin_layout Standard
@@ -155,51 +165,10 @@ We show that ...
 placement b
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
 status open
 
 \begin_layout Plain Layout
-\begin_inset Graphics
-	filename figures/marked_quadrotor.jpg
-	lyxscale 20
-	height 3cm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Infrared-markers-used"
-
-\end_inset
-
-Infrared markers
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+\align center
 \begin_inset space \hfill{}
 \end_inset
 
@@ -255,6 +224,47 @@ ALMs
 \begin_inset space \hfill{}
 \end_inset
 
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/marked_quadrotor.jpg
+	lyxscale 20
+	height 3cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Infrared-markers-used"
+
+\end_inset
+
+Infrared markers
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
  
 \begin_inset Caption
 
@@ -265,12 +275,25 @@ name "fig:marked_quadrotor"
 
 \end_inset
 
-The ARDrone 2.0 equipped with reflecting markers for the OptiTrack (shown
- in 
+The ARDrone 2.0 equipped with four 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALMs
+\end_layout
+
+\end_inset
+
+ (shown in 
 \emph on
 a
 \emph default
-) and the LEDs tracked by the DVS (shown in 
+) tracked by the DVS, and reflective markers used by the OptiTrack (shown
+ in 
 \emph on
 b
 \emph default
@@ -289,7 +312,7 @@ b
 \end_layout
 
 \begin_layout Subsection
-Setup
+Hardware
 \end_layout
 
 \begin_layout Subsubsection
@@ -297,8 +320,12 @@ Robot platform
 \end_layout
 
 \begin_layout Standard
-We used the commercially available ARDrone 2.0, a remarkable platform for
- its low price of 
+We used the commercially available ARDrone 2.0
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+ a remarkable platform for its low price of 
 \begin_inset ERT
 status open
 
@@ -312,6 +339,10 @@ xxx
 \end_inset
 
 .
+\end_layout
+
+\end_inset
+
  We attached four custom-built 
 \begin_inset ERT
 status open
@@ -325,7 +356,7 @@ ALMs
 
 \end_inset
 
- (
+ to the bottom of the platform (
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:quadcopter_belly"
@@ -350,10 +381,7 @@ ALMs
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-The drone has also a front-facing 
+ The drone has also a front-facing 
 \begin_inset Formula $720\times980$
 \end_inset
 
@@ -362,7 +390,7 @@ The drone has also a front-facing
 \end_layout
 
 \begin_layout Subsubsection
-DVS 
+DVS
 \end_layout
 
 \begin_layout Standard
@@ -373,24 +401,16 @@ The DVS128 camera was used for the tests.
 \end_inset
 
  pixels.
- The lens attached was a 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
-\end_layout
-
+ The lens attached gave the sensor a FOV of approximately 65°, giving a
+ resolution of 0.5
+\begin_inset space ~
 \end_inset
 
-, with a FOV of approximately 90 deg, giving a resolution of 0.7 pixels/degree.
+pixels/°.
  For tracking the quadcopter, the DVS was installed on the floor facing
  upwards.
  Note that the relative motion between DVS and quadcopter would be the same
- if the positions were switched (
+ if the 
 \begin_inset ERT
 status open
 
@@ -403,7 +423,7 @@ ALMs
 
 \end_inset
 
- on the floor or another vehicle and DVS on the platform).
+ were on the floor and the DVS on board.
 \end_layout
 
 \begin_layout Subsubsection
@@ -413,12 +433,13 @@ OptiTrack
 \begin_layout Standard
 To measure the pose estimation accuracy we used a OptiTrack tracking system
  from NaturalPoint
-\begin_inset Foot
-status collapsed
+\begin_inset space ~
+\end_inset
 
-\begin_layout Plain Layout
-http://www.naturalpoint.com/optitrack/
-\end_layout
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "optitrack"
 
 \end_inset
 
@@ -432,12 +453,8 @@ reference "fig:Infrared-markers-used"
 \end_inset
 
 ).
- 
-\end_layout
-
-\begin_layout Standard
-Our lab setup comprised 10 cameras in an 
-\begin_inset Formula $6\,\mbox{m}\times8\,\mbox{m}$
+ Our lab setup comprised 10 cameras in a 
+\begin_inset Formula $6\times8\,\mbox{m}$
 \end_inset
 
  area; the cost of this system is approximately 20,000
@@ -454,7 +471,11 @@ CHF.
 \end_inset
 
 Hz.
- The accuracy is stated as 
+ The accuracy is stated as
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset Formula $\sim1$
 \end_inset
 
@@ -640,9 +661,10 @@ Flip motion seen from the frontal camera
 \end_layout
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename figures/slides/flip_sequence.pdf
-	width 16cm
+	width 17cm
 
 \end_inset
 
@@ -653,6 +675,12 @@ Flip motion seen from the frontal camera
 \begin_inset Caption
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Motion-blur-induced"
+
+\end_inset
+
 Motion blur induced on CMOS image from flip motion.
 \end_layout
 
@@ -666,7 +694,7 @@ Motion blur induced on CMOS image from flip motion.
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 Motion
 \end_layout
 
@@ -684,32 +712,11 @@ flip
 \begin_inset Formula $360^{\circ}$
 \end_inset
 
- roll (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:Flip-motion-seen"
-
-\end_inset
-
-).
- This happens in approximately 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
-\end_layout
-
-\end_inset
-
- seconds.
+ roll.
  During the flip the frontal camera images are severely blurred (
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "fig:Flip-inside"
+reference "fig:Motion-blur-induced"
 
 \end_inset
 
@@ -744,21 +751,21 @@ key "Saner"
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 Interference OptiTrack / DVS
 \end_layout
 
 \begin_layout Standard
-We encountered an unexpected incompatibility between OptiTrack and DVS camera.
+We encountered an unexpected incompatibility between OptiTrack and DVS.
  The OptiTrack uses high-power infrared spotlights.
  In the OptiTrack's standard configuration, the spotlights are pulsed at
  a high frequency.
  This is of course invisible to normal sensors and to the human eye, but
  it was a spectacular interference for the DVS.
- Like most cameras, the DVS is very sensitive to the infrared spectrum and
+ Like most cameras, the DVS is very sensitive in the infrared spectrum and
  is much faster than the OptiTrack strobing frequency.
- Strong generated a buffer overflow on the DVS as the electronics could
- not handle the large number of events to be processed contemporaneously.
+ This generated a buffer overflow on the DVS as the electronics could not
+ handle the large number of events to be processed contemporaneously.
  Eventually we understood how to deactivate the strobing for all the cameras
  prior to recording.
  Still there was a slight residual interference by the infrared illumination
@@ -786,7 +793,20 @@ We compare three ways to track the pose of the quadcopter: 1)
 \begin_inset space ~
 \end_inset
 
-The output of our method; 2)
+The output of our DVS-based 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALM
+\end_layout
+
+\end_inset
+
+ tracking method; 2)
 \begin_inset space ~
 \end_inset
 
@@ -798,6 +818,10 @@ The output of a traditional feature-based tracker using the data from the
  conventional CMOS camera mounted front-facing on the drone.
  The image data was streamed to a computer via network interface, were the
  parallel tracking and mapping algorithm (PTAM)
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset CommandInset citation
 LatexCommand cite
 key "PTAM"
@@ -822,7 +846,12 @@ name "sec:datarecording"
 Using this setup we did several recordings, in which we recorded the OptiTrack
  tracking data, using its native format, the image data using a ROS interface,
  as well as the raw event data from the DVS in the native format.
- All these data, plus other data used for preliminary experiments, are available
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+All these data, plus other data used for preliminary experiments, are available
  at the website 
 \begin_inset ERT
 status open
@@ -839,32 +868,33 @@ xxx
 .
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 To synchronize the data from different sources we used a motion induced
  cue.
  We moved manually the drone up and down, generating an approximated sinusoid
- curve in the position data.
- Matching this trend in the data allowed easy synchronization of the various
- recordings.
+ curve in the position data, which allowed easy manual matching of the sequences.
 \end_layout
 
 \begin_layout Standard
 After adjusting for the delay, the data sets were brought to the same number
  of samples with a common time stamps.
  As our algorithm's output has a lower sampling rate than the OptiTrack
- (1KhZ vs 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
-\end_layout
-
+ (1
+\begin_inset space ~
 \end_inset
 
+KHz vs 
+250
+\begin_inset space ~
+\end_inset
+
+Hz
+\lang english
 ), the OptiTrack data was resampled by linear interpolation.
 \end_layout
 
@@ -884,8 +914,12 @@ Each recording then started with inducing the cue followed by the drone
 \end_layout
 
 \begin_layout Standard
-After time synchronization we put all data in the same frame of reference.
- Given two sequences of points 
+As a final step, the time series were put in the same frame of reference.
+ Given two sequences of points
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset Formula $\boldsymbol{x}_{k},\boldsymbol{y}_{k}\in\mathbb{R}^{3}$
 \end_inset
 
@@ -905,16 +939,14 @@ After time synchronization we put all data in the same frame of reference.
 
 \end_inset
 
-which can be easily solved using 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
+which is a classic Procrustes problem
+\begin_inset space ~
+\end_inset
 
 
-\backslash
-xxx
-\end_layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gower04procrustes"
 
 \end_inset
 
@@ -1059,6 +1091,10 @@ To measure the onset and offset of the blackout for the DVS, we considered
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Figure
 \begin_inset space ~
 \end_inset
@@ -1080,6 +1116,11 @@ reference "img:fliptimes"
  with a red plus.
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 Table 
 \begin_inset CommandInset ref
@@ -1094,7 +1135,12 @@ reference "tab:downtime_tab"
  time of the DVS and takes longer than the average duration of a flip.
  One can clearly see that the time where tracking is lost is much shorter
  with our approach in respect to PTAM.
- As Figure 
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+As Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "img:mean_downtime"
@@ -1103,20 +1149,31 @@ reference "img:mean_downtime"
 
  further illustrates, the downtime for the DVS stays inside the interval
  of the flip duration.
- The results emphasize that the DVS is faster in recovering lost tracks
- than the PTAM approach due to the shorter latency.
- As verified with our recordings, the downtimes of the DVS correspond to
- losing sight of the LED markers because of their emission angle.
  
 \end_layout
 
-\begin_layout Standard
-We reckon that with a suitable configuration of either more markers or dynamic
- vision sensors, tracking could be maintained during the whole flip.
- PTAM shows to lose track for a longer duration than the flip takes.
+\end_inset
+
+The results emphasize that the DVS is faster in recovering lost tracks than
+ the PTAM approach due to not suffering from motion blur.
+ As verified with our recordings, the downtimes of the DVS correspond to
+ losing sight of the LED markers because of their emission angle.
+ With a suitable configuration of either more markers or dynamic vision
+ sensors, tracking could be maintained during the whole flip.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+PTAM shows to lose track for a longer duration than the flip takes.
  In contrary to the DVS the the camera of the drone loses sight of its tracked
  features due to blurring in the camera image and thus takes a longer time
  to recover.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1253,6 +1310,10 @@ flip duration
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 \begin_inset Float figure
 placement h
 wide false
@@ -1304,12 +1365,21 @@ Statistical plot of measure time interval.
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Float figure
 placement h
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset ERT
@@ -1356,8 +1426,13 @@ name "img:mean_downtime"
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
-Pose estimation
+Accuracy of estimated pose
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:poseestimationeval"
@@ -1368,22 +1443,42 @@ name "sec:poseestimationeval"
 \end_layout
 
 \begin_layout Standard
+The statistics of the estimation error for DVS and PTAM, considering the
+ OptiTrack as the ground truth, are summarized in 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "tab:trans_error_tab"
+reference "tab:Estimation-error"
 
 \end_inset
 
- shows the mean and standard error for the translation in both approaches.
- The DVS average error is roughly two times lower than PTAM.
- 
+ and shown in graphical form in
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "img:trans_error_box"
+reference "fig:errors"
 
 \end_inset
 
- shows the statistical distribution of the pose errors.
+.
+\end_layout
+
+\begin_layout Standard
+As for the translation, the DVS estimation error is roughly two times lower
+ than PTAM (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:errors"
+
+\end_inset
+
+
+\emph on
+a
+\emph default
+).
  Although the spread of outliers is higher in our approach compared to PTAM,
  the translation errors of the latter technique show a broader distribution
  around their median.
@@ -1392,31 +1487,20 @@ reference "img:trans_error_box"
 \end_layout
 
 \begin_layout Standard
-Figures
-\begin_inset space ~
-\end_inset
-
-
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "img:roll_error_box"
+LatexCommand formatted
+reference "fig:errors"
 
 \end_inset
 
-, 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "img:pitch_error_box"
 
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "img:yaw_error_box"
-
-\end_inset
-
+\emph on
+b
+\emph default
+--
+\emph on
+d
+\emph default
  show the error distribution for roll, pitch and yaw respectively.
  The DVS performs worse in roll and pitch compared to yaw.
  This was to be expected, because of the position of the 
@@ -1435,33 +1519,25 @@ ALMs
 .
  As roll and pitch play a minor roll in quadrotor pose estimation these
  can be neglected for finding the drone's orientation.
- Table 
+ The DVS performs slightly worse than PTAM with a mean error of 6° and a
+ deviation of 15° (
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:yaw_error_tab"
-
-\end_inset
-
- demonstrates that the DVS performs slightly worse than PTAM with a mean
- error of 6 degrees and a deviation of 15 degrees.
- This is explained by the much lower resolution of the DVS (
-\begin_inset Formula $128\times128$
-\end_inset
-
-) compared to the PTAM data (
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
-\end_layout
+LatexCommand formatted
+reference "tab:Estimation-error"
 
 \end_inset
 
 ).
+ This is explained by the much lower resolution of the DVS (
+\begin_inset Formula $128\times128$
+\end_inset
+
+ pixels) compared to the CMOS camera used by PTAM (
+\begin_inset Formula $720\times980$
+\end_inset
+
+ pixels).
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1554,6 +1630,15 @@ xspace}
 
 
 \backslash
+renewcommand{
+\backslash
+tabcolsep}{3pt}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
 footnotesize
 \end_layout
 
@@ -1589,7 +1674,7 @@ footnotesize
 \begin_inset Text
 
 \begin_layout Plain Layout
-(a) Translation (cm)
+(a) Translation
 \end_layout
 
 \end_inset
@@ -1721,7 +1806,7 @@ rule{0pt}{1em}
 \uwave default
 \noun default
 \color inherit
- 12.6 
+ 12.6 cm 
 \end_layout
 
 \end_inset
@@ -1912,7 +1997,7 @@ PTAM
 \uwave default
 \noun default
 \color inherit
- 12.4 
+ 12.4 cm
 \end_layout
 
 \end_inset
@@ -3229,6 +3314,12 @@ name "img:yaw_error_box"
 \begin_inset Caption
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:errors"
+
+\end_inset
+
 Distributions of the errors of DVS/PTAM in reference to the OptiTrack measuremen
 ts.
  The data is synthesized in

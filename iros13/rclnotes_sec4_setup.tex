@@ -2,10 +2,10 @@
 \section{Hardware setup and event data\label{sec:Hardware-setup-and}}
 
 This section describes the hardware setup and gives an intuition of
-the kind of data that we can observe.
+the event data that a DVS produces.
 
 
-\subsubsection{DVS and its interface \label{sec:interface}}
+\subsubsection{DVS and its interface\label{sec:interface}}
 
 The DVS attaches to a computer using a common USB port. The camera
 is distributed with a portable software framework written in Java
@@ -13,32 +13,28 @@ called jAER~\cite{jaer}. This project, developed in C++ for maximum
 efficiency, needed a special driver to be developed, based on the
 Thesycon USB device driver~\cite{thesycon}. The events are transmitted
 from the camera in packets of up to several hundred events; however,
-each event is independently tagged at the source with its proper timestamp. 
-
+each event is independently tagged at the source with its proper timestamp.
 
 
 
 \subsubsection{Active LED Markers (\ALMs)\label{sec:leds}}
 
 The LED controller is based on the bronze board~\cite{bronzeboard}
-from INI Labs, which is based on an AVR32. The board can drive up
-to 5 LEDs in pulse-width modulation.  
-
-We used infrared LEDs (\textbf{CB: part number, specs?}) since the
-DVS is very sensitive to the infrared spectrum. 
+from iniLabs, which is based on an AVR32.  We used infrared LEDs
+since the DVS is very sensitive in the infrared spectrum. 
 
 
 
 In our setup we could easily change the PWM frequency to the LEDs.
 An upper bound on the detectable frequency depends on the power of
 the LEDs and the distance to the camera; a DVS camera is not magic:
-there must be enough photons reaching the photoreceptor in a given
-interval over the baseline level to trigger an event. In our setup
-we found 2~KHz to be an adequate number. The frequencies for each
-LEDs were then decided in the interval 1--2~KHz making sure we did
-not choose frequencies with common harmonics. A reasonable lower bound
-on the blinking frequency was found experimentally to be $1$~KHz
-to minimize the confusion between with background motion (see \prettyref{sub:Alternate-events-and-motion}
+there must be a large enough change in the number of photons reaching
+the photoreceptor to trigger an event. In our setup we found 2~KHz
+to be an adequate number. The frequencies for each LEDs were then
+decided in the interval 1--2~KHz making sure we did not choose frequencies
+with common harmonics. A reasonable lower bound on the blinking frequency
+was found experimentally to be $1$~KHz to minimize the confusion
+between with background motion (see \prettyref{sub:Alternate-events-and-motion}
 below).
 
 
@@ -64,9 +60,7 @@ deviation $\sigma=6\,\mu s$. }
 
 
 \prettyref{fig:events-hist} gives an intuition of how the data looks
-like. (The website \xxx contains video rendering of for these and
-other experiments as well as the raw event data in binary format.)
-In this scenario both the \ALMs and the DVS are fixed. \prettyref{fig:events-hist}\emph{a}
+like. In this scenario both the \ALMs and the DVS are fixed. \prettyref{fig:events-hist}\emph{a}
 shows the histogram of the number of events coming from a particular
 pixels. The three peaks are the three \ALMs ($f=500,700,1000\,\mbox{Hz}$).
 The number of events is different for each peak because the frequencies
