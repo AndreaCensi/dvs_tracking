@@ -1,3 +1,5 @@
+\vfill\newpage
+
 
 \section{Conclusions\label{sec:conclusion}}
 
@@ -12,12 +14,11 @@ be completely re-designed to take advantage of the low latency.
 This paper has presented the first pose tracking application using
 DVS data. We have shown that the DVS can detect Active LEDs Markers
 (\ALMs) and disambiguate their identity if different blinking frequencies
-are used, thus thus avoiding the complexity of data association. The
-algorithm that the we developed uses a Bayesian framework, in which
-we accumulate evidence of every single event into ``evidence maps''
-that are tuned to a particular frequency. The temporal interval can
-be tuned and it is a tradeoff between latency and precision. In our
-experimental conditions it was possible to have a latency of only
+are used. The algorithm that the we developed uses a Bayesian framework,
+in which we accumulate evidence of every single event into ``evidence
+maps'' that are tuned to a particular frequency. The temporal interval
+can be tuned and it is a tradeoff between latency and precision. In
+our experimental conditions it was possible to have a latency of only
 1~ms. After detection, we used a particle filter and a multi-hypothesis
 tracker. 
 
@@ -27,10 +28,10 @@ the DVS is able to reacquire stable tracking with negligible delay
 as soon as the LEDs are visible again, without suffering from motion
 blur, which limits the traditional CMOS-based conventional feature
 tracking solution. However, the precision in reconstructing the pose
-is limited because of the low $128\times128$ resolution. Future work
-involving the hardware include improving the \ALMs by increasing
-their power and their angular emittance field, as we have found these
-to be the main limitations.
+is limited because of the low sensor resolution. Future work involving
+the hardware include improving the \ALMs by increasing their power
+and their angular emittance field, as we have found these to be the
+main limitations.
 
 In conclusion, DVS-based \ALM tracking promises to be a feasible
 technology that can be used for fast tracking in robotics.
@@ -41,6 +42,10 @@ technology that can be used for fast tracking in robotics.
 
 
 
-\textbf{Acknowledgements}: We gratefully acknowledge the contribution
-of Christian Saner for \xxx, of Yves \xxx as our pilot, and Matia
-Pizzoli for the CMOS-based tracking experiments.
+\medskip
+
+\noindent \textbf{\small Acknowledgements}{\small : We gratefully
+acknowledge the contribution of Christian Saner for helping with the
+ARDrone software development, the assistance of Yves Albers-Sch\"onberg
+as our pilot during test flights and in recording ROS logs, and the
+assistance of Matia Pizzoli in the CMOS-based tracking experiments.}

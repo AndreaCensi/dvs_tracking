@@ -216,7 +216,7 @@ key "bronzeboard"
 
 \end_inset
 
- from iniLabs, which is based on an AVR32.
+ from inilabs, which is based on an AVR32.
  
 \begin_inset Note Note
 status open
@@ -240,7 +240,7 @@ Although a less powerful microprocessor would have been sufficient, a high
 
 \end_inset
 
-We used infrared LEDs since the DVS is very sensitive in the infrared spectrum.
+We used infrared LEDs since the DVS is most sensitive in the infrared spectrum.
  
 \begin_inset Note Note
 status collapsed
@@ -597,8 +597,8 @@ For this particular data, the P events arrive noisily, while the N events
  Note that the what we observe here is the combination of the LED dynamics
  with the dynamics of the photoreceptor and the nonlinear detector.
  Experimentally we found that the interval between successive P/N transitions
- is very repeatable: we have observed that the jitter is well approximated
- by a Gaussian with standard deviation equal to 
+ is repeatable: we have observed that the jitter is well approximated by
+ a Gaussian with standard deviation equal to 
 \begin_inset Formula $6\,\mu s$
 \end_inset
 
@@ -761,7 +761,7 @@ ALMs
 a moving camera with no LEDs.
  From this data we can see that the motion of the camera generates a large
  number of events, but at low frequencies, and notwithstanding the motion,
- we can still see very clearly the peaks originated from the markers.
+ we can still clearly see the peaks originated from the markers.
  Therefore, if we choose the marker frequencies high enough, we can filter
  for the camera motion just by ignoring the events corresponding to frequencies
  under a certain threshold.

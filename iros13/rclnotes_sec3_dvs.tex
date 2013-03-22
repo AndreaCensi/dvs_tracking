@@ -1,49 +1,105 @@
 
-\section{The Dynamic Vision Sensor\label{sec:The-DVS-camera}}
+\section{The Dynamic Vision Sensor (DVS)\label{sec:The-DVS-camera}}
 
-\textbf{CB/TB: could you write a short description (\textasciitilde{}2
-columns) of the DVS camera that could be understandable to a computer
-scientist? Also feel free to write more, I will edit it down to space
-constraints. I wrote down a few points that I'd like to make regarding
-future improvements that are relevant to robotics.}
+A regular CMOS camera records a visual scene by taking a stroboscopic
+series of still frames. Computer vision and robot perception methods
+work on the analysis of each frame separately. This established approach
+has some fundamental drawbacks: each pixel gets sampled and processed
+over and over again at each frame, independently of its relevance
+to the decision to be taken, or whether its value changed. Much processing
+power is used for considering redundant information, which translate
+into high latencies and low frame rates. In contrast to this, we observe
+that in biological systems there is redundancy suppression already
+on the \textquotedblleft{}sensor\textquotedblright{}: as recordings
+of nerve cells coming from the eye show, the retina mostly responds
+to \emph{changes} in the perceived brightness.
 
-\begin{figure}[b]
-\hfill{}\subfloat[DVS camera ]{{\color[rgb]{0.7,0.7,0.7}\rule{2.6cm}{3cm}}}\hfill{}\subfloat[Response to circular stimulus]{{\color[rgb]{0.7,0.7,0.7}\rule{2.6cm}{3cm}}
+The field of\emph{ neuromorphic engineering} tries to implement the
+computations done by nervous systems as VLSI circuits. The computation
+is \emph{analogic}: currents, voltages and charges are used for computing,
+rather than binary representations. The resulting circuits are also
+\emph{asynchronous}: like nervous cells, they operate independently
+of an external clock for state transitions. There has been a large
+amount of research in neuromorphic sensory systems of different scale
+and complexity~\cite{liu10neuromorphic}. The first system to be
+commercially available is the so-called ``silicon retina'' or \emph{dynamic
+vision sensor} (DVS)~\cite{lichtsteiner08asynchronous}.
 
-}\hfill{}\subfloat[Drone rotor]{{\color[rgb]{0.7,0.7,0.7}\rule{2.6cm}{3cm}}
+Each pixel in the DVS operates independently and asynchronously from
+the others. The photons that reach a photodiod produce a photocurrent,
+which is converted into a voltage. This voltage gets continuously
+compared to the last sampled voltage. As soon as the difference between
+these two voltages is larger than a certain threshold, the pixel requests
+to send an \emph{event} off chip. After the address and the timestamp
+of this event has been registered from a CPLD at the chip periphery,
+the pixel is reset, and the most recent voltage gets sampled to be
+compared against successive voltages. Depending on the sign of the
+difference, either a P~event (positive) or an N~event (negative)
+is generated. P~events indicate that the brightness increased, N~events
+indicated that it decreased. All of this computation is done without
+digitizing the signal. 
 
-}\hfill{}
+The parameters that modulate the pixel behavior are dynamically programmed
+using a set of bias currents. Some of the parameters that can be dynamically
+changed are the temporal contrast frequency cutoff, the P \& N threshold,
+and the event frequency cutoff. Each event carriers the following
+information: the \emph{address }of the pixel that observed the change
+(equivalent to its~$x,y$ coordinates), the \emph{polarity} (P or
+N), and a timestamp, which has a 1~\textmu{}s resolution.
 
-\caption{\label{fig:DVS-camera}DVS camera and its output}
-\end{figure}
+The sensor therefore only produces output if the observed scene changes.
+This is not only the case if the intensity of a light source gets
+modulated (as with a blinking LED), but also if a static scene moves
+relative to the sensor. If the sensor itself is moved it perceives
+all the edges and contours in its visual field.
 
-
-\lorem
-
-\lorem
-
-\lorem
-
-\lorem
-
-\lorem
-
-\lorem
-
-\lorem
-
-\lorem
-
-\lorem
+Sensing the world with a set of autonomous, change-sensitive pixels
+has various advantages compared to traditional image sensors:
 \begin{itemize}
-\item Some citations: \cite{boerlin09getting}\cite{lichtsteiner08asynchronous}\cite{etienne-cummings99intelligent}\cite{oster08quantification}
-\item Future improvements:
-
-\begin{itemize}
-\item miniaturization
-\item higher resolution
-\item buffer able to handle more events
-\item inclusion of a normal CMOS camera
-\item easier to tune\end{itemize}
+\item Since the photocurrent gets converted to a voltage on pixel level,
+the brightness measurement does not require a uniform exposure time
+for all pixels. This leads to the high dynamic range of 120dB which
+is capped by the exposure time in conventional image sensors.
+\item By only sensing changes, the sensor performs on-chip data compression.
+This does not only make the amount of output data dependent on the
+activity in a scene but it also focusses the processing effort on
+the region of interest where it is changing. This focusing leads to
+controller update intervals of down to 125~\textmu{}s~\cite{conradt09pencil}.
+\item Redundant information does not occupy the output bus and tiherefore
+relevant information can be signaled very fast. The sensor chip itself
+has a latency of 15~\textmu{}s which allows to come up with sensor-actuator
+latencies (including sensor and actuator USB communication and laptop
+processing) of 3~ms~\cite{delbruck07fast}.
+\item The high resolution of the event timestamps can be used to investigate
+the dynamics in a scene such as motion or blinking frequencies. While
+conventional vision sensors only allow to investigate the scene at
+given times, the DVS produces a continuous stream of information.
 \end{itemize}
+The main drawbacks of the current generation of DVS are its low resolution
+of $128\times128$, and the inability to sample the absolute brightness
+levels like a normal camera. 
+
+The low resolution is due to the prototype fabrication process used
+(350~nm) and the fact that each pixel is associated to a complex
+circuit carrying on the analogous computation. The static scene content
+cannot be accessed because the according technology was not ready
+for the first series of sensors. But since the field of event-based
+vision sensors is steadily growing~\cite{delbruck10activity}, these
+limitations will soon be overcome. 
+
+Some of the latest developments include higher temporal contrast sensitivity
+of 1.5\%~\cite{serrano13128} and higher spatial resolution of $240\times180$
+or $304\times240$, accompanied with a readout channel for pictures
+and movies that simulates a CMOS camera~\cite{posch11qvga,berner13240}. 
+
+Ongoing efforts include increasing the availability of the embedded
+version of the sensor (eDVS, used in~\cite{conradt09pencil}), which
+weighs only a few grams and measures $30\times50\times50$~mm. Furthermore,
+future versions of event based vision sensors are expected to include
+a USB 3.0 interface for higher data transmission rates.
+
+
+
+
+
 

@@ -77,6 +77,24 @@
 
 \begin_body
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vfill
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Conclusions
 \begin_inset CommandInset label
@@ -119,7 +137,7 @@ ALMs
 \end_inset
 
 ) and disambiguate their identity if different blinking frequencies are
- used, thus thus avoiding the complexity of data association.
+ used.
  The algorithm that the we developed uses a Bayesian framework, in which
  we accumulate evidence of every single event into 
 \begin_inset Quotes eld
@@ -162,11 +180,7 @@ We have evaluated the use of this technology for tracking the motion of
  from motion blur, which limits the traditional CMOS-based conventional
  feature tracking solution.
  However, the precision in reconstructing the pose is limited because of
- the low 
-\begin_inset Formula $128\times128$
-\end_inset
-
- resolution.
+ the low sensor resolution.
  Future work involving the hardware include improving the 
 \begin_inset ERT
 status open
@@ -301,11 +315,30 @@ Apart from a number of possible improvements, the approach has shown to
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+medskip
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
 
 \series bold
+\size small
 Acknowledgements
 \series default
-: We gratefully acknowledge the contribution of Christian Saner for 
+: We gratefully acknowledge the contribution of Christian Saner for helping
+ with the ARDrone software development, the assistance of Yves Albers-Sch
 \begin_inset ERT
 status open
 
@@ -313,25 +346,13 @@ status open
 
 
 \backslash
-xxx
+"o
 \end_layout
 
 \end_inset
 
-, of Yves 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
-\end_layout
-
-\end_inset
-
- as our pilot, and Matia Pizzoli for the CMOS-based tracking experiments.
+nberg as our pilot during test flights and in recording ROS logs, and the
+ assistance of Matia Pizzoli in the CMOS-based tracking experiments.
 \end_layout
 
 \end_body

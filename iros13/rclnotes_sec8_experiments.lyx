@@ -181,9 +181,9 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename figures/quadcopter_belly.jpg
+	filename figures/quadcopter_belly_small.jpg
 	lyxscale 20
-	height 3cm
+	height 3.5cm
 
 \end_inset
 
@@ -228,13 +228,13 @@ ALMs
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename figures/marked_quadrotor.jpg
+	filename figures/marked_quadrotor_small.jpg
 	lyxscale 20
-	height 3cm
+	height 3.5cm
 
 \end_inset
 
@@ -365,7 +365,7 @@ reference "fig:quadcopter_belly"
 
 ).
  Each LED was fixed facing downwards, one under each of the four rotors,
- so that the four where lying on a plane forming a square of 20cm side length.
+ so that the four were lying on a plane forming a square of 20cm side length.
  The USB connector available on the drone provided power to the microcontroller
  and 
 \begin_inset ERT
@@ -461,7 +461,7 @@ reference "fig:Infrared-markers-used"
 \begin_inset space ~
 \end_inset
 
-CHF.
+CHF ($21,000).
  The sampling frequency used was 
 \begin_inset Formula $250$
 \end_inset
@@ -663,7 +663,7 @@ Flip motion seen from the frontal camera
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figures/slides/flip_sequence.pdf
+	filename figures/slides/flip_sequence_small.pdf
 	width 17cm
 
 \end_inset
@@ -762,7 +762,7 @@ We encountered an unexpected incompatibility between OptiTrack and DVS.
  a high frequency.
  This is of course invisible to normal sensors and to the human eye, but
  it was a spectacular interference for the DVS.
- Like most cameras, the DVS is very sensitive in the infrared spectrum and
+ Like most cameras, the DVS is most sensitive in the infrared spectrum and
  is much faster than the OptiTrack strobing frequency.
  This generated a buffer overflow on the DVS as the electronics could not
  handle the large number of events to be processed contemporaneously.
@@ -888,14 +888,11 @@ After adjusting for the delay, the data sets were brought to the same number
 \begin_inset space ~
 \end_inset
 
-KHz vs 
-250
+KHz vs 250
 \begin_inset space ~
 \end_inset
 
-Hz
-\lang english
-), the OptiTrack data was resampled by linear interpolation.
+Hz), the OptiTrack data was resampled by linear interpolation.
 \end_layout
 
 \begin_layout Standard
@@ -1199,6 +1196,19 @@ name "tab:downtime_tab"
 
 
 \begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-2mm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
 status collapsed
 
 \begin_layout Plain Layout
@@ -1210,7 +1220,7 @@ centering
 
 \end_inset
 
- 
+
 \begin_inset Tabular
 <lyxtabular version="3" rows="3" columns="2">
 <features tabularvalignment="middle">
@@ -1298,6 +1308,19 @@ flip duration
 </cell>
 </row>
 </lyxtabular>
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-2mm}
+\end_layout
 
 \end_inset
 
@@ -1542,9 +1565,10 @@ reference "tab:Estimation-error"
 
 \begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption
@@ -3104,206 +3128,36 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-\begin_inset Note Note
+\align center
+\begin_inset ERT
 status open
 
 \begin_layout Plain Layout
-\begin_inset Float 
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
 
 
 \backslash
-centering
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Graphics
-	filename figures/trans_error_box.eps
-	height 4.5cm
-
-\end_inset
-
- 
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "img:trans_error_box"
-
-\end_inset
-
-Translation error
+vspace{-2mm}
 \end_layout
 
 \end_inset
 
 
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float 
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-centering
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Graphics
-	filename figures/roll_error_box.pdf
-	height 4.5cm
-
-\end_inset
-
- 
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "img:roll_error_box"
-
-\end_inset
-
- Roll
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float 
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-centering
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Graphics
-	filename figures/pitch_error_box.pdf
-	height 4.5cm
-
-\end_inset
-
- 
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "img:pitch_error_box"
-
-\end_inset
-
- Pitch
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float 
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-centering
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Graphics
-	filename figures/yaw_error_box.pdf
-	height 4.5cm
-
-\end_inset
-
- 
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "img:yaw_error_box"
-
-\end_inset
-
- Yaw
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
 \begin_inset Graphics
 	filename figures/slides/errors.pdf
-	width 14cm
+	width 13.5cm
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-4mm}
+\end_layout
 
 \end_inset
 

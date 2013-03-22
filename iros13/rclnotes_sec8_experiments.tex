@@ -13,7 +13,7 @@ of the sensor.
 
 
 \begin{figure}[b]
-\centering{}\hfill{}\subfloat[\label{fig:quadcopter_belly}\ALMs configuration]{\includegraphics[height=3cm]{figures/quadcopter_belly} }\hfill{}\subfloat[\label{fig:Infrared-markers-used}Infrared markers]{\includegraphics[height=3cm]{figures/marked_quadrotor}
+\centering{}\hfill{}\subfloat[\label{fig:quadcopter_belly}\ALMs configuration]{\includegraphics[height=3.5cm]{figures/quadcopter_belly_small} }\hfill{}\subfloat[\label{fig:Infrared-markers-used}Infrared markers]{\includegraphics[height=3.5cm]{figures/marked_quadrotor_small}
 
 }\hfill{} \caption{\label{fig:marked_quadrotor}The ARDrone 2.0 equipped with four \ALMs
 (shown in \emph{a}) tracked by the DVS, and reflective markers used
@@ -30,7 +30,7 @@ by the OptiTrack (shown in \emph{b}). }
 We used the commercially available ARDrone 2.0 We attached four custom-built
 \ALMs to the bottom of the platform (\prettyref{fig:quadcopter_belly}).
 Each LED was fixed facing downwards, one under each of the four rotors,
-so that the four where lying on a plane forming a square of 20cm side
+so that the four were lying on a plane forming a square of 20cm side
 length. The USB connector available on the drone provided power to
 the microcontroller and \ALMs. The drone has also a front-facing
 $720\times980$ CMOS camera that is used in these experiments, while
@@ -55,8 +55,8 @@ system from NaturalPoint~\cite{optitrack}, which is a marker-based
 optical motion tracking system using active infrared light and reflective
 marker balls. Four markers have been applied to the drone (\prettyref{fig:Infrared-markers-used}).
 Our lab setup comprised 10 cameras in a $6\times8\,\mbox{m}$ area;
-the cost of this system is approximately 20,000~CHF. The sampling
-frequency used was $250$~Hz. The accuracy is stated as~$\sim1$~mm
+the cost of this system is approximately 20,000~CHF (\$21,000). The
+sampling frequency used was $250$~Hz. The accuracy is stated as~$\sim1$~mm
 by the manufacturer, but this seems an optimistic estimate based on
 our experience with the system.
 
@@ -68,7 +68,7 @@ our experience with the system.
 \par\end{centering}
 
 \begin{centering}
-\includegraphics[width=17cm]{figures/slides/flip_sequence}
+\includegraphics[width=17cm]{figures/slides/flip_sequence_small}
 \par\end{centering}
 
 \caption{\label{fig:Motion-blur-induced}Motion blur induced on CMOS image
@@ -93,7 +93,7 @@ DVS. The OptiTrack uses high-power infrared spotlights. In the OptiTrack's
 standard configuration, the spotlights are pulsed at a high frequency.
 This is of course invisible to normal sensors and to the human eye,
 but it was a spectacular interference for the DVS. Like most cameras,
-the DVS is very sensitive in the infrared spectrum and is much faster
+the DVS is most sensitive in the infrared spectrum and is much faster
 than the OptiTrack strobing frequency. This generated a buffer overflow
 on the DVS as the electronics could not handle the large number of
 events to be processed contemporaneously. Eventually we understood
@@ -128,7 +128,7 @@ of the sequences.
 
 After adjusting for the delay, the data sets were brought to the same
 number of samples with a common time stamps. As our algorithm's output
-has a lower sampling rate than the OptiTrack (1~KHz vs \inputencoding{latin1}{250~Hz}\inputencoding{latin9}),
+has a lower sampling rate than the OptiTrack (1~KHz vs 250~Hz),
 the OptiTrack data was resampled by linear interpolation.
 
 
@@ -198,12 +198,12 @@ could be maintained during the whole flip.
 \begin{table}
 \caption{\label{tab:downtime_tab} Tracking downtime intervals and the flip
 duration.}
-\centering %
+\vspace{-2mm}\centering%
 \begin{tabular}{r|l}
 \rule{0pt}{1em}DVS  & $0.35\pm0.10$ s\tabularnewline
 PTAM  & $0.80\pm0.33$ s\tabularnewline
 flip duration & $0.56\pm0.15$ s\tabularnewline
-\end{tabular}
+\end{tabular}\vspace{-2mm}
 \end{table}
 
 
@@ -237,7 +237,7 @@ This is explained by the much lower resolution of the DVS ($128\times128$
 pixels) compared to the CMOS camera used by PTAM ($720\times980$
 pixels). 
 
-\begin{table}
+\begin{table}[H]
 \caption{\label{tab:Estimation-error}Estimation error of DVS and PTAM compared
 to Optitrack}
 
@@ -262,10 +262,8 @@ PTAM & 19.0 & $\pm$ 12.4 cm & 7  & $\pm$ 22\textdegree{} & 5  & $\pm$ 11\textdeg
 
 
 \begin{figure*}
-
-
 \begin{centering}
-\includegraphics[width=14cm]{figures/slides/errors}
+\vspace{-2mm}\includegraphics[width=13.5cm]{figures/slides/errors}\vspace{-4mm}
 \par\end{centering}
 
 \caption{\label{fig:errors}Distributions of the errors of DVS/PTAM in reference

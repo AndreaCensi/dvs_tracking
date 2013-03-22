@@ -1135,8 +1135,12 @@ ALM
 \end_inset
 
  with that frequency produces a hyper-transition of that interval.
- This distribution is found experimentally to be well approximated by a
- Gaussian (see the data in 
+ The distribution 
+\begin_inset Formula $p(\Delta_{k}\mid f_{i})$
+\end_inset
+
+ is found experimentally to be well approximated by a Gaussian, as seen
+ in the data in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:switch-hist"
@@ -1147,11 +1151,7 @@ reference "fig:switch-hist"
 \emph on
 b
 \emph default
-, which give 
-\begin_inset Formula $\sigma=30\ \mbox{Hz}$
-\end_inset
-
-): 
+: 
 \begin_inset Formula 
 \begin{equation}
 p(\Delta_{k}\mid f_{i})=\mathcal{N}\left(\frac{1}{\Delta_{k}}-f_{i},\sigma^{2}\right).\label{eq:lik_delta}
@@ -1159,8 +1159,21 @@ p(\Delta_{k}\mid f_{i})=\mathcal{N}\left(\frac{1}{\Delta_{k}}-f_{i},\sigma^{2}\r
 
 \end_inset
 
-The evidence maps collect events within a time slice corresponding to an
- interval of 
+In our experimental setting, the standard deviation is approximately
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\sigma=30\ \mbox{Hz}$
+\end_inset
+
+.
+ The evidence maps collect events within a time slice corresponding to an
+ interval of
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset Formula $1/f_{i}$
 \end_inset
 
@@ -1181,16 +1194,28 @@ the evidence map
 \begin_inset Formula $I_{i}(\left\langle x,y\right\rangle ,t)$
 \end_inset
 
- for a pixel 
+ for a pixel
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset Formula $x,y$
 \end_inset
 
- and at time 
+ and at time
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset Formula $t$
 \end_inset
 
  is given by the sum of the contributions of all events at the given pixel
- and in the interval 
+ and in the interval
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset Formula $\left[t-1/f_{i},t\right]$
 \end_inset
 
@@ -1206,7 +1231,7 @@ the evidence map
 \uwave default
 \noun default
 \color inherit
- 
+
 \begin_inset Formula 
 \[
 I_{i}(\left\langle x,y\right\rangle ,t)=\sum_{t_{k}\in\left[t-\frac{1}{f_{i}},t\right]\wedge\left\langle x_{k},y_{k}\right\rangle =\left\langle x,y\right\rangle }\mathcal{N}\left(\frac{1}{\Delta_{k}}-f_{i},\sigma^{2}\right).

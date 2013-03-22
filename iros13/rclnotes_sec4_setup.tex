@@ -20,8 +20,8 @@ each event is independently tagged at the source with its proper timestamp.
 \subsubsection{Active LED Markers (\ALMs)\label{sec:leds}}
 
 The LED controller is based on the bronze board~\cite{bronzeboard}
-from iniLabs, which is based on an AVR32.  We used infrared LEDs
-since the DVS is very sensitive in the infrared spectrum. 
+from inilabs, which is based on an AVR32.  We used infrared LEDs
+since the DVS is most sensitive in the infrared spectrum. 
 
 
 
@@ -79,7 +79,7 @@ For this particular data, the P events arrive noisily, while the N
 events arrive more regularly. Note that the what we observe here is
 the combination of the LED dynamics with the dynamics of the photoreceptor
 and the nonlinear detector. Experimentally we found that the interval
-between successive P/N transitions is very repeatable: we have observed
+between successive P/N transitions is repeatable: we have observed
 that the jitter is well approximated by a Gaussian with standard deviation
 equal to $6\,\mu s$ (\prettyref{fig:events-hist}\emph{c}).
 
@@ -110,8 +110,7 @@ the P/N transitions in three scenarios: a)~a fixed camera looking
 at fixed \ALMs; b)~a moving camera looking at fixed \ALMs; c)~a
 moving camera with no LEDs. From this data we can see that the motion
 of the camera generates a large number of events, but at low frequencies,
-and notwithstanding the motion, we can still see very clearly the
-peaks originated from the markers. Therefore, if we choose the marker
-frequencies high enough, we can filter for the camera motion just
-by ignoring the events corresponding to frequencies under a certain
-threshold. 
+and notwithstanding the motion, we can still clearly see the peaks
+originated from the markers. Therefore, if we choose the marker frequencies
+high enough, we can filter for the camera motion just by ignoring
+the events corresponding to frequencies under a certain threshold. 

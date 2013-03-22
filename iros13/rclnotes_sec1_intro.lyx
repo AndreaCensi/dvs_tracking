@@ -136,15 +136,15 @@ At the current state of the art, the agility of an autonomous flying robot
  is limited by the speed of its sensing pipeline, as the relatively high
  latency and low sampling frequency limit the aggressiveness of the control
  strategies that can be implemented.
- Dynamic Vision Sensors (DVS) encode changes in the visual field using an
- address-event representation.
+ Dynamic Vision Sensors (DVS) encode changes in the perceived brightness
+ using an address-event representation.
  The latency of such sensors can be measured in the microseconds, thus offering
  the theoretical possibility of creating a sensing pipeline whose latency
  is negligible compared to the dynamics of the platform.
  However, to use these sensors we must rethink the way we interpret visual
  data.
  We present an approach to low-latency pose tracking using a DVS and Active
- Led Markers (ALMs), which are LEDs blinking at very high frequency (>1
+ Led Markers (ALMs), which are LEDs blinking at high frequency (>1
 \begin_inset space ~
 \end_inset
 
@@ -370,18 +370,11 @@ In this paper, we consider the use of a Dynamic Vision Sensor (DVS) for
 \emph on
 events
 \emph default
- (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:DVS-camera"
-
-\end_inset
-
-), which encode 
+ that encode 
 \emph on
 changes
 \emph default
- in the visual field.
+ in the brightness.
  
 \begin_inset Note Note
 status open
@@ -524,7 +517,7 @@ ALMs
 
 \end_inset
 
-), which are infrared LEDs blinking at very high frequency (
+), which are infrared LEDs blinking at  high frequency (
 \begin_inset Formula $>1\,\mbox{kHz}$
 \end_inset
 
@@ -547,13 +540,13 @@ One approach to using the DVS data is to cluster the events in order to
 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "delbruck07fast,conradt09pencil"
+key "delbruck07fast,conradt09pencil,Matthias"
 
 \end_inset
 
 .
  This approach works well when the camera is static, because the output
- is very sparse.
+ is spatiotemporally sparse.
  
 \end_layout
 

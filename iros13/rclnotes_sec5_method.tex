@@ -133,17 +133,17 @@ A hyper-transition with interval $\Delta_{k}$ contributes to the
 evidence map of frequency~$f_{i}$ with a weight that is proportional
 to~$p(\Delta_{k}\mid f_{i})$; that is, the likelihood that a marker
 \ALM with that frequency produces a hyper-transition of that interval.
-This distribution is found experimentally to be well approximated
-by a Gaussian (see the data in \prettyref{fig:switch-hist}\emph{b},
-which give $\sigma=30\ \mbox{Hz}$): 
+The distribution $p(\Delta_{k}\mid f_{i})$ is found experimentally
+to be well approximated by a Gaussian, as seen in the data in \prettyref{fig:switch-hist}\emph{b}:
 \begin{equation}
 p(\Delta_{k}\mid f_{i})=\mathcal{N}\left(\frac{1}{\Delta_{k}}-f_{i},\sigma^{2}\right).\label{eq:lik_delta}
 \end{equation}
+In our experimental setting, the standard deviation is approximately~$\sigma=30\ \mbox{Hz}$.
 The evidence maps collect events within a time slice corresponding
-to an interval of $1/f_{i}$. Therefore, the value of the evidence
-map $I_{i}(\left\langle x,y\right\rangle ,t)$ for a pixel $x,y$
-and at time $t$ is given by the sum of the contributions of all events
-at the given pixel and in the interval $\left[t-1/f_{i},t\right]$:
+to an interval of~$1/f_{i}$. Therefore, the value of the evidence
+map $I_{i}(\left\langle x,y\right\rangle ,t)$ for a pixel~$x,y$
+and at time~$t$ is given by the sum of the contributions of all
+events at the given pixel and in the interval~$\left[t-1/f_{i},t\right]$:
 \[
 I_{i}(\left\langle x,y\right\rangle ,t)=\sum_{t_{k}\in\left[t-\frac{1}{f_{i}},t\right]\wedge\left\langle x_{k},y_{k}\right\rangle =\left\langle x,y\right\rangle }\mathcal{N}\left(\frac{1}{\Delta_{k}}-f_{i},\sigma^{2}\right).
 \]
