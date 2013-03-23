@@ -136,7 +136,8 @@ At the current state of the art, the agility of an autonomous flying robot
  is limited by the speed of its sensing pipeline, as the relatively high
  latency and low sampling frequency limit the aggressiveness of the control
  strategies that can be implemented.
- Dynamic Vision Sensors (DVS) encode changes in the perceived brightness
+ To obtain more agile robots, we need faster sensors.
+ A Dynamic Vision Sensor (DVS) encodes changes in the perceived brightness
  using an address-event representation.
  The latency of such sensors can be measured in the microseconds, thus offering
  the theoretical possibility of creating a sensing pipeline whose latency
@@ -669,6 +670,24 @@ myurl
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vfill
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

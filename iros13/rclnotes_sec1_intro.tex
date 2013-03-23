@@ -11,20 +11,20 @@ Davide Scaramuzza}
 At the current state of the art, the agility of an autonomous flying
 robot is limited by the speed of its sensing pipeline, as the relatively
 high latency and low sampling frequency limit the aggressiveness of
-the control strategies that can be implemented. Dynamic Vision Sensors
-(DVS) encode changes in the perceived brightness using an address-event
-representation. The latency of such sensors can be measured in the
-microseconds, thus offering the theoretical possibility of creating
-a sensing pipeline whose latency is negligible compared to the dynamics
-of the platform. However, to use these sensors we must rethink the
-way we interpret visual data. We present an approach to low-latency
-pose tracking using a DVS and Active Led Markers (ALMs), which are
-LEDs blinking at high frequency (>1~KHz). The DVS time resolution
-is able to distinguish different frequencies, thus avoiding the need
-for data association. We compare the DVS approach to traditional tracking
-using a CMOS camera, and we show that the DVS performance is not affected
-by fast motion, unlike the CMOS camera, which suffers from motion
-blur. 
+the control strategies that can be implemented. To obtain more agile
+robots, we need faster sensors. A Dynamic Vision Sensor (DVS) encodes
+changes in the perceived brightness using an address-event representation.
+The latency of such sensors can be measured in the microseconds, thus
+offering the theoretical possibility of creating a sensing pipeline
+whose latency is negligible compared to the dynamics of the platform.
+However, to use these sensors we must rethink the way we interpret
+visual data. We present an approach to low-latency pose tracking using
+a DVS and Active Led Markers (ALMs), which are LEDs blinking at high
+frequency (>1~KHz). The DVS time resolution is able to distinguish
+different frequencies, thus avoiding the need for data association.
+We compare the DVS approach to traditional tracking using a CMOS camera,
+and we show that the DVS performance is not affected by fast motion,
+unlike the CMOS camera, which suffers from motion blur. 
 \end{abstract}
 
 \section{Introduction}
@@ -147,3 +147,5 @@ proves to be the current limitation of this approach.
 
 Software, datasets, and videos illustrating the method are available
 at the website \myurl.
+
+\vfill\newpage

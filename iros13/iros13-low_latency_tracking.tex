@@ -7,6 +7,9 @@
 \let\proof\relax 
 \let\endproof\relax
 \usepackage{mathpazo}
+\renewcommand{\baselinestretch}{0.97}
+\usepackage[tracking=false,kerning=true,spacing=true]{microtype}
+
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage{array}
@@ -26,8 +29,8 @@
 \providecommand{\tabularnewline}{\\}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
-\numberwithin{equation}{section}
-\numberwithin{figure}{section}
+% \numberwithin{equation}{section}
+% \numberwithin{figure}{section}
 
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
@@ -55,6 +58,6 @@
 \input{rclnotes_sec8_experiments.tex}
 
 \input{rclnotes_sec9_conclusions.tex}
-
+\renewcommand{\baselinestretch}{0.95}
 \input{rclnotes_sec90_biblio.tex}
 \end{document}
