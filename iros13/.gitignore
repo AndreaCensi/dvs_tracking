@@ -34,3 +34,4 @@
 *.*~
 .deps
 *.toc
+.DS_Store
