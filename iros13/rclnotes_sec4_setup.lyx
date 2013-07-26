@@ -77,24 +77,6 @@
 
 \begin_body
 
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vfill
-\backslash
-pagebreak
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 Hardware setup and event data
 \begin_inset CommandInset label
@@ -111,7 +93,7 @@ This section describes the hardware setup and gives an intuition of the
  event data that a DVS produces.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 DVS and its interface
 \begin_inset CommandInset label
 LatexCommand label
@@ -199,7 +181,7 @@ te with their driver.
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Active LED Markers (
 \begin_inset ERT
 status open
@@ -321,157 +303,8 @@ KHz, so that those frequencies would not be confused with the events triggered
  by the background motion.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Statistical properties of event sequences
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement b
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename figures/slides/event_sequence2.pdf
-	width 9cm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:events-hist"
-
-\end_inset
-
-Example event sequence from a DVS looking at an Active LED Marker (
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-ALM
-\end_layout
-
-\end_inset
-
-).
- Subfigure (a) shows the histogram of events seen from a fixed camera looking
- at three 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-ALMs
-\end_layout
-
-\end_inset
-
-.
- The difference in numbers is due to the different frequencies of the 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-ALMs
-\end_layout
-
-\end_inset
-
-.
- Subfigure (b) shows a slice of the events seen at a particular pixel near
- the center of one of the 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-ALMs
-\end_layout
-
-\end_inset
-
- which has a blinking frequency of 1 KHz.
- The data is a series of events with positive (
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-pP
-\end_layout
-
-\end_inset
-
-) and negative (
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-pN
-\end_layout
-
-\end_inset
-
-) events.
- (c) The sequence of 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-pPN
-\end_layout
-
-\end_inset
-
- transitions are highly regular; in this data we observed that the distribution
- of the intervals is well approximated by a Gaussian with mean 
-\begin_inset Formula $1000\,\mu s$
-\end_inset
-
- and standard deviation 
-\begin_inset Formula $\sigma=6\,\mu s$
-\end_inset
-
-.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -732,7 +565,7 @@ c
 ).
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Effects of sensor motion
 \begin_inset CommandInset label
 LatexCommand label
@@ -744,73 +577,8 @@ name "sub:Alternate-events-and-motion"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-placement b
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename figures/slides/motion_small.pdf
-	width 8.6cm
-
-\end_inset
-
-
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:switch-hist"
-
-\end_inset
-
-Comparison of transition events statistics in three cases: a)
-\begin_inset space ~
-\end_inset
-
-visible markers, without motion; b)
-\begin_inset space ~
-\end_inset
-
-with camera motion; c)
-\begin_inset space ~
-\end_inset
-
-with camera motion but no marker visible.
- Note in (c) that the motion of the camera creates apparent motion of the
- environment and a large number of events; however they are of a low frequency.
- In this case, the events from the background are negligible after 
-\begin_inset Formula $700$
-\end_inset
-
-
-\begin_inset space ~
-\end_inset
-
-Hz, though this depends on the statistics of the environment and the speed
- of the motion.
- We can choose the frequencies of the markers high enough such that they
- are not confused as background motion.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Things get more complicated when the sensor is moving, because the apparent
- motion of the environment creates changes in luminance that are unrelated
- to the 
+If the sensor is moving, events are generated from the apparent motion of
+ the environment as well as the 
 \begin_inset ERT
 status open
 
@@ -826,6 +594,7 @@ ALMs
 .
  However, we have found that we can discriminate between the two types of
  events based on their temporal statistics.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -835,12 +604,37 @@ reference "fig:switch-hist"
 
 \end_inset
 
- shows the histogram of frequencies of the P/N transitions in three scenarios:
- a)
+ shows the histogram of frequencies of the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pP
+\end_layout
+
+\end_inset
+
+/
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pN
+\end_layout
+
+\end_inset
+
+ transitions in three scenarios: a)
 \begin_inset space ~
 \end_inset
 
-a fixed camera looking at fixed 
+a stationary camera looking at stationary 
 \begin_inset ERT
 status open
 
@@ -857,7 +651,7 @@ ALMs
 \begin_inset space ~
 \end_inset
 
-a moving camera looking at fixed 
+a moving camera looking at stationary 
 \begin_inset ERT
 status open
 
@@ -875,13 +669,238 @@ ALMs
 \end_inset
 
 a moving camera with no LEDs.
- From this data we can see that the motion of the camera generates a large
- number of events, but at low frequencies, and notwithstanding the motion,
- we can still clearly see the peaks originated from the markers.
- Therefore, if we choose the marker frequencies high enough, we can filter
- for the camera motion just by ignoring the events corresponding to frequencies
- under a certain threshold.
+ From this data we can see that the sensor motion generates a large number
+ of events and transitions, but the corresponding frequencies are low (
+\begin_inset Formula $<600$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+Hz in this case), so that we can still clearly see the peaks originated
+ from the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALMs
+\end_layout
+
+\end_inset
+
+-generated events.
+ Therefore, by choosing the blinking frequencies high enough, it is possible
+ to filter out the sensor motion just by ignoring the events corresponding
+ to frequencies under a certain threshold.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vfill
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/slides/motion_small.pdf
+	width 8.6cm
+	BoundingBox 15bp 5bp 483bp 300bp
+	clip
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:switch-hist"
+
+\end_inset
+
+This figure shows the statistics of the intervals between 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pP
+\end_layout
+
+\end_inset
+
+/
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pN
+\end_layout
+
+\end_inset
+
+ transitions, in three different scenarios.
+ The upper row shows the number of events generated by each pixel over in
+ an interval of a few seconds.
+ The bottom row shows the histograms of the inverse of the interval between
+ successive 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pP
+\end_layout
+
+\end_inset
+
+/
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pN
+\end_layout
+
+\end_inset
+
+ transitions at each pixel.
+ (a)
+\begin_inset space ~
+\end_inset
+
+In the first case, both 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALMs
+\end_layout
+
+\end_inset
+
+ and sensor are stationary.
+ The observed frequencies correspond to the three 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALMs
+\end_layout
+
+\end_inset
+
+.
+ (b)
+\begin_inset space ~
+\end_inset
+
+In the second case, the sensor is moving with respect to the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALMs
+\end_layout
+
+\end_inset
+
+ and the environment.
+ (c)
+\begin_inset space ~
+\end_inset
+
+In the third case the sensor is moving and the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALMs
+\end_layout
+
+\end_inset
+
+ have been switched off.
+ In (b)
+\begin_inset space ~
+\end_inset
+
+and
+\begin_inset space ~
+\end_inset
+
+(c) the motion of the camera creates apparent motion of the environment
+ which generates a large number of events and transitions.
+ However, those transitions have low frequency.
+ In this case, the events generated from the background motion are negligible
+ after 
+\begin_inset Formula $700$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+Hz, though this depends on the statistics of the environment and the speed
+ of the motion.
+ We can choose the frequencies of the markers high enough such that they
+ are not confused with the background motion.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

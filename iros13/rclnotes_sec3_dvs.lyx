@@ -391,6 +391,154 @@ The high resolution of the event timestamps can be used to investigate highly
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+placement b
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/slides/event_sequence2.pdf
+	width 8.6cm
+	BoundingBox 12bp 0bp 500bp 135bp
+	clip
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:events-hist"
+
+\end_inset
+
+Example event sequence from a DVS looking at an Active LED Marker (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALM
+\end_layout
+
+\end_inset
+
+).
+ Subfigure (a) shows the histogram of events seen from a fixed camera looking
+ at three 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALMs
+\end_layout
+
+\end_inset
+
+.
+ The difference in numbers is due to the different frequencies of the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALMs
+\end_layout
+
+\end_inset
+
+.
+ Subfigure (b) shows a slice of the events seen at a particular pixel near
+ the center of one of the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ALMs
+\end_layout
+
+\end_inset
+
+ which has a blinking frequency of 1 KHz.
+ The data is a series of events with positive (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pP
+\end_layout
+
+\end_inset
+
+) and negative (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pN
+\end_layout
+
+\end_inset
+
+) events.
+ (c) The sequence of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pPN
+\end_layout
+
+\end_inset
+
+ transitions are highly regular; in this data we observed that the distribution
+ of the intervals is well approximated by a Gaussian with mean 
+\begin_inset Formula $1000\,\mu s$
+\end_inset
+
+ and standard deviation 
+\begin_inset Formula $\sigma=6\,\mu s$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 The main drawbacks of the current generation of DVS are its low resolution
  of 
 \begin_inset Formula $128\times128$

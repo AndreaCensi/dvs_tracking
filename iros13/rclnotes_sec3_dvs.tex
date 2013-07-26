@@ -78,6 +78,21 @@ in this paper, blinking LEDs. Moreover, because events are asynchronous,
 it is not necessary to commit to use a given sampling frequency like
 in a conventional sensors.
 \end{itemize}
+\begin{figure}[b]
+\centering{}\includegraphics[bb=12bp 0bp 500bp 135bp,clip,width=8.6cm]{figures/slides/event_sequence2}\caption{\label{fig:events-hist}Example event sequence from a DVS looking
+at an Active LED Marker (\ALM). Subfigure (a) shows the histogram
+of events seen from a fixed camera looking at three \ALMs. The difference
+in numbers is due to the different frequencies of the \ALMs. Subfigure
+(b) shows a slice of the events seen at a particular pixel near the
+center of one of the \ALMs which has a blinking frequency of 1 KHz.
+The data is a series of events with positive (\pP) and negative (\pN)
+events. (c) The sequence of \pPN transitions are highly regular;
+in this data we observed that the distribution of the intervals is
+well approximated by a Gaussian with mean $1000\,\mu s$ and standard
+deviation $\sigma=6\,\mu s$. }
+\end{figure}
+
+
 The main drawbacks of the current generation of DVS are its low resolution
 of $128\times128$, and the inability to sample the absolute brightness
 levels like a normal camera. The low resolution is due to the prototype

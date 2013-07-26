@@ -172,7 +172,7 @@ Autonomous micro helicopters will soon play a major role in tasks such search
  A key problem in aerial-vehicle navigation is pose stabilization and trajectory
  control in six degrees of freedom using onboard sensors.
  Experiments with prototype systems that use an external motion-tracking
- systems have shown that the platform themselves allow extreme maneveurability
+ systems have shown that the platform themselves allow extreme maneuverability
  if the localization problem can be assumed to be solved
 \begin_inset space ~
 \end_inset
@@ -209,109 +209,6 @@ key "Shen2011"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement b
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename figures/slides/latency1.pdf
-	width 8cm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-Traditional architecture
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename figures/slides/latency2.pdf
-	width 8cm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-Low latency, event-based architecture
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Discretization-and-latency"
-
-\end_inset
-
-To improve the agility of autonomous flying robots, we need to improve the
- total latency of the sensing pipeline.
- Using a device like a Dynamic Vision Sensor (DVS) we can theoretically
- obtain a sensing pipeline which has microsecond latency.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -507,6 +404,109 @@ These problems
 
  It is projected that in a couple of generations the technology will progress
  to have comparable resolution with traditional cameras.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/slides/latency1.pdf
+	width 8cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Traditional architecture
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/slides/latency2.pdf
+	width 8cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Low latency, event-based architecture
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Discretization-and-latency"
+
+\end_inset
+
+To improve the agility of autonomous flying robots, we need to improve the
+ total latency of the sensing pipeline.
+ Using a device like a Dynamic Vision Sensor (DVS) we can theoretically
+ obtain a sensing pipeline which has microsecond latency.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

@@ -37,35 +37,11 @@ such search and rescue, environment monitoring, security surveillance,
 inspection. A key problem in aerial-vehicle navigation is pose stabilization
 and trajectory control in six degrees of freedom using onboard sensors.
 Experiments with prototype systems that use an external motion-tracking
-systems have shown that the platform themselves allow extreme maneveurability
+systems have shown that the platform themselves allow extreme maneuverability
 if the localization problem can be assumed to be solved~\cite{Lupashin2012}.
 However, such extreme performance is not attainable, not even in principle,
 with traditional robotic sensors, such as CMOS cameras~\cite{Weiss2011}
 or laser rangefinders~\cite{Shen2011}.
-
-\begin{figure}[b]
-\begin{centering}
-\subfloat[Traditional architecture]{\begin{centering}
-\includegraphics[width=8cm]{figures/slides/latency1}
-\par\end{centering}
-
-}
-\par\end{centering}
-
-\begin{centering}
-\subfloat[Low latency, event-based architecture]{\begin{centering}
-\includegraphics[width=8cm]{figures/slides/latency2}
-\par\end{centering}
-
-}
-\par\end{centering}
-
-\caption{\label{fig:Discretization-and-latency}To improve the agility of autonomous
-flying robots, we need to improve the total latency of the sensing
-pipeline. Using a device like a Dynamic Vision Sensor (DVS) we can
-theoretically obtain a sensing pipeline which has microsecond latency.}
-\end{figure}
-
 
 The agility of an autonomous flying robot is limited by the speed
 of the sensing pipeline. More precisely, ``speed'' can be quantified
@@ -95,6 +71,30 @@ such as the limited resolution of $128\times128$ pixels, which is
 the limiting factor for robotics applications.  It is projected
 that in a couple of generations the technology will progress to have
 comparable resolution with traditional cameras.
+
+\begin{figure}[H]
+\begin{centering}
+\subfloat[Traditional architecture]{\begin{centering}
+\includegraphics[width=8cm]{figures/slides/latency1}
+\par\end{centering}
+
+}
+\par\end{centering}
+
+\begin{centering}
+\subfloat[Low latency, event-based architecture]{\begin{centering}
+\includegraphics[width=8cm]{figures/slides/latency2}
+\par\end{centering}
+
+}
+\par\end{centering}
+
+\caption{\label{fig:Discretization-and-latency}To improve the agility of autonomous
+flying robots, we need to improve the total latency of the sensing
+pipeline. Using a device like a Dynamic Vision Sensor (DVS) we can
+theoretically obtain a sensing pipeline which has microsecond latency.}
+\end{figure}
+
 
 On the theory side, to take full advantage of the sensor capability
 we need to rethink completely the way we design robotic sensing pipelines.
