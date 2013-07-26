@@ -89,7 +89,7 @@ name "sec:experiments"
 \end_layout
 
 \begin_layout Standard
-The experiments consider the advantages of a DVS-based tracking solution
+The experiments evaluate the advantages of a DVS-based tracking solution
  with respect to a tracking solution based on a traditional CMOS camera.
  We compare the DVS-based 
 \begin_inset ERT
@@ -320,9 +320,9 @@ Robot platform
 \end_layout
 
 \begin_layout Standard
-We used the commercially available ARDrone 2.0
+We used the commercially available ARDrone 2.0.
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
  a remarkable platform for its low price of 
@@ -395,7 +395,6 @@ DVS
 
 \begin_layout Standard
 The DVS128 camera was used for the tests.
- This model is currently commercially available from INI labs.
  It has a resolution of 
 \begin_inset Formula $128\times128$
 \end_inset
@@ -471,7 +470,7 @@ CHF ($21,000).
 \end_inset
 
 Hz.
- The accuracy is stated as
+ The manufacturer states that the accuracy is
 \begin_inset space ~
 \end_inset
 
@@ -507,8 +506,12 @@ mm
 \uwave default
 \noun default
 \color inherit
- by the manufacturer, but this seems an optimistic estimate based on our
- experience with the system.
+, but this seems a rather optimistic estimate based on our experience with
+ the system; we evaluate the accuracy to be closer to 5--10
+\begin_inset space ~
+\end_inset
+
+mm.
 \end_layout
 
 \begin_layout Standard
@@ -764,8 +767,8 @@ We encountered an unexpected incompatibility between OptiTrack and DVS.
  it was a spectacular interference for the DVS.
  Like most cameras, the DVS is most sensitive in the infrared spectrum and
  is much faster than the OptiTrack strobing frequency.
- This generated a buffer overflow on the DVS as the electronics could not
- handle the large number of events to be processed contemporaneously.
+ This generated an overflow in the DVS events buffer as the electronics
+ could not handle the large number of events to be processed contemporaneously.
  Eventually we understood how to deactivate the strobing for all the cameras
  prior to recording.
  Still there was a slight residual interference by the infrared illumination
@@ -877,12 +880,12 @@ xxx
 To synchronize the data from different sources we used a motion induced
  cue.
  We moved manually the drone up and down, generating an approximated sinusoid
- curve in the position data, which allowed easy manual matching of the sequences.
+ curve in the position data, which allowed easy manual matching of the sequences
+ and estimation of the delay between the two.
 \end_layout
 
 \begin_layout Standard
-After adjusting for the delay, the data sets were brought to the same number
- of samples with a common time stamps.
+After adjusting for the delay, we adjusted the sampling frequency.
  As our algorithm's output has a lower sampling rate than the OptiTrack
  (1
 \begin_inset space ~

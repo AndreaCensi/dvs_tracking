@@ -1,7 +1,7 @@
 
 \section{Experiments\label{sec:experiments}}
 
-The experiments consider the advantages of a DVS-based tracking solution
+The experiments evaluate the advantages of a DVS-based tracking solution
 with respect to a tracking solution based on a traditional CMOS camera.
 We compare the DVS-based \ALM tracking with vision-based tracking
 using the PTAM algorithm, using the output of an OptiTrack system
@@ -27,8 +27,8 @@ by the OptiTrack (shown in \emph{b}). }
 
 \subsubsection{Robot platform}
 
-We used the commercially available ARDrone 2.0 We attached four custom-built
-\ALMs to the bottom of the platform (\prettyref{fig:quadcopter_belly}).
+We used the commercially available ARDrone 2.0. We attached four
+custom-built \ALMs to the bottom of the platform (\prettyref{fig:quadcopter_belly}).
 Each LED was fixed facing downwards, one under each of the four rotors,
 so that the four were lying on a plane forming a square of 20cm side
 length. The USB connector available on the drone provided power to
@@ -39,8 +39,7 @@ the ground-facing camera is not used.
 
 \subsubsection{DVS}
 
-The DVS128 camera was used for the tests. This model is currently
-commercially available from INI labs. It has a resolution of $128\times128$
+The DVS128 camera was used for the tests. It has a resolution of $128\times128$
 pixels. The lens attached gave the sensor a FOV of approximately 65\textdegree{},
 giving a resolution of 0.5~pixels/\textdegree{}. For tracking the
 quadcopter, the DVS was installed on the floor facing upwards. Note
@@ -56,9 +55,10 @@ optical motion tracking system using active infrared light and reflective
 marker balls. Four markers have been applied to the drone (\prettyref{fig:Infrared-markers-used}).
 Our lab setup comprised 10 cameras in a $6\times8\,\mbox{m}$ area;
 the cost of this system is approximately 20,000~CHF (\$21,000). The
-sampling frequency used was $250$~Hz. The accuracy is stated as~$\sim1$~mm
-by the manufacturer, but this seems an optimistic estimate based on
-our experience with the system.
+sampling frequency used was $250$~Hz. The manufacturer states that
+the accuracy is~$\sim1$~mm, but this seems a rather optimistic
+estimate based on our experience with the system; we evaluate the
+accuracy to be closer to 5--10~mm.
 
 
 
@@ -94,13 +94,13 @@ standard configuration, the spotlights are pulsed at a high frequency.
 This is of course invisible to normal sensors and to the human eye,
 but it was a spectacular interference for the DVS. Like most cameras,
 the DVS is most sensitive in the infrared spectrum and is much faster
-than the OptiTrack strobing frequency. This generated a buffer overflow
-on the DVS as the electronics could not handle the large number of
-events to be processed contemporaneously. Eventually we understood
-how to deactivate the strobing for all the cameras prior to recording.
-Still there was a slight residual interference by the infrared illumination
-from the OptiTrack, but it should have relatively little impact to
-the results of our experiments.
+than the OptiTrack strobing frequency. This generated an overflow
+in the DVS events buffer as the electronics could not handle the large
+number of events to be processed contemporaneously. Eventually we
+understood how to deactivate the strobing for all the cameras prior
+to recording. Still there was a slight residual interference by the
+infrared illumination from the OptiTrack, but it should have relatively
+little impact to the results of our experiments.
 
 
 \subsection{Methods}
@@ -124,12 +124,11 @@ native format.
 To synchronize the data from different sources we used a motion induced
 cue. We moved manually the drone up and down, generating an approximated
 sinusoid curve in the position data, which allowed easy manual matching
-of the sequences.
+of the sequences and estimation of the delay between the two.
 
-After adjusting for the delay, the data sets were brought to the same
-number of samples with a common time stamps. As our algorithm's output
-has a lower sampling rate than the OptiTrack (1~KHz vs 250~Hz),
-the OptiTrack data was resampled by linear interpolation.
+After adjusting for the delay, we adjusted the sampling frequency.
+As our algorithm's output has a lower sampling rate than the OptiTrack
+(1~KHz vs 250~Hz), the OptiTrack data was resampled by linear interpolation.
 
 
 
