@@ -9,35 +9,36 @@ the event data that a DVS produces.
 
 \subsubsection{DVS and its interface\label{sec:interface}}
 
-The DVS attaches to a computer using a common USB port. The camera
-is distributed with a portable software framework written in Java
-called jAER~\cite{jaer}. This project, developed in C++ for maximum
-efficiency, needed a special driver to be developed, based on the
-Thesycon USB device driver~\cite{thesycon}. The events are transmitted
-from the camera in packets of up to several hundred events; however,
-each event is independently tagged at the source with its proper timestamp.
+The DVS has a standard USB 2.0 interface. The sensor is distributed
+with a portable software framework written in Java called jAER~\cite{jaer}.
+For this project we used C++ for maximum efficiency. So we developed
+a special driver to be developed, based on the Thesycon USB device
+driver~\cite{thesycon}. The events are transmitted from the sensor
+in packets of up to several hundred events; however, each event is
+still independently tagged at the source with its proper timestamp.
 
 
 
 \subsubsection{Active LED Markers (\ALMs)\label{sec:leds}}
 
-The LED controller is based on the bronze board~\cite{bronzeboard}
-from inilabs, which is based on an AVR32.  We used infrared LEDs
-since the DVS is most sensitive in the infrared spectrum. 
+We used infrared LEDs since the DVS is most sensitive in the infrared
+spectrum.  The LED controller is based on the Bronze Board~\cite{bronzeboard}
+from inilabs, which is based on an AVR32.  The controller drives
+the LEDs using PWM.
 
 
 
 In our setup we could easily change the PWM frequency to the LEDs.
 An upper bound on the detectable frequency depends on the power of
-the LEDs and the distance to the camera; a DVS camera is not magic:
-there must be a large enough change in the number of photons reaching
-the photoreceptor to trigger an event. In our setup we found 2~KHz
-to be an adequate number. The frequencies for each LEDs were then
-decided in the interval 1--2~KHz making sure we did not choose frequencies
-with common harmonics. A reasonable lower bound on the blinking frequency
-was found experimentally to be $1$~KHz to minimize the confusion
-between with background motion (see \prettyref{sub:Alternate-events-and-motion}
-below).
+the LEDs and the distance to the sensor. A DVS is not magic: there
+must be a large enough change in the number of photons reaching the
+photoreceptor to trigger an event. In our setup we found 2~KHz to
+be an adequate value as an upper bound. The frequencies for each LEDs
+were then decided in the interval 1--2~KHz making sure we did not
+choose frequencies with common harmonics. A reasonable lower bound
+on the blinking frequency was found experimentally to be $1$~KHz,
+so that those frequencies would not be confused with the events triggered
+by the background motion.
 
 
 \subsubsection{Statistical properties of event sequences}
@@ -61,10 +62,11 @@ deviation $\sigma=6\,\mu s$. }
 \end{figure}
 
 
-\prettyref{fig:events-hist} gives an intuition of how the data looks
-like. In this scenario both the \ALMs and the DVS are fixed. \prettyref{fig:events-hist}\emph{a}
-shows the histogram of the number of events coming from a particular
-pixels. The three peaks are the three \ALMs ($f=500,700,1000\,\mbox{Hz}$).
+\prettyref{fig:events-hist} gives an intuition of how the stream
+of events looks like. In this scenario both the \ALMs and the DVS
+are fixed. \prettyref{fig:events-hist}\emph{a} shows the histogram
+of the number of events coming from a particular pixels. The three
+peaks are three \ALMs at frequencies $f=500,700,1000\,\mbox{Hz}$.
 The number of events is different for each peak because the frequencies
 differ. The halo in \prettyref{fig:events-hist}\emph{a} cannot be
 explained by the refractive properties of the optics, and is probably
@@ -72,24 +74,24 @@ due to non-ideal local interactions among neighbors in the sensing
 array.
 
 \prettyref{fig:events-hist}\emph{b} shows the sequence of events
-obtained from one particular pixel, corresponding to an \ALM  with
-a frequency of 1~KHz. There is a different number of P and N events,
-which tells us that we cannot really interpret the DVS data as simply
-the derivative of the image. 
+obtained from one particular pixel, corresponding to the \ALM  with
+a frequency of 1~KHz. There is a different number of~\pP and~\pN
+events. This implies that it is not possible to interpret these events
+as the derivative of the image.
 
-For this particular data, the P events arrive noisily, while the N
+For this particular data, the~\pP events arrive noisily, while the~\pN
 events arrive more regularly. Note that the what we observe here is
 the combination of the LED dynamics with the dynamics of the photoreceptor
-and the nonlinear detector. Experimentally we found that the interval
-between successive P/N transitions is repeatable: we have observed
-that the jitter is well approximated by a Gaussian with standard deviation
-equal to $6\,\mu s$ (\prettyref{fig:events-hist}\emph{c}).
+and the nonlinear detector. Experimentally, we found that the interval
+between successive \pP/\pN transitions is repeatable. For this data,
+the jitter is well approximated by a Gaussian with standard deviation
+equal to $6$~$\mu$s (\prettyref{fig:events-hist}\emph{c}).
 
 
-\subsubsection{Effect of motion\label{sub:Alternate-events-and-motion}}
+\subsubsection{Effects of sensor motion\label{sub:Alternate-events-and-motion}}
 
 \begin{figure}[b]
-\centering{}\includegraphics[width=8.6cm]{figures/slides/motion}\caption{\label{fig:switch-hist}Comparison of transition events statistics
+\centering{}\includegraphics[width=8.6cm]{figures/slides/motion_small}\caption{\label{fig:switch-hist}Comparison of transition events statistics
 in three cases: a)~visible markers, without motion; b)~with camera
 motion; c)~with camera motion but no marker visible. Note in (c)
 that the motion of the camera creates apparent motion of the environment
@@ -102,7 +104,7 @@ motion.}
 \end{figure}
 
 
-Things get more complicated when the camera is moving, because the
+Things get more complicated when the sensor is moving, because the
 apparent motion of the environment creates changes in luminance that
 are unrelated to the \ALMs. However, we have found that we can discriminate
 between the two types of events based on their temporal statistics.

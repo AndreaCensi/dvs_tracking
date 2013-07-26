@@ -398,31 +398,14 @@ The main drawbacks of the current generation of DVS are its low resolution
 
 , and the inability to sample the absolute brightness levels like a normal
  camera.
- 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-xxx
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The low resolution is due to the prototype fabrication process used (350
+ The low resolution is due to the prototype fabrication process used (350
 \begin_inset space ~
 \end_inset
 
 nm) and the fact that each pixel is associated to a complex circuit carrying
- on the analogous computation.
- The static scene content cannot be accessed because the according technology
- was not ready for the first series of sensors.
+ on the analog computation.
+ The absolute brightness levels cannot be accessed because the according
+ technology was not ready for the first series of sensors.
  But since the field of event-based vision sensors is steadily growing
 \begin_inset space ~
 \end_inset
@@ -435,11 +418,7 @@ key "delbruck10activity"
 \end_inset
 
 , these limitations will soon be overcome.
- 
-\end_layout
-
-\begin_layout Standard
-Some of the latest developments include higher temporal contrast sensitivity
+ Some of the latest developments include higher temporal contrast sensitivity
  of 1.5%
 \begin_inset space ~
 \end_inset
@@ -451,11 +430,19 @@ key "serrano13128"
 
 \end_inset
 
- and higher spatial resolution of 
+ and higher spatial resolution of
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset Formula $240\times180$
 \end_inset
 
- or 
+ or
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset Formula $304\times240$
 \end_inset
 
@@ -476,8 +463,8 @@ key "posch11qvga,berner13240"
 \end_layout
 
 \begin_layout Standard
-Ongoing efforts include increasing the availability of the embedded version
- of the sensor (eDVS, used in
+Other ongoing efforts include increasing the availability of the embedded
+ version of the sensor (eDVS, used in
 \begin_inset space ~
 \end_inset
 
@@ -488,7 +475,11 @@ key "conradt09pencil"
 
 \end_inset
 
-), which weighs only a few grams and measures 
+), which weighs only a few grams and measures
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset Formula $30\times50\times50$
 \end_inset
 

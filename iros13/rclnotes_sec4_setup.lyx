@@ -123,8 +123,8 @@ name "sec:interface"
 \end_layout
 
 \begin_layout Standard
-The DVS attaches to a computer using a common USB port.
- The camera is distributed with a portable software framework written in
+The DVS has a standard USB 2.0 interface.
+ The sensor is distributed with a portable software framework written in
  Java called jAER
 \begin_inset space ~
 \end_inset
@@ -137,8 +137,9 @@ key "jaer"
 \end_inset
 
 .
- This project, developed in C++ for maximum efficiency, needed a special
- driver to be developed, based on the Thesycon USB device driver
+ For this project we used C++ for maximum efficiency.
+ So we developed a special driver to be developed, based on the Thesycon
+ USB device driver
 \begin_inset space ~
 \end_inset
 
@@ -150,9 +151,9 @@ key "thesycon"
 \end_inset
 
 .
- The events are transmitted from the camera in packets of up to several
- hundred events; however, each event is independently tagged at the source
- with its proper timestamp.
+ The events are transmitted from the sensor in packets of up to several
+ hundred events; however, each event is still independently tagged at the
+ source with its proper timestamp.
  
 \begin_inset Note Note
 status collapsed
@@ -223,29 +224,6 @@ name "sec:leds"
 \end_layout
 
 \begin_layout Standard
-The LED controller is based on the bronze board
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "bronzeboard"
-
-\end_inset
-
- from inilabs, which is based on an AVR32.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-The board can drive up to 5 LEDs in pulse-width modulation.
-\end_layout
-
-\end_inset
-
- 
 \begin_inset Note Note
 status collapsed
 
@@ -275,7 +253,29 @@ An already existing C code example was taken and adapted to our needs.
 
 \end_inset
 
+ The LED controller is based on the Bronze Board
+\begin_inset space ~
+\end_inset
 
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bronzeboard"
+
+\end_inset
+
+ from inilabs, which is based on an AVR32.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The board can drive up to 5 LEDs in pulse-width modulation.
+\end_layout
+
+\end_inset
+
+ The controller drives the LEDs using PWM.
 \end_layout
 
 \begin_layout Standard
@@ -295,14 +295,14 @@ We decided to attach four LEDs to our quadrotor which is the minimum number
 \begin_layout Standard
 In our setup we could easily change the PWM frequency to the LEDs.
  An upper bound on the detectable frequency depends on the power of the
- LEDs and the distance to the camera; a DVS camera is not magic: there must
- be a large enough change in the number of photons reaching the photoreceptor
- to trigger an event.
+ LEDs and the distance to the sensor.
+ A DVS is not magic: there must be a large enough change in the number of
+ photons reaching the photoreceptor to trigger an event.
  In our setup we found 2
 \begin_inset space ~
 \end_inset
 
-KHz to be an adequate number.
+KHz to be an adequate value as an upper bound.
  The frequencies for each LEDs were then decided in the interval 1--2
 \begin_inset space ~
 \end_inset
@@ -317,14 +317,8 @@ KHz making sure we did not choose frequencies with common harmonics.
 \begin_inset space ~
 \end_inset
 
-KHz to minimize the confusion between with background motion (see 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sub:Alternate-events-and-motion"
-
-\end_inset
-
- below).
+KHz, so that those frequencies would not be confused with the events triggered
+ by the background motion.
 \end_layout
 
 \begin_layout Subsubsection
@@ -487,7 +481,7 @@ reference "fig:events-hist"
 
 \end_inset
 
- gives an intuition of how the data looks like.
+ gives an intuition of how the stream of events looks like.
  
 \begin_inset Note Note
 status collapsed
@@ -538,7 +532,7 @@ reference "fig:events-hist"
 a
 \emph default
  shows the histogram of the number of events coming from a particular pixels.
- The three peaks are the three 
+ The three peaks are three 
 \begin_inset ERT
 status open
 
@@ -551,11 +545,11 @@ ALMs
 
 \end_inset
 
- (
+ at frequencies 
 \begin_inset Formula $f=500,700,1000\,\mbox{Hz}$
 \end_inset
 
-).
+.
  The number of events is different for each peak because the frequencies
  differ.
  The halo in 
@@ -586,7 +580,7 @@ reference "fig:events-hist"
 b
 \emph default
  shows the sequence of events obtained from one particular pixel, corresponding
- to an 
+ to the 
 \begin_inset ERT
 status open
 
@@ -604,23 +598,127 @@ ALM
 \end_inset
 
 KHz.
- There is a different number of P and N events, which tells us that we cannot
- really interpret the DVS data as simply the derivative of the image.
- 
+ There is a different number of
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pP
+\end_layout
+
+\end_inset
+
+ and
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pN
+\end_layout
+
+\end_inset
+
+ events.
+ This implies that it is not possible to interpret these events as the derivativ
+e of the image.
 \end_layout
 
 \begin_layout Standard
-For this particular data, the P events arrive noisily, while the N events
- arrive more regularly.
- Note that the what we observe here is the combination of the LED dynamics
- with the dynamics of the photoreceptor and the nonlinear detector.
- Experimentally we found that the interval between successive P/N transitions
- is repeatable: we have observed that the jitter is well approximated by
- a Gaussian with standard deviation equal to 
-\begin_inset Formula $6\,\mu s$
+For this particular data, the
+\begin_inset space ~
 \end_inset
 
- (
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pP
+\end_layout
+
+\end_inset
+
+ events arrive noisily, while the
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pN
+\end_layout
+
+\end_inset
+
+ events arrive more regularly.
+ Note that the what we observe here is the combination of the LED dynamics
+ with the dynamics of the photoreceptor and the nonlinear detector.
+ Experimentally, we found that the interval between successive 
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pP
+\end_layout
+
+\end_inset
+
+/
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pN
+\end_layout
+
+\end_inset
+
+
+\lang english
+ transitions is repeatable.
+ For this data, the jitter is well approximated by a Gaussian with standard
+ deviation equal to 
+\begin_inset Formula $6$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\mu$
+\end_inset
+
+s (
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:events-hist"
@@ -635,7 +733,7 @@ c
 \end_layout
 
 \begin_layout Subsubsection
-Effect of motion
+Effects of sensor motion
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:Alternate-events-and-motion"
@@ -655,7 +753,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figures/slides/motion.pdf
+	filename figures/slides/motion_small.pdf
 	width 8.6cm
 
 \end_inset
@@ -710,7 +808,7 @@ Hz, though this depends on the statistics of the environment and the speed
 \end_layout
 
 \begin_layout Standard
-Things get more complicated when the camera is moving, because the apparent
+Things get more complicated when the sensor is moving, because the apparent
  motion of the environment creates changes in luminance that are unrelated
  to the 
 \begin_inset ERT

@@ -80,23 +80,20 @@ in a conventional sensors.
 \end{itemize}
 The main drawbacks of the current generation of DVS are its low resolution
 of $128\times128$, and the inability to sample the absolute brightness
-levels like a normal camera. \xxx
+levels like a normal camera. The low resolution is due to the prototype
+fabrication process used (350~nm) and the fact that each pixel is
+associated to a complex circuit carrying on the analog computation.
+The absolute brightness levels cannot be accessed because the according
+technology was not ready for the first series of sensors. But since
+the field of event-based vision sensors is steadily growing~\cite{delbruck10activity},
+these limitations will soon be overcome. Some of the latest developments
+include higher temporal contrast sensitivity of 1.5\%~\cite{serrano13128}
+and higher spatial resolution of~$240\times180$ or~$304\times240$,
+accompanied with a readout channel for pictures and movies that simulates
+a CMOS camera~\cite{posch11qvga,berner13240}. 
 
-The low resolution is due to the prototype fabrication process used
-(350~nm) and the fact that each pixel is associated to a complex
-circuit carrying on the analogous computation. The static scene content
-cannot be accessed because the according technology was not ready
-for the first series of sensors. But since the field of event-based
-vision sensors is steadily growing~\cite{delbruck10activity}, these
-limitations will soon be overcome. 
-
-Some of the latest developments include higher temporal contrast sensitivity
-of 1.5\%~\cite{serrano13128} and higher spatial resolution of $240\times180$
-or $304\times240$, accompanied with a readout channel for pictures
-and movies that simulates a CMOS camera~\cite{posch11qvga,berner13240}. 
-
-Ongoing efforts include increasing the availability of the embedded
+Other ongoing efforts include increasing the availability of the embedded
 version of the sensor (eDVS, used in~\cite{conradt09pencil}), which
-weighs only a few grams and measures $30\times50\times50$~mm. Furthermore,
+weighs only a few grams and measures~$30\times50\times50$~mm. Furthermore,
 future versions of event based vision sensors are expected to include
 a USB 3.0 interface for higher data transmission rates.
