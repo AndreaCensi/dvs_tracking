@@ -112,7 +112,8 @@ The field of
 \emph on
  neuromorphic engineering
 \emph default
- tries to implement the computations done by nervous systems as VLSI circuits.
+ tries to reproduce the main characteristics of the computations done by
+ nervous systems as VLSI circuits.
  The computation is 
 \emph on
 analogic
@@ -146,11 +147,11 @@ silicon retina
 \begin_inset Quotes erd
 \end_inset
 
- or 
+ or Dynamic Vision Sensor
 \emph on
-dynamic vision sensor
+ 
 \emph default
- (DVS)
+(DVS)
 \begin_inset space ~
 \end_inset
 
@@ -179,35 +180,17 @@ event
  After the address and the timestamp of this event has been registered from
  a CPLD at the chip periphery, the pixel is reset, and the most recent voltage
  gets sampled to be compared against successive voltages.
- Depending on the sign of the difference, either a P
-\begin_inset space ~
-\end_inset
-
-event (positive) or an N
-\begin_inset space ~
-\end_inset
-
-event (negative) is generated.
- P
-\begin_inset space ~
-\end_inset
-
-events indicate that the brightness increased, N
-\begin_inset space ~
-\end_inset
-
-events indicated that it decreased.
  All of this computation is done without digitizing the signal.
  
 \end_layout
 
 \begin_layout Standard
-The parameters that modulate the pixel behavior are dynamically programmed
- using a set of bias currents.
- Some of the parameters that can be dynamically changed are the temporal
- contrast frequency cutoff, the P & N threshold, and the event frequency
- cutoff.
- Each event carriers the following information: the 
+Each event carriers the following information: a timestamp, which has a
+ 1
+\begin_inset space ~
+\end_inset
+
+µs resolution, the 
 \emph on
 address 
 \emph default
@@ -219,15 +202,110 @@ of the pixel that observed the change (equivalent to its
 \begin_inset Formula $x,y$
 \end_inset
 
- coordinates), the 
+ coordinates), and the 
 \emph on
 polarity
 \emph default
- (P or N), and a timestamp, which has a 1
+ of the change (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pP
+\end_layout
+
+\end_inset
+
+ or 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pN
+\end_layout
+
+\end_inset
+
+).
+ The polarity depends on the sign of the difference.
+ 
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pP
+\end_layout
+
+\end_inset
+
+
+\lang english
+
 \begin_inset space ~
 \end_inset
 
-µs resolution.
+events indicate that the brightness increased, while 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pN
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+events indicated that it decreased.
+\end_layout
+
+\begin_layout Standard
+The parameters that modulate the pixel behavior are dynamically programmed
+ using a set of bias currents.
+ Some of the parameters that can be dynamically changed are the temporal
+ contrast frequency cutoff, the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pP
+\end_layout
+
+\end_inset
+
+ & 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pN
+\end_layout
+
+\end_inset
+
+ threshold, and the event frequency cutoff.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -254,9 +332,10 @@ s measurement does not require a uniform exposure time for all pixels.
 \begin_layout Itemize
 By only sensing changes, the sensor performs on-chip data compression.
  This does not only make the amount of output data dependent on the activity
- in a scene but it also focusses the processing effort on the region of
+ in a scene, but it also focuses the processing effort on the region of
  interest where it is changing.
- This focusing leads to controller update intervals of down to 125
+ This focusing allows to create controllers that have update intervals of
+ down to 125
 \begin_inset space ~
 \end_inset
 
@@ -275,14 +354,17 @@ key "conradt09pencil"
 \end_layout
 
 \begin_layout Itemize
-Redundant information does not occupy the output bus and tiherefore relevant
+Redundant information does not occupy the output bus and therefore relevant
  information can be signaled very fast.
  The sensor chip itself has a latency of 15
 \begin_inset space ~
 \end_inset
 
-µs which allows to come up with sensor-actuator latencies (including sensor
- and actuator USB communication and laptop processing) of 3
+µs.
+ In practice the main limitation to the latency of prototype systems is
+ not the DVS, but USB communication.
+ Round-trip latencies of the whole systems using off-the-shelf computer
+ architectures are in the order of 3
 \begin_inset space ~
 \end_inset
 
@@ -301,10 +383,11 @@ key "delbruck07fast"
 \end_layout
 
 \begin_layout Itemize
-The high resolution of the event timestamps can be used to investigate the
- dynamics in a scene such as motion or blinking frequencies.
- While conventional vision sensors only allow to investigate the scene at
- given times, the DVS produces a continuous stream of information.
+The high resolution of the event timestamps can be used to investigate highly
+ dynamics elements in a scene, such as fast motion or, like in this paper,
+ blinking LEDs.
+ Moreover, because events are asynchronous, it is not necessary to commit
+ to use a given sampling frequency like in a conventional sensors.
 \end_layout
 
 \begin_layout Standard
@@ -316,6 +399,19 @@ The main drawbacks of the current generation of DVS are its low resolution
 , and the inability to sample the absolute brightness levels like a normal
  camera.
  
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+xxx
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -403,395 +499,6 @@ key "conradt09pencil"
 mm.
  Furthermore, future versions of event based vision sensors are expected
  to include a USB 3.0 interface for higher data transmission rates.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Float figure
-placement b
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-{
-\backslash
-color[rgb]{0.7,0.7,0.7}
-\backslash
-rule{2.6cm}{3cm}}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Caption
-
-\begin_layout Plain Layout
-DVS camera 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-{
-\backslash
-color[rgb]{0.7,0.7,0.7}
-\backslash
-rule{2.6cm}{3cm}}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-Response to circular stimulus
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-{
-\backslash
-color[rgb]{0.7,0.7,0.7}
-\backslash
-rule{2.6cm}{3cm}}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-Drone rotor
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:DVS-camera"
-
-\end_inset
-
-DVS camera and its output
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lorem
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lorem
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lorem
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lorem
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lorem
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lorem
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lorem
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lorem
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-lorem
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Itemize
-Some citations: 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "boerlin09getting"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "lichtsteiner08asynchronous"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "etienne-cummings99intelligent"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "oster08quantification"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Future improvements:
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-miniaturization
-\end_layout
-
-\begin_layout Itemize
-higher resolution
-\end_layout
-
-\begin_layout Itemize
-buffer able to handle more events
-\end_layout
-
-\begin_layout Itemize
-inclusion of a normal CMOS camera
-\end_layout
-
-\begin_layout Itemize
-easier to tune
-\end_layout
-
-\end_deeper
-\end_inset
-
-
 \end_layout
 
 \end_body

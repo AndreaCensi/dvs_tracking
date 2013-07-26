@@ -86,8 +86,8 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figures/slides/overall1.pdf
-	width 16cm
+	filename figures/slides/overall2.pdf
+	width 18cm
 
 \end_inset
 
@@ -198,6 +198,24 @@ ALMs
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vfill
+\backslash
+pagebreak
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 DVS-based Active LED Marker tracking 
 \end_layout
@@ -257,7 +275,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename figures/slides/stages2.pdf
+	filename figures/slides/stages3.pdf
 	width 8.6cm
 
 \end_inset
@@ -627,10 +645,10 @@ pNP
 \begin_layout Standard
 \align center
 \begin_inset Float table
-placement H
+placement b
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
